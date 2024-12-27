@@ -17,9 +17,12 @@ export default {
         'gray-light-100': '#f0f0f0',
         'gray-light-150': '#d5d5d5',
         'gray-light-200': '#b3b3b3',
-        'gray-dark': '#333333',
+        'gray-dark-100': '#565656',
+        'gray-dark-200': '#333333',
         'primary-blue': '#2179A1',
         'primary-blue-hover': '#1e6390',
+        black: '#000000',
+        blue: '#337FA2',
       },
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],

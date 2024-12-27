@@ -60,3 +60,20 @@ export const StartIcon = () => (
     </defs>
   </svg>
 );
+
+export const ArrowDown = () => {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      className='h-5 w-5 ml-2'
+      viewBox='0 0 20 20'
+      fill='currentColor'
+    >
+      <path
+        fillRule='evenodd'
+        d='M5.23 7.21a.75.75 0 011.06.02L10 11.584l3.71-4.354a.75.75 0 111.14.976l-4.25 5a.75.75 0 01-1.14 0l-4.25-5a.75.75 0 01.02-1.06z'
+        clipRule='evenodd'
+      />
+    </svg>
+  );
+};
