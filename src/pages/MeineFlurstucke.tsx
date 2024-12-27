@@ -39,7 +39,7 @@ export default function MeineFlurstucke() {
 
       <div className='flex mt-6 flex-col gap-6'>
         <div className='flex justify-between items-center'>
-          <div className='flex items-center border border-[#D5D5D5] bg-white rounded-[8px] overflow-hidden'>
+          <div className='flex items-center border border-gray-light-150 bg-white rounded-[8px] overflow-hidden'>
             <button className='pl-3 py-2'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -64,7 +64,7 @@ export default function MeineFlurstucke() {
           <div className='relative' ref={dropdownRef}>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className='flex items-center px-4 py-2 border border-[#D5D5D5] rounded-[8px] bg-white focus:outline-none text-black'
+              className='flex items-center px-4 py-2 border border-gray-light-150 rounded-[8px] bg-white focus:outline-none text-black'
             >
               <span>{selectedOption || 'Sortieren nach'}</span>
               <svg

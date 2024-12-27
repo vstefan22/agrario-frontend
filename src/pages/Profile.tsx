@@ -195,7 +195,7 @@ export default function Profile() {
   };
 
   return (
-    <div className='bg-[#f9f9f9] min-h-screen flex flex-col items-center justify-start px-4 py-8'>
+    <div className='bg-gray-lightest min-h-screen flex flex-col items-center justify-start px-4 py-8'>
       <div className='w-full max-w-[960px] bg-white border border-gray-medium rounded-[44px] p-8'>
         {error && <div className='text-red-600 mb-6'>{error}</div>}
         {success && <div className='text-green-600 mb-6'>{success}</div>}

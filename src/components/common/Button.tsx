@@ -27,7 +27,7 @@ const Button: FC<ButtonProps> = ({
   switch (variant) {
     case 'primary':
       variantClasses =
-        'justify-center w-[236px] h-[48px] bg-white text-primary border border-transparent hover:bg-gray-lightest';
+        'justify-center w-[236px] h-[48px] bg-white text-primary border border-transparent hover:bg-gray-muted';
       break;
     case 'secondary':
       variantClasses =
