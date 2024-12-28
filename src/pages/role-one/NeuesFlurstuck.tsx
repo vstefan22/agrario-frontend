@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import Search from '../components/common/Search';
-import Input from '../components/common/Input';
-import Button from '../components/common/Button';
+import { useState, ChangeEvent } from 'react';
+import Search from '../../components/common/Search';
+import Input from '../../components/common/Input';
+import Button from '../../components/common/Button';
 // import GoogleMap, { PolygonData } from '../components/common/GoogleMap';
 // import useHttpRequest from '../hooks/http-request-hook';
 // import useAuthStore from '../store/auth-store';
@@ -24,6 +24,7 @@ export default function NeuesFlurstuck() {
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   // const [polygonData, setPolygonData] = useState<PolygonData>([]);
 
   const handleChange = (
@@ -87,6 +88,10 @@ export default function NeuesFlurstuck() {
     console.log('Add flurstuck clicked.');
   };
 
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
   const resetFields = () => {
     setFormData({
       municipal: '',
@@ -102,8 +107,14 @@ export default function NeuesFlurstuck() {
       {success && <div className='text-green-600 mb-6'>{success}</div>}
 
       <div className='flex items-center justify-between mb-6'>
-        <h1 className='text-xl font-semibold text-gray-800'>Neues Flurstück</h1>
-        <Search placeholder='Search' />
+        <h1 className='text-[32px] font-bold text-black-muted'>
+          Neues Flurstück
+        </h1>
+        <Search
+          placeholder='Search'
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
       </div>
 
       <div className='flex-1 flex flex-col'>
@@ -196,7 +207,7 @@ export default function NeuesFlurstuck() {
           </div>
         </div>
 
-        <div className='md:col-span-4 flex flex-1 justify-end space-x-4 mt-4'>
+        <div className='md:col-span-4 flex justify-end space-x-4 mt-4 mb-6'>
           <Button variant='blueSecondary' type='button' onClick={() => {}}>
             Abbrechen
           </Button>

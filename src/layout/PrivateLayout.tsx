@@ -7,7 +7,7 @@ const PrivateLayout = ({ children }: { children: React.ReactNode }) => {
         <div className='w-[230px] bg-white shadow-md h-full'>
           <Sidebar />
         </div>
-        <main className='flex-1 overflow-auto'>{children}</main>
+        <main className='flex-1'>{children}</main>
       </div>
     </div>
   );

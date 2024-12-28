@@ -1,12 +1,18 @@
-import { FC, InputHTMLAttributes } from 'react';
+import { FC, ChangeEvent } from 'react';
 import searchIcon from '../../assets/images/search.png';
 
-type SearchProps = InputHTMLAttributes<HTMLInputElement> & {};
+type SearchProps = {
+  placeholder?: string;
+  className?: string;
+  value: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+};
 
 const Search: FC<SearchProps> = ({
   placeholder = 'Search',
   className = '',
-  ...props
+  value,
+  onChange,
 }) => {
   return (
     <div
@@ -25,7 +31,8 @@ const Search: FC<SearchProps> = ({
       <input
         type='text'
         placeholder={placeholder}
-        {...props}
+        value={value}
+        onChange={onChange}
         className='flex-1 bg-transparent focus:outline-none text-gray-700'
       />
     </div>

@@ -1,15 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { auth, db } from '../firebase/firebase-config';
-import { auth } from '../firebase/firebase-config';
 import { TbCameraPlus } from 'react-icons/tb';
-import Input from '../components/common/Input';
-import Button from '../components/common/Button';
-import IconCircleButton from '../components/common/IconCircleButton';
-import { EyeOpenIcon, EyeClosedIcon } from '../assets/svgs/svg-icons';
-
-// import { onAuthStateChanged, updatePassword } from 'firebase/auth';
-// import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import Input from '../../components/common/Input';
+import Button from '../../components/common/Button';
+import IconCircleButton from '../../components/common/IconCircleButton';
+import { EyeOpenIcon, EyeClosedIcon } from '../../assets/svgs/svg-icons';
+// import useAuthStore from '../../store/auth-store';
 
 interface UserData {
   vorname: string;
@@ -28,7 +24,9 @@ interface UserData {
 
 export default function Profile() {
   const navigate = useNavigate();
+  // const { user } = useAuthStore();
 
+  // TODO: use actual user data here
   const [formData, setFormData] = useState<UserData>({
     vorname: 'Max',
     nachname: 'Mustermann',
@@ -47,7 +45,7 @@ export default function Profile() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
-  const [userName, setUserName] = useState(''); // Dummy user name
+  const [userName, setUserName] = useState('');
   const [profilePic, setProfilePic] = useState(
     'https://s3-alpha-sig.figma.com/img/01cc/5d61/f928befeeece4a5c1e2f09ab88eac5cc?Expires=1735516800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=IZe3UOdo59zO4aHKULYUvDhMUIHSDdU7ikD3n3c2CVQZMVYmnmhRDWPKGCoJoP7sbSY6wmm5eQ8aKphj8xU8ymJaj0zkI90mpfr0ki4MiUcz5xBOKFsN3iPumxdxH~LU6dAFKKPUS6NFzW~ywx-RICjvhYBDoeaG3UqgtdAzr747DxDqzTM4JzktYyChDO-3d5e0fDatlraLgZTCsIWzTImROLt8cKyz1glTQoXg4IXF778SNN-lNSuzDut2nYCxTgq3uam8RwMOEWjitxUT0h0-9A0JYvPaXTflAYgIfE4AnCPIJvgp3w1Y~buDyMA~Vd3jJTXVUMp8FaDoYrOG6Q__'
   );
@@ -55,37 +53,7 @@ export default function Profile() {
 
   useEffect(() => {
     setUserName('Max Mustermann');
-    // COMMENTED OUT: Fetch user data from Firebase
-    /*
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const userDoc = await getDoc(doc(db, 'users', user.uid));
-        if (userDoc.exists()) {
-          const data = userDoc.data();
-          setFormData({
-            vorname: data.vorname || '',
-            nachname: data.nachname || '',
-            unternehmen: data.unternehmen || '',
-            position: data.position || '',
-            strasse: data.strasse || '',
-            plz: data.plz || '',
-            stadt: data.stadt || '',
-            website: data.website || '',
-            email: data.email || '',
-            telefon: data.telefon || '',
-            password: '',
-            confirmPassword: '',
-          });
-          setUserName(`${data.vorname} ${data.nachname}`);
-          setProfilePic(data.profilePic || '/default-profile.png'); // Ensure you have a profilePic field
-        }
-      } else {
-        navigate('/login'); // Redirect to login if not authenticated
-      }
-    });
-
-    return () => unsubscribe();
-    */
+    // TODO: check if this is still needed
   }, [navigate]);
 
   const handleChange = (
@@ -146,35 +114,18 @@ export default function Profile() {
     setLoading(true);
 
     try {
-      const user = auth.currentUser;
-      if (user) {
-        // COMMENTED OUT: Update user data in Firestore
-        /*
-        await updateDoc(doc(db, 'users', user.uid), {
-          vorname: formData.vorname,
-          nachname: formData.nachname,
-          unternehmen: formData.unternehmen,
-          position: formData.position,
-          strasse: formData.strasse,
-          plz: formData.plz,
-          stadt: formData.stadt,
-          website: formData.website,
-          email: formData.email,
-          telefon: formData.telefon,
-          updatedAt: new Date(),
-        });
-
-        // If password fields are filled, update the password
-        if (formData.password) {
-          await updatePassword(user, formData.password);
-        }
-        */
-
-        // Since we are using dummy data, we'll just simulate a successful update
-        setSuccess('Profil erfolgreich aktualisiert.');
-      } else {
-        setError('Benutzer ist nicht authentifiziert.');
-      }
+      // TODO: create update request for user
+      // const data = await sendRequest(
+      //   '/user-update/',
+      //   'POST',
+      //   {
+      //     headers: {
+      //       Authorization: `Bearer ${token}`,
+      //     },
+      //   },
+      //   formData
+      // );
+      setSuccess('Profil erfolgreich aktualisiert.');
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message || 'Ein Fehler ist aufgetreten.');
@@ -191,7 +142,7 @@ export default function Profile() {
   };
 
   const handleOnPasswordChange = () => {
-    console.log('Passwort andern clicked');
+    navigate('/profile/password-change');
   };
 
   return (
