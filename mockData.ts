@@ -1,4 +1,5 @@
 import flImage from './src/assets/images/fl-image.png';
+import { FragenHilfeItem } from './src/types/fragenhilfe-data-types';
 
 export const flurstuckData = [
   {
@@ -43,4 +44,24 @@ export const flurstuckData = [
     image: flImage,
     analyzePlus: 'active',
   },
+];
+
+
+export const fragenHilfeData: FragenHilfeItem[] = [
+  {
+    title: 'Morbi fringilla metus ac lacus dapibus.',
+    content: "Sed nec pharetra felis, in ultrices neque. Phasellus varius semper tellus, ac imperdiet erat commodo id. Aenean lobortis justo et velit ornare malesuada. Nam lacus orci, elementum eu odio ac, molestie venenatis turpis. Mauris ex ipsum, dictum gravida pretium sed, molestie nec ante. Sed ac ullamcorper nisi.",
+  },
+  {
+    title: 'What we like to do & what we don’t like to do',
+    content: "Sed nec pharetra felis, in ultrices neque. Phasellus varius semper tellus, ac imperdiet erat commodo id. Aenean lobortis justo et velit ornare malesuada. Nam lacus orci, elementum eu odio ac, molestie venenatis turpis. Mauris ex ipsum, dictum gravida pretium sed, molestie nec ante. Sed ac ullamcorper nisi.",
+  },
+  {
+    title: 'Fusce fermentum tempus sapien a sagittis tellus mattis id. Cras et enim ex.',
+    content: "Sed nec pharetra felis, in ultrices neque. Phasellus varius semper tellus, ac imperdiet erat commodo id. Aenean lobortis justo et velit ornare malesuada. Nam lacus orci, elementum eu odio ac, molestie venenatis turpis. Mauris ex ipsum, dictum gravida pretium sed, molestie nec ante. Sed ac ullamcorper nisi.",
+  },
+  {
+    title: 'Nunc aliquam tempus iaculis. Ut eu imperdiet velit.',
+    content: "Sed nec pharetra felis, in ultrices neque. Phasellus varius semper tellus, ac imperdiet erat commodo id. Aenean lobortis justo et velit ornare malesuada. Nam lacus orci, elementum eu odio ac, molestie venenatis turpis. Mauris ex ipsum, dictum gravida pretium sed, molestie nec ante. Sed ac ullamcorper nisi.",
+  }
 ];
