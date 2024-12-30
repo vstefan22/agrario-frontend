@@ -10,6 +10,7 @@ import EinenFreundEinladen from './pages/role-one/EinenFreundEinladen';
 import FragenHilfe from './pages/role-one/FragenHilfe';
 import Profile from './pages/role-one/Profile';
 import PasswordChange from './components/profile/PasswordChange';
+import WarenkorbAnalysePlus from './pages/role-one/WarenkorbAnalysePlus';
 
 const App = () => {
   return (
@@ -33,6 +34,9 @@ const App = () => {
                     path='/meine-flurstucke'
                     element={<MeineFlurstucke />}
                   />
+
+                  <Route path='/meine-flurstucke/analyse-plus' element={<WarenkorbAnalysePlus />} />
+
                   <Route path='/meine-angebote' element={<MeineAngebote />} />
                   <Route
                     path='/einen-freund-einladen'
