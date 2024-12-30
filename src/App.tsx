@@ -5,6 +5,7 @@ import NewRegister from './components/auth/NewRegister';
 import Register from './components/auth/Register';
 import NeuesFlurstuck from './pages/role-one/NeuesFlurstuck';
 import MeineFlurstucke from './pages/role-one/MeineFlurstucke';
+import FlurstuckDetails from './pages/role-one/FlurstuckDetails';
 import MeineAngebote from './pages/role-one/MeineAngebote';
 import EinenFreundEinladen from './pages/role-one/EinenFreundEinladen';
 import FragenHilfe from './pages/role-one/FragenHilfe';
@@ -32,6 +33,10 @@ const App = () => {
                   <Route
                     path='/meine-flurstucke'
                     element={<MeineFlurstucke />}
+                  />
+                  <Route
+                    path='/meine-flurstucke/details'
+                    element={<FlurstuckDetails />}
                   />
                   <Route path='/meine-angebote' element={<MeineAngebote />} />
                   <Route
