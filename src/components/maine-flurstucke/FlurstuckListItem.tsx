@@ -6,19 +6,26 @@ import active from '../../assets/images/active.png';
 import inactive from '../../assets/images/inactive.png';
 import imgPlaceholder from '../../assets/images/image-placeholder.png';
 import Button from '../common/Button';
+import { useNavigate } from 'react-router-dom';
+import useFlurstuckStore from '../../store/flurstuck-store';
 
 type FlurstuckListItemProps = {
   data: FlurstuckType;
 };
 
 const FlurstuckListItem: FC<FlurstuckListItemProps> = ({ data }) => {
+  const navigate = useNavigate();
+  const { setFlurstuck } = useFlurstuckStore();
+
   const handleViewDetails = () => {
-    console.log('handle view details clicked.');
+    setFlurstuck(data);
+    navigate('/meine-flurstucke/details');
   };
 
   const handleFetchOffers = () => {
     console.log('handle fetch offers clicked.');
   };
+
   return (
     <div
       className='w-full bg-white rounded-[18px] p-4'
@@ -34,7 +41,7 @@ const FlurstuckListItem: FC<FlurstuckListItemProps> = ({ data }) => {
               src={data.image || imgPlaceholder}
               width='100%'
               alt={'flurstuck-image'}
-              className='object-cover h-full'
+              className='object-cover h-full rounded-tl-xl rounded-tr-xl'
             />
           </div>
           <div className='flex items-center mb-3'>
