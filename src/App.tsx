@@ -7,7 +7,6 @@ import Register2 from './pages/role-two/Register';
 import NeuesFlurstuck from './pages/role-one/NeuesFlurstuck';
 import MeineFlurstucke from './pages/role-one/MeineFlurstucke';
 import FlurstuckDetails from './pages/role-one/FlurstuckDetails';
-import MeineAngebote from './pages/role-one/MeineAngebote';
 import EinenFreundEinladen from './pages/role-one/EinenFreundEinladen';
 import FragenHilfe from './pages/role-one/FragenHilfe';
 import Profile from './pages/role-one/Profile';
@@ -15,6 +14,7 @@ import PasswordChange from './components/profile/PasswordChange';
 import WarenkorbAnalysePlus from './pages/role-one/WarenkorbAnalysePlus';
 import VielenDankfurIhreBestellung from './pages/role-one/VielenDankFurIhreBestellung';
 import ThankYouMarketing from './pages/role-one/ThankYouMarketing';
+import MyOffers from './pages/role-one/MyOffers';
 
 
 const App = () => {
@@ -47,7 +47,7 @@ const App = () => {
                     path='/meine-flurstucke/details'
                     element={<FlurstuckDetails />}
                   />
-                  <Route path='/meine-angebote' element={<MeineAngebote />} />
+                  <Route path='/meine-angebote' element={<MyOffers />} />
                   <Route
                     path='/einen-freund-einladen'
                     element={<EinenFreundEinladen />}
