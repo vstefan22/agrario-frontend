@@ -1,10 +1,10 @@
 import { thankYouMarketingData } from '../../../mockData';
 import ThankYouMarketingList from '../../components/maine-flurstucke/ThankYouMarketingList';
 import Button from '../../components/common/Button';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 const ThankYouMarketing = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     function getMoreOffers() {
         console.log("---> Get more offers");

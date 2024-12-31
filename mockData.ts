@@ -1,5 +1,6 @@
 import flImage from './src/assets/images/fl-image.png';
 import { FragenHilfeItem } from './src/types/fragenhilfe-data-types';
+import fieldsImg from "./src/assets/images/fieldsImage.png";
 
 export const flurstuckListData = [
   {
@@ -151,4 +152,36 @@ export const thankYouMarketingData = [
     image: flImage,
     analyzePlus: 'active',
   },
+];
+
+
+export const myOfferData = [
+  {
+    id: 'FL-56141',
+    state: 'Hessen',
+    plz: 65366,
+    city: 'Rüdesheim',
+    district: 'Hasensprung',
+    flur: '2',
+    flurstuck: '35-6',
+    registry: 'Grünland',
+    size: 10000,
+    parcelNumber: '123-456-789',
+    image: fieldsImg,
+    analyzePlus: 'active',
+  },
+  {
+    id: 'FL-56142',
+    state: 'Hessen',
+    plz: 65366,
+    city: 'Rüdesheim',
+    district: 'Hasensprung',
+    flur: '2',
+    flurstuck: '35-6',
+    registry: 'Grünland',
+    size: 10000,
+    parcelNumber: '987-654-321',
+    image: flImage,
+    analyzePlus: 'inactive',
+  }
 ];

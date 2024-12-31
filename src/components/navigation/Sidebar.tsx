@@ -78,11 +78,11 @@ export default function Sidebar() {
 
             <Button
               variant={
-                activeRoute === '/my-offer'
+                activeRoute === '/meine-angebote'
                   ? 'sidebarPrimary'
                   : 'sidebarSecondary'
               }
-              onClick={() => handleNavigate('/my-offer')}
+              onClick={() => handleNavigate('/meine-angebote')}
             >
               <RiDiscountPercentLine className='mr-3' />
               Meine Angebote
