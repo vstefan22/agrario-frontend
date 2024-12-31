@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase/firebase-config';
@@ -23,6 +23,14 @@ export default function Sidebar() {
   // TODO: use role from user object when provided
   const userRole: string = 'role-1';
 
+  // Track the active route
+  const [activeRoute, setActiveRoute] = useState('/');
+
+  const handleNavigate = (route: string) => {
+    setActiveRoute(route);
+    navigate(route);
+  };
+
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -36,7 +44,10 @@ export default function Sidebar() {
   return (
     <div className='bg-white h-full w-[230px] flex flex-col justify-between items-center shadow-md pt-[70px]'>
       <div className='flex flex-col space-y-3'>
-        <Button variant='sidebarPrimary' onClick={() => navigate('/')}>
+        <Button
+          variant={activeRoute === '/' ? 'sidebarPrimary' : 'sidebarSecondary'}
+          onClick={() => handleNavigate('/')}
+        >
           <FaRocket className='mr-3' />
           Start
         </Button>
@@ -44,42 +55,62 @@ export default function Sidebar() {
         {userRole === 'role-1' && (
           <Fragment>
             <Button
-              variant='sidebarSecondary'
-              onClick={() => navigate('/neues-flurstuck')}
+              variant={
+                activeRoute === '/neues-flurstuck'
+                  ? 'sidebarPrimary'
+                  : 'sidebarSecondary'
+              }
+              onClick={() => handleNavigate('/neues-flurstuck')}
             >
-              <FaTh className='mr-3 text-gray-medium' />
+              <FaTh className='mr-3' />
               Neues Flurstück
             </Button>
 
             <Button
-              variant='sidebarSecondary'
-              onClick={() => navigate('/meine-flurstucke')}
+              variant={
+                activeRoute === '/meine-flurstucke'
+                  ? 'sidebarPrimary'
+                  : 'sidebarSecondary'
+              }
+              onClick={() => handleNavigate('/meine-flurstucke')}
             >
-              <FaMapLocationDot className='mr-3 text-gray-medium' />
+              <FaMapLocationDot className='mr-3' />
               Meine Flurstücke
             </Button>
 
             <Button
-              variant='sidebarSecondary'
-              onClick={() => navigate('/meine-angebote')}
+              variant={
+                activeRoute === '/meine-angebote'
+                  ? 'sidebarPrimary'
+                  : 'sidebarSecondary'
+              }
+              onClick={() => handleNavigate('/meine-angebote')}
             >
-              <RiDiscountPercentLine className='mr-3 text-gray-medium' />
+              <RiDiscountPercentLine className='mr-3' />
               Meine Angebote
             </Button>
 
             <Button
-              variant='sidebarSecondary'
-              onClick={() => navigate('/einen-freund-einladen')}
+              variant={
+                activeRoute === '/einen-freund-einladen'
+                  ? 'sidebarPrimary'
+                  : 'sidebarSecondary'
+              }
+              onClick={() => handleNavigate('/einen-freund-einladen')}
             >
-              <FaUserPlus className='mr-3 text-gray-medium' />
+              <FaUserPlus className='mr-3' />
               Einen Freund einladen
             </Button>
 
             <Button
-              variant='sidebarSecondary'
-              onClick={() => navigate('/fragen-hilfe')}
+              variant={
+                activeRoute === '/fragen-hilfe'
+                  ? 'sidebarPrimary'
+                  : 'sidebarSecondary'
+              }
+              onClick={() => handleNavigate('/fragen-hilfe')}
             >
-              <FaQuestionCircle className='mr-3 text-gray-medium' />
+              <FaQuestionCircle className='mr-3' />
               Fragen/Hilfe
             </Button>
           </Fragment>
@@ -88,26 +119,38 @@ export default function Sidebar() {
         {userRole === 'role-2' && (
           <Fragment>
             <Button
-              variant='sidebarSecondary'
-              onClick={() => navigate('/flurstucke-suchen')}
+              variant={
+                activeRoute === '/flurstucke-suchen'
+                  ? 'sidebarPrimary'
+                  : 'sidebarSecondary'
+              }
+              onClick={() => handleNavigate('/flurstucke-suchen')}
             >
-              <FaMapLocationDot className='mr-3 text-gray-medium' />
+              <FaMapLocationDot className='mr-3' />
               Flurstücke suchen
             </Button>
 
             <Button
-              variant='sidebarSecondary'
-              onClick={() => navigate('/meine-watchlist')}
+              variant={
+                activeRoute === '/meine-watchlist'
+                  ? 'sidebarPrimary'
+                  : 'sidebarSecondary'
+              }
+              onClick={() => handleNavigate('/meine-watchlist')}
             >
-              <HiOutlineClipboardList className='mr-3 text-gray-medium' />
+              <HiOutlineClipboardList className='mr-3' />
               Meine Watchlist
             </Button>
 
             <Button
-              variant='sidebarSecondary'
-              onClick={() => navigate('/aktive-auktionen')}
+              variant={
+                activeRoute === '/aktive-auktionen'
+                  ? 'sidebarPrimary'
+                  : 'sidebarSecondary'
+              }
+              onClick={() => handleNavigate('/aktive-auktionen')}
             >
-              <FaSignOutAlt className='mr-3 text-gray-medium' />
+              <FaSignOutAlt className='mr-3' />
               Aktive Auktionen
             </Button>
           </Fragment>
