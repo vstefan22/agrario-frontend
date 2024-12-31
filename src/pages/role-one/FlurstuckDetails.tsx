@@ -8,7 +8,7 @@ function FlurstuckDetails() {
   const { flurstuck } = useFlurstuckStore();
 
   const handleRequestOffer = () => {
-    console.log('Request an offer clicked.');
+    navigate('/meine-flurstucke/offer-preparation');
   };
 
   const handleDownloadReport = () => {
@@ -17,7 +17,6 @@ function FlurstuckDetails() {
 
   const handleAnalysePlus = () => {
     navigate('/meine-flurstucke/analyse-plus');
-    console.log('Analyse plus clicked.');
   };
 
   console.log('flurstuck in details: ', flurstuck);

@@ -1,6 +1,6 @@
 import Search from '../../components/common/Search';
 import Select from '../../components/common/Select';
-import { options } from '../../types/select-options';
+import { sortOptions } from '../../types/select-options';
 import { filterData, sortData } from '../../utils/helper-functions';
 import { myOfferData } from '../../../mockData';
 import MyOfferList from '../../components/maine-flurstucke/MyOffersList';
@@ -8,11 +8,17 @@ import { useState, ChangeEvent } from 'react';
 
 
 function MyOffers() {
-  const [sortOption, setSortOption] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const handleSelectChange = (option: string) => {
-    setSortOption(option);
+  const [filters, setFilters] = useState<Record<string, string | null>>({
+    sortOption: null,
+  });
+
+  const handleSelectChange = (name: string, option: string) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [name]: option,
+    }));
   };
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -20,7 +26,7 @@ function MyOffers() {
   };
 
   const filteredData = filterData(myOfferData, searchTerm);
-  const sortedData = sortData(filteredData, sortOption);
+  const sortedData = sortData(filteredData, filters.sortOption);
 
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
@@ -38,8 +44,10 @@ function MyOffers() {
             onChange={handleSearchChange}
           />
           <Select
-            options={options}
-            value={sortOption}
+            name='sortOption'
+            variant='sort'
+            options={sortOptions}
+            value={filters.sortOption}
             onChange={handleSelectChange}
             placeholder='Sortieren nach'
           />

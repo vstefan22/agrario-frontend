@@ -2,24 +2,29 @@ import { useState, ChangeEvent } from 'react';
 import Search from '../../components/common/Search';
 import Select from '../../components/common/Select';
 import FlurstuckList from '../../components/maine-flurstucke/FlurstuckList';
-import { options } from '../../types/select-options';
 import { filterData, sortData } from '../../utils/helper-functions';
-import { flurstuckData } from '../../../mockData';
+import { sortOptions } from '../../types/select-options';
+import { flurstuckListData } from '../../../mockData';
 
 export default function MeineFlurstucke() {
-  const [sortOption, setSortOption] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [filters, setFilters] = useState<Record<string, string | null>>({
+    sortOption: null,
+  });
 
-  const handleSelectChange = (option: string) => {
-    setSortOption(option);
+  const handleSelectChange = (name: string, option: string) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [name]: option,
+    }));
   };
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 
-  const filteredData = filterData(flurstuckData, searchTerm);
-  const sortedData = sortData(filteredData, sortOption);
+  const filteredData = filterData(flurstuckListData, searchTerm);
+  const sortedData = sortData(filteredData, filters.sortOption);
 
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
@@ -35,8 +40,10 @@ export default function MeineFlurstucke() {
             onChange={handleSearchChange}
           />
           <Select
-            options={options}
-            value={sortOption}
+            name='sortOption'
+            variant='sort'
+            options={sortOptions}
+            value={filters.sortOption}
             onChange={handleSelectChange}
             placeholder='Sortieren nach'
           />

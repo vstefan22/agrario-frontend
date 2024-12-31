@@ -1,9 +1,9 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { FlurstuckType } from '../types/flurstuck-types';
+import { AngeboteFlurstuckType, FlurstuckType } from '../types/flurstuck-types';
 
 type FlurstuckState = {
-  flurstuck: FlurstuckType | null;
+  flurstuck: FlurstuckType | AngeboteFlurstuckType | null;
   flurstucks: FlurstuckType[];
   flurstuckId: string | null;
 
