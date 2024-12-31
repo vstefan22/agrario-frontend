@@ -38,7 +38,7 @@ const WarenkorbAnalysePlus = () => {
 
 
 
-            <WarenkorbAnalysePlusList data={warenkorbAnalysePlusData} />
+            <WarenkorbAnalysePlusList data={warenkorbAnalysePlusData} isEnable />
 
 
             <div className="flex justify-between my-8">

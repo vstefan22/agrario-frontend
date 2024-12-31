@@ -6,9 +6,13 @@ import delIcon from "../../assets/images/del.png";
 
 type WarenkorbAnalysePlusListItemProps = {
     data: WarenkorbAnalysePlusType;
+    isEnable?: boolean;
 };
 
-const WarenkorbAnalysePlusListItem: FC<WarenkorbAnalysePlusListItemProps> = ({ data }) => {
+const WarenkorbAnalysePlusListItem: FC<WarenkorbAnalysePlusListItemProps> = ({ data, isEnable }) => {
+
+    const IDNummerClass = !isEnable ? "min-w-[188px]" : "";
+
     return (
         <div
             className='w-full bg-white rounded-[18px] p-4 py-10 my-3'
@@ -18,7 +22,7 @@ const WarenkorbAnalysePlusListItem: FC<WarenkorbAnalysePlusListItemProps> = ({ d
             }}
         >
             <div className='flex justify-between items-center mx-3'>
-                <div className='flex border-[0.16px] min-w-[116px] min-h-[104px] border-gray-medium/60 rounded-xl flex-col justify-center items-center'>
+                <div className={`flex border-[0.16px] min-w-[116px] min-h-[104px] border-gray-medium/60 rounded-xl flex-col justify-center items-center ${IDNummerClass}`}>
                     <div className='flex items-center flex-col'>
                         <h5 className='font-bold text-[16px] text-black-muted whitespace-nowrap'>
                             {data.id}
@@ -30,12 +34,14 @@ const WarenkorbAnalysePlusListItem: FC<WarenkorbAnalysePlusListItemProps> = ({ d
                     <DynamicTable data={data} columns={WARENKORB_ANALYSE_PLUS_COLUMNS} isResize />
                 </div>
 
-                <button>
-                    <div className='border-[1.12px] border-[#C1D7E1] rounded-[50%] p-[11px] flex'>
-                        <img src={delIcon} alt="Delete Icon" className='min-w-[14px]' />
-                    </div>
-                </button>
 
+                {isEnable &&
+                    <button>
+                        <div className='border-[1.12px] border-[#C1D7E1] rounded-[50%] p-[11px] flex'>
+                            <img src={delIcon} alt="Delete Icon" className='min-w-[14px]' />
+                        </div>
+                    </button>
+                }
             </div>
         </div >
     );

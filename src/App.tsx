@@ -11,6 +11,7 @@ import FragenHilfe from './pages/role-one/FragenHilfe';
 import Profile from './pages/role-one/Profile';
 import PasswordChange from './components/profile/PasswordChange';
 import WarenkorbAnalysePlus from './pages/role-one/WarenkorbAnalysePlus';
+import VielenDankfurIhreBestellung from './pages/role-one/VielenDankFurIhreBestellung';
 
 const App = () => {
   return (
@@ -34,6 +35,8 @@ const App = () => {
                     path='/meine-flurstucke'
                     element={<MeineFlurstucke />}
                   />
+
+                  <Route path="/meine-flurstucke/vielen-dank" element={<VielenDankfurIhreBestellung />} />
 
                   <Route path='/meine-flurstucke/analyse-plus' element={<WarenkorbAnalysePlus />} />
 
