@@ -2,7 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './layout/Layout';
 import ProtectedLayout from './layout/ProtectedLayout';
 import NewRegister from './components/auth/NewRegister';
-import Register from './components/auth/Register';
+import Register from './pages/role-one/Register';
+import Register2 from './pages/role-two/Register';
 import NeuesFlurstuck from './pages/role-one/NeuesFlurstuck';
 import MeineFlurstucke from './pages/role-one/MeineFlurstucke';
 import FlurstuckDetails from './pages/role-one/FlurstuckDetails';
@@ -14,6 +15,7 @@ import PasswordChange from './components/profile/PasswordChange';
 import WarenkorbAnalysePlus from './pages/role-one/WarenkorbAnalysePlus';
 import VielenDankfurIhreBestellung from './pages/role-one/VielenDankFurIhreBestellung';
 
+
 const App = () => {
   return (
     <Router>
@@ -21,6 +23,7 @@ const App = () => {
         <Routes>
           <Route path='/new-register' element={<NewRegister />} />
           <Route path='/register' element={<Register />} />
+          <Route path='/register2' element={<Register2 />} />
           <Route
             path='*'
             element={

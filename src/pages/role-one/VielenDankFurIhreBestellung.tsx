@@ -1,4 +1,4 @@
-import WarenkorbAnalysePlusList from "../../components/warenkorb-analyse-plus/WarenkorbAnalysePlusList";
+import WarenkorbAnalysePlusList from "../../components/maine-flurstucke/WarenkorbAnalysePlusList";
 import { warenkorbAnalysePlusData } from "../../../mockData";
 import Button from "../../components/common/Button";
 
