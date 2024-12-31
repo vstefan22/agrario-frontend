@@ -12,31 +12,29 @@ export default function Register2() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    vorname: '',
-    nachname: '',
-    unternehmen: '',
+    firstName: '',
+    lastName: '',
+    company: '',
     position: '',
-    strasse: '',
-    plz: '',
-    stadt: '',
+    street: '',
+    postalCode: '',
+    city: '',
     website: '',
     email: '',
-    telefon: '',
+    mobile: '',
     password: '',
     confirmPassword: '',
     privacyAccepted: false,
     termsAccepted: false,
     iAccept: false,
-
-
-    windenergie: false,
-    solarenergie: false,
-    batteriespeicher: false,
-    warmespeicher: false,
-    wasserstoff: false,
-    ladeinfrastruktur: false,
-    okologische: false,
-    sonstigeText: '',
+    windEnergy: false,
+    solarEnergy: false,
+    batteryStorage: false,
+    heatStorage: false,
+    hydrogen: false,
+    chargingInfrastructure: false,
+    ecological: false,
+    additionalText: '',
   });
 
   const [error, setError] = useState('');
@@ -52,7 +50,7 @@ export default function Register2() {
       checked = (e.target as HTMLInputElement).checked;
     }
 
-    if (name === 'telefon') {
+    if (name === 'mobile') {
       const regex = /^\+?[0-9]*$/;
       if (!regex.test(value)) {
         return;
@@ -69,11 +67,10 @@ export default function Register2() {
     e.preventDefault();
 
     if (
-      !formData.vorname ||
-      !formData.nachname ||
-      !formData.unternehmen ||
+      !formData.firstName ||
+      !formData.lastName ||
+      !formData.company ||
       !formData.email ||
-      !formData.telefon ||
       !formData.password ||
       !formData.confirmPassword
     ) {
@@ -90,19 +87,19 @@ export default function Register2() {
     }
 
 
-    if (!/^\+?[0-9]*$/.test(formData.telefon)) {
+    if (!/^\+?[0-9]*$/.test(formData.mobile)) {
       setError('Bitte geben Sie eine gültige Telefonnummer ein (z.B. +5316326236).');
       return;
     }
 
-    if (!formData.batteriespeicher &&
-      !formData.ladeinfrastruktur &&
-      !formData.solarenergie &&
-      !formData.wasserstoff &&
-      !formData.windenergie &&
-      !formData.warmespeicher &&
-      !formData.okologische &&
-      formData.sonstigeText.trim() === ""
+    if (!formData.batteryStorage &&
+      !formData.chargingInfrastructure &&
+      !formData.solarEnergy &&
+      !formData.hydrogen &&
+      !formData.windEnergy &&
+      !formData.heatStorage &&
+      !formData.ecological &&
+      formData.additionalText.trim() === ""
     ) {
       setError('Bitte wählen Sie mindestens eine Option oder geben Sie einen Text in das Feld "Sonstige" ein.');
       return;
@@ -124,16 +121,16 @@ export default function Register2() {
       setUser({ email: user.email, id: user.uid });
 
       const userData = {
-        vorname: formData.vorname,
-        nachname: formData.nachname,
-        unternehmen: formData.unternehmen,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        company: formData.company,
         position: formData.position || null,
-        strasse: formData.strasse,
-        plz: formData.plz,
-        stadt: formData.stadt,
+        street: formData.street,
+        postalCode: formData.postalCode,
+        city: formData.city,
         website: formData.website || null,
         email: formData.email,
-        telefon: formData.telefon || null,
+        mobile: formData.mobile || null,
         createdAt: new Date().toISOString(),
       };
       // TODO: poziv ka bekendu
@@ -164,24 +161,24 @@ export default function Register2() {
           <Input
             label='Vorname'
             placeholder='Text hinzufügen'
-            name='vorname'
-            value={formData.vorname}
+            name='firstName'
+            value={formData.firstName}
             onChange={handleChange}
             required
           />
           <Input
             label='Nachname'
             placeholder='Text hinzufügen'
-            name='nachname'
-            value={formData.nachname}
+            name='lastName'
+            value={formData.lastName}
             onChange={handleChange}
             required
           />
           <Input
             label='Name des Unternehmens'
             placeholder='Text hinzufügen'
-            name='unternehmen'
-            value={formData.unternehmen}
+            name='company'
+            value={formData.company}
             onChange={handleChange}
             required
           />
@@ -195,8 +192,8 @@ export default function Register2() {
           <Input
             label='Anschrift/Strasse'
             placeholder='Text hinzufügen'
-            name='strasse'
-            value={formData.strasse}
+            name='street'
+            value={formData.street}
             onChange={handleChange}
             required
             className='md:col-span-1'
@@ -205,16 +202,16 @@ export default function Register2() {
             <Input
               label='PLZ'
               placeholder='66651'
-              name='plz'
-              value={formData.plz}
+              name='postalCode'
+              value={formData.postalCode}
               onChange={handleChange}
               required
             />
             <Input
               label='Stadt'
               placeholder='Text hinzufügen'
-              name='stadt'
-              value={formData.stadt}
+              name='city'
+              value={formData.city}
               onChange={handleChange}
               required
             />
@@ -229,11 +226,10 @@ export default function Register2() {
           <Input
             label='Telefonnummer'
             placeholder='0167498753'
-            name='telefon'
+            name='mobile'
             type='tel'
-            value={formData.telefon}
+            value={formData.mobile}
             onChange={handleChange}
-            required
             pattern='^\+?[0-9]*$'
           />
 
@@ -243,45 +239,45 @@ export default function Register2() {
             <div className='grid grid-cols-2 gap-y-6 mb-8'>
               <Checkbox
                 label='Windenergie (On-Shore)'
-                name='windenergie'
-                checked={formData.windenergie}
+                name='windEnergy'
+                checked={formData.windEnergy}
                 onChange={handleChange}
               />
               <Checkbox
                 label='Freiflächen-Solarenergie'
-                name='solarenergie'
-                checked={formData.solarenergie}
+                name='solarEnergy'
+                checked={formData.solarEnergy}
                 onChange={handleChange}
               />
               <Checkbox
                 label='Batteriespeicher'
-                name='batteriespeicher'
-                checked={formData.batteriespeicher}
+                name='batteryStorage'
+                checked={formData.batteryStorage}
                 onChange={handleChange}
               />
               <Checkbox
                 label='Wärmespeicher'
-                name='warmespeicher'
-                checked={formData.warmespeicher}
+                name='heatStorage'
+                checked={formData.heatStorage}
                 onChange={handleChange}
               />
               <Checkbox
                 label='Wasserstoff'
-                name='wasserstoff'
-                checked={formData.wasserstoff}
+                name='hydrogen'
+                checked={formData.hydrogen}
                 onChange={handleChange}
               />
               <Checkbox
                 label='Elektromobilität-Ladeinfrastruktur'
-                name='ladeinfrastruktur'
-                checked={formData.ladeinfrastruktur}
+                name='chargingInfrastructure'
+                checked={formData.chargingInfrastructure}
                 onChange={handleChange}
               />
               <div className='col-span-2 space-y-10'>
                 <Checkbox
                   label='Ökologische Aufwertungsmaßnahmen (z.B. Ökopunkte)'
-                  name='okologische'
-                  checked={formData.okologische}
+                  name='ecological'
+                  checked={formData.ecological}
                   onChange={handleChange}
                 />
                 <div className='w-[433px]'>
@@ -290,9 +286,9 @@ export default function Register2() {
                   <Input
                     label='Sonstige'
                     placeholder='Beispiel'
-                    name='sonstigeText'
+                    name='additionalText'
                     type='profile'
-                    value={formData.sonstigeText}
+                    value={formData.additionalText}
                     onChange={handleChange}
                   />
                 </div>

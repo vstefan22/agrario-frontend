@@ -1,5 +1,5 @@
 import Button from "../../components/common/Button";
-import WarenkorbAnalysePlusList from "../../components/warenkorb-analyse-plus/WarenkorbAnalysePlusList";
+import WarenkorbAnalysePlusList from "../../components/maine-flurstucke/WarenkorbAnalysePlusList";
 import { warenkorbAnalysePlusData } from "../../../mockData";
 import { useNavigate } from "react-router-dom";
 
