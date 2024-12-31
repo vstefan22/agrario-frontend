@@ -1,13 +1,13 @@
 import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Button from '../common/Button';
 import DynamicTable from '../common/DynamicTable';
+import useFlurstuckStore from '../../store/flurstuck-store';
 import { MEINE_FLURSTUCK_COLUMNS } from '../../types/table-data-types';
 import { FlurstuckType } from '../../types/flurstuck-types';
 import active from '../../assets/images/active.png';
 import inactive from '../../assets/images/inactive.png';
 import imgPlaceholder from '../../assets/images/image-placeholder.png';
-import Button from '../common/Button';
-import { useNavigate } from 'react-router-dom';
-import useFlurstuckStore from '../../store/flurstuck-store';
 
 type FlurstuckListItemProps = {
   data: FlurstuckType;

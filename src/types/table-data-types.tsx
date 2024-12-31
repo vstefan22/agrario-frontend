@@ -10,6 +10,17 @@ export const MEINE_FLURSTUCK_COLUMNS = [
   { key: 'parcelNumber', label: 'Parcel number' },
 ];
 
+export const OFFER_ITEM_COLUMNS = [
+  { key: 'bundesland', label: 'Bundesland' },
+  { key: 'plz', label: 'PLZ' },
+  { key: 'gemeinde', label: 'Gemeinde' },
+  { key: 'gemarkung', label: 'Gemarkung' },
+  { key: 'flur', label: 'Flur' },
+  { key: 'flurstuck', label: 'Flurstück' },
+  { key: 'nll', label: 'Nutzung laut Liegenschaftskataster' },
+  { key: 'grobe', label: 'Größe' },
+];
+
 export const WARENKORB_ANALYSE_PLUS_COLUMNS = [
   { key: 'bundesland', label: 'Bundesland' },
   { key: 'plz', label: 'PLZ' },
@@ -19,7 +30,7 @@ export const WARENKORB_ANALYSE_PLUS_COLUMNS = [
   { key: 'flurstuck', label: 'Flurstück' },
   { key: 'nll', label: 'Nutzung laut Liegenschaftskataster' },
   { key: 'grobe', label: 'Größe' },
-]
+];
 
 export const THANK_YOU_MARKETING_COLUMNS = [
   { key: 'state', label: 'Bundesland' },
