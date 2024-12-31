@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import fileUploadIcon from '../../assets/images/file-upload.png';
 import fileDocumentIcon from '../../assets/images/file-document.png';
-import delIcon from '../../assets/images/file-upload.png';
+import deleteIcon from '../../assets/images/del.png';
 
 function formatFileSize(sizeInBytes: number): string {
   const kb = sizeInBytes / 1024;
@@ -95,7 +95,11 @@ const UploadFile: FC<UploadFileProps> = ({ onFilesChange }) => {
                 onClick={() => handleDelete(index)}
                 className='ml-auto'
               >
-                <img src={delIcon} alt='delete' className='w-[20px] h-[20px]' />
+                <img
+                  src={deleteIcon}
+                  alt='delete'
+                  className='w-[20px] h-[20px]'
+                />
               </button>
             </div>
           );

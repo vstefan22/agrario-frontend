@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase/firebase-config';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import Input from '../common/Input';
-import Button from '../common/Button';
-import Checkbox from '../common/Checkbox';
+import Input from '../../components/common/Input';
+import Button from '../../components/common/Button';
+import Checkbox from '../../components/common/Checkbox';
 import useAuthStore from '../../store/auth-store';
 
 export default function Register() {
@@ -12,16 +12,16 @@ export default function Register() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    vorname: '',
-    nachname: '',
-    unternehmen: '',
+    firstName: '',
+    lastName: '',
+    company: '',
     position: '',
-    strasse: '',
-    plz: '',
-    stadt: '',
+    street: '',
+    postalCode: '',
+    city: '',
     website: '',
     email: '',
-    telefon: '',
+    mobile: '',
     password: '',
     confirmPassword: '',
     privacyAccepted: false,
@@ -51,9 +51,9 @@ export default function Register() {
     e.preventDefault();
 
     if (
-      !formData.vorname ||
-      !formData.nachname ||
-      !formData.unternehmen ||
+      !formData.firstName ||
+      !formData.lastName ||
+      !formData.company ||
       !formData.email ||
       !formData.password ||
       !formData.confirmPassword
@@ -85,16 +85,16 @@ export default function Register() {
       setUser({ email: user.email, id: user.uid });
 
       const userData = {
-        vorname: formData.vorname,
-        nachname: formData.nachname,
-        unternehmen: formData.unternehmen,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        company: formData.company,
         position: formData.position || null,
-        strasse: formData.strasse,
-        plz: formData.plz,
-        stadt: formData.stadt,
+        street: formData.street,
+        postalCode: formData.postalCode,
+        city: formData.city,
         website: formData.website || null,
         email: formData.email,
-        telefon: formData.telefon || null,
+        mobile: formData.mobile || null,
         createdAt: new Date().toISOString(),
       };
       // TODO: poziv ka bekendu
@@ -112,7 +112,7 @@ export default function Register() {
   };
 
   return (
-    <div className='bg-primary h-full flex flex-col items-center justify-center px-4'>
+    <div className='bg-primary flex flex-col items-center justify-center px-4 min-h-screen p-12'>
       <h1 className='text-[46px] font-bold mb-6 text-white'>Registrierung</h1>
       <div className='w-full max-w-[960px] bg-white/10 border-[3px] border-[rgba(255,255,255,0.06)] rounded-[44px] p-8'>
         {error && <div className='text-red-600 mb-6'>{error}</div>}
@@ -122,22 +122,22 @@ export default function Register() {
         >
           <Input
             label='Vorname'
-            name='vorname'
-            value={formData.vorname}
+            name='firstName'
+            value={formData.firstName}
             onChange={handleChange}
             required
           />
           <Input
             label='Nachname'
-            name='nachname'
-            value={formData.nachname}
+            name='lastName'
+            value={formData.lastName}
             onChange={handleChange}
             required
           />
           <Input
             label='Name des Unternehmens'
-            name='unternehmen'
-            value={formData.unternehmen}
+            name='company'
+            value={formData.company}
             onChange={handleChange}
             required
           />
@@ -149,8 +149,8 @@ export default function Register() {
           />
           <Input
             label='Anschrift/Strasse'
-            name='strasse'
-            value={formData.strasse}
+            name='street'
+            value={formData.street}
             onChange={handleChange}
             required
             className='md:col-span-1'
@@ -158,15 +158,15 @@ export default function Register() {
           <div className='grid grid-cols-2 gap-4 md:col-span-1'>
             <Input
               label='PLZ'
-              name='plz'
-              value={formData.plz}
+              name='postalCode'
+              value={formData.postalCode}
               onChange={handleChange}
               required
             />
             <Input
               label='Stadt'
-              name='stadt'
-              value={formData.stadt}
+              name='city'
+              value={formData.city}
               onChange={handleChange}
               required
             />
@@ -187,9 +187,9 @@ export default function Register() {
           />
           <Input
             label='Telefonnummer'
-            name='telefon'
+            name='mobile'
             type='tel'
-            value={formData.telefon}
+            value={formData.mobile}
             onChange={handleChange}
           />
           <Input

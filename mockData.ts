@@ -97,3 +97,58 @@ export const offerItemData = {
   size: 10000,
   image: flImage,
 };
+
+export const warenkorbAnalysePlusData = [
+  {
+    id: 'FL-56141',
+    bundesland: 'Hessen',
+    plz: 65366,
+    gemeinde: 'Rüdesheim',
+    gemarkung: 'Hasensprung',
+    flur: '2',
+    flurstuck: '35-6',
+    nll: 'Grünland',
+    grobe: 10000,
+  },
+
+  {
+    id: 'FL-56142',
+    bundesland: 'Hessen',
+    plz: 65366,
+    gemeinde: 'Rüdesheim',
+    gemarkung: 'Hasensprung',
+    flur: '2',
+    flurstuck: '35-6',
+    nll: 'Grünland',
+    grobe: 10000,
+  },
+
+  {
+    id: 'FL-56143',
+    bundesland: 'Hessen',
+    plz: 65366,
+    gemeinde: 'Rüdesheim',
+    gemarkung: 'Hasensprung',
+    flur: '2',
+    flurstuck: '35-6',
+    nll: 'Grünland',
+    grobe: 10000,
+  },
+];
+
+export const thankYouMarketingData = [
+  {
+    id: 'FL-001',
+    state: 'Hessen',
+    plz: 60306,
+    city: 'Frankfurt',
+    district: 'Westend',
+    flur: 'Field 12',
+    flurstuck: 'Parcel 34',
+    registry: 'Residential Land',
+    size: 10000,
+    parcelNumber: '123-456-789',
+    image: flImage,
+    analyzePlus: 'active',
+  },
+];
