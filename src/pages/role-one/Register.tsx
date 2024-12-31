@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase/firebase-config';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import Input from '../common/Input';
-import Button from '../common/Button';
-import Checkbox from '../common/Checkbox';
+import Input from '../../components/common/Input';
+import Button from '../../components/common/Button';
+import Checkbox from '../../components/common/Checkbox';
 import useAuthStore from '../../store/auth-store';
 
 export default function Register() {
@@ -112,7 +112,7 @@ export default function Register() {
   };
 
   return (
-    <div className='bg-primary h-full flex flex-col items-center justify-center px-4'>
+    <div className='bg-primary flex flex-col items-center justify-center px-4 min-h-screen p-12'>
       <h1 className='text-[46px] font-bold mb-6 text-white'>Registrierung</h1>
       <div className='w-full max-w-[960px] bg-white/10 border-[3px] border-[rgba(255,255,255,0.06)] rounded-[44px] p-8'>
         {error && <div className='text-red-600 mb-6'>{error}</div>}
