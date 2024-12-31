@@ -65,3 +65,42 @@ export const fragenHilfeData: FragenHilfeItem[] = [
     content: "Sed nec pharetra felis, in ultrices neque. Phasellus varius semper tellus, ac imperdiet erat commodo id. Aenean lobortis justo et velit ornare malesuada. Nam lacus orci, elementum eu odio ac, molestie venenatis turpis. Mauris ex ipsum, dictum gravida pretium sed, molestie nec ante. Sed ac ullamcorper nisi.",
   }
 ];
+
+
+export const warenkorbAnalysePlusData = [
+  {
+    id: 'FL-56141',
+    bundesland: 'Hessen',
+    plz: 65366,
+    gemeinde: 'Rüdesheim',
+    gemarkung: 'Hasensprung',
+    flur: '2',
+    flurstuck: '35-6',
+    nll: 'Grünland',
+    grobe: 10000,
+  },
+
+  {
+    id: 'FL-56142',
+    bundesland: 'Hessen',
+    plz: 65366,
+    gemeinde: 'Rüdesheim',
+    gemarkung: 'Hasensprung',
+    flur: '2',
+    flurstuck: '35-6',
+    nll: 'Grünland',
+    grobe: 10000,
+  },
+
+  {
+    id: 'FL-56143',
+    bundesland: 'Hessen',
+    plz: 65366,
+    gemeinde: 'Rüdesheim',
+    gemarkung: 'Hasensprung',
+    flur: '2',
+    flurstuck: '35-6',
+    nll: 'Grünland',
+    grobe: 10000,
+  }
+];

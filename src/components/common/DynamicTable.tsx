@@ -4,23 +4,26 @@ type Column = { key: string; label: string };
 type DynamicTableProps = {
   columns: Column[];
   data: Record<string, unknown>;
+  isResize?: boolean;
 };
 
-const DynamicTable: FC<DynamicTableProps> = ({ columns, data }) => {
+const DynamicTable: FC<DynamicTableProps> = ({ columns, data, isResize }) => {
+  const customClassName = isResize ? "px-5" : "";
+
   return (
     <table>
       <tbody className='flex border border-gray-medium/60 rounded-xl'>
         {columns.map((column) => (
           <tr
             key={column.key}
-            className='flex flex-col border border-gray-medium border-t-0 border-l-0 border-b-0 last:border-r-0'
+            className="flex flex-col border border-gray-medium border-t-0 border-l-0 border-b-0 last:border-r-0"
           >
-            <td className='p-4 font-semibold text-gray-dark-200 border-l-0 border-r-0 border-b-0'>
+            <td className={`p-4 font-semibold text-gray-dark-200 border-l-0 border-r-0 border-b-0 ${customClassName}`}>
               {column.label}
             </td>
             <td
               key={column.key}
-              className='border border-gray-medium p-3 text-gray-dark-200 font-400 border-l-0 border-r-0 border-b-0'
+              className={`border border-gray-medium p-3 text-gray-dark-200 font-400 border-l-0 border-r-0 border-b-0 ${customClassName}`}
             >
               {String(data[column.key] ?? '-')}
             </td>
