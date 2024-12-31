@@ -239,6 +239,31 @@ export default function MyOffer() {
               onChange={handleChange}
             />
           </div>
+          <div className='flex gap-8 w-[800px] justify-between'>
+            <Checkbox
+              label='Keine Nutzung von Solarenergie'
+              name='solarEnergyRestriction'
+              variant='primary'
+              checked={formData.solarEnergyRestriction}
+              onChange={handleChange}
+            />
+            <Checkbox
+              label='Keine Nutzung von Energiespeicher'
+              name='energyStorageRestriction'
+              variant='primary'
+              checked={formData.energyStorageRestriction}
+              onChange={handleChange}
+            />
+          </div>
+          <div className='flex gap-8'>
+            <Checkbox
+              label='Keine Nutzung für ökologische Aufwertungen'
+              name='ecoEnhancementsRestriction'
+              variant='primary'
+              checked={formData.ecoEnhancementsRestriction}
+              onChange={handleChange}
+            />
+          </div>
 
           <TextArea
             id='message'
@@ -252,7 +277,6 @@ export default function MyOffer() {
           <UploadFile onFilesChange={handleFilesChange} />
 
           <div className='flex flex-col w-full gap-8'>
-            {/* isOwnerOrAuthorized */}
             <div className='flex flex-col'>
               <Checkbox
                 label='Ja, ich bestätige Eigentümer des Grundstückes oder von den Eigentümern beauftragt oder mandatiert zu sein .'
@@ -267,8 +291,6 @@ export default function MyOffer() {
                 </span>
               )}
             </div>
-
-            {/* acceptPrivacyPolicy */}
             <div className='flex flex-col'>
               <Checkbox
                 label='Ja, ich akzeptiere die Datenschutzbedingungen'
@@ -283,8 +305,6 @@ export default function MyOffer() {
                 </span>
               )}
             </div>
-
-            {/* acceptTermsAndConditions */}
             <div className='flex flex-col'>
               <Checkbox
                 label='Ja, ich akzeptiere die AGBs'
@@ -299,8 +319,6 @@ export default function MyOffer() {
                 </span>
               )}
             </div>
-
-            {/* other */}
             <div className='flex flex-col'>
               <Checkbox
                 label='Ja, ich...'
