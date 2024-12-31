@@ -6,8 +6,8 @@ import Register from './components/auth/Register';
 import NeuesFlurstuck from './pages/role-one/NeuesFlurstuck';
 import MeineFlurstucke from './pages/role-one/MeineFlurstucke';
 import FlurstuckDetails from './pages/role-one/FlurstuckDetails';
-import MeineAngebote from './pages/role-one/MeineAngebote';
 import EinenFreundEinladen from './pages/role-one/EinenFreundEinladen';
+import OfferPreparation from './pages/role-one/OfferPreparation';
 import FragenHilfe from './pages/role-one/FragenHilfe';
 import Profile from './pages/role-one/Profile';
 import PasswordChange from './components/profile/PasswordChange';
@@ -38,7 +38,10 @@ const App = () => {
                     path='/meine-flurstucke/details'
                     element={<FlurstuckDetails />}
                   />
-                  <Route path='/meine-angebote' element={<MeineAngebote />} />
+                  <Route
+                    path='/meine-flurstucke/offer-preparation'
+                    element={<OfferPreparation />}
+                  />
                   <Route
                     path='/einen-freund-einladen'
                     element={<EinenFreundEinladen />}

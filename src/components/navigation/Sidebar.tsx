@@ -22,8 +22,6 @@ export default function Sidebar() {
 
   // TODO: use role from user object when provided
   const userRole: string = 'role-1';
-
-  // Track the active route
   const [activeRoute, setActiveRoute] = useState('/');
 
   const handleNavigate = (route: string) => {
@@ -80,11 +78,11 @@ export default function Sidebar() {
 
             <Button
               variant={
-                activeRoute === '/meine-angebote'
+                activeRoute === '/my-offer'
                   ? 'sidebarPrimary'
                   : 'sidebarSecondary'
               }
-              onClick={() => handleNavigate('/meine-angebote')}
+              onClick={() => handleNavigate('/my-offer')}
             >
               <RiDiscountPercentLine className='mr-3' />
               Meine Angebote
