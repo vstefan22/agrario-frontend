@@ -8,6 +8,7 @@ import TextArea from '../../components/common/TextArea';
 import UploadFile from '../../components/common/UploadFile';
 import { defaultOptions } from '../../types/select-options';
 import { offerItemData } from '../../../mockData';
+import { useNavigate } from 'react-router-dom';
 
 const initialFormData = {
   availableDate: null as Date | null,
@@ -28,6 +29,7 @@ const initialFormData = {
 };
 
 export default function MyOffer() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState(initialFormData);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -118,10 +120,17 @@ export default function MyOffer() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateForm()) {
-      console.log('Form submitted with:', formData);
+
+    try {
+      if (validateForm()) {
+        console.log('Form submitted with:', formData);
+      }
+      // TODO: send marketing request
+      navigate('/role-one/my-plots/thank-you-marketing-request');
+    } catch (err) {
+      console.log('Error: ', err);
     }
   };
 
