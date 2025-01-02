@@ -154,6 +154,24 @@ export const thankYouMarketingData = [
   },
 ];
 
+export const detailsData = [
+  {
+    id: 'FL-001',
+    state: 'Hessen',
+    plz: 60306,
+    city: 'Frankfurt',
+    district: 'Westend',
+    flur: 'Field 12',
+    flurstuck: 'Parcel 34',
+    registry: 'Residential Land',
+    size: 10000,
+    parcelNumber: '123-456-789',
+    image: fieldsImg,
+    analyzePlus: 'inactive',
+  },
+];
+
+
 export const myOfferData = [
   {
     id: 'FL-56141',

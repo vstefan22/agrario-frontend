@@ -11,6 +11,7 @@ import NewPlot from './pages/role-one/NewPlot';
 import MyPlots from './pages/role-one/MyPlots';
 import PlotDetails from './pages/role-one/PlotDetails';
 import MyOffers from './pages/role-one/MyOffers';
+import OfferDetails from './pages/role-one/OfferDetails';
 import OfferPreparation from './pages/role-one/OfferPreparation';
 import FriendInvite from './pages/role-one/FriendInvite';
 import QuestionsHelp from './pages/role-one/QuestionsHelp';
@@ -53,6 +54,7 @@ const App = () => {
                   />
                   <Route path='/my-plots/details' element={<PlotDetails />} />
                   <Route path='/my-offers' element={<MyOffers />} />
+                  <Route path='/my-offers/details' element={<OfferDetails />} />
                   <Route
                     path='/my-plots/offer-preparation'
                     element={<OfferPreparation />}

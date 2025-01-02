@@ -57,6 +57,7 @@ export default function NewRegister() {
             label='Ich bin Eigentümer/Verwalter von Grundstücken'
             checked={selectedRole === 'role-1'}
             readOnly
+            labelClassName='justify-center'
           />
 
           <p className='text-sm text-white mt-4 text-center w-full'>
@@ -93,6 +94,7 @@ export default function NewRegister() {
             label='Ich suche geeignete Grundstücke'
             checked={selectedRole === 'role-2'}
             readOnly
+            labelClassName='justify-center'
           />
 
           <p className='text-sm text-white mt-4 text-center w-full'>
