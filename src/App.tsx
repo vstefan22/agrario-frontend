@@ -16,8 +16,7 @@ import WarenkorbAnalysePlus from './pages/role-one/WarenkorbAnalysePlus';
 import VielenDankfurIhreBestellung from './pages/role-one/VielenDankFurIhreBestellung';
 import ThankYouMarketing from './pages/role-one/ThankYouMarketing';
 import MyOffers from './pages/role-one/MyOffers';
-import Details from './pages/role-one/Details';
-
+import OfferDetails from './pages/role-one/OfferDetails';
 
 const App = () => {
   return (
@@ -50,7 +49,7 @@ const App = () => {
                     element={<FlurstuckDetails />}
                   />
                   <Route path='/meine-angebote' element={<MyOffers />} />
-                  <Route path='/meine-angebote/details' element={<Details />} />
+                  <Route path='/meine-angebote/details' element={<OfferDetails />} />
                   <Route
                     path='/meine-flurstucke/offer-preparation'
                     element={<OfferPreparation />}

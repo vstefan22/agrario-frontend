@@ -14,6 +14,7 @@ interface SelectProps {
   onEdit?: () => void;
   divClassName?: string;
   labelClassName?: string;
+  divWidthClass?: string;
 }
 
 const Select: FC<SelectProps> = ({
@@ -28,6 +29,7 @@ const Select: FC<SelectProps> = ({
   onEdit,
   divClassName,
   labelClassName,
+  divWidthClass,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -75,7 +77,7 @@ const Select: FC<SelectProps> = ({
   return (
     <div className={`${divClassName}`}>
       {variant === 'default' && label && (
-        <div className='flex w-[420px] justify-between'>
+        <div className={`flex justify-between ${divWidthClass}`}>
           <label
             className={`
               text-gray-dark-200
