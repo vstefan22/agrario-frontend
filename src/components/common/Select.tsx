@@ -12,6 +12,8 @@ interface SelectProps {
   label?: string;
   required?: boolean;
   onEdit?: () => void;
+  divClassName?: string;
+  labelClassName?: string;
 }
 
 const Select: FC<SelectProps> = ({
@@ -23,7 +25,9 @@ const Select: FC<SelectProps> = ({
   variant = 'default',
   label,
   required = false,
-  onEdit
+  onEdit,
+  divClassName,
+  labelClassName,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -69,24 +73,26 @@ const Select: FC<SelectProps> = ({
   };
 
   return (
-    <div>
+    <div className={`${divClassName}`}>
       {variant === 'default' && label && (
         <div className='flex w-[420px] justify-between'>
           <label
-            className='
+            className={`
               text-gray-dark-200
               text-[16px]
               font-[400]
               leading-[24px]
               mb-2
-              block
-            '
+              block ${labelClassName}
+            `}
             style={{ height: '24px' }}
           >
             {label}
             {required && '*'}
           </label>
-          {onEdit && <EditButton onClick={onEdit} />}
+          {onEdit && <div className='mt-auto mb-2'>
+            <EditButton onClick={onEdit} />
+          </div>}
         </div>
       )}
 

@@ -11,6 +11,7 @@ type DatePickerProps = {
   placeholder?: string;
   required?: boolean;
   onEdit?: () => void;
+  divClassName?: string;
 };
 
 const DatePicker: FC<DatePickerProps> = ({
@@ -19,17 +20,18 @@ const DatePicker: FC<DatePickerProps> = ({
   onChange,
   placeholder = 'DD/MM/YY',
   required = false,
-  onEdit
+  onEdit,
+  divClassName
 }) => {
   return (
-    <div className='flex flex-col'>
+    <div className={`flex flex-col ${divClassName}`}>
       {label && (
         <div className='flex w-[420px] justify-between'>
           <label className='text-gray-dark-200 text-[16px] h-[24px] font-[400] leading-[24px] mb-2'>
             {label}
             {required ? '*' : ''}
           </label>
-          {onEdit && <EditButton onClick={onEdit} />}
+          {onEdit && <div className='mt-auto mb-2'><EditButton onClick={onEdit} /></div>}
         </div>
       )}
 

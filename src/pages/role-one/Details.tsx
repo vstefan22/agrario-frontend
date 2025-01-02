@@ -59,6 +59,7 @@ const Details = () => {
                     onChange={handleDateChange}
                     placeholder='DD/MM/YY'
                     onEdit={handleOnEdit}
+                    divClassName="mt-auto"
                 />
                 {errors.availableDate && (
                     <span className='text-red-500 text-sm'>
@@ -73,24 +74,29 @@ const Details = () => {
                     onChange={handleSelectChange}
                     options={defaultOptions}
                     value="" // need to work on this
+                    divClassName="mt-auto"
+                    labelClassName="mb-7"
                 />
                 <Select
                     name='select2'
-                    label='Regionalität des Projektentwicklers*'
+                    label='Regionalität des Projektentwicklers'
                     required
                     onEdit={handleOnEdit}
                     onChange={handleSelectChange}
                     options={defaultOptions}
                     value="" // need to work on this
+                    divClassName="mt-auto"
                 />
                 <Select
                     name='select3'
-                    label='Sind Sie offen für Verpachtung oder für Verkauf*'
+                    label='Sind Sie offen für Verpachtung oder für Verkauf'
                     required
                     onEdit={handleOnEdit}
                     onChange={handleSelectChange}
                     options={defaultOptions}
                     value="" // need to work on this
+                    divClassName="mt-auto"
+                    labelClassName="mb-7"
                 />
             </div>
 
