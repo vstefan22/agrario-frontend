@@ -2,63 +2,78 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './layout/Layout';
 import ProtectedLayout from './layout/ProtectedLayout';
 import NewRegister from './components/auth/NewRegister';
-import Register from './pages/role-one/Register';
-import Register2 from './pages/role-two/Register';
-import NeuesFlurstuck from './pages/role-one/NeuesFlurstuck';
-import MeineFlurstucke from './pages/role-one/MeineFlurstucke';
-import FlurstuckDetails from './pages/role-one/FlurstuckDetails';
-import EinenFreundEinladen from './pages/role-one/EinenFreundEinladen';
-import OfferPreparation from './pages/role-one/OfferPreparation';
-import FragenHilfe from './pages/role-one/FragenHilfe';
+import Login from './components/auth/Login';
+import RegisterRoleOne from './pages/role-one/Register';
+import RegisterRoleTwo from './pages/role-two/Register';
 import Profile from './pages/role-one/Profile';
 import PasswordChange from './components/profile/PasswordChange';
-import WarenkorbAnalysePlus from './pages/role-one/WarenkorbAnalysePlus';
-import VielenDankfurIhreBestellung from './pages/role-one/VielenDankFurIhreBestellung';
-import ThankYouMarketing from './pages/role-one/ThankYouMarketing';
+import NewPlot from './pages/role-one/NewPlot';
+import MyPlots from './pages/role-one/MyPlots';
+import PlotDetails from './pages/role-one/PlotDetails';
 import MyOffers from './pages/role-one/MyOffers';
 import OfferDetails from './pages/role-one/OfferDetails';
+import OfferPreparation from './pages/role-one/OfferPreparation';
+import FriendInvite from './pages/role-one/FriendInvite';
+import QuestionsHelp from './pages/role-one/QuestionsHelp';
+import AnalysePlusCart from './pages/role-one/AnalysePlusCart';
+import ThankYouOrderRequest from './pages/role-one/ThankYouOrderRequest';
+import ThankYouMarketing from './pages/role-one/ThankYouMarketing';
+import PlotsSearch from './pages/role-two/PlotsSearch';
+import MyWatchlist from './pages/role-two/MyWatchlist';
+import ActiveAuctions from './pages/role-two/ActiveAuctions';
 
 const App = () => {
   return (
     <Router>
       <Layout>
         <Routes>
+          <Route path='/login' element={<Login />} />
           <Route path='/new-register' element={<NewRegister />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/register2' element={<Register2 />} />
+          <Route path='/register/role-one' element={<RegisterRoleOne />} />
+          <Route path='/register/role-two' element={<RegisterRoleTwo />} />
           <Route
-            path='*'
+            path='/role-one/*'
             element={
               <ProtectedLayout>
                 <Routes>
                   <Route path='/profile' element={<Profile />} />
+                  <Route path='/password-change' element={<PasswordChange />} />
+                  <Route path='/new-plot' element={<NewPlot />} />
+                  <Route path='/my-plots' element={<MyPlots />} />
                   <Route
-                    path='/profile/password-change'
-                    element={<PasswordChange />}
+                    path='/my-plots/thank-you-order-request'
+                    element={<ThankYouOrderRequest />}
                   />
-                  <Route path='/neues-flurstuck' element={<NeuesFlurstuck />} />
                   <Route
-                    path='/meine-flurstucke'
-                    element={<MeineFlurstucke />}
+                    path='/my-plots/thank-you-marketing'
+                    element={<ThankYouMarketing />}
                   />
-                  <Route path="/meine-flurstucke/vielen-dank" element={<VielenDankfurIhreBestellung />} />
-                  <Route path="/meine-flurstucke/vielen-dank-marketing" element={<ThankYouMarketing />} />
-                  <Route path='/meine-flurstucke/analyse-plus' element={<WarenkorbAnalysePlus />} />
                   <Route
-                    path='/meine-flurstucke/details'
-                    element={<FlurstuckDetails />}
+                    path='/my-plots/analyse-plus'
+                    element={<AnalysePlusCart />}
                   />
-                  <Route path='/meine-angebote' element={<MyOffers />} />
-                  <Route path='/meine-angebote/details' element={<OfferDetails />} />
+                  <Route path='/my-plots/details' element={<PlotDetails />} />
+                  <Route path='/my-offers' element={<MyOffers />} />
+                  <Route path='/my-offers/details' element={<OfferDetails />} />
                   <Route
-                    path='/meine-flurstucke/offer-preparation'
+                    path='/my-plots/offer-preparation'
                     element={<OfferPreparation />}
                   />
-                  <Route
-                    path='/einen-freund-einladen'
-                    element={<EinenFreundEinladen />}
-                  />
-                  <Route path='/fragen-hilfe' element={<FragenHilfe />} />
+                  <Route path='/friend-invite' element={<FriendInvite />} />
+                  <Route path='/questions-help' element={<QuestionsHelp />} />
+                </Routes>
+              </ProtectedLayout>
+            }
+          />
+          <Route
+            path='role-two/*'
+            element={
+              <ProtectedLayout>
+                <Routes>
+                  <Route path='/profile' element={<Profile />} />
+                  <Route path='/plots-search' element={<PlotsSearch />} />
+                  <Route path='/my-watchlist' element={<MyWatchlist />} />
+                  <Route path='/active-auctions' element={<ActiveAuctions />} />
                 </Routes>
               </ProtectedLayout>
             }

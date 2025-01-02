@@ -13,7 +13,7 @@ type SearchData = {
   flurstuck: string;
 };
 
-export default function NeuesFlurstuck() {
+export default function NewPlot() {
   // const { token } = useAuthStore();
   // const { sendRequest } = useHttpRequest();
   const [formData, setFormData] = useState<SearchData>({

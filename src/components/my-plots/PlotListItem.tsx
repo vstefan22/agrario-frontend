@@ -2,24 +2,24 @@ import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../common/Button';
 import DynamicTable from '../common/DynamicTable';
-import useFlurstuckStore from '../../store/flurstuck-store';
-import { MEINE_FLURSTUCK_COLUMNS } from '../../types/table-data-types';
-import { FlurstuckType } from '../../types/flurstuck-types';
+import usePlotStore from '../../store/plot-store';
+import { MY_PLOTS_COLUMNS } from '../../types/table-data-types';
+import { PlotType } from '../../types/plot-types';
 import active from '../../assets/images/active.png';
 import inactive from '../../assets/images/inactive.png';
 import imgPlaceholder from '../../assets/images/image-placeholder.png';
 
-type FlurstuckListItemProps = {
-  data: FlurstuckType;
+type PlotListItemProps = {
+  data: PlotType;
 };
 
-const FlurstuckListItem: FC<FlurstuckListItemProps> = ({ data }) => {
+const PlotListItem: FC<PlotListItemProps> = ({ data }) => {
   const navigate = useNavigate();
-  const { setFlurstuck } = useFlurstuckStore();
+  const { setPlot } = usePlotStore();
 
   const handleViewDetails = () => {
-    setFlurstuck(data);
-    navigate('/meine-flurstucke/details');
+    setPlot(data);
+    navigate('/my-plots/details');
   };
 
   const handleFetchOffers = () => {
@@ -40,7 +40,7 @@ const FlurstuckListItem: FC<FlurstuckListItemProps> = ({ data }) => {
             <img
               src={data.image || imgPlaceholder}
               width='100%'
-              alt={'flurstuck-image'}
+              alt={'flurstuck image'}
               className='object-cover h-full rounded-tl-xl rounded-tr-xl'
             />
           </div>
@@ -53,11 +53,11 @@ const FlurstuckListItem: FC<FlurstuckListItemProps> = ({ data }) => {
           </div>
         </div>
         <div className='flex flex-col'>
-          <DynamicTable data={data} columns={MEINE_FLURSTUCK_COLUMNS} />
+          <DynamicTable data={data} columns={MY_PLOTS_COLUMNS} />
           <div className='flex justify-end items-center pt-5 gap-3'>
             <img
               src={data.analyzePlus === 'active' ? active : inactive}
-              alt={'image-active/inactive'}
+              alt={'aktiv/inaktiv image'}
               className='w-[60px] h-[22px] object-cover'
             />
             <p className='text-[14px] text-gray-dark-100 font-400 mr-3'>
@@ -86,4 +86,4 @@ const FlurstuckListItem: FC<FlurstuckListItemProps> = ({ data }) => {
   );
 };
 
-export default FlurstuckListItem;
+export default PlotListItem;

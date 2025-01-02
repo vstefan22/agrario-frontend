@@ -1,12 +1,12 @@
 import { FC, Fragment } from 'react';
 import ThankYouMarketingListItem from './ThankYouMarketingListItem';
-import { FlurstuckType } from '../../types/flurstuck-types';
+import { PlotType } from '../../types/plot-types';
 
-type FlurstuckListProps = {
-  data: FlurstuckType[];
+type PlotListProps = {
+  data: PlotType[];
 };
 
-const ThankYouMarketingList: FC<FlurstuckListProps> = ({ data }) => {
+const ThankYouMarketingList: FC<PlotListProps> = ({ data }) => {
   return (
     <Fragment>
       {data.map((tym) => (

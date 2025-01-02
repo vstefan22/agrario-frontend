@@ -7,16 +7,17 @@ import Button from '../common/Button';
 export default function NewRegister() {
   const navigate = useNavigate();
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
 
   const handleRoleSelect = (role: string) => {
     setSelectedRole(role);
   };
 
   const handleSubmit = () => {
-    if (selectedRole) {
-      setLoading(true);
-      navigate('/register');
+    if (selectedRole === 'role-1') {
+      navigate('/register/role-one');
+    }
+    if (selectedRole === 'role-2') {
+      navigate('/register/role-two');
     }
   };
 
@@ -28,10 +29,11 @@ export default function NewRegister() {
 
       <div className='w-full max-w-[900px] grid grid-cols-1 md:grid-cols-2 gap-1 mb-8 justify-items-center'>
         <div
-          className={`w-[400px] h-[370px] border-2 rounded-lg p-6 flex flex-col items-center justify-start cursor-pointer ${selectedRole === 'role-1'
-            ? 'bg-white/15 border-[rgba(255,255,255,0.5)]'
-            : 'bg-white/10 border-[rgba(255,255,255,0.06)]'
-            } hover:bg-[rgba(255,255,255,0.15)] transition-all`}
+          className={`w-[400px] h-[370px] border-2 rounded-lg p-6 flex flex-col items-center justify-start cursor-pointer ${
+            selectedRole === 'role-1'
+              ? 'bg-white/15 border-[rgba(255,255,255,0.5)]'
+              : 'bg-white/10 border-[rgba(255,255,255,0.06)]'
+          } hover:bg-[rgba(255,255,255,0.15)] transition-all`}
           onClick={() => handleRoleSelect('role-1')}
           role='button'
           tabIndex={0}
@@ -64,10 +66,11 @@ export default function NewRegister() {
         </div>
 
         <div
-          className={`w-[400px] h-[370px] border-2 rounded-lg p-6 flex flex-col items-center justify-start cursor-pointer ${selectedRole === 'role-2'
-            ? 'bg-white/15 border-[rgba(255,255,255,0.5)]'
-            : 'bg-white/10 border-[rgba(255,255,255,0.06)]'
-            } hover:bg-[rgba(255,255,255,0.15)] transition-all`}
+          className={`w-[400px] h-[370px] border-2 rounded-lg p-6 flex flex-col items-center justify-start cursor-pointer ${
+            selectedRole === 'role-2'
+              ? 'bg-white/15 border-[rgba(255,255,255,0.5)]'
+              : 'bg-white/10 border-[rgba(255,255,255,0.06)]'
+          } hover:bg-[rgba(255,255,255,0.15)] transition-all`}
           onClick={() => handleRoleSelect('role-2')}
           role='button'
           tabIndex={0}
@@ -108,11 +111,10 @@ export default function NewRegister() {
         <Button
           type='button'
           variant='primary'
-          disabled={!selectedRole || loading}
-          isLoading={loading}
+          disabled={!selectedRole}
           onClick={handleSubmit}
         >
-          {loading ? 'Senden...' : 'Weiter'}
+          {'Weiter'}
         </Button>
       </div>
     </div>

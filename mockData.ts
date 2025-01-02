@@ -1,8 +1,8 @@
 import flImage from './src/assets/images/fl-image.png';
-import { FragenHilfeItem } from './src/types/fragenhilfe-data-types';
-import fieldsImg from "./src/assets/images/fieldsImage.png";
+import { QuestionsHelpItem } from './src/types/questions-help-types';
+import fieldsImg from './src/assets/images/fieldsImage.png';
 
-export const flurstuckListData = [
+export const plotsListData = [
   {
     id: 'FL-001',
     state: 'Hessen',
@@ -47,7 +47,7 @@ export const flurstuckListData = [
   },
 ];
 
-export const fragenHilfeData: FragenHilfeItem[] = [
+export const questionsHelpData: QuestionsHelpItem[] = [
   {
     title: 'Morbi fringilla metus ac lacus dapibus.',
     content:
@@ -99,7 +99,7 @@ export const offerItemData = {
   image: flImage,
 };
 
-export const warenkorbAnalysePlusData = [
+export const analysePlusCartData = [
   {
     id: 'FL-56141',
     bundesland: 'Hessen',
@@ -200,5 +200,5 @@ export const myOfferData = [
     parcelNumber: '987-654-321',
     image: flImage,
     analyzePlus: 'inactive',
-  }
+  },
 ];

@@ -7,7 +7,12 @@ import headerLogo from '../../assets/images/header_logo.png';
 
 const NavBar: FC = () => {
   const { isAuthenticated, user } = useAuthStore();
-
+  let userRole = 'role-one';
+  if (user.role === 'role-one') {
+    userRole = 'role-one';
+  } else if (user.role === 'role-two') {
+    userRole = 'role-two';
+  }
   return (
     <Navbar className='w-full h-[80px] flex justify-between items-center px-6'>
       <div className='flex-shrink-0'>
@@ -23,7 +28,7 @@ const NavBar: FC = () => {
       </div>
 
       <NavLink
-        href='/profile'
+        href={`/${userRole}/profile`}
         className='bg-primary/50 text-primary w-[50px] h-[50px] rounded-full flex items-center justify-center overflow-hidden hover:bg-primary/30'
         ariaLabel='Go to Profile'
       >
