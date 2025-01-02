@@ -6,16 +6,22 @@ import { analysePlusCartData } from '../../../mockData';
 const AnalysePlusCart = () => {
   const navigate = useNavigate();
 
-  const handleAddParcel = () => {
-    console.log('Parcel Handler');
+  const handleAddPlot = () => {
+    navigate('/role-one/my-plots/offer-preparation');
   };
 
-  const handleSendCode = () => {
-    console.log('Send Gutschein-Code');
+  const handleStripeCheckout = () => {
+    // TODO: add stripe checkout request
+    console.log('stripe checkout clicked.');
+  };
+
+  const handleReedemCode = () => {
+    // TODO: add reedem code request
+    console.log('reedem code clicked.');
   };
 
   const handleReturnBack = () => {
-    navigate('/my-plots');
+    navigate(-1);
   };
 
   return (
@@ -34,7 +40,7 @@ const AnalysePlusCart = () => {
         <Button
           type='button'
           variant='bluePrimary'
-          onClick={handleAddParcel}
+          onClick={handleAddPlot}
           className='w-[280px] h-[48px]'
         >
           Weitere Flurstucke hinzufugen
@@ -51,15 +57,15 @@ const AnalysePlusCart = () => {
             onClick={handleReturnBack}
             className='w-[280px] h-[48px]'
           >
-            Weitere Flurstucke hinzufugen
+            Abbrechen
           </Button>
           <Button
             type='button'
             variant='bluePrimary'
-            onClick={handleAddParcel}
+            onClick={handleStripeCheckout}
             className='w-[280px] h-[48px]'
           >
-            Weitere Flurstucke hinzufugen
+            Analyse PLUS kaufen
           </Button>
         </div>
         <div className='bg-white rounded-xl shadow-md px-6 py-4 text-right flex flex-col gap-4 text-gray-dark-200'>
@@ -99,7 +105,7 @@ const AnalysePlusCart = () => {
               <Button
                 type='button'
                 variant='bluePrimary'
-                onClick={handleSendCode}
+                onClick={handleReedemCode}
                 className='w-[94px] h-[24px] text-[16px]'
               >
                 Confirm
