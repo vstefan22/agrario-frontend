@@ -1,14 +1,14 @@
 import Button from '../../components/common/Button';
 import imgDetails from '../../assets/images/details-document.png';
-import useFlurstuckStore from '../../store/flurstuck-store';
+import usePlotStore from '../../store/plot-store';
 import { useNavigate } from 'react-router-dom';
 
-function FlurstuckDetails() {
+function PlotDetails() {
   const navigate = useNavigate();
-  const { flurstuck } = useFlurstuckStore();
+  const { plot } = usePlotStore();
 
   const handleRequestOffer = () => {
-    navigate('/meine-flurstucke/offer-preparation');
+    navigate('/my-plots/offer-preparation');
   };
 
   const handleDownloadReport = () => {
@@ -16,15 +16,13 @@ function FlurstuckDetails() {
   };
 
   const handleAnalysePlus = () => {
-    navigate('/meine-flurstucke/analyse-plus');
+    navigate('/my-plots/analyse-plus');
   };
-
-  console.log('flurstuck in details: ', flurstuck);
 
   return (
     <div className='bg-gray-lightest min-h-screen flex flex-col px-7 pt-4'>
       <h1 className='text-[32px] font-bold text-black-muted mb-4'>
-        {`Detailansicht Flurstück ${flurstuck?.id}`}
+        {`Detailansicht Flurstück ${plot?.id}`}
       </h1>
 
       <div className='flex flex-col justify-center bg-white h-[440px] rounded-[16px] shadow-[6px_6px_54px_0px_#0000000D]'>
@@ -66,4 +64,4 @@ function FlurstuckDetails() {
   );
 }
 
-export default FlurstuckDetails;
+export default PlotDetails;

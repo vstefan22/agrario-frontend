@@ -1,4 +1,4 @@
-export type FlurstuckType = {
+export type PlotType = {
   id: string;
   state: string;
   plz: number;

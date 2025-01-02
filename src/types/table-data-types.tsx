@@ -1,4 +1,4 @@
-export const MEINE_FLURSTUCK_COLUMNS = [
+export const MY_PLOTS_COLUMNS = [
   { key: 'state', label: 'Bundesland' },
   { key: 'plz', label: 'PLZ' },
   { key: 'city', label: 'Gemeinde' },
@@ -21,7 +21,7 @@ export const OFFER_ITEM_COLUMNS = [
   { key: 'grobe', label: 'Größe' },
 ];
 
-export const WARENKORB_ANALYSE_PLUS_COLUMNS = [
+export const ANALYSE_PLUS_CART_COLUMNS = [
   { key: 'bundesland', label: 'Bundesland' },
   { key: 'plz', label: 'PLZ' },
   { key: 'gemeinde', label: 'Gemeinde' },

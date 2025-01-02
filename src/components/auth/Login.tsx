@@ -69,7 +69,15 @@ export default function Login() {
       setUser({ email: user.email, id: user.uid });
       setToken(accessToken);
 
-      navigate('/');
+      // TODO: use actual role from user object
+      // if (user.role === 'role-one') {
+      //   navigate('/role-one');
+      // } else if (user.role === 'role-two') {
+      //   navigate('/role-two');
+      // } else {
+      //   navigate('/');
+      // }
+      navigate('/role-one');
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message || 'Ein Fehler ist aufgetreten.');

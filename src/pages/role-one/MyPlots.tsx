@@ -1,12 +1,12 @@
 import { useState, ChangeEvent } from 'react';
 import Search from '../../components/common/Search';
 import Select from '../../components/common/Select';
-import FlurstuckList from '../../components/maine-flurstucke/FlurstuckList';
-import { filterData, sortData } from '../../utils/helper-functions';
+import PlotList from '../../components/my-plots/PlotList';
 import { sortOptions } from '../../types/select-options';
-import { flurstuckListData } from '../../../mockData';
+import { filterData, sortData } from '../../utils/helper-functions';
+import { plotsListData } from '../../../mockData';
 
-export default function MeineFlurstucke() {
+export default function MyPlots() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState<Record<string, string | null>>({
     sortOption: null,
@@ -23,7 +23,7 @@ export default function MeineFlurstucke() {
     setSearchTerm(e.target.value);
   };
 
-  const filteredData = filterData(flurstuckListData, searchTerm);
+  const filteredData = filterData(plotsListData, searchTerm);
   const sortedData = sortData(filteredData, filters.sortOption);
 
   return (
@@ -48,7 +48,7 @@ export default function MeineFlurstucke() {
             placeholder='Sortieren nach'
           />
         </div>
-        <FlurstuckList data={sortedData} />
+        <PlotList data={sortedData} />
       </div>
     </div>
   );

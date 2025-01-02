@@ -1,9 +1,9 @@
-import { FlurstuckType } from '../types/flurstuck-types';
+import { PlotType } from '../types/plot-types';
 
 export const filterData = (
-  items: FlurstuckType[],
+  items: PlotType[],
   searchValue: string
-): FlurstuckType[] => {
+): PlotType[] => {
   if (!searchValue) return items;
 
   return items.filter((item) =>
@@ -12,9 +12,9 @@ export const filterData = (
 };
 
 export const sortData = (
-  items: FlurstuckType[],
+  items: PlotType[],
   sortOption: string | null
-): FlurstuckType[] => {
+): PlotType[] => {
   if (!sortOption) return items;
 
   switch (sortOption) {
