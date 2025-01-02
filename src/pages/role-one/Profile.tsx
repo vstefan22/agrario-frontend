@@ -142,7 +142,7 @@ export default function Profile() {
   };
 
   const handleOnPasswordChange = () => {
-    navigate('/profile/password-change');
+    navigate('/password-change');
   };
 
   return (

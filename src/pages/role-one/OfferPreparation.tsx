@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import OfferItem from '../../components/maine-flurstucke/OfferItem';
+import { useState, ChangeEvent } from 'react';
+import OfferItem from '../../components/my-plots/OfferItem';
 import Button from '../../components/common/Button';
 import DatePicker from '../../components/common/DatePicker';
 import Select from '../../components/common/Select';
@@ -32,7 +32,7 @@ export default function MyOffer() {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value, type } = e.target;
     const checked =
@@ -129,18 +129,6 @@ export default function MyOffer() {
     setFormData(initialFormData);
     setErrors({});
   };
-
-  // Opcioni "live" approach (ako želiš):
-  //  - provera nakon svake promene formData,
-  //    ALI ne treba ponovo raditi setErrors ako su iste,
-  //    jer bi to dovelo do re-rendera.
-  //
-  // useEffect(() => {
-  //   // Samo ako hoćeš "live" validaciju svih polja:
-  //   // const isValid = validateForm(); // paznja! moze opet okinuti setErrors
-  //   // Ne preporučuje se u svakom Projectu,
-  //   // radije validiraj polje po polje onChange / onBlur
-  // }, [formData]);
 
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>

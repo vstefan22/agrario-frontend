@@ -1,15 +1,14 @@
 import { FC } from 'react';
 import DynamicTable from '../common/DynamicTable';
-import { THANK_YOU_MARKETING_COLUMNS } from '../../types/table-data-types';
-import { ThankYouMarketingType } from "../../types/thank-you-marketing-types";
+import { OFFER_ITEM_COLUMNS } from '../../types/table-data-types';
+import { OfferItemType } from '../../types/offer-types';
 import imgPlaceholder from '../../assets/images/image-placeholder.png';
-import preparationImg from "../../assets/images/preparation.png";
 
-type ThankYouMarketingItemProps = {
-  data: ThankYouMarketingType;
+type OfferItemProps = {
+  data: OfferItemType;
 };
 
-const ThankYouMarketingListItem: FC<ThankYouMarketingItemProps> = ({ data }) => {
+const OfferItem: FC<OfferItemProps> = ({ data }) => {
   return (
     <div
       className='w-full bg-white rounded-[18px] p-4'
@@ -24,7 +23,7 @@ const ThankYouMarketingListItem: FC<ThankYouMarketingItemProps> = ({ data }) => 
             <img
               src={data.image || imgPlaceholder}
               width='100%'
-              alt={'flurstuck-image'}
+              alt={'angebote image'}
               className='object-cover h-full rounded-tl-xl rounded-tr-xl'
             />
           </div>
@@ -37,18 +36,11 @@ const ThankYouMarketingListItem: FC<ThankYouMarketingItemProps> = ({ data }) => 
           </div>
         </div>
         <div className='flex flex-col'>
-          <DynamicTable data={data} columns={THANK_YOU_MARKETING_COLUMNS} />
-          <div className='flex justify-end items-center gap-3 mt-auto'>
-            <img
-              src={preparationImg}
-              alt={'image-active/inactive'}
-              className='object-cover'
-            />
-          </div>
+          <DynamicTable data={data} columns={OFFER_ITEM_COLUMNS} />
         </div>
       </div>
     </div>
   );
 };
 
-export default ThankYouMarketingListItem;
+export default OfferItem;

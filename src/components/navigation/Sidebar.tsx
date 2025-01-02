@@ -18,11 +18,17 @@ import useAuthStore from '../../store/auth-store';
 
 export default function Sidebar() {
   const navigate = useNavigate();
-  const { clearAuth } = useAuthStore();
+  const { clearAuth, user } = useAuthStore();
 
-  // TODO: use role from user object when provided
-  const userRole: string = 'role-1';
-  const [activeRoute, setActiveRoute] = useState('/');
+  // TODO: use actual role from user object when provided
+  let userRole: string = 'role-one';
+  if (user.role === 'role-one') {
+    userRole = 'role-one';
+  }
+  if (user.role === 'role-two') {
+    userRole = 'role-two';
+  }
+  const [activeRoute, setActiveRoute] = useState(`/${userRole}`);
 
   const handleNavigate = (route: string) => {
     setActiveRoute(route);
@@ -42,23 +48,26 @@ export default function Sidebar() {
   return (
     <div className='bg-white h-full w-[230px] flex flex-col justify-between items-center shadow-md pt-[70px]'>
       <div className='flex flex-col space-y-3'>
-        <Button
-          variant={activeRoute === '/' ? 'sidebarPrimary' : 'sidebarSecondary'}
-          onClick={() => handleNavigate('/')}
-        >
-          <FaRocket className='mr-3' />
-          Start
-        </Button>
-
-        {userRole === 'role-1' && (
+        {userRole === 'role-one' && (
           <Fragment>
             <Button
               variant={
-                activeRoute === '/neues-flurstuck'
+                activeRoute === '/role-one'
                   ? 'sidebarPrimary'
                   : 'sidebarSecondary'
               }
-              onClick={() => handleNavigate('/neues-flurstuck')}
+              onClick={() => handleNavigate('/role-one')}
+            >
+              <FaRocket className='mr-3' />
+              Start
+            </Button>
+            <Button
+              variant={
+                activeRoute === '/role-one/new-plot'
+                  ? 'sidebarPrimary'
+                  : 'sidebarSecondary'
+              }
+              onClick={() => handleNavigate('/role-one/new-plot')}
             >
               <FaTh className='mr-3' />
               Neues Flurstück
@@ -66,11 +75,11 @@ export default function Sidebar() {
 
             <Button
               variant={
-                activeRoute === '/meine-flurstucke'
+                activeRoute === '/role-one/my-plots'
                   ? 'sidebarPrimary'
                   : 'sidebarSecondary'
               }
-              onClick={() => handleNavigate('/meine-flurstucke')}
+              onClick={() => handleNavigate('/role-one/my-plots')}
             >
               <FaMapLocationDot className='mr-3' />
               Meine Flurstücke
@@ -78,11 +87,11 @@ export default function Sidebar() {
 
             <Button
               variant={
-                activeRoute === '/meine-angebote'
+                activeRoute === '/role-one/my-offers'
                   ? 'sidebarPrimary'
                   : 'sidebarSecondary'
               }
-              onClick={() => handleNavigate('/meine-angebote')}
+              onClick={() => handleNavigate('/role-one/my-offers')}
             >
               <RiDiscountPercentLine className='mr-3' />
               Meine Angebote
@@ -90,11 +99,11 @@ export default function Sidebar() {
 
             <Button
               variant={
-                activeRoute === '/einen-freund-einladen'
+                activeRoute === '/role-one/friend-invite'
                   ? 'sidebarPrimary'
                   : 'sidebarSecondary'
               }
-              onClick={() => handleNavigate('/einen-freund-einladen')}
+              onClick={() => handleNavigate('/role-one/friend-invite')}
             >
               <FaUserPlus className='mr-3' />
               Einen Freund einladen
@@ -102,11 +111,11 @@ export default function Sidebar() {
 
             <Button
               variant={
-                activeRoute === '/fragen-hilfe'
+                activeRoute === '/role-one/questions-help'
                   ? 'sidebarPrimary'
                   : 'sidebarSecondary'
               }
-              onClick={() => handleNavigate('/fragen-hilfe')}
+              onClick={() => handleNavigate('/role-one/questions-help')}
             >
               <FaQuestionCircle className='mr-3' />
               Fragen/Hilfe
@@ -114,15 +123,26 @@ export default function Sidebar() {
           </Fragment>
         )}
 
-        {userRole === 'role-2' && (
+        {userRole === 'role-two' && (
           <Fragment>
             <Button
               variant={
-                activeRoute === '/flurstucke-suchen'
+                activeRoute === '/role-two'
                   ? 'sidebarPrimary'
                   : 'sidebarSecondary'
               }
-              onClick={() => handleNavigate('/flurstucke-suchen')}
+              onClick={() => handleNavigate('/role-two')}
+            >
+              <FaRocket className='mr-3' />
+              Start
+            </Button>
+            <Button
+              variant={
+                activeRoute === '/role-two/flurstucke-suchen'
+                  ? 'sidebarPrimary'
+                  : 'sidebarSecondary'
+              }
+              onClick={() => handleNavigate('/role-two/flurstucke-suchen')}
             >
               <FaMapLocationDot className='mr-3' />
               Flurstücke suchen
@@ -130,11 +150,11 @@ export default function Sidebar() {
 
             <Button
               variant={
-                activeRoute === '/meine-watchlist'
+                activeRoute === '/role-two/meine-watchlist'
                   ? 'sidebarPrimary'
                   : 'sidebarSecondary'
               }
-              onClick={() => handleNavigate('/meine-watchlist')}
+              onClick={() => handleNavigate('/role-two/meine-watchlist')}
             >
               <HiOutlineClipboardList className='mr-3' />
               Meine Watchlist
@@ -142,11 +162,11 @@ export default function Sidebar() {
 
             <Button
               variant={
-                activeRoute === '/aktive-auktionen'
+                activeRoute === '/role-two/aktive-auktionen'
                   ? 'sidebarPrimary'
                   : 'sidebarSecondary'
               }
-              onClick={() => handleNavigate('/aktive-auktionen')}
+              onClick={() => handleNavigate('/role-two/aktive-auktionen')}
             >
               <FaSignOutAlt className='mr-3' />
               Aktive Auktionen
