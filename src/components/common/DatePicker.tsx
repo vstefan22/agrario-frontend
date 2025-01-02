@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import ReactDatePicker from 'react-datepicker';
+import EditButton from './EditButton';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -9,6 +10,7 @@ type DatePickerProps = {
   onChange: (date: Date | null) => void;
   placeholder?: string;
   required?: boolean;
+  onEdit?: () => void;
 };
 
 const DatePicker: FC<DatePickerProps> = ({
@@ -17,14 +19,18 @@ const DatePicker: FC<DatePickerProps> = ({
   onChange,
   placeholder = 'DD/MM/YY',
   required = false,
+  onEdit
 }) => {
   return (
     <div className='flex flex-col'>
       {label && (
-        <label className='text-gray-dark-200 text-[16px] h-[24px] font-[400] leading-[24px] mb-2'>
-          {label}
-          {required ? '*' : ''}
-        </label>
+        <div className='flex w-[420px] justify-between'>
+          <label className='text-gray-dark-200 text-[16px] h-[24px] font-[400] leading-[24px] mb-2'>
+            {label}
+            {required ? '*' : ''}
+          </label>
+          {onEdit && <EditButton onClick={onEdit} />}
+        </div>
       )}
 
       <ReactDatePicker

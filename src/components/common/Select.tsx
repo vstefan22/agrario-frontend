@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, FC } from 'react';
 import { ArrowDown } from '../../assets/svgs/svg-icons';
+import EditButton from './EditButton';
 
 interface SelectProps {
   name: string;
@@ -10,6 +11,7 @@ interface SelectProps {
   variant?: 'sort' | 'default';
   label?: string;
   required?: boolean;
+  onEdit?: () => void;
 }
 
 const Select: FC<SelectProps> = ({
@@ -21,6 +23,7 @@ const Select: FC<SelectProps> = ({
   variant = 'default',
   label,
   required = false,
+  onEdit
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -68,20 +71,23 @@ const Select: FC<SelectProps> = ({
   return (
     <div>
       {variant === 'default' && label && (
-        <label
-          className='
-            text-gray-dark-200
-            text-[16px]
-            font-[400]
-            leading-[24px]
-            mb-2
-            block
-          '
-          style={{ height: '24px' }}
-        >
-          {label}
-          {required && '*'}
-        </label>
+        <div className='flex w-[420px] justify-between'>
+          <label
+            className='
+              text-gray-dark-200
+              text-[16px]
+              font-[400]
+              leading-[24px]
+              mb-2
+              block
+            '
+            style={{ height: '24px' }}
+          >
+            {label}
+            {required && '*'}
+          </label>
+          {onEdit && <EditButton onClick={onEdit} />}
+        </div>
       )}
 
       <div className='relative' ref={dropdownRef}>
@@ -107,10 +113,9 @@ const Select: FC<SelectProps> = ({
                       w-full h-[50px] px-4 text-[15px]
                       flex items-center justify-center text-center
                       rounded-[6px] transition-colors duration-200
-                      ${
-                        isSelected
-                          ? 'bg-blue text-white'
-                          : 'bg-gray-100 text-black hover:bg-gray-200'
+                      ${isSelected
+                        ? 'bg-blue text-white'
+                        : 'bg-gray-100 text-black hover:bg-gray-200'
                       }
                     `}
                   >
