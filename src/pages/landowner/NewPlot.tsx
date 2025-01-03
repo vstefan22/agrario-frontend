@@ -1,7 +1,10 @@
 import { useState, ChangeEvent } from 'react';
 import Search from '../../components/common/Search';
 import Button from '../../components/common/Button';
-import GoogleMap, { PolygonData } from '../../components/common/GoogleMap';
+import GoogleMap, {
+  PolygonData,
+  PolygonCoord,
+} from '../../components/common/GoogleMap';
 // import useHttpRequest from '../hooks/http-request-hook';
 // import useAuthStore from '../store/auth-store';
 import SearchByAttributesUpdated from '../../components/my-plots/SearchByAttributesUpdated';
@@ -61,16 +64,8 @@ export default function NewPlot() {
     setSuccess('');
 
     try {
-      // const data = await sendRequest(
-      //   '/furstuck/',
-      //   'POST',
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${token}`,
-      //     },
-      //   },
-      //   formData
-      // );
+      // TODO: create actual request for getting polygon data for new plot creation
+      // const data = await sendRequest('/', 'POST', { ... }, formData);
 
       const dummyCoords: PolygonData = [
         { lat: 52.52, lng: 13.4 },
@@ -80,7 +75,7 @@ export default function NewPlot() {
       ];
 
       setPolygonData(dummyCoords);
-      setSuccess('Parcela je uspešno pronađena!');
+      setSuccess('Parcela je erfolgreich gefunden!');
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message || 'Ein Fehler ist aufgetreten.');
@@ -90,8 +85,29 @@ export default function NewPlot() {
     }
   };
 
-  const handleOnAddFlurstuck = () => {
-    console.log('Add flurstuck clicked.');
+  const handleAddPlot = () => {
+    const finalPayload = {
+      state_name: formData.federalState,
+      district_name: formData.zipCode,
+      municipality_name: formData.municipal,
+      cadastral_area: formData.gemarkung,
+      cadastral_sector: formData.flur,
+      plot_number_main: formData.flurstuck,
+      plot_number_secondary: '5678',
+      land_use: 'Residential',
+      polygon: {
+        type: 'Polygon',
+        coordinates: [polygonData.map((coord) => [coord.lng, coord.lat])],
+      },
+      status: 'available',
+    };
+
+    console.log('Final payload:', finalPayload);
+
+    // TODO: create actual request for new plot creation
+    // sendRequest('/offers/parcels/', 'POST', { headers: {..} }, finalPayload);
+
+    setSuccess('Flurstück hinzugefügt!');
   };
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -107,6 +123,10 @@ export default function NewPlot() {
       flur: '',
       flurstuck: '',
     });
+  };
+
+  const handleMapClick = (coordinates: PolygonCoord) => {
+    setPolygonData([coordinates]);
   };
 
   return (
@@ -144,7 +164,7 @@ export default function NewPlot() {
             className='w-full bg-white rounded-[18px] p-8'
             style={{ boxShadow: '6px 6px 54px 0px #0000000D' }}
           >
-            <GoogleMap polygonData={polygonData} />
+            <GoogleMap polygonData={polygonData} onMapClick={handleMapClick} />
           </div>
         </div>
 
@@ -152,12 +172,7 @@ export default function NewPlot() {
           <Button variant='blueSecondary' type='button' onClick={() => {}}>
             Abbrechen
           </Button>
-
-          <Button
-            variant='bluePrimary'
-            type='button'
-            onClick={handleOnAddFlurstuck}
-          >
+          <Button variant='bluePrimary' type='button' onClick={handleAddPlot}>
             Flurstück hinzufügen
           </Button>
         </div>
