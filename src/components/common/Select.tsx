@@ -15,6 +15,7 @@ interface SelectProps {
   divClassName?: string;
   labelClassName?: string;
   divWidthClass?: string;
+  buttonClass?: string;
 }
 
 const Select: FC<SelectProps> = ({
@@ -30,6 +31,7 @@ const Select: FC<SelectProps> = ({
   divClassName,
   labelClassName,
   divWidthClass,
+  buttonClass,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -70,7 +72,7 @@ const Select: FC<SelectProps> = ({
       border border-gray-medium/60
       rounded-[8px] bg-white
       focus:outline-none text-black
-      px-3
+      px-3 ${buttonClass}
     `;
   };
 
