@@ -7,7 +7,7 @@ const ThankYouMarketingRequest = () => {
   const navigate = useNavigate();
 
   function handleGoToMyOffers() {
-    navigate('/role-one/my-offers');
+    navigate('/landowner/my-offers');
     console.log('go to MyOffers clicked.');
   }
 

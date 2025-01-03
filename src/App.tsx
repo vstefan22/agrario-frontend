@@ -3,40 +3,40 @@ import Layout from './layout/Layout';
 import ProtectedLayout from './layout/ProtectedLayout';
 import NewRegister from './components/auth/NewRegister';
 import Login from './components/auth/Login';
-import RegisterRoleOne from './pages/role-one/Register';
-import RegisterRoleTwo from './pages/role-two/Register';
-import ProfileRoleOne from './pages/role-one/Profile';
+import RegisterLandowner from './pages/landowner/Register';
+import RegisterDeveloper from './pages/developer/Register';
+import ProfileLandowner from './pages/landowner/Profile';
 import PasswordChange from './components/profile/PasswordChange';
-import NewPlot from './pages/role-one/NewPlot';
-import MyPlots from './pages/role-one/MyPlots';
-import PlotDetails from './pages/role-one/PlotDetails';
-import MyOffers from './pages/role-one/MyOffers';
-import OfferDetails from './pages/role-one/OfferDetails';
-import OfferPreparation from './pages/role-one/OfferPreparation';
-import FriendInvite from './pages/role-one/FriendInvite';
-import QuestionsHelp from './pages/role-one/QuestionsHelp';
-import AnalysePlusCart from './pages/role-one/AnalysePlusCart';
-import ThankYouOrderRequest from './pages/role-one/ThankYouOrderRequest';
-import ThankYouMarketingRequest from './pages/role-one/ThankYouMarketingRequest';
-import PlotsSearch from './pages/role-two/PlotsSearch';
-import MyWatchlist from './pages/role-two/MyWatchlist';
-import ActiveAuctions from './pages/role-two/ActiveAuctions';
+import NewPlot from './pages/landowner/NewPlot';
+import MyPlots from './pages/landowner/MyPlots';
+import PlotDetails from './pages/landowner/PlotDetails';
+import MyOffers from './pages/landowner/MyOffers';
+import OfferDetails from './pages/landowner/OfferDetails';
+import OfferPreparation from './pages/landowner/OfferPreparation';
+import FriendInvite from './pages/landowner/FriendInvite';
+import QuestionsHelp from './pages/landowner/QuestionsHelp';
+import AnalysePlusCart from './pages/landowner/AnalysePlusCart';
+import ThankYouOrderRequest from './pages/landowner/ThankYouOrderRequest';
+import ThankYouMarketingRequest from './pages/landowner/ThankYouMarketingRequest';
+import PlotsSearch from './pages/developer/PlotsSearch';
+import MyWatchlist from './pages/developer/MyWatchlist';
+import ActiveAuctions from './pages/developer/ActiveAuctions';
 
 const App = () => {
   return (
     <Router>
       <Layout>
         <Routes>
-          <Route path='/login' element={<Login />} />
+          <Route path='/' element={<Login />} />
           <Route path='/new-register' element={<NewRegister />} />
-          <Route path='/register/role-one' element={<RegisterRoleOne />} />
-          <Route path='/register/role-two' element={<RegisterRoleTwo />} />
+          <Route path='/register/landowner' element={<RegisterLandowner />} />
+          <Route path='/register/developer' element={<RegisterDeveloper />} />
           <Route
-            path='/role-one/*'
+            path='/landowner/*'
             element={
               <ProtectedLayout>
                 <Routes>
-                  <Route path='/profile' element={<ProfileRoleOne />} />
+                  <Route path='/profile' element={<ProfileLandowner />} />
                   <Route path='/password-change' element={<PasswordChange />} />
                   <Route path='/new-plot' element={<NewPlot />} />
                   <Route path='/my-plots' element={<MyPlots />} />
@@ -66,7 +66,7 @@ const App = () => {
             }
           />
           <Route
-            path='role-two/*'
+            path='developer/*'
             element={
               <ProtectedLayout>
                 <Routes>

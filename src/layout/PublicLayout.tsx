@@ -1,6 +1,5 @@
-// import Login from '../components/auth/Login';
-import Home from '../pages/Home';
+import Login from '../components/auth/Login';
 
-const PublicLayout = () => <Home />;
+const PublicLayout = () => <Login />;
 
 export default PublicLayout;
