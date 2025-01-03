@@ -1,12 +1,14 @@
 import { useState, ChangeEvent } from 'react';
 import Search from '../../components/common/Search';
-import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 // import GoogleMap, { PolygonData } from '../components/common/GoogleMap';
 // import useHttpRequest from '../hooks/http-request-hook';
 // import useAuthStore from '../store/auth-store';
+import SearchByAttributesUpdated from '../../components/my-plots/SearchByAttributesUpdated';
 
 type SearchData = {
+  federalState: string;
+  zipCode: string;
   municipal: string;
   gemarkung: string;
   flur: string;
@@ -17,6 +19,8 @@ export default function NewPlot() {
   // const { token } = useAuthStore();
   // const { sendRequest } = useHttpRequest();
   const [formData, setFormData] = useState<SearchData>({
+    federalState: '',
+    zipCode: '',
     municipal: '',
     gemarkung: '',
     flur: '',
@@ -41,6 +45,8 @@ export default function NewPlot() {
     e.preventDefault();
 
     if (
+      !formData.federalState ||
+      !formData.zipCode ||
       !formData.municipal ||
       !formData.gemarkung ||
       !formData.flur ||
@@ -94,6 +100,8 @@ export default function NewPlot() {
 
   const resetFields = () => {
     setFormData({
+      federalState: '',
+      zipCode: '',
       municipal: '',
       gemarkung: '',
       flur: '',
@@ -107,9 +115,12 @@ export default function NewPlot() {
       {success && <div className='text-green-600 mb-6'>{success}</div>}
 
       <div className='flex items-center justify-between mb-6'>
-        <h1 className='text-[32px] font-bold text-black-muted'>
-          Neues Flurstück
-        </h1>
+        <div className='w-[526px]'>
+          <h1 className='text-[32px] font-bold text-black-muted'>
+            Neues Flurstück
+          </h1>
+          <p className='text-gray-dark-100 text-[16px]'>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.</p>
+        </div>
         <Search
           placeholder='Search'
           value={searchTerm}
@@ -118,85 +129,13 @@ export default function NewPlot() {
       </div>
 
       <div className='flex-1 flex flex-col'>
-        <div
-          className='w-full bg-white rounded-[18px] p-8'
-          style={{ boxShadow: '6px 6px 54px 0px #0000000D' }}
-        >
-          <h2 className='text-black text-[40px] leading-[48px] mb-2'>
-            Search by Parcel Attributes
-          </h2>
-          <p className='text-gray-dark-100 text-[20px] leading-[24px] font-normal mb-7'>
-            Enter municipal, gemarkung, Flur, and Flurstück
-          </p>
-
-          <form
-            onSubmit={handleSubmit}
-            className='grid grid-cols-1 md:grid-cols-4 gap-6'
-          >
-            <div className='md:col-span-2'>
-              <Input
-                variant='profile'
-                label='Municipal'
-                required
-                id='municipal'
-                name='municipal'
-                placeholder='Enter Municipal'
-                value={formData.municipal}
-                onChange={handleChange}
-              />
-            </div>
-            <div className='md:col-span-2'>
-              <Input
-                variant='profile'
-                label='Gemarkung'
-                required
-                id='gemarkung'
-                name='gemarkung'
-                placeholder='Enter Gemarkung'
-                value={formData.gemarkung}
-                onChange={handleChange}
-              />
-            </div>
-            <div className='md:col-span-2'>
-              <Input
-                variant='profile'
-                label='Flur'
-                required
-                id='flur'
-                name='flur'
-                placeholder='Enter Flur'
-                value={formData.flur}
-                onChange={handleChange}
-              />
-            </div>
-            <div className='md:col-span-2'>
-              <Input
-                variant='profile'
-                label='Flurstück'
-                required
-                id='flurstuck'
-                name='flurstuck'
-                placeholder='Enter Flurstück'
-                value={formData.flurstuck}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className='md:col-span-4 flex justify-end space-x-4'>
-              <Button
-                variant='blueSecondary'
-                type='button'
-                onClick={() => resetFields()}
-              >
-                Abbrechen
-              </Button>
-
-              <Button variant='bluePrimary' type='submit'>
-                Search
-              </Button>
-            </div>
-          </form>
-        </div>
+        {/* Stari SearchByAttributes se nalazi u my-plots/SearchByAttributes.tsx */}
+        <SearchByAttributesUpdated
+          formData={formData}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          resetFields={resetFields}
+        />
 
         <div className='flex-1 flex flex-col mt-6'>
           <div
@@ -208,7 +147,7 @@ export default function NewPlot() {
         </div>
 
         <div className='md:col-span-4 flex justify-end space-x-4 mt-4 mb-6'>
-          <Button variant='blueSecondary' type='button' onClick={() => {}}>
+          <Button variant='blueSecondary' type='button' onClick={() => { }}>
             Abbrechen
           </Button>
 

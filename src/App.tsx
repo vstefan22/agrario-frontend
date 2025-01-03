@@ -6,6 +6,7 @@ import Login from './components/auth/Login';
 import RegisterLandowner from './pages/landowner/Register';
 import RegisterDeveloper from './pages/developer/Register';
 import ProfileLandowner from './pages/landowner/Profile';
+import ProfileDeveloper from './pages/developer/Profile';
 import PasswordChange from './components/profile/PasswordChange';
 import NewPlot from './pages/landowner/NewPlot';
 import MyPlots from './pages/landowner/MyPlots';
@@ -21,6 +22,7 @@ import ThankYouMarketingRequest from './pages/landowner/ThankYouMarketingRequest
 import PlotsSearch from './pages/developer/PlotsSearch';
 import MyWatchlist from './pages/developer/MyWatchlist';
 import ActiveAuctions from './pages/developer/ActiveAuctions';
+import ThankYouSubscribe from './pages/developer/ThankYouSubscribe';
 
 const App = () => {
   return (
@@ -70,6 +72,8 @@ const App = () => {
             element={
               <ProtectedLayout>
                 <Routes>
+                  <Route path='/profile' element={<ProfileDeveloper />} />
+                  <Route path='/profile/subscribe' element={<ThankYouSubscribe />} />
                   <Route path='/plots-search' element={<PlotsSearch />} />
                   <Route path='/my-watchlist' element={<MyWatchlist />} />
                   <Route path='/active-auctions' element={<ActiveAuctions />} />
