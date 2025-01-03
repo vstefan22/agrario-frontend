@@ -1,8 +1,11 @@
 import AnalysePlusCartList from '../../components/my-plots/AnalysePlusCartList';
 import { analysePlusCartData } from '../../../mockData';
 import Button from '../../components/common/Button';
+import { useNavigate } from 'react-router-dom';
 
 const ThankYouOrderRequest = () => {
+  const navigate = useNavigate()
+
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
       <h1 className='text-[32px] font-bold text-black-muted mb-6'>
@@ -16,7 +19,7 @@ const ThankYouOrderRequest = () => {
       <AnalysePlusCartList data={analysePlusCartData} />
 
       <div className='ml-auto mt-6'>
-        <Button variant='bluePrimary'>Zurück zur Übersicht</Button>
+        <Button variant='bluePrimary' onClick={() => { navigate("/landowner/my-plots") }}>Zurück zur Übersicht</Button>
       </div>
     </div>
   );

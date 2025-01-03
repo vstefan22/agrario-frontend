@@ -4,7 +4,7 @@ import cardImg2 from "../../assets/images/card-img-2.png";
 import { useNavigate } from "react-router-dom";
 
 
-const Start = () => {
+const StartLandowner = () => {
     const navigate = useNavigate();
 
     return (
@@ -22,4 +22,4 @@ const Start = () => {
     );
 }
 
-export default Start;
+export default StartLandowner;

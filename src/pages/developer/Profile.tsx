@@ -23,8 +23,6 @@ interface UserData {
   companyFoundingYear: number;
   installedMWCapacity: number;
   employeesNumber: string;
-
-
   vorname: string;
   nachname: string;
   unternehmen: string;
@@ -34,7 +32,6 @@ interface UserData {
   telefon: string;
   password: string;
   confirmPassword: string;
-
   windEnergy: boolean;
   solarEnergy: boolean;
   batteryStorage: boolean;
@@ -57,7 +54,6 @@ export default function Profile() {
     companyFoundingYear: 2012,
     installedMWCapacity: 2020,
     employeesNumber: "1",
-
     vorname: 'Max',
     nachname: 'Mustermann',
     unternehmen: 'Musterfirma GmbH',
@@ -69,7 +65,6 @@ export default function Profile() {
     telefon: '+49 123 456 7890',
     password: 'Password123!',
     confirmPassword: 'Password123!',
-
     windEnergy: true,
     solarEnergy: false,
     batteryStorage: true,
@@ -78,7 +73,6 @@ export default function Profile() {
     chargingInfrastructure: false,
     ecological: false,
     additionalText: "Text hinzufügen"
-
   });
 
   const [error, setError] = useState('');
@@ -593,6 +587,7 @@ export default function Profile() {
                     description="All the basic features to boost your freelance career"
                     features={PACKAGE_FEATURES.free}
                     buttonText="Status aktiv"
+                    onClick={() => { navigate("/developer/profile/subscribe") }}
                   />
                   <PackageCard
                     title="Paket Premium"
@@ -602,12 +597,14 @@ export default function Profile() {
                     features={PACKAGE_FEATURES.premium}
                     buttonText="Paket buchen"
                     isActive
+                    onClick={() => { navigate("/developer/profile/subscribe") }}
                   />
                   <PackageCard
                     title="Paket Enterprise"
                     price="Preis auf Anfrage"
                     features={PACKAGE_FEATURES.onRequest}
                     buttonText="Sales kontaktierten"
+                    onClick={() => { navigate("/developer/profile/subscribe") }}
                   />
                 </>
               ) : (
@@ -619,6 +616,7 @@ export default function Profile() {
                     description="All the basic features to boost your freelance career"
                     features={PACKAGE_FEATURES.free}
                     buttonText="Status aktiv"
+                    onClick={() => { navigate("/developer/profile/subscribe") }}
                   />
                   <PackageCard
                     title="Paket Premium"
@@ -628,19 +626,21 @@ export default function Profile() {
                     features={PACKAGE_FEATURES.premium}
                     buttonText="Paket buchen"
                     isActive
+                    onClick={() => { navigate("/developer/profile/subscribe") }}
                   />
                   <PackageCard
                     title="Paket Enterprise"
                     price="Preis auf Anfrage"
                     features={PACKAGE_FEATURES.onRequest}
                     buttonText="Sales kontaktierten"
+                    onClick={() => { navigate("/developer/profile/subscribe") }}
                   />
                 </>
               )}
             </div>
 
             <div className='flex gap-6 mt-5'>
-              <Button type='button' variant='blueSecondary' className='mt-6' onClick={() => navigate("/role-two")}>Abbrechen</Button>
+              <Button type='button' variant='blueSecondary' className='mt-6' onClick={() => navigate("/developer")}>Abbrechen</Button>
               <Button type='submit' disabled={loading} variant='bluePrimary' className='mt-6'>{loading ? 'Suchprofil ändern...' : 'Suchprofil ändern'}</Button>
             </div>
           </div>

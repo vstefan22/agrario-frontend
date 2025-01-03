@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, FC } from 'react';
 import { ArrowDown } from '../../assets/svgs/svg-icons';
 import EditButton from './EditButton';
+import RangeSlider from './RangeSlider';
 
 interface SelectProps {
   name: string;
@@ -16,6 +17,9 @@ interface SelectProps {
   labelClassName?: string;
   divWidthClass?: string;
   buttonClass?: string;
+  addRangeSlider?: boolean;
+  title?: string;
+  details?: string;
 }
 
 const Select: FC<SelectProps> = ({
@@ -32,6 +36,9 @@ const Select: FC<SelectProps> = ({
   labelClassName,
   divWidthClass,
   buttonClass,
+  addRangeSlider = false,
+  title,
+  details,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -94,9 +101,11 @@ const Select: FC<SelectProps> = ({
             {label}
             {required && '*'}
           </label>
-          {onEdit && <div className='mt-auto mb-2'>
-            <EditButton onClick={onEdit} />
-          </div>}
+          {onEdit && (
+            <div className='mt-auto mb-2'>
+              <EditButton onClick={onEdit} />
+            </div>
+          )}
         </div>
       )}
 
@@ -113,6 +122,9 @@ const Select: FC<SelectProps> = ({
         {isOpen && (
           <div className='absolute left-1/3 transform -translate-x-1/2 w-[260px] bg-white rounded-[16px] shadow-lg z-10'>
             <div className='flex flex-col gap-2'>
+              {addRangeSlider && (
+                <RangeSlider title={title} details={details} />
+              )}
               {options.map((option) => {
                 const isSelected = value === option;
                 return (
@@ -123,9 +135,10 @@ const Select: FC<SelectProps> = ({
                       w-full h-[50px] px-4 text-[15px]
                       flex items-center justify-center text-center
                       rounded-[6px] transition-colors duration-200
-                      ${isSelected
-                        ? 'bg-blue text-white'
-                        : 'bg-gray-100 text-black hover:bg-gray-200'
+                      ${
+                        isSelected
+                          ? 'bg-blue text-white'
+                          : 'bg-gray-100 text-black hover:bg-gray-200'
                       }
                     `}
                   >
