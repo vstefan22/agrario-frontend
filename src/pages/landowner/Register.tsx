@@ -6,26 +6,29 @@ import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import Checkbox from '../../components/common/Checkbox';
 import useAuthStore from '../../store/auth-store';
+import useHttpRequest from '../../hooks/http-request-hook';
 
 export default function Register() {
-  const { setUser, setToken } = useAuthStore();
   const navigate = useNavigate();
+  const { setUser, setToken } = useAuthStore();
+  const { sendRequest } = useHttpRequest();
 
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    company: '',
+    firstname: '',
+    lastname: '',
+    company_name: '',
     position: '',
-    street: '',
-    postalCode: '',
+    street_address: '',
+    zipcode: '',
     city: '',
-    website: '',
+    company_website: '',
     email: '',
-    mobile: '',
+    phone_number: '',
     password: '',
-    confirmPassword: '',
-    privacyAccepted: false,
-    termsAccepted: false,
+    confirm_password: '',
+    role: 'landowner',
+    privacy_accepted: false,
+    terms_accepted: false,
   });
 
   const [error, setError] = useState('');
@@ -51,21 +54,26 @@ export default function Register() {
     e.preventDefault();
 
     if (
-      !formData.firstName ||
-      !formData.lastName ||
-      !formData.company ||
+      !formData.firstname ||
+      !formData.lastname ||
+      !formData.company_name ||
+      !formData.position ||
+      !formData.street_address ||
+      !formData.zipcode ||
+      !formData.city ||
+      !formData.phone_number ||
       !formData.email ||
       !formData.password ||
-      !formData.confirmPassword
+      !formData.confirm_password
     ) {
       setError('Bitte füllen Sie alle erforderlichen Felder aus.');
       return;
     }
-    if (formData.password !== formData.confirmPassword) {
+    if (formData.password !== formData.confirm_password) {
       setError('Die Passwörter stimmen nicht überein.');
       return;
     }
-    if (!formData.privacyAccepted || !formData.termsAccepted) {
+    if (!formData.privacy_accepted || !formData.terms_accepted) {
       setError('Bitte akzeptieren Sie die Datenschutzbedingungen und AGB.');
       return;
     }
@@ -84,22 +92,10 @@ export default function Register() {
       setToken(accessToken);
       setUser({ email: user.email, id: user.uid });
 
-      const userData = {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        company: formData.company,
-        position: formData.position || null,
-        street: formData.street,
-        postalCode: formData.postalCode,
-        city: formData.city,
-        website: formData.website || null,
-        email: formData.email,
-        mobile: formData.mobile || null,
-        createdAt: new Date().toISOString(),
-      };
-      // TODO: poziv ka bekendu
-      console.log('user data: ', userData);
-      navigate('/login');
+      const data = await sendRequest('/accounts/users/', 'POST', {}, formData);
+
+      console.log('user data: ', data);
+      navigate('/');
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message || 'Ein Fehler ist aufgetreten.');
@@ -122,22 +118,22 @@ export default function Register() {
         >
           <Input
             label='Vorname'
-            name='firstName'
-            value={formData.firstName}
+            name='firstname'
+            value={formData.firstname}
             onChange={handleChange}
             required
           />
           <Input
             label='Nachname'
-            name='lastName'
-            value={formData.lastName}
+            name='lastname'
+            value={formData.lastname}
             onChange={handleChange}
             required
           />
           <Input
             label='Name des Unternehmens'
-            name='company'
-            value={formData.company}
+            name='company_name'
+            value={formData.company_name}
             onChange={handleChange}
             required
           />
@@ -146,11 +142,12 @@ export default function Register() {
             name='position'
             value={formData.position}
             onChange={handleChange}
+            required
           />
           <Input
             label='Anschrift/Strasse'
-            name='street'
-            value={formData.street}
+            name='street_address'
+            value={formData.street_address}
             onChange={handleChange}
             required
             className='md:col-span-1'
@@ -158,8 +155,8 @@ export default function Register() {
           <div className='grid grid-cols-2 gap-4 md:col-span-1'>
             <Input
               label='PLZ'
-              name='postalCode'
-              value={formData.postalCode}
+              name='zipcode'
+              value={formData.zipcode}
               onChange={handleChange}
               required
             />
@@ -173,8 +170,8 @@ export default function Register() {
           </div>
           <Input
             label='Website des Unternehmens'
-            name='website'
-            value={formData.website}
+            name='company_website'
+            value={formData.company_website}
             onChange={handleChange}
           />
           <Input
@@ -187,9 +184,9 @@ export default function Register() {
           />
           <Input
             label='Telefonnummer'
-            name='mobile'
+            name='phone_number'
             type='tel'
-            value={formData.mobile}
+            value={formData.phone_number}
             onChange={handleChange}
           />
           <Input
@@ -202,9 +199,9 @@ export default function Register() {
           />
           <Input
             label='Passwort bestätigen'
-            name='confirmPassword'
+            name='confirm_password'
             type='password'
-            value={formData.confirmPassword}
+            value={formData.confirm_password}
             onChange={handleChange}
             required
             className='md:col-span-1'
@@ -212,14 +209,14 @@ export default function Register() {
           <div className='md:col-span-2 flex justify-between items-center'>
             <Checkbox
               label='Ich aktzeptiere die Datenschutzbedingungen'
-              name='privacyAccepted'
-              checked={formData.privacyAccepted}
+              name='privacy_accepted'
+              checked={formData.privacy_accepted}
               onChange={handleChange}
             />
             <Checkbox
               label='Ich aktzeptiere die Allgemeinen Geschäftsbedingungen'
-              name='termsAccepted'
-              checked={formData.termsAccepted}
+              name='terms_accepted'
+              checked={formData.terms_accepted}
               onChange={handleChange}
             />
           </div>

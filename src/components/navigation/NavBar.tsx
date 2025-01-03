@@ -7,11 +7,12 @@ import headerLogo from '../../assets/images/header_logo.png';
 
 const NavBar: FC = () => {
   const { isAuthenticated, user } = useAuthStore();
-  let userRole = 'role-one';
-  if (user && user.role === 'role-one') {
-    userRole = 'role-one';
-  } else if (user && user.role === 'role-two') {
-    userRole = 'role-two';
+  let userRole = 'landowner';
+  if (user && user.role === 'landowner') {
+    userRole = 'landowner';
+  }
+  if (user && user.role === 'developer') {
+    userRole = 'developer';
   }
   return (
     <Navbar className='w-full h-[80px] flex justify-between items-center px-6'>

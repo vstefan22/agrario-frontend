@@ -13,11 +13,11 @@ export default function NewRegister() {
   };
 
   const handleSubmit = () => {
-    if (selectedRole === 'role-1') {
-      navigate('/register/role-one');
+    if (selectedRole === 'landowner') {
+      navigate('/register/landowner');
     }
-    if (selectedRole === 'role-2') {
-      navigate('/register/role-two');
+    if (selectedRole === 'developer') {
+      navigate('/register/developer');
     }
   };
 
@@ -30,19 +30,19 @@ export default function NewRegister() {
       <div className='w-full max-w-[900px] grid grid-cols-1 md:grid-cols-2 gap-1 mb-8 justify-items-center'>
         <div
           className={`w-[400px] h-[370px] border-2 rounded-lg p-6 flex flex-col items-center justify-start cursor-pointer ${
-            selectedRole === 'role-1'
+            selectedRole === 'landowner'
               ? 'bg-white/15 border-[rgba(255,255,255,0.5)]'
               : 'bg-white/10 border-[rgba(255,255,255,0.06)]'
           } hover:bg-[rgba(255,255,255,0.15)] transition-all`}
-          onClick={() => handleRoleSelect('role-1')}
+          onClick={() => handleRoleSelect('landowner')}
           role='button'
           tabIndex={0}
           onKeyPress={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
-              handleRoleSelect('role-1');
+              handleRoleSelect('landowner');
             }
           }}
-          aria-pressed={selectedRole === 'role-1'}
+          aria-pressed={selectedRole === 'landowner'}
         >
           <h2 className='text-[24px] text-white font-bold mb-4'>Role - 1</h2>
 
@@ -55,7 +55,7 @@ export default function NewRegister() {
 
           <Checkbox
             label='Ich bin Eigentümer/Verwalter von Grundstücken'
-            checked={selectedRole === 'role-1'}
+            checked={selectedRole === 'landowner'}
             readOnly
             labelClassName='justify-center'
           />
@@ -67,19 +67,19 @@ export default function NewRegister() {
 
         <div
           className={`w-[400px] h-[370px] border-2 rounded-lg p-6 flex flex-col items-center justify-start cursor-pointer ${
-            selectedRole === 'role-2'
+            selectedRole === 'developer'
               ? 'bg-white/15 border-[rgba(255,255,255,0.5)]'
               : 'bg-white/10 border-[rgba(255,255,255,0.06)]'
           } hover:bg-[rgba(255,255,255,0.15)] transition-all`}
-          onClick={() => handleRoleSelect('role-2')}
+          onClick={() => handleRoleSelect('developer')}
           role='button'
           tabIndex={0}
           onKeyPress={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
-              handleRoleSelect('role-2');
+              handleRoleSelect('developer');
             }
           }}
-          aria-pressed={selectedRole === 'role-2'}
+          aria-pressed={selectedRole === 'developer'}
         >
           <h2 className='text-[24px] text-white font-bold mb-4'>Role - 2</h2>
 
@@ -92,7 +92,7 @@ export default function NewRegister() {
 
           <Checkbox
             label='Ich suche geeignete Grundstücke'
-            checked={selectedRole === 'role-2'}
+            checked={selectedRole === 'developer'}
             readOnly
             labelClassName='justify-center'
           />

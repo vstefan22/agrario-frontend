@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import DynamicTable from '../common/DynamicTable';
 import Button from '../common/Button';
 import { THANK_YOU_MARKETING_COLUMNS } from '../../types/table-data-types';
@@ -12,7 +13,10 @@ type OfferListItemProps = {
 };
 
 const OfferListItem: FC<OfferListItemProps> = ({ data }) => {
+  const navigate = useNavigate();
+
   const handleViewDetails = () => {
+    navigate('/landowner/my-offers/details');
     console.log('Should add details nav');
   };
 

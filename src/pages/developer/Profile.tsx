@@ -45,7 +45,7 @@ interface UserData {
   additionalText: string;
 }
 
-export default function Profile2() {
+export default function Profile() {
   const navigate = useNavigate();
   // const { user } = useAuthStore();
 

@@ -3,42 +3,42 @@ import Layout from './layout/Layout';
 import ProtectedLayout from './layout/ProtectedLayout';
 import NewRegister from './components/auth/NewRegister';
 import Login from './components/auth/Login';
-import RegisterRoleOne from './pages/role-one/Register';
-import RegisterRoleTwo from './pages/role-two/Register';
-import Profile from './pages/role-one/Profile';
+import RegisterLandowner from './pages/landowner/Register';
+import RegisterDeveloper from './pages/developer/Register';
+import ProfileLandowner from './pages/landowner/Profile';
+import ProfileDeveloper from './pages/developer/Profile';
 import PasswordChange from './components/profile/PasswordChange';
-import NewPlot from './pages/role-one/NewPlot';
-import MyPlots from './pages/role-one/MyPlots';
-import PlotDetails from './pages/role-one/PlotDetails';
-import MyOffers from './pages/role-one/MyOffers';
-import OfferDetails from './pages/role-one/OfferDetails';
-import OfferPreparation from './pages/role-one/OfferPreparation';
-import FriendInvite from './pages/role-one/FriendInvite';
-import QuestionsHelp from './pages/role-one/QuestionsHelp';
-import AnalysePlusCart from './pages/role-one/AnalysePlusCart';
-import ThankYouOrderRequest from './pages/role-one/ThankYouOrderRequest';
-import ThankYouMarketing from './pages/role-one/ThankYouMarketing';
-import PlotsSearch from './pages/role-two/PlotsSearch';
-import MyWatchlist from './pages/role-two/MyWatchlist';
-import ActiveAuctions from './pages/role-two/ActiveAuctions';
-import Profile2 from './pages/role-two/Profile';
-import ThankYouSubscribe from './pages/role-two/ThankYouSubscribe';
+import NewPlot from './pages/landowner/NewPlot';
+import MyPlots from './pages/landowner/MyPlots';
+import PlotDetails from './pages/landowner/PlotDetails';
+import MyOffers from './pages/landowner/MyOffers';
+import OfferDetails from './pages/landowner/OfferDetails';
+import OfferPreparation from './pages/landowner/OfferPreparation';
+import FriendInvite from './pages/landowner/FriendInvite';
+import QuestionsHelp from './pages/landowner/QuestionsHelp';
+import AnalysePlusCart from './pages/landowner/AnalysePlusCart';
+import ThankYouOrderRequest from './pages/landowner/ThankYouOrderRequest';
+import ThankYouMarketingRequest from './pages/landowner/ThankYouMarketingRequest';
+import PlotsSearch from './pages/developer/PlotsSearch';
+import MyWatchlist from './pages/developer/MyWatchlist';
+import ActiveAuctions from './pages/developer/ActiveAuctions';
+import ThankYouSubscribe from './pages/developer/ThankYouSubscribe';
 
 const App = () => {
   return (
     <Router>
       <Layout>
         <Routes>
-          <Route path='/login' element={<Login />} />
+          <Route path='/' element={<Login />} />
           <Route path='/new-register' element={<NewRegister />} />
-          <Route path='/register/role-one' element={<RegisterRoleOne />} />
-          <Route path='/register/role-two' element={<RegisterRoleTwo />} />
+          <Route path='/register/landowner' element={<RegisterLandowner />} />
+          <Route path='/register/developer' element={<RegisterDeveloper />} />
           <Route
-            path='/role-one/*'
+            path='/landowner/*'
             element={
               <ProtectedLayout>
                 <Routes>
-                  <Route path='/profile' element={<Profile />} />
+                  <Route path='/profile' element={<ProfileLandowner />} />
                   <Route path='/password-change' element={<PasswordChange />} />
                   <Route path='/new-plot' element={<NewPlot />} />
                   <Route path='/my-plots' element={<MyPlots />} />
@@ -47,20 +47,20 @@ const App = () => {
                     element={<ThankYouOrderRequest />}
                   />
                   <Route
-                    path='/my-plots/thank-you-marketing'
-                    element={<ThankYouMarketing />}
+                    path='/my-plots/thank-you-marketing-request'
+                    element={<ThankYouMarketingRequest />}
                   />
                   <Route
                     path='/my-plots/analyse-plus'
                     element={<AnalysePlusCart />}
                   />
                   <Route path='/my-plots/details' element={<PlotDetails />} />
-                  <Route path='/my-offers' element={<MyOffers />} />
-                  <Route path='/my-offers/details' element={<OfferDetails />} />
                   <Route
                     path='/my-plots/offer-preparation'
                     element={<OfferPreparation />}
                   />
+                  <Route path='/my-offers' element={<MyOffers />} />
+                  <Route path='/my-offers/details' element={<OfferDetails />} />
                   <Route path='/friend-invite' element={<FriendInvite />} />
                   <Route path='/questions-help' element={<QuestionsHelp />} />
                 </Routes>
@@ -68,11 +68,11 @@ const App = () => {
             }
           />
           <Route
-            path='role-two/*'
+            path='developer/*'
             element={
               <ProtectedLayout>
                 <Routes>
-                  <Route path='/profile' element={<Profile2 />} />
+                  <Route path='/profile' element={<ProfileDeveloper />} />
                   <Route path='/profile/subscribe' element={<ThankYouSubscribe />} />
                   <Route path='/plots-search' element={<PlotsSearch />} />
                   <Route path='/my-watchlist' element={<MyWatchlist />} />

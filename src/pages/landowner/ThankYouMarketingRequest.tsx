@@ -1,18 +1,19 @@
 import { thankYouMarketingData } from '../../../mockData';
 import ThankYouMarketingList from '../../components/my-plots/ThankYouMarketingList';
 import Button from '../../components/common/Button';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const ThankYouMarketing = () => {
-  // const navigate = useNavigate();
+const ThankYouMarketingRequest = () => {
+  const navigate = useNavigate();
 
-  function getMoreOffers() {
-    console.log('---> Get more offers');
+  function handleGoToMyOffers() {
+    navigate('/landowner/my-offers');
+    console.log('go to MyOffers clicked.');
   }
 
-  function goBack() {
-    console.log('Need to add navigate');
-    // navigate(-1);
+  function handleRequestAdditionalOffer() {
+    navigate(-1);
+    console.log('request additional offer clicked.');
   }
 
   return (
@@ -36,7 +37,7 @@ const ThankYouMarketing = () => {
           type='button'
           variant='blueSecondary'
           className='w-[354px] whitespace-nowrap'
-          onClick={goBack}
+          onClick={handleGoToMyOffers}
         >
           Zurück zur Übersicht meiner Angebote
         </Button>
@@ -44,7 +45,7 @@ const ThankYouMarketing = () => {
           type='button'
           variant='bluePrimary'
           className='w-[274px] whitespace-nowrap'
-          onClick={getMoreOffers}
+          onClick={handleRequestAdditionalOffer}
         >
           Weitere Angebote einholen
         </Button>
@@ -53,4 +54,4 @@ const ThankYouMarketing = () => {
   );
 };
 
-export default ThankYouMarketing;
+export default ThankYouMarketingRequest;

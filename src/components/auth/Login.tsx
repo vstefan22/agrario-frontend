@@ -70,14 +70,14 @@ export default function Login() {
       setToken(accessToken);
 
       // TODO: use actual role from user object
-      // if (user.role === 'role-one') {
-      //   navigate('/role-one');
-      // } else if (user.role === 'role-two') {
-      //   navigate('/role-two');
+      // if (user.role === 'landowner') {
+      //   navigate('/landowner');
+      // } else if (user.role === 'developer') {
+      //   navigate('/developer');
       // } else {
       //   navigate('/');
       // }
-      navigate('/role-one');
+      navigate('/landowner');
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message || 'Ein Fehler ist aufgetreten.');
