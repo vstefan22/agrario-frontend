@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-type PolygonCoord = {
+export type PolygonCoord = {
   lat: number;
   lng: number;
 };
@@ -19,13 +19,13 @@ const MAP_DISPLAY_OPTIONS: google.maps.PolygonOptions = {
 
 interface GoogleMapProps {
   polygonData?: PolygonData;
+  onMapClick?: (coordinates: PolygonCoord) => void;
 }
 
-const GoogleMap = ({ polygonData = [] }: GoogleMapProps) => {
+const GoogleMap = ({ polygonData = [], onMapClick }: GoogleMapProps) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
 
-  // Prvi useEffect -> Inicijalizacija Google mape
   useEffect(() => {
     if (!mapRef.current) return;
 
@@ -41,7 +41,25 @@ const GoogleMap = ({ polygonData = [] }: GoogleMapProps) => {
     setMap(createdMap);
   }, []);
 
-  // Drugi useEffect -> Crtanje poligona kada dobijemo polygonData
+  useEffect(() => {
+    if (!map || !onMapClick) return;
+
+    const listener = map.addListener(
+      'click',
+      (e: google.maps.MapMouseEvent) => {
+        if (e.latLng) {
+          const lat = e.latLng.lat();
+          const lng = e.latLng.lng();
+          onMapClick({ lat, lng });
+        }
+      }
+    );
+
+    return () => {
+      google.maps.event.removeListener(listener);
+    };
+  }, [map, onMapClick]);
+
   useEffect(() => {
     if (!map || polygonData.length === 0) return;
 
@@ -51,12 +69,12 @@ const GoogleMap = ({ polygonData = [] }: GoogleMapProps) => {
     });
     polygon.setMap(map);
 
-    // Fit bounds na poligon
     const bounds = new google.maps.LatLngBounds();
-    polygonData.forEach((coord) => bounds.extend(coord));
+    polygonData.forEach((coord) => {
+      bounds.extend(coord);
+    });
     map.fitBounds(bounds);
 
-    // Čišćenje poligona pri demontaži ili pri promeni dependencies
     return () => {
       polygon.setMap(null);
     };
