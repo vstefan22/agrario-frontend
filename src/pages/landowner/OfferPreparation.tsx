@@ -128,7 +128,7 @@ export default function MyOffer() {
         console.log('Form submitted with:', formData);
       }
       // TODO: send marketing request
-      navigate('/role-one/my-plots/thank-you-marketing-request');
+      navigate('/landowner/my-plots/thank-you-marketing-request');
     } catch (err) {
       console.log('Error: ', err);
     }

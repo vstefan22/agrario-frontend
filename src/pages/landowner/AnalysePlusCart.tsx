@@ -7,7 +7,7 @@ const AnalysePlusCart = () => {
   const navigate = useNavigate();
 
   const handleAddPlot = () => {
-    navigate('/role-one/my-plots/offer-preparation');
+    navigate('/landowner/my-plots/offer-preparation');
   };
 
   const handleStripeCheckout = () => {

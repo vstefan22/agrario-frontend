@@ -142,7 +142,7 @@ export default function Profile() {
   };
 
   const handleOnPasswordChange = () => {
-    navigate('/role-one/password-change');
+    navigate('/landowner/password-change');
   };
 
   return (

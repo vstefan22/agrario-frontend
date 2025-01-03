@@ -8,7 +8,7 @@ function PlotDetails() {
   const { plot } = usePlotStore();
 
   const handleRequestOffer = () => {
-    navigate('/role-one/my-plots/offer-preparation');
+    navigate('/landowner/my-plots/offer-preparation');
   };
 
   const handleDownloadReport = () => {
@@ -16,7 +16,7 @@ function PlotDetails() {
   };
 
   const handleAnalysePlus = () => {
-    navigate('/role-one/my-plots/analyse-plus');
+    navigate('/landowner/my-plots/analyse-plus');
   };
 
   return (

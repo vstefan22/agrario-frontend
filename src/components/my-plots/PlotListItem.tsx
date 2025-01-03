@@ -19,7 +19,7 @@ const PlotListItem: FC<PlotListItemProps> = ({ data }) => {
 
   const handleViewDetails = () => {
     setPlot(data);
-    navigate('/role-one/my-plots/details');
+    navigate('/landowner/my-plots/details');
   };
 
   const handleFetchOffers = () => {
