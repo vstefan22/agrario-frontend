@@ -19,7 +19,14 @@ import useAuthStore from '../../store/auth-store';
 export default function Sidebar() {
   const navigate = useNavigate();
   const { clearAuth, user } = useAuthStore();
-  const userRole = user.role;
+  // const userRole = user.role;
+  const role = user.role;
+  let userRole = 'landowner';
+  if (user && role === 'landowner') {
+    userRole = 'landowner';
+  } else if (user && role === 'developer') {
+    userRole = 'developer';
+  }
 
   const [activeRoute, setActiveRoute] = useState(`/${userRole}`);
 
@@ -75,7 +82,7 @@ export default function Sidebar() {
               onClick={() => handleNavigate('/landowner/my-plots')}
             >
               <FaMapLocationDot className='mr-3' />
-              my Flurstücke
+              My Flurstücke
             </Button>
 
             <Button
@@ -87,7 +94,7 @@ export default function Sidebar() {
               onClick={() => handleNavigate('/landowner/my-offers')}
             >
               <RiDiscountPercentLine className='mr-3' />
-              my Angebote
+              My Angebote
             </Button>
 
             <Button
