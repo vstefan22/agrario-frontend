@@ -24,6 +24,7 @@ import MyWatchlist from './pages/developer/MyWatchlist';
 import ActiveAuctions from './pages/developer/ActiveAuctions';
 import ThankYouSubscribe from './pages/developer/ThankYouSubscribe';
 import Support from './pages/landowner/Support';
+import Start from './pages/landowner/Start';
 
 const App = () => {
   return (
@@ -41,6 +42,7 @@ const App = () => {
                 <Routes>
                   <Route path='/profile' element={<ProfileLandowner />} />
                   <Route path='/password-change' element={<PasswordChange />} />
+                  <Route path='/' element={<Start />} />
                   <Route path='/new-plot' element={<NewPlot />} />
                   <Route path='/my-plots' element={<MyPlots />} />
                   <Route
