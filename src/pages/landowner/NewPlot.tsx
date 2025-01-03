@@ -1,7 +1,10 @@
 import { useState, ChangeEvent } from 'react';
 import Search from '../../components/common/Search';
 import Button from '../../components/common/Button';
-// import GoogleMap, { PolygonData } from '../components/common/GoogleMap';
+import GoogleMap, {
+  PolygonData,
+  PolygonCoord,
+} from '../../components/common/GoogleMap';
 // import useHttpRequest from '../hooks/http-request-hook';
 // import useAuthStore from '../store/auth-store';
 import SearchByAttributesUpdated from '../../components/my-plots/SearchByAttributesUpdated';
@@ -29,7 +32,7 @@ export default function NewPlot() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  // const [polygonData, setPolygonData] = useState<PolygonData>([]);
+  const [polygonData, setPolygonData] = useState<PolygonData>([]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -61,26 +64,18 @@ export default function NewPlot() {
     setSuccess('');
 
     try {
-      // const data = await sendRequest(
-      //   '/furstuck/',
-      //   'POST',
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${token}`,
-      //     },
-      //   },
-      //   formData
-      // );
+      // TODO: create actual request for getting polygon data for new plot creation
+      // const data = await sendRequest('/', 'POST', { ... }, formData);
 
-      // const dummyCoords: PolygonData = [
-      //   { lat: 52.52, lng: 13.4 },
-      //   { lat: 52.52, lng: 13.41 },
-      //   { lat: 52.53, lng: 13.41 },
-      //   { lat: 52.53, lng: 13.4 },
-      // ];
+      const dummyCoords: PolygonData = [
+        { lat: 52.52, lng: 13.4 },
+        { lat: 52.52, lng: 13.41 },
+        { lat: 52.53, lng: 13.41 },
+        { lat: 52.53, lng: 13.4 },
+      ];
 
-      // setPolygonData(dummyCoords);
-      setSuccess('Parcela je uspešno pronađena!');
+      setPolygonData(dummyCoords);
+      setSuccess('Parcela je erfolgreich gefunden!');
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message || 'Ein Fehler ist aufgetreten.');
@@ -90,8 +85,29 @@ export default function NewPlot() {
     }
   };
 
-  const handleOnAddFlurstuck = () => {
-    console.log('Add flurstuck clicked.');
+  const handleAddPlot = () => {
+    const finalPayload = {
+      state_name: formData.federalState,
+      district_name: formData.zipCode,
+      municipality_name: formData.municipal,
+      cadastral_area: formData.gemarkung,
+      cadastral_sector: formData.flur,
+      plot_number_main: formData.flurstuck,
+      plot_number_secondary: '5678',
+      land_use: 'Residential',
+      polygon: {
+        type: 'Polygon',
+        coordinates: [polygonData.map((coord) => [coord.lng, coord.lat])],
+      },
+      status: 'available',
+    };
+
+    console.log('Final payload:', finalPayload);
+
+    // TODO: create actual request for new plot creation
+    // sendRequest('/offers/parcels/', 'POST', { headers: {..} }, finalPayload);
+
+    setSuccess('Flurstück hinzugefügt!');
   };
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -109,6 +125,10 @@ export default function NewPlot() {
     });
   };
 
+  const handleMapClick = (coordinates: PolygonCoord) => {
+    setPolygonData([coordinates]);
+  };
+
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
       {error && <div className='text-red-600 mb-6'>{error}</div>}
@@ -119,7 +139,10 @@ export default function NewPlot() {
           <h1 className='text-[32px] font-bold text-black-muted'>
             Neues Flurstück
           </h1>
-          <p className='text-gray-dark-100 text-[16px]'>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.</p>
+          <p className='text-gray-dark-100 text-[16px]'>
+            There are many variations of passages of Lorem Ipsum available, but
+            the majority have suffered alteration in some form.
+          </p>
         </div>
         <Search
           placeholder='Search'
@@ -129,7 +152,6 @@ export default function NewPlot() {
       </div>
 
       <div className='flex-1 flex flex-col'>
-        {/* Stari SearchByAttributes se nalazi u my-plots/SearchByAttributes.tsx */}
         <SearchByAttributesUpdated
           formData={formData}
           handleChange={handleChange}
@@ -142,20 +164,15 @@ export default function NewPlot() {
             className='w-full bg-white rounded-[18px] p-8'
             style={{ boxShadow: '6px 6px 54px 0px #0000000D' }}
           >
-            {/* <GoogleMap polygonData={polygonData} /> */}
+            <GoogleMap polygonData={polygonData} onMapClick={handleMapClick} />
           </div>
         </div>
 
         <div className='md:col-span-4 flex justify-end space-x-4 mt-4 mb-6'>
-          <Button variant='blueSecondary' type='button' onClick={() => { }}>
+          <Button variant='blueSecondary' type='button' onClick={() => {}}>
             Abbrechen
           </Button>
-
-          <Button
-            variant='bluePrimary'
-            type='button'
-            onClick={handleOnAddFlurstuck}
-          >
+          <Button variant='bluePrimary' type='button' onClick={handleAddPlot}>
             Flurstück hinzufügen
           </Button>
         </div>
