@@ -39,7 +39,7 @@ export default function Sidebar() {
     try {
       await signOut(auth);
       clearAuth();
-      navigate('/login');
+      navigate('/');
     } catch (error) {
       console.error('Error signing out:', error);
     }
