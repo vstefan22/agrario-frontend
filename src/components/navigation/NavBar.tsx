@@ -8,9 +8,9 @@ import headerLogo from '../../assets/images/header_logo.png';
 const NavBar: FC = () => {
   const { isAuthenticated, user } = useAuthStore();
   let userRole = 'role-one';
-  if (user.role === 'role-one') {
+  if (user && user.role === 'role-one') {
     userRole = 'role-one';
-  } else if (user.role === 'role-two') {
+  } else if (user && user.role === 'role-two') {
     userRole = 'role-two';
   }
   return (

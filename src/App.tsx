@@ -21,6 +21,8 @@ import ThankYouMarketing from './pages/role-one/ThankYouMarketing';
 import PlotsSearch from './pages/role-two/PlotsSearch';
 import MyWatchlist from './pages/role-two/MyWatchlist';
 import ActiveAuctions from './pages/role-two/ActiveAuctions';
+import Profile2 from './pages/role-two/Profile';
+import ThankYouSubscribe from './pages/role-two/ThankYouSubscribe';
 
 const App = () => {
   return (
@@ -70,7 +72,8 @@ const App = () => {
             element={
               <ProtectedLayout>
                 <Routes>
-                  <Route path='/profile' element={<Profile />} />
+                  <Route path='/profile' element={<Profile2 />} />
+                  <Route path='/profile/subscribe' element={<ThankYouSubscribe />} />
                   <Route path='/plots-search' element={<PlotsSearch />} />
                   <Route path='/my-watchlist' element={<MyWatchlist />} />
                   <Route path='/active-auctions' element={<ActiveAuctions />} />
