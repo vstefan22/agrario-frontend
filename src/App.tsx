@@ -23,6 +23,7 @@ import PlotsSearch from './pages/developer/PlotsSearch';
 import MyWatchlist from './pages/developer/MyWatchlist';
 import ActiveAuctions from './pages/developer/ActiveAuctions';
 import ThankYouSubscribe from './pages/developer/ThankYouSubscribe';
+import Support from './pages/landowner/Support';
 
 const App = () => {
   return (
@@ -63,6 +64,7 @@ const App = () => {
                   <Route path='/my-offers/details' element={<OfferDetails />} />
                   <Route path='/friend-invite' element={<FriendInvite />} />
                   <Route path='/questions-help' element={<QuestionsHelp />} />
+                  <Route path='/support' element={<Support />} />
                 </Routes>
               </ProtectedLayout>
             }
