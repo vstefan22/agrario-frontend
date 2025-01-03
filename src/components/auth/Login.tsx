@@ -100,7 +100,7 @@ export default function Login() {
         >
           <div className='md:col-span-4'>
             <Input
-              label='Email Adresse*'
+              label='Email Adresse'
               id='email'
               name='email'
               type='email'
@@ -112,7 +112,7 @@ export default function Login() {
 
           <div className='md:col-span-4'>
             <Input
-              label='Passwort*'
+              label='Passwort'
               id='password'
               name='password'
               type='password'
