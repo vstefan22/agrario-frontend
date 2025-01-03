@@ -1,7 +1,7 @@
 import { useState, ChangeEvent } from 'react';
 import Search from '../../components/common/Search';
 import Button from '../../components/common/Button';
-// import GoogleMap, { PolygonData } from '../components/common/GoogleMap';
+import GoogleMap, { PolygonData } from '../../components/common/GoogleMap';
 // import useHttpRequest from '../hooks/http-request-hook';
 // import useAuthStore from '../store/auth-store';
 import SearchByAttributesUpdated from '../../components/my-plots/SearchByAttributesUpdated';
@@ -29,7 +29,7 @@ export default function NewPlot() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  // const [polygonData, setPolygonData] = useState<PolygonData>([]);
+  const [polygonData, setPolygonData] = useState<PolygonData>([]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -72,14 +72,14 @@ export default function NewPlot() {
       //   formData
       // );
 
-      // const dummyCoords: PolygonData = [
-      //   { lat: 52.52, lng: 13.4 },
-      //   { lat: 52.52, lng: 13.41 },
-      //   { lat: 52.53, lng: 13.41 },
-      //   { lat: 52.53, lng: 13.4 },
-      // ];
+      const dummyCoords: PolygonData = [
+        { lat: 52.52, lng: 13.4 },
+        { lat: 52.52, lng: 13.41 },
+        { lat: 52.53, lng: 13.41 },
+        { lat: 52.53, lng: 13.4 },
+      ];
 
-      // setPolygonData(dummyCoords);
+      setPolygonData(dummyCoords);
       setSuccess('Parcela je uspešno pronađena!');
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -119,7 +119,10 @@ export default function NewPlot() {
           <h1 className='text-[32px] font-bold text-black-muted'>
             Neues Flurstück
           </h1>
-          <p className='text-gray-dark-100 text-[16px]'>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.</p>
+          <p className='text-gray-dark-100 text-[16px]'>
+            There are many variations of passages of Lorem Ipsum available, but
+            the majority have suffered alteration in some form.
+          </p>
         </div>
         <Search
           placeholder='Search'
@@ -129,7 +132,6 @@ export default function NewPlot() {
       </div>
 
       <div className='flex-1 flex flex-col'>
-        {/* Stari SearchByAttributes se nalazi u my-plots/SearchByAttributes.tsx */}
         <SearchByAttributesUpdated
           formData={formData}
           handleChange={handleChange}
@@ -142,12 +144,12 @@ export default function NewPlot() {
             className='w-full bg-white rounded-[18px] p-8'
             style={{ boxShadow: '6px 6px 54px 0px #0000000D' }}
           >
-            {/* <GoogleMap polygonData={polygonData} /> */}
+            <GoogleMap polygonData={polygonData} />
           </div>
         </div>
 
         <div className='md:col-span-4 flex justify-end space-x-4 mt-4 mb-6'>
-          <Button variant='blueSecondary' type='button' onClick={() => { }}>
+          <Button variant='blueSecondary' type='button' onClick={() => {}}>
             Abbrechen
           </Button>
 

@@ -1,64 +1,77 @@
-// import { useEffect, useState, useRef } from 'react';
+/// <reference types="@types/google.maps" />
 
-// type PolygonCoord = {
-//   lat: number;
-//   lng: number;
-// };
+import { useEffect, useRef, useState } from 'react';
 
-// export type PolygonData = PolygonCoord[];
+type PolygonCoord = {
+  lat: number;
+  lng: number;
+};
 
-// export default function GoogleMap({
-//   polygonData,
-// }: {
-//   polygonData: PolygonData;
-// }) {
-//   const mapRef = useRef<HTMLDivElement>(null);
-//   const [map, setMap] = useState<google.maps.Map | null>(null);
+export type PolygonData = PolygonCoord[];
 
-//   // Inicijalizacija Google mape
-//   useEffect(() => {
-//     if (!mapRef.current) return;
+const MAP_DISPLAY_OPTIONS: google.maps.PolygonOptions = {
+  fillColor: '#206f6a',
+  fillOpacity: 0.65,
+  strokeColor: '#104f50',
+  strokeOpacity: 0.9,
+  strokeWeight: 4,
+};
 
-//     const createdMap = new google.maps.Map(mapRef.current, {
-//       center: { lat: 52.520008, lng: 13.404954 },
-//       zoom: 12,
-//     });
-//     setMap(createdMap);
-//   }, []);
+interface GoogleMapProps {
+  polygonData?: PolygonData;
+}
 
-//   // Kada dobijemo nove koordinate, iscrtaj poligon
-//   useEffect(() => {
-//     if (!map || !polygonData || polygonData.length === 0) return;
+const GoogleMap = ({ polygonData = [] }: GoogleMapProps) => {
+  const mapRef = useRef<HTMLDivElement>(null);
+  const [map, setMap] = useState<google.maps.Map | null>(null);
 
-//     // Ocisti stare poligone/markere ako je potrebno
-//     // (u produkcionom kodu bi trebalo pamtiti reference na poligone i obrisati ih .setMap(null))
+  // Prvi useEffect -> Inicijalizacija Google mape
+  useEffect(() => {
+    if (!mapRef.current) return;
 
-//     const polygon = new google.maps.Polygon({
-//       paths: polygonData,
-//       strokeColor: '#FF0000',
-//       strokeOpacity: 0.8,
-//       strokeWeight: 2,
-//       fillColor: '#FF0000',
-//       fillOpacity: 0.35,
-//     });
-//     polygon.setMap(map);
+    const createdMap = new google.maps.Map(mapRef.current, {
+      center: { lat: 52.52, lng: 13.4 },
+      zoom: 13,
+      mapTypeId: 'hybrid',
+      streetViewControl: false,
+      mapTypeControl: false,
+      panControl: false,
+      rotateControl: false,
+    });
+    setMap(createdMap);
+  }, []);
 
-//     // Opcionalno: zumiraj mapu da obuhvati ceo poligon
-//     const bounds = new google.maps.LatLngBounds();
-//     polygonData.forEach((coord) => {
-//       bounds.extend(coord);
-//     });
-//     map.fitBounds(bounds);
-//   }, [map, polygonData]);
+  // Drugi useEffect -> Crtanje poligona kada dobijemo polygonData
+  useEffect(() => {
+    if (!map || polygonData.length === 0) return;
 
-//   return (
-//     <div
-//       ref={mapRef}
-//       style={{
-//         width: '100%',
-//         height: '400px',
-//         borderRadius: '10px',
-//       }}
-//     />
-//   );
-// }
+    const polygon = new google.maps.Polygon({
+      paths: polygonData,
+      ...MAP_DISPLAY_OPTIONS,
+    });
+    polygon.setMap(map);
+
+    // Fit bounds na poligon
+    const bounds = new google.maps.LatLngBounds();
+    polygonData.forEach((coord) => bounds.extend(coord));
+    map.fitBounds(bounds);
+
+    // Čišćenje poligona pri demontaži ili pri promeni dependencies
+    return () => {
+      polygon.setMap(null);
+    };
+  }, [map, polygonData]);
+
+  return (
+    <div
+      ref={mapRef}
+      style={{
+        width: '100%',
+        height: '600px',
+        borderRadius: '8px',
+      }}
+    />
+  );
+};
+
+export default GoogleMap;
