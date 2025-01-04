@@ -24,6 +24,8 @@ import MyWatchlist from './pages/developer/MyWatchlist';
 import ActiveAuctions from './pages/developer/ActiveAuctions';
 import ThankYouSubscribe from './pages/developer/ThankYouSubscribe';
 import Support from './pages/landowner/Support';
+import StartLandowner from './pages/landowner/Start';
+import StartDeveloper from './pages/developer/Start';
 
 const App = () => {
   return (
@@ -41,6 +43,7 @@ const App = () => {
                 <Routes>
                   <Route path='/profile' element={<ProfileLandowner />} />
                   <Route path='/password-change' element={<PasswordChange />} />
+                  <Route path='/' element={<StartLandowner />} />
                   <Route path='/new-plot' element={<NewPlot />} />
                   <Route path='/my-plots' element={<MyPlots />} />
                   <Route
@@ -76,6 +79,7 @@ const App = () => {
                 <Routes>
                   <Route path='/profile' element={<ProfileDeveloper />} />
                   <Route path='/profile/subscribe' element={<ThankYouSubscribe />} />
+                  <Route path='/' element={<StartDeveloper />} />
                   <Route path='/plots-search' element={<PlotsSearch />} />
                   <Route path='/my-watchlist' element={<MyWatchlist />} />
                   <Route path='/active-auctions' element={<ActiveAuctions />} />

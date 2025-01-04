@@ -17,6 +17,7 @@ type PackageCardProps = {
     features: FeatureType[];
     buttonText: string;
     isActive?: boolean;
+    onClick: () => void;
 };
 
 
@@ -28,6 +29,7 @@ const PackageCard: React.FC<PackageCardProps> = ({
     features,
     buttonText,
     isActive = false,
+    onClick,
 }) => {
 
     const addClass = typeof price === 'string' ? 'mb-3' : '';
@@ -60,8 +62,8 @@ const PackageCard: React.FC<PackageCardProps> = ({
             </ul>
 
             {/* Need to add functionallity on these buttons */}
-            {isActive ? <Button type='button' variant='bluePrimary' className='mt-8'>{buttonText}</Button> :
-                <Button type='button' variant='blueSecondary' className='mt-8 !text-blue-muted'>{buttonText}</Button>}
+            {isActive ? <Button type='button' variant='bluePrimary' className='mt-8' onClick={onClick}>{buttonText}</Button> :
+                <Button type='button' variant='blueSecondary' className='mt-8 !text-blue-muted' onClick={onClick}>{buttonText}</Button>}
         </div>
     );
 };

@@ -46,6 +46,9 @@ export default function MyPlots() {
             value={filters.sortOption}
             onChange={handleSelectChange}
             placeholder='Sortieren nach'
+            addRangeSlider
+            title='Fläche'
+            details='Größe der Fläche'
           />
         </div>
         <PlotList data={sortedData} />
