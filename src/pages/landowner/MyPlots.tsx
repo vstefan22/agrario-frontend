@@ -15,7 +15,7 @@ export default function MyPlots() {
   const [filters, setFilters] = useState<Record<string, string | null>>({
     sortOption: null,
   });
-  const [range, setRange] = useState<[number, number]>([0, 25000]);
+  const [range, setRange] = useState<[number, number]>([20, 20000]);
 
   const handleSelectChange = (name: string, option: string) => {
     setFilters((prevFilters) => ({
@@ -61,6 +61,7 @@ export default function MyPlots() {
             details='Größe der Fläche'
             onFilter={handleRangeFilter}
             unit='ha'
+            initialValues={[range[0] / 100, range[1] / 100]}
           />
         </div>
         <PlotList data={sortedData} />

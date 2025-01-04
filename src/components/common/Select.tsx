@@ -22,9 +22,10 @@ interface BaseSelectProps {
 interface RageSliderProps extends BaseSelectProps {
   addRangeSlider: true;
   title: string;
-  details: string;
+  details?: string;
   onFilter: (range: [number, number]) => void;
   unit: string;
+  initialValues: [number, number];
 }
 
 interface NoRageSliderProps extends BaseSelectProps {
@@ -33,6 +34,7 @@ interface NoRageSliderProps extends BaseSelectProps {
   details?: never;
   onFilter?: never;
   unit?: never;
+  initialValues?: never;
 }
 
 type SelectProps = NoRageSliderProps | RageSliderProps;
@@ -56,6 +58,7 @@ const Select: FC<SelectProps> = ({
   details,
   onFilter,
   unit,
+  initialValues,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -145,6 +148,7 @@ const Select: FC<SelectProps> = ({
                   details={details}
                   onFilter={(newRange) => onFilter(newRange)}
                   unit={unit}
+                  initialValues={initialValues}
                 />
               )}
               {options.map((option) => {

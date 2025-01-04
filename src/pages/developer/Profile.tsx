@@ -49,11 +49,11 @@ export default function Profile() {
   // TODO: use actual user data here
   const [formData, setFormData] = useState<UserData>({
     companyName: 'Text hinzufügen',
-    companyWebsite: "https://",
-    street: "Text hinzufügen",
+    companyWebsite: 'https://',
+    street: 'Text hinzufügen',
     companyFoundingYear: 2012,
     installedMWCapacity: 2020,
-    employeesNumber: "1",
+    employeesNumber: '1',
     vorname: 'Max',
     nachname: 'Mustermann',
     unternehmen: 'Musterfirma GmbH',
@@ -72,7 +72,7 @@ export default function Profile() {
     hydrogen: false,
     chargingInfrastructure: false,
     ecological: false,
-    additionalText: "Text hinzufügen"
+    additionalText: 'Text hinzufügen',
   });
 
   const [error, setError] = useState('');
@@ -154,7 +154,6 @@ export default function Profile() {
       !formData.city ||
       !formData.companyFoundingYear ||
       !formData.installedMWCapacity ||
-
       !formData.vorname ||
       !formData.nachname ||
       !formData.unternehmen ||
@@ -213,12 +212,12 @@ export default function Profile() {
   };
 
   const saveChanges = () => {
-    console.log("Save changes");
-  }
+    console.log('Save changes');
+  };
 
   const editSearchProfile = () => {
-    console.log("edit search profile");
-  }
+    console.log('edit search profile');
+  };
 
   const handleOnPasswordChange = () => {
     navigate('../../role-one/password-change'); // NEED TO ADD - navigate to role two pass change page
@@ -227,7 +226,9 @@ export default function Profile() {
   return (
     <div className='bg-gray-lightest min-h-screen flex flex-col justify-start items-center px-4 py-8'>
       <div className='w-[962px]'>
-        <h1 className='text-[32px] font-bold text-black-muted mb-4'>Ihr Profil, Firma GmbH</h1>
+        <h1 className='text-[32px] font-bold text-black-muted mb-4'>
+          Ihr Profil, Firma GmbH
+        </h1>
         <div className='w-full max-w-[960px] bg-white border border-gray-medium rounded-[44px] p-8 pt-0'>
           {error && <div className='text-red-600 mb-6'>{error}</div>}
           {success && <div className='text-green-600 mb-6'>{success}</div>}
@@ -294,7 +295,9 @@ export default function Profile() {
 
           <div>
             <div>
-              <h1 className='text-[32px] font-bold text-black-muted mb-4'>Unternehmensdaten</h1>
+              <h1 className='text-[32px] font-bold text-black-muted mb-4'>
+                Unternehmensdaten
+              </h1>
               <form
                 onSubmit={handleSubmit}
                 className='grid grid-cols-1 md:grid-cols-4 gap-x-12 gap-y-6'
@@ -399,12 +402,15 @@ export default function Profile() {
             </div>
 
             <div className='flex mt-4 justify-end'>
-              <Button variant='bluePrimary'
-                onClick={saveChanges}>Zugangsdaten ändern</Button>
+              <Button variant='bluePrimary' onClick={saveChanges}>
+                Zugangsdaten ändern
+              </Button>
             </div>
 
             <div className='mt-4'>
-              <h1 className='text-[32px] font-bold text-black-muted mb-4'>Mein Suchprofil</h1>
+              <h1 className='text-[32px] font-bold text-black-muted mb-4'>
+                Mein Suchprofil
+              </h1>
               <form
                 onSubmit={handleSubmit}
                 className='grid grid-cols-1 md:grid-cols-4 gap-x-12 gap-y-6'
@@ -494,8 +500,13 @@ export default function Profile() {
               </form>
 
               <div className='mt-4'>
-                <h1 className='text-[32px] font-bold text-black-muted mb-4'>Mein Suchprofil</h1>
-                <p className='text-primary text-[16px] w-[606px] mb-4'>Unser Unternehmen interessiert sich für Grundstücke die für folgende Anwendungen geeignet sind</p>
+                <h1 className='text-[32px] font-bold text-black-muted mb-4'>
+                  Mein Suchprofil
+                </h1>
+                <p className='text-primary text-[16px] w-[606px] mb-4'>
+                  Unser Unternehmen interessiert sich für Grundstücke die für
+                  folgende Anwendungen geeignet sind
+                </p>
                 <form
                   onSubmit={handleSubmit}
                   className='grid grid-cols-1 w-[70%]'
@@ -567,85 +578,118 @@ export default function Profile() {
                   </div>
                 </form>
 
-                <Button variant='bluePrimary'
-                  onClick={editSearchProfile}>Suchprofil ändern</Button>
-
+                <Button variant='bluePrimary' onClick={editSearchProfile}>
+                  Suchprofil ändern
+                </Button>
               </div>
             </div>
           </div>
 
           <div className='flex flex-col items-center mt-10'>
-            <h1 className='text-[32px] font-bold text-black-muted mb-4'>Mein Abo</h1>
-            <SlideCheckbox option1='Yearly' option2='Monthly' checked={isChecked} onChange={handleToggleChange} />
+            <h1 className='text-[32px] font-bold text-black-muted mb-4'>
+              Mein Abo
+            </h1>
+            <SlideCheckbox
+              option1='Yearly'
+              option2='Monthly'
+              checked={isChecked}
+              onChange={handleToggleChange}
+            />
             <div className='flex gap-6 mt-8'>
               {isChecked ? (
                 <>
                   <PackageCard
-                    title="Paket Free"
+                    title='Paket Free'
                     price={0}
-                    plan="/ monthly"
-                    description="All the basic features to boost your freelance career"
+                    plan='/ monthly'
+                    description='All the basic features to boost your freelance career'
                     features={PACKAGE_FEATURES.free}
-                    buttonText="Status aktiv"
-                    onClick={() => { navigate("/developer/profile/subscribe") }}
+                    buttonText='Status aktiv'
+                    onClick={() => {
+                      navigate('/developer/profile/subscribe');
+                    }}
                   />
                   <PackageCard
-                    title="Paket Premium"
+                    title='Paket Premium'
                     price={59}
-                    plan="/ monthly"
-                    description="All the basic features to boost your freelance career"
+                    plan='/ monthly'
+                    description='All the basic features to boost your freelance career'
                     features={PACKAGE_FEATURES.premium}
-                    buttonText="Paket buchen"
+                    buttonText='Paket buchen'
                     isActive
-                    onClick={() => { navigate("/developer/profile/subscribe") }}
+                    onClick={() => {
+                      navigate('/developer/profile/subscribe');
+                    }}
                   />
                   <PackageCard
-                    title="Paket Enterprise"
-                    price="Preis auf Anfrage"
+                    title='Paket Enterprise'
+                    price='Preis auf Anfrage'
                     features={PACKAGE_FEATURES.onRequest}
-                    buttonText="Sales kontaktierten"
-                    onClick={() => { navigate("/developer/profile/subscribe") }}
+                    buttonText='Sales kontaktierten'
+                    onClick={() => {
+                      navigate('/developer/profile/subscribe');
+                    }}
                   />
                 </>
               ) : (
                 <>
                   <PackageCard
-                    title="Paket Free"
+                    title='Paket Free'
                     price={0}
-                    plan="/ yearly"
-                    description="All the basic features to boost your freelance career"
+                    plan='/ yearly'
+                    description='All the basic features to boost your freelance career'
                     features={PACKAGE_FEATURES.free}
-                    buttonText="Status aktiv"
-                    onClick={() => { navigate("/developer/profile/subscribe") }}
+                    buttonText='Status aktiv'
+                    onClick={() => {
+                      navigate('/developer/profile/subscribe');
+                    }}
                   />
                   <PackageCard
-                    title="Paket Premium"
+                    title='Paket Premium'
                     price={599}
-                    plan="/ yearly"
-                    description="All the basic features to boost your freelance career"
+                    plan='/ yearly'
+                    description='All the basic features to boost your freelance career'
                     features={PACKAGE_FEATURES.premium}
-                    buttonText="Paket buchen"
+                    buttonText='Paket buchen'
                     isActive
-                    onClick={() => { navigate("/developer/profile/subscribe") }}
+                    onClick={() => {
+                      navigate('/developer/profile/subscribe');
+                    }}
                   />
                   <PackageCard
-                    title="Paket Enterprise"
-                    price="Preis auf Anfrage"
+                    title='Paket Enterprise'
+                    price='Preis auf Anfrage'
                     features={PACKAGE_FEATURES.onRequest}
-                    buttonText="Sales kontaktierten"
-                    onClick={() => { navigate("/developer/profile/subscribe") }}
+                    buttonText='Sales kontaktierten'
+                    onClick={() => {
+                      navigate('/developer/profile/subscribe');
+                    }}
                   />
                 </>
               )}
             </div>
 
             <div className='flex gap-6 mt-5'>
-              <Button type='button' variant='blueSecondary' className='mt-6' onClick={() => navigate("/developer")}>Abbrechen</Button>
-              <Button type='submit' disabled={loading} variant='bluePrimary' className='mt-6'>{loading ? 'Suchprofil ändern...' : 'Suchprofil ändern'}</Button>
+              <Button
+                type='button'
+                variant='blueSecondary'
+                className='mt-6'
+                onClick={() => navigate('..')}
+              >
+                Abbrechen
+              </Button>
+              <Button
+                type='submit'
+                disabled={loading}
+                variant='bluePrimary'
+                className='mt-6'
+              >
+                {loading ? 'Suchprofil ändern...' : 'Suchprofil ändern'}
+              </Button>
             </div>
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 }

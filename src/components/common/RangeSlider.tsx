@@ -6,11 +6,18 @@ interface rangeSliderTypes {
   details?: string;
   unit?: string;
   onFilter: (range: [number, number]) => void;
+  initialValues: [number, number];
 }
 
-const RangeSlider = ({ title, details, onFilter, unit }: rangeSliderTypes) => {
+const RangeSlider = ({
+  title,
+  details,
+  onFilter,
+  unit,
+  initialValues,
+}: rangeSliderTypes) => {
   // Srediti podatke i funkcije da budu reusable kada se bude radio r2v4
-  const [values, setValues] = useState<[number, number]>([0.2, 200]);
+  const [values, setValues] = useState<[number, number]>(initialValues);
   const STEP = 0.1;
   const MIN = 0;
   const MAX = 250;
@@ -24,7 +31,7 @@ const RangeSlider = ({ title, details, onFilter, unit }: rangeSliderTypes) => {
   };
 
   return (
-    <div className='w-full h-[100px] px-4 text-[15px] flex flex-col rounded-[6px] mt-4'>
+    <div className='w-full mb-2 px-4 text-[15px] flex flex-col rounded-[6px] mt-4'>
       {title && (
         <p className='text-[14px] text-black-muted mb-4 font-bold'>{title}</p>
       )}

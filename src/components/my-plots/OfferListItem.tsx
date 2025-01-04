@@ -17,7 +17,6 @@ const OfferListItem: FC<OfferListItemProps> = ({ data }) => {
 
   const handleViewDetails = () => {
     navigate('/landowner/my-offers/details');
-    console.log('Should add details nav');
   };
 
   return (
