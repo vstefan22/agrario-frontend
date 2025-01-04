@@ -3,7 +3,7 @@ import { ArrowDown } from '../../assets/svgs/svg-icons';
 import EditButton from './EditButton';
 import RangeSlider from './RangeSlider';
 
-interface SelectProps {
+interface BaseSelectProps {
   name: string;
   options: string[];
   placeholder?: string;
@@ -17,10 +17,27 @@ interface SelectProps {
   labelClassName?: string;
   divWidthClass?: string;
   buttonClass?: string;
-  addRangeSlider?: boolean;
-  title?: string;
-  details?: string;
 }
+
+interface RageSliderProps extends BaseSelectProps {
+  addRangeSlider: true;
+  title: string;
+  details?: string;
+  onFilter: (range: [number, number]) => void;
+  unit: string;
+  initialValues: [number, number];
+}
+
+interface NoRageSliderProps extends BaseSelectProps {
+  addRangeSlider?: false;
+  title?: never;
+  details?: never;
+  onFilter?: never;
+  unit?: never;
+  initialValues?: never;
+}
+
+type SelectProps = NoRageSliderProps | RageSliderProps;
 
 const Select: FC<SelectProps> = ({
   name,
@@ -39,6 +56,9 @@ const Select: FC<SelectProps> = ({
   addRangeSlider = false,
   title,
   details,
+  onFilter,
+  unit,
+  initialValues,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -122,8 +142,14 @@ const Select: FC<SelectProps> = ({
         {isOpen && (
           <div className='absolute left-1/3 transform -translate-x-1/2 w-[260px] bg-white rounded-[16px] shadow-lg z-10'>
             <div className='flex flex-col gap-2'>
-              {addRangeSlider && (
-                <RangeSlider title={title} details={details} />
+              {addRangeSlider && onFilter && (
+                <RangeSlider
+                  title={title}
+                  details={details}
+                  onFilter={(newRange) => onFilter(newRange)}
+                  unit={unit}
+                  initialValues={initialValues}
+                />
               )}
               {options.map((option) => {
                 const isSelected = value === option;

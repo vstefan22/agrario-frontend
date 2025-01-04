@@ -1,9 +1,13 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useCallback } from 'react';
 import Search from '../../components/common/Search';
 import Select from '../../components/common/Select';
 import PlotList from '../../components/my-plots/PlotList';
 import { sortOptions } from '../../types/select-options';
-import { filterData, sortData } from '../../utils/helper-functions';
+import {
+  filterData,
+  sortData,
+  filterDataRange,
+} from '../../utils/helper-functions';
 import { plotsListData } from '../../../mockData';
 
 export default function MyPlots() {
@@ -11,6 +15,7 @@ export default function MyPlots() {
   const [filters, setFilters] = useState<Record<string, string | null>>({
     sortOption: null,
   });
+  const [range, setRange] = useState<[number, number]>([20, 20000]);
 
   const handleSelectChange = (name: string, option: string) => {
     setFilters((prevFilters) => ({
@@ -23,8 +28,13 @@ export default function MyPlots() {
     setSearchTerm(e.target.value);
   };
 
-  const filteredData = filterData(plotsListData, searchTerm);
-  const sortedData = sortData(filteredData, filters.sortOption);
+  const handleRangeFilter = useCallback((newRange: [number, number]) => {
+    setRange(newRange);
+  }, []);
+
+  const searchFilteredData = filterData(plotsListData, searchTerm);
+  const rangeFilteredData = filterDataRange(searchFilteredData, range);
+  const sortedData = sortData(rangeFilteredData, filters.sortOption);
 
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
@@ -49,6 +59,9 @@ export default function MyPlots() {
             addRangeSlider
             title='Fläche'
             details='Größe der Fläche'
+            onFilter={handleRangeFilter}
+            unit='ha'
+            initialValues={[range[0] / 100, range[1] / 100]}
           />
         </div>
         <PlotList data={sortedData} />

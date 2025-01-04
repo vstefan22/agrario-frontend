@@ -171,7 +171,6 @@ export const detailsData = [
   },
 ];
 
-
 export const myOfferData = [
   {
     id: 'FL-56141',
@@ -202,3 +201,13 @@ export const myOfferData = [
     analyzePlus: 'inactive',
   },
 ];
+
+export const analysePlusValues = {
+  items: 3,
+  costPerItem: 199,
+  sumOfItems: 597,
+  taxPercent: 19,
+  taxAmount: 113.34,
+  subtotal: 711.34,
+  total: 711.34,
+};

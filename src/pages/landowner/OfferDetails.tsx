@@ -8,6 +8,7 @@ import UploadFile from '../../components/common/UploadFile';
 import Button from '../../components/common/Button';
 import { defaultOptions } from '../../types/select-options';
 import { detailsData } from '../../../mockData';
+import { useNavigate } from 'react-router-dom';
 
 const OfferDetails = () => {
   const [formData, setFormData] = useState<{
@@ -44,6 +45,8 @@ const OfferDetails = () => {
     other: true,
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const navigate = useNavigate();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -298,7 +301,11 @@ const OfferDetails = () => {
         </div>
 
         <div className='flex gap-x-6 mt-8 justify-end'>
-          <Button variant='blueSecondary' type='button'>
+          <Button
+            variant='blueSecondary'
+            type='button'
+            onClick={() => navigate('..', { relative: 'path' })}
+          >
             Abbrechen
           </Button>
           <Button variant='blueSecondary' type='button' className='w-[306px]'>

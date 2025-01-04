@@ -347,7 +347,7 @@ export default function Profile() {
             <Button
               variant='blueSecondary'
               type='button'
-              onClick={() => navigate('/')}
+              onClick={() => navigate('..')}
             >
               Abbrechen
             </Button>

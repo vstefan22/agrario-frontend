@@ -24,9 +24,18 @@ export const sortData = (
       return [...items].sort((a, b) => a.state.localeCompare(b.state));
     case 'Sortieren nach Größe':
       return [...items].sort((a, b) => a.size - b.size);
-    case 'Sortieren nach PLZ':
-      return [...items].sort((a, b) => a.plz - b.plz);
     default:
       return items;
   }
+};
+
+export const filterDataRange = (
+  items: PlotType[],
+  range: [number, number]
+): PlotType[] => {
+  const filteredItems = items.filter((item) => {
+    return item.size >= range[0] && item.size <= range[1];
+  });
+
+  return filteredItems.sort((a, b) => a.size - b.size);
 };

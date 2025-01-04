@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/common/Button';
 import AnalysePlusCartList from '../../components/my-plots/AnalysePlusCartList';
-import { analysePlusCartData } from '../../../mockData';
+import { analysePlusCartData, analysePlusValues } from '../../../mockData';
 
 const AnalysePlusCart = () => {
   const navigate = useNavigate();
@@ -18,10 +18,6 @@ const AnalysePlusCart = () => {
   const handleReedemCode = () => {
     // TODO: add reedem code request
     console.log('reedem code clicked.');
-  };
-
-  const handleReturnBack = () => {
-    navigate(-1);
   };
 
   return (
@@ -54,7 +50,7 @@ const AnalysePlusCart = () => {
           <Button
             type='button'
             variant='blueSecondary'
-            onClick={handleReturnBack}
+            onClick={() => navigate(-1)}
             className='w-[280px] h-[48px]'
           >
             Abbrechen
@@ -69,29 +65,38 @@ const AnalysePlusCart = () => {
           </Button>
         </div>
         <div className='bg-white rounded-xl shadow-md px-6 py-4 text-right flex flex-col gap-4 text-gray-dark-200'>
-          <div className='flex justify-end'>
-            <p className='mr-1'>Number of Items:</p>
-            <p className='font-semibold'>3</p>
-          </div>
-          <div className='flex justify-end'>
-            <p className='mr-1'>Cost per Item:</p>
-            <p className='font-semibold'>199,00 €</p>
-          </div>
-          <div className='flex justify-end'>
-            <p className='mr-1'>Sum of items:</p>
-            <p className='font-semibold'>597,00 €</p>
-          </div>
-          <div className='flex justify-end'>
-            <p className='mr-1'>Tax in percent:</p>
-            <p className='font-semibold'>19% MWSt</p>
-          </div>
-          <div className='flex justify-end'>
-            <p className='mr-1'>Tax amount:</p>
-            <p className='font-semibold'>113,34 €</p>
-          </div>
-          <div className='flex justify-end text-[14px]'>
-            <p className='mr-1'>Subtotal:</p>
-            <p className='font-semibold'>711,34 €</p>
+          <div className='flex flex-col space-y-3 mb-3'>
+            <p>
+              Number of Items: <strong>{analysePlusValues.items}</strong>
+            </p>
+            <p>
+              Cost per Item:{' '}
+              <strong>
+                {analysePlusValues.costPerItem.toFixed(2).replace('.', ',')} €
+              </strong>
+            </p>
+            <p>
+              Sum of items:{' '}
+              <strong>
+                {analysePlusValues.sumOfItems.toFixed(2).replace('.', ',')} €
+              </strong>
+            </p>
+            <p>
+              Tax in percent:{' '}
+              <strong>{analysePlusValues.taxPercent}% MWSt </strong>
+            </p>
+            <p>
+              Tax amount:{' '}
+              <strong>
+                {analysePlusValues.taxAmount.toFixed(2).replace('.', ',')} €
+              </strong>
+            </p>
+            <p className='text-[14px]'>
+              Subtotal:{' '}
+              <strong>
+                {analysePlusValues.subtotal.toFixed(2).replace('.', ',')} €
+              </strong>
+            </p>
           </div>
 
           <div className='flex justify-end items-center max-[746px]:flex-col max-[746px]:items-end'>
@@ -100,22 +105,26 @@ const AnalysePlusCart = () => {
               <input
                 type='text'
                 placeholder='Gutschein-Code'
-                className='border-[1px] border-r-0 py-1 px-2 rounded-l-md border-gray-medium/60'
+                className='border-[1px] border-r-0 py-1 px-2 rounded-l-md border-gray-medium/60 w-[180px]'
               />
               <Button
                 type='button'
                 variant='bluePrimary'
                 onClick={handleReedemCode}
-                className='w-[94px] h-[24px] text-[16px]'
+                className='w-[90px] h-[48px] text-[16px]'
               >
                 Confirm
               </Button>
             </div>
           </div>
 
-          <div className='flex justify-end'>
-            <p className='mr-1'>Total:</p>
-            <p className='font-semibold'>711,34 €</p>
+          <div className='flex flex-col mt-3'>
+            <p>
+              Total:{' '}
+              <strong>
+                {analysePlusValues.total.toFixed(2).replace('.', ',')} €
+              </strong>
+            </p>
           </div>
         </div>
       </div>
