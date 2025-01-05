@@ -38,7 +38,7 @@ const AnalysePlusCartListItem: FC<AnalysePlusCartListItemProps> = ({
           <DynamicTable
             data={data}
             columns={ANALYSE_PLUS_CART_COLUMNS}
-            isResize
+            customClassName='px-5'
           />
         </div>
 

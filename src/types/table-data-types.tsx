@@ -42,3 +42,10 @@ export const THANK_YOU_MARKETING_COLUMNS = [
   { key: 'registry', label: 'Nutzung laut Liegenschaftskataster' },
   { key: 'size', label: 'Größe' },
 ];
+
+export const PLOT_SEARCH_COLUMNS = [
+  { key: 'state', label: 'Bundesland' },
+  { key: 'district', label: 'Landkreis' },
+  { key: 'registry', label: 'Nutzung laut Liegenschaftskataster' },
+  { key: 'size', label: 'Größe' },
+];

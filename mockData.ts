@@ -168,6 +168,8 @@ export const detailsData = [
     parcelNumber: '123-456-789',
     image: fieldsImg,
     analyzePlus: 'inactive',
+    infrastructure: 'Freiflächensolar',
+    evaluation: 'Potentiell geeignet',
   },
 ];
 
@@ -211,3 +213,49 @@ export const analysePlusValues = {
   subtotal: 711.34,
   total: 711.34,
 };
+
+export const plotSearchData = [
+  {
+    id: 'FL-56141',
+    state: 'Hessen',
+    district: 'Rheingau-Taunus',
+    registry: 'Grünland',
+    size: 10000,
+    image: flImage,
+    infrastructure: 'Wind, Biodiversität',
+    evaluation: 'Potentiell geeignet',
+  },
+  {
+    id: 'FL-56142',
+    state: 'Hessen',
+    district: 'Rheingau-Taunus',
+    registry: 'Grünland',
+    size: 10000,
+    image: fieldsImg,
+    infrastructure: 'Freiflächensolar',
+    evaluation: 'Potentiell geeignet',
+  },
+];
+
+export const myWatchlistData = [
+  {
+    id: 'FL-56141',
+    state: 'Hessen',
+    district: 'Rheingau-Taunus',
+    registry: 'Grünland',
+    size: 10000,
+    image: flImage,
+    infrastructure: 'Freiflächensolar',
+    evaluation: 'Potentiell geeignet',
+  },
+  {
+    id: 'FL-56142',
+    state: 'Hessen',
+    district: 'Rheingau-Taunus',
+    registry: 'Grünland',
+    size: 10000,
+    image: fieldsImg,
+    infrastructure: 'Freiflächensolar',
+    evaluation: 'Potentiell geeignet',
+  },
+];

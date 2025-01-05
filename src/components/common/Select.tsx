@@ -149,6 +149,8 @@ const Select: FC<SelectProps> = ({
                   onFilter={(newRange) => onFilter(newRange)}
                   unit={unit}
                   initialValues={initialValues}
+                  min={0}
+                  max={250}
                 />
               )}
               {options.map((option) => {

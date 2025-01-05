@@ -1,4 +1,4 @@
-export type ThankYouMarketingType = {
+export type DetailsType = {
   id: string;
   state: string;
   plz: number;
@@ -10,4 +10,6 @@ export type ThankYouMarketingType = {
   size: number;
   image: string;
   analyzePlus: string;
+  infrastructure: string;
+  evaluation: string;
 };

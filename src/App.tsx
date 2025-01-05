@@ -26,6 +26,7 @@ import ThankYouSubscribe from './pages/developer/ThankYouSubscribe';
 import Support from './pages/landowner/Support';
 import StartLandowner from './pages/landowner/Start';
 import StartDeveloper from './pages/developer/Start';
+import ParcelDetails from './pages/developer/ParcelDetails';
 
 const App = () => {
   return (
@@ -78,9 +79,16 @@ const App = () => {
               <ProtectedLayout>
                 <Routes>
                   <Route path='/profile' element={<ProfileDeveloper />} />
-                  <Route path='/profile/subscribe' element={<ThankYouSubscribe />} />
+                  <Route
+                    path='/profile/subscribe'
+                    element={<ThankYouSubscribe />}
+                  />
                   <Route path='/' element={<StartDeveloper />} />
                   <Route path='/plots-search' element={<PlotsSearch />} />
+                  <Route
+                    path='/plots-search/parcel-details'
+                    element={<ParcelDetails />}
+                  />
                   <Route path='/my-watchlist' element={<MyWatchlist />} />
                   <Route path='/active-auctions' element={<ActiveAuctions />} />
                 </Routes>
