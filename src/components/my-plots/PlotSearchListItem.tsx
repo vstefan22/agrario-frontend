@@ -4,12 +4,15 @@ import { PLOT_SEARCH_COLUMNS } from '../../types/table-data-types';
 import { PlotSearchType } from '../../types/plot-search-types';
 import imgPlaceholder from '../../assets/images/image-placeholder.png';
 import Button from '../common/Button';
+import { useNavigate } from 'react-router-dom';
 
 type PlotSearchListItemProps = {
   data: PlotSearchType;
 };
 
 const PlotSearchListItem: FC<PlotSearchListItemProps> = ({ data }) => {
+  const navigate = useNavigate();
+
   return (
     <div
       className='w-full bg-white rounded-[18px] p-4 mb-6'
@@ -61,7 +64,14 @@ const PlotSearchListItem: FC<PlotSearchListItemProps> = ({ data }) => {
                 Zu Watchlist hinzufügen
               </Button>
               {/* Povezati button na r2v5-detailansicht flurstuck kada se uradi */}
-              <Button type='button' variant='bluePrimary' className='w-[200px]'>
+              <Button
+                type='button'
+                variant='bluePrimary'
+                className='w-[200px]'
+                onClick={() =>
+                  navigate('/developer/plots-search/parcel-details')
+                }
+              >
                 Detail ansehen
               </Button>
             </div>
