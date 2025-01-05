@@ -236,3 +236,26 @@ export const plotSearchData = [
     evaluation: 'Potentiell geeignet',
   },
 ];
+
+export const myWatchlistData = [
+  {
+    id: 'FL-56141',
+    state: 'Hessen',
+    district: 'Rheingau-Taunus',
+    registry: 'Grünland',
+    size: 10000,
+    image: flImage,
+    infrastructure: 'Freiflächensolar',
+    evaluation: 'Potentiell geeignet',
+  },
+  {
+    id: 'FL-56142',
+    state: 'Hessen',
+    district: 'Rheingau-Taunus',
+    registry: 'Grünland',
+    size: 10000,
+    image: fieldsImg,
+    infrastructure: 'Freiflächensolar',
+    evaluation: 'Potentiell geeignet',
+  },
+];
