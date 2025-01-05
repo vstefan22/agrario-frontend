@@ -78,7 +78,10 @@ const App = () => {
               <ProtectedLayout>
                 <Routes>
                   <Route path='/profile' element={<ProfileDeveloper />} />
-                  <Route path='/profile/subscribe' element={<ThankYouSubscribe />} />
+                  <Route
+                    path='/profile/subscribe'
+                    element={<ThankYouSubscribe />}
+                  />
                   <Route path='/' element={<StartDeveloper />} />
                   <Route path='/plots-search' element={<PlotsSearch />} />
                   <Route path='/my-watchlist' element={<MyWatchlist />} />
