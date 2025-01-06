@@ -64,8 +64,9 @@ const Checkbox: FC<CheckboxProps> = ({
       </div>
 
       <span
-        className={`${variant === 'primary' ? 'text-black-muted' : 'text-white'
-          } text-sm`}
+        className={`${
+          variant === 'primary' ? 'text-black-muted' : 'text-white'
+        } text-sm`}
       >
         {label}
       </span>

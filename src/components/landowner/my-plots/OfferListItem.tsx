@@ -1,19 +1,27 @@
 import { FC } from 'react';
-import DynamicTable from '../common/DynamicTable';
-import { THANK_YOU_MARKETING_COLUMNS } from '../../types/table-data-types';
-import { DetailsType } from '../../types/details-types';
-import active from '../../assets/images/vermarktung-aktiv.png';
-import inactive from '../../assets/images/vermarktung-in-vorbereitung.png';
-import imgPlaceholder from '../../assets/images/image-placeholder.png';
+import { useNavigate } from 'react-router-dom';
+import DynamicTable from '../../common/DynamicTable';
+import Button from '../../common/Button';
+import { THANK_YOU_MARKETING_COLUMNS } from '../../../types/table-data-types';
+import { ThankYouMarketingType } from '../../../types/thank-you-marketing-types';
+import active from '../../../assets/images/vermarktung-aktiv.png';
+import inactive from '../../../assets/images/vermarktung-in-vorbereitung.png';
+import imgPlaceholder from '../../../assets/images/image-placeholder.png';
 
-type DetailsListItemProps = {
-  data: DetailsType;
+type OfferListItemProps = {
+  data: ThankYouMarketingType;
 };
 
-const DetailsListItem: FC<DetailsListItemProps> = ({ data }) => {
+const OfferListItem: FC<OfferListItemProps> = ({ data }) => {
+  const navigate = useNavigate();
+
+  const handleViewDetails = () => {
+    navigate('/landowner/my-offers/details');
+  };
+
   return (
     <div
-      className='w-full bg-white rounded-[18px] p-4 mb-6'
+      className='w-full bg-white rounded-[18px] p-4'
       style={{
         boxShadow: '6px 6px 54px 0px #0000000D',
         minHeight: '250px',
@@ -25,7 +33,7 @@ const DetailsListItem: FC<DetailsListItemProps> = ({ data }) => {
             <img
               src={data.image || imgPlaceholder}
               width='100%'
-              alt={'flurstuck-image'}
+              alt={'flurstuck image'}
               className='object-cover h-full rounded-tl-xl rounded-tr-xl'
             />
           </div>
@@ -39,20 +47,20 @@ const DetailsListItem: FC<DetailsListItemProps> = ({ data }) => {
         </div>
         <div className='flex flex-col'>
           <DynamicTable data={data} columns={THANK_YOU_MARKETING_COLUMNS} />
-          <div className='flex justify-between items-center pt-5 gap-3 mt-auto'>
-            <div>
-              <h1 className='text-black-muted text-[14px]'>
-                {data.infrastructure}
-              </h1>
-              <p className='text-gray-dark-100 text-[10px] opacity-[70%]'>
-                {data.evaluation}
-              </p>
-            </div>
+          <div className='flex justify-end items-center pt-5 gap-3'>
             <img
               src={data.analyzePlus === 'active' ? active : inactive}
-              alt={'image-active/inactive'}
+              alt={`aktiv/inaktiv image`}
               className='mr-4 h-[22px] object-cover'
             />
+
+            <Button
+              variant='bluePrimary'
+              type='button'
+              onClick={handleViewDetails}
+            >
+              Angebots-Details
+            </Button>
           </div>
         </div>
       </div>
@@ -60,4 +68,4 @@ const DetailsListItem: FC<DetailsListItemProps> = ({ data }) => {
   );
 };
 
-export default DetailsListItem;
+export default OfferListItem;

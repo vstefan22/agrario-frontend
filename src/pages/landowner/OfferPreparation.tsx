@@ -1,5 +1,5 @@
 import { useState, ChangeEvent } from 'react';
-import OfferItem from '../../components/my-plots/OfferItem';
+import OfferItem from '../../components/landowner/my-plots/OfferItem';
 import Button from '../../components/common/Button';
 import DatePicker from '../../components/common/DatePicker';
 import Select from '../../components/common/Select';

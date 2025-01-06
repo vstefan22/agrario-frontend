@@ -1,7 +1,7 @@
 import { useState, ChangeEvent, useCallback } from 'react';
 import Search from '../../components/common/Search';
 import Select from '../../components/common/Select';
-import PlotList from '../../components/my-plots/PlotList';
+import PlotList from '../../components/developer/my-plots/PlotList';
 import { sortOptions } from '../../types/select-options';
 import {
   filterData,

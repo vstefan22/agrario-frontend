@@ -1,10 +1,10 @@
-import AnalysePlusCartList from '../../components/my-plots/AnalysePlusCartList';
+import AnalysePlusCartList from '../../components/landowner/my-plots/AnalysePlusCartList';
 import { analysePlusCartData } from '../../../mockData';
 import Button from '../../components/common/Button';
 import { useNavigate } from 'react-router-dom';
 
 const ThankYouOrderRequest = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
@@ -19,7 +19,14 @@ const ThankYouOrderRequest = () => {
       <AnalysePlusCartList data={analysePlusCartData} />
 
       <div className='ml-auto mt-6'>
-        <Button variant='bluePrimary' onClick={() => { navigate("/landowner/my-plots") }}>Zurück zur Übersicht</Button>
+        <Button
+          variant='bluePrimary'
+          onClick={() => {
+            navigate('/landowner/my-plots');
+          }}
+        >
+          Zurück zur Übersicht
+        </Button>
       </div>
     </div>
   );

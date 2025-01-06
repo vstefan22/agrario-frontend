@@ -1,5 +1,5 @@
 import { thankYouMarketingData } from '../../../mockData';
-import ThankYouMarketingList from '../../components/my-plots/ThankYouMarketingList';
+import ThankYouMarketingList from '../../components/landowner/my-plots/ThankYouMarketingList';
 import Button from '../../components/common/Button';
 import { useNavigate } from 'react-router-dom';
 

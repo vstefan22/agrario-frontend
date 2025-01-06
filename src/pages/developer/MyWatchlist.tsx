@@ -1,4 +1,4 @@
-import MyWatchlistList from '../../components/my-plots/MyWatchlistList';
+import MyWatchlistList from '../../components/developer/my-plots/MyWatchlistList';
 import { myWatchlistData } from '../../../mockData';
 import { useState, ChangeEvent } from 'react';
 import Search from '../../components/common/Search';

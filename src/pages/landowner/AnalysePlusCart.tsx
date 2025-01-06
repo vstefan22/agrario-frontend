@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/common/Button';
-import AnalysePlusCartList from '../../components/my-plots/AnalysePlusCartList';
+import AnalysePlusCartList from '../../components/landowner/my-plots/AnalysePlusCartList';
 import { analysePlusCartData, analysePlusValues } from '../../../mockData';
 
 const AnalysePlusCart = () => {

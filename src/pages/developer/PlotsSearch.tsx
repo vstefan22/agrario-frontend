@@ -1,4 +1,4 @@
-import PlotSearchList from '../../components/my-plots/PlotSearchList';
+import PlotSearchList from '../../components/developer/my-plots/PlotSearchList';
 import { plotSearchData } from '../../../mockData';
 import { useState, ChangeEvent, useCallback } from 'react';
 import Search from '../../components/common/Search';

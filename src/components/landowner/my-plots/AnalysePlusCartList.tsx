@@ -1,6 +1,6 @@
 import { FC, Fragment } from 'react';
-import AnalysePlusCartListItem from './AnalysePlusCartListItem';
-import { AnalysePlusCartType } from '../../types/analyse-plus-cart-types';
+import AnalysePlusCartListItem from '../my-plots/AnalysePlusCartListItem';
+import { AnalysePlusCartType } from '../../../types/analyse-plus-cart-types';
 
 type AnalysePlusCartListProps = {
   data: AnalysePlusCartType[];
