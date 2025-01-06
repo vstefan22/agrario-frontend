@@ -9,11 +9,11 @@ import active from '../../../assets/images/active.png';
 import inactive from '../../../assets/images/inactive.png';
 import imgPlaceholder from '../../../assets/images/image-placeholder.png';
 
-type PlotListItemProps = {
+type PlotItemProps = {
   data: PlotType;
 };
 
-const PlotListItem: FC<PlotListItemProps> = ({ data }) => {
+const PlotItem: FC<PlotItemProps> = ({ data }) => {
   const navigate = useNavigate();
   const { setPlot } = usePlotStore();
 
@@ -86,4 +86,4 @@ const PlotListItem: FC<PlotListItemProps> = ({ data }) => {
   );
 };
 
-export default PlotListItem;
+export default PlotItem;

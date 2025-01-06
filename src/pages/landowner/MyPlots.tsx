@@ -1,7 +1,8 @@
 import { useState, ChangeEvent, useCallback } from 'react';
 import Search from '../../components/common/Search';
 import Select from '../../components/common/Select';
-import PlotList from '../../components/developer/my-plots/PlotList';
+import GenericList from '../../components/common/GenericList';
+import PlotItem from '../../components/landowner/my-plots/PlotItem';
 import { sortOptions } from '../../types/select-options';
 import {
   filterData,
@@ -64,7 +65,10 @@ export default function MyPlots() {
             initialValues={[range[0] / 100, range[1] / 100]}
           />
         </div>
-        <PlotList data={sortedData} />
+        <GenericList
+          data={sortedData}
+          renderItem={(plot) => <PlotItem key={plot.id} data={plot} />}
+        />
       </div>
     </div>
   );

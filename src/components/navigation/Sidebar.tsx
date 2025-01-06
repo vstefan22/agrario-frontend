@@ -1,5 +1,5 @@
-import { Fragment, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Fragment } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase/firebase-config';
 import {
@@ -18,9 +18,11 @@ import useAuthStore from '../../store/auth-store';
 
 export default function Sidebar() {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const { clearAuth, user } = useAuthStore();
-  // const userRole = user.role;
   const role = user.role;
+
   let userRole = 'landowner';
   if (user && role === 'landowner') {
     userRole = 'landowner';
@@ -28,10 +30,18 @@ export default function Sidebar() {
     userRole = 'developer';
   }
 
-  const [activeRoute, setActiveRoute] = useState(`/${userRole}`);
+  // Helper: exact = true => mora da se poklapa tačno
+  const isRouteActive = (basePath: string, exact = false) => {
+    if (exact) {
+      return location.pathname === basePath;
+    }
+    return (
+      location.pathname === basePath ||
+      location.pathname.startsWith(basePath + '/')
+    );
+  };
 
   const handleNavigate = (route: string) => {
-    setActiveRoute(route);
     navigate(route);
   };
 
@@ -52,7 +62,7 @@ export default function Sidebar() {
           <Fragment>
             <Button
               variant={
-                activeRoute === '/landowner'
+                isRouteActive('/landowner', true)
                   ? 'sidebarPrimary'
                   : 'sidebarSecondary'
               }
@@ -61,9 +71,10 @@ export default function Sidebar() {
               <FaRocket className='mr-3' />
               Start
             </Button>
+
             <Button
               variant={
-                activeRoute === '/landowner/new-plot'
+                isRouteActive('/landowner/new-plot')
                   ? 'sidebarPrimary'
                   : 'sidebarSecondary'
               }
@@ -75,7 +86,7 @@ export default function Sidebar() {
 
             <Button
               variant={
-                activeRoute === '/landowner/my-plots'
+                isRouteActive('/landowner/my-plots')
                   ? 'sidebarPrimary'
                   : 'sidebarSecondary'
               }
@@ -87,7 +98,7 @@ export default function Sidebar() {
 
             <Button
               variant={
-                activeRoute === '/landowner/my-offers'
+                isRouteActive('/landowner/my-offers')
                   ? 'sidebarPrimary'
                   : 'sidebarSecondary'
               }
@@ -99,7 +110,7 @@ export default function Sidebar() {
 
             <Button
               variant={
-                activeRoute === '/landowner/friend-invite'
+                isRouteActive('/landowner/friend-invite')
                   ? 'sidebarPrimary'
                   : 'sidebarSecondary'
               }
@@ -111,7 +122,7 @@ export default function Sidebar() {
 
             <Button
               variant={
-                activeRoute === '/landowner/questions-help'
+                isRouteActive('/landowner/questions-help')
                   ? 'sidebarPrimary'
                   : 'sidebarSecondary'
               }
@@ -127,7 +138,7 @@ export default function Sidebar() {
           <Fragment>
             <Button
               variant={
-                activeRoute === '/developer'
+                isRouteActive('/developer', true)
                   ? 'sidebarPrimary'
                   : 'sidebarSecondary'
               }
@@ -136,9 +147,10 @@ export default function Sidebar() {
               <FaRocket className='mr-3' />
               Start
             </Button>
+
             <Button
               variant={
-                activeRoute === '/developer/plots-search'
+                isRouteActive('/developer/plots-search')
                   ? 'sidebarPrimary'
                   : 'sidebarSecondary'
               }
@@ -150,7 +162,7 @@ export default function Sidebar() {
 
             <Button
               variant={
-                activeRoute === '/developer/my-watchlist'
+                isRouteActive('/developer/my-watchlist')
                   ? 'sidebarPrimary'
                   : 'sidebarSecondary'
               }
@@ -162,7 +174,7 @@ export default function Sidebar() {
 
             <Button
               variant={
-                activeRoute === '/developer/active-auctions'
+                isRouteActive('/developer/active-auctions')
                   ? 'sidebarPrimary'
                   : 'sidebarSecondary'
               }

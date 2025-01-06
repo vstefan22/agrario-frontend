@@ -1,15 +1,15 @@
 import { FC } from 'react';
 import DynamicTable from '../../common/DynamicTable';
 import { PLOT_DETAILS_COLUMNS } from '../../../types/table-data-types';
-import { AnalysePlusCartType } from '../../../types/analyse-plus-cart-types';
+import { PlotAnalysePlusType } from '../../../types/plot-types';
 import delIcon from '../../../assets/images/del.png';
 
-type AnalysePlusCartListItemProps = {
-  data: AnalysePlusCartType;
+type AnalysePlusCartItemProps = {
+  data: PlotAnalysePlusType;
   isEnable?: boolean;
 };
 
-const AnalysePlusCartListItem: FC<AnalysePlusCartListItemProps> = ({
+const AnalysePlusCartItem: FC<AnalysePlusCartItemProps> = ({
   data,
   isEnable,
 }) => {
@@ -54,4 +54,4 @@ const AnalysePlusCartListItem: FC<AnalysePlusCartListItemProps> = ({
   );
 };
 
-export default AnalysePlusCartListItem;
+export default AnalysePlusCartItem;

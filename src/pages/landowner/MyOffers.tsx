@@ -1,7 +1,8 @@
 import { useState, ChangeEvent } from 'react';
 import Search from '../../components/common/Search';
 import Select from '../../components/common/Select';
-import OfferList from '../../components/landowner/my-plots/OfferList';
+import GenericList from '../../components/common/GenericList';
+import OfferItem from '../../components/landowner/my-plots/OfferItem';
 import { sortOptions } from '../../types/select-options';
 import { filterData, sortData } from '../../utils/helper-functions';
 import { myOfferData } from '../../../mockData';
@@ -51,7 +52,10 @@ function MyOffers() {
             placeholder='Sortieren nach'
           />
         </div>
-        <OfferList data={sortedData} />
+        <GenericList
+          data={sortedData}
+          renderItem={(plot) => <OfferItem key={plot.id} data={plot} />}
+        />
       </div>
     </div>
   );
