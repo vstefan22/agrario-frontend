@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import DynamicTable from '../../common/DynamicTable';
+import ItemImage from '../../common/ItemImage';
 import { PLOT_DETAILS_COLUMNS } from '../../../types/table-data-types';
 import { PlotAnalysePlusType } from '../../../types/plot-types';
 import delIcon from '../../../assets/images/del.png';
-import ItemImage from '../../common/ItemImage';
 
 type AnalysePlusCartItemProps = {
   data: PlotAnalysePlusType;
