@@ -260,7 +260,7 @@ export default function Profile() {
                 />
               </div>
 
-              <div className='h-40 border-l-[1px] border-[#D9D9D9] mx-0'></div>
+              <div className='h-40 border-l-[1px] border-gray-light-125 mx-0'></div>
 
               <div className='relative w-24 h-24 pt-1'>
                 <div className='relative w-24 h-24 rounded-full border-4 border-primary overflow-hidden flex justify-center items-center'>
@@ -289,7 +289,7 @@ export default function Profile() {
               </div>
             </div>
             <div className='relative w-full'>
-              <hr className='border-t-[1px] border-[#D9D9D9] w-full' />
+              <hr className='border-t-[1px] border-gray-light-125 w-full' />
             </div>
           </div>
 

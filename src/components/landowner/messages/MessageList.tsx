@@ -24,8 +24,8 @@ const MessageList = ({ name, message, time, category }: MessageListTypes) => {
 
   return (
     <div
-      className={`py-4 border-b-[0.8px] border-[#E0E0E0] flex gap-6 px-4 items-center ${
-        isChecked && 'bg-[#4880FF]/[6%]'
+      className={`py-4 border-b-[0.8px] border-gray-light-125 flex gap-6 px-4 items-center ${
+        isChecked && 'bg-sky-blue/[6%]'
       }`}
     >
       <label
@@ -40,7 +40,7 @@ const MessageList = ({ name, message, time, category }: MessageListTypes) => {
           className='
   appearance-none
   w-[16px] h-[16px]
-  border-2 border-[#B3B3B3]
+  border-2 border-gray-light-200
   rounded
   cursor-pointer
   checked:bg-black

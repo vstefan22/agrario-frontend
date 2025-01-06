@@ -35,19 +35,19 @@ const MessageStorage = () => {
         />
         <div className='flex'>
           <button
-            className='bg-[#FAFBFD] w-[40px] h-[40px] border-[0.4px] rounded-l-[3px] border-gray-medium/70 flex justify-center items-center'
+            className='bg-gray-muted-light w-[40px] h-[40px] border-[0.4px] rounded-l-[3px] border-gray-medium/70 flex justify-center items-center'
             onClick={handleMsgArchive}
           >
             <img src={archiveIcon} alt='archive icon' />
           </button>
           <button
-            className='bg-[#FAFBFD] w-[40px] h-[40px] border-t-[0.4px] border-b-[0.4px] border-gray-medium/70 flex justify-center items-center'
+            className='bg-gray-muted-light w-[40px] h-[40px] border-t-[0.4px] border-b-[0.4px] border-gray-medium/70 flex justify-center items-center'
             onClick={handleMsgInfo}
           >
             <img src={infoIcon} alt='archive icon' />
           </button>
           <button
-            className='bg-[#FAFBFD] w-[40px] h-[40px] border-[0.4px] rounded-r-[3px] border-gray-medium/70 flex justify-center items-center'
+            className='bg-gray-muted-light w-[40px] h-[40px] border-[0.4px] rounded-r-[3px] border-gray-medium/70 flex justify-center items-center'
             onClick={handleMsgDelete}
           >
             <img src={delIcon} alt='delete icon' />

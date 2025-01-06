@@ -37,7 +37,7 @@ const MyWatchlistItem: FC<MyWatchlistItemProps> = ({ data }) => {
             />
 
             <button onClick={handleDeletePlot}>
-              <div className='border-[1.12px] border-[#C1D7E1] rounded-[50%] p-[11px] flex'>
+              <div className='border-[1.12px] border-gray-blue-light rounded-[50%] p-[11px] flex'>
                 <img src={delIcon} alt='Delete Icon' className='min-w-[14px]' />
               </div>
             </button>
