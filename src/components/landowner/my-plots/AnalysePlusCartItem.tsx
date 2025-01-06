@@ -3,6 +3,7 @@ import DynamicTable from '../../common/DynamicTable';
 import { PLOT_DETAILS_COLUMNS } from '../../../types/table-data-types';
 import { PlotAnalysePlusType } from '../../../types/plot-types';
 import delIcon from '../../../assets/images/del.png';
+import ItemImage from '../../common/ItemImage';
 
 type AnalysePlusCartItemProps = {
   data: PlotAnalysePlusType;
@@ -24,16 +25,10 @@ const AnalysePlusCartItem: FC<AnalysePlusCartItemProps> = ({
       }}
     >
       <div className='flex justify-between items-center mx-3'>
-        <div
+        <ItemImage
+          id={data.id}
           className={`flex border-[0.16px] min-w-[116px] min-h-[104px] border-gray-medium/60 rounded-xl flex-col justify-center items-center ${IDNummerClass}`}
-        >
-          <div className='flex items-center flex-col'>
-            <h5 className='font-bold text-[16px] text-black-muted whitespace-nowrap'>
-              {data.id}
-            </h5>
-            <p className='text-[12px] text-gray-dark-100 font-400'>ID-Nummer</p>
-          </div>
-        </div>
+        />
         <div className='flex flex-col min-h-[104px] whitespace-nowrap'>
           <DynamicTable
             data={data}
