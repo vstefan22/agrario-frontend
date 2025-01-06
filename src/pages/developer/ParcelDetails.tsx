@@ -1,6 +1,6 @@
-import imgDetails from '../../assets/images/details-document.png';
-import usePlotStore from '../../store/plot-store';
 import Button from '../../components/common/Button';
+import usePlotStore from '../../store/plot-store';
+import imgDetails from '../../assets/images/details-document.png';
 
 const ParcelDetails = () => {
   const { plot } = usePlotStore();

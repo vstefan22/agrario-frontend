@@ -1,10 +1,10 @@
 import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Button from '../../common/Button';
 import DynamicTable from '../../common/DynamicTable';
 import { PLOT_SEARCH_COLUMNS } from '../../../types/table-data-types';
 import { PlotSearchType } from '../../../types/plot-search-types';
 import imgPlaceholder from '../../../assets/images/image-placeholder.png';
-import Button from '../../common/Button';
-import { useNavigate } from 'react-router-dom';
 
 type PlotSearchListItemProps = {
   data: PlotSearchType;

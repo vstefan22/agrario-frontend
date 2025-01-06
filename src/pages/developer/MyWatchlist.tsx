@@ -1,13 +1,13 @@
-import MyWatchlistList from '../../components/developer/my-plots/MyWatchlistList';
-import { myWatchlistData } from '../../../mockData';
 import { useState, ChangeEvent } from 'react';
 import Search from '../../components/common/Search';
 import Select from '../../components/common/Select';
+import MyWatchlistList from '../../components/developer/my-plots/MyWatchlistList';
 import { sortOptions } from '../../types/select-options';
 import {
   sortPlotsSearchData,
   filterPlotsSearchData,
 } from '../../utils/helper-functions';
+import { myWatchlistData } from '../../../mockData';
 
 const MyWatchlist = () => {
   const [searchTerm, setSearchTerm] = useState('');

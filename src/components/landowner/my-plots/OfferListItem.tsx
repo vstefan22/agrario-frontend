@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DynamicTable from '../../common/DynamicTable';
 import Button from '../../common/Button';
-import { THANK_YOU_MARKETING_COLUMNS } from '../../../types/table-data-types';
+import { PLOT_DETAILS_COLUMNS } from '../../../types/table-data-types';
 import { ThankYouMarketingType } from '../../../types/thank-you-marketing-types';
 import active from '../../../assets/images/vermarktung-aktiv.png';
 import inactive from '../../../assets/images/vermarktung-in-vorbereitung.png';
@@ -46,7 +46,7 @@ const OfferListItem: FC<OfferListItemProps> = ({ data }) => {
           </div>
         </div>
         <div className='flex flex-col'>
-          <DynamicTable data={data} columns={THANK_YOU_MARKETING_COLUMNS} />
+          <DynamicTable data={data} columns={PLOT_DETAILS_COLUMNS} />
           <div className='flex justify-end items-center pt-5 gap-3'>
             <img
               src={data.analyzePlus === 'active' ? active : inactive}
