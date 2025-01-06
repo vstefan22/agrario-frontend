@@ -1,7 +1,7 @@
+import { useNavigate } from 'react-router-dom';
 import ActionCard from '../../components/start/ActionCard';
 import cardImg1 from '../../assets/images/card-img1.png';
 import cardImg2 from '../../assets/images/card-img-2.png';
-import { useNavigate } from 'react-router-dom';
 
 const StartDeveloper = () => {
   const navigate = useNavigate();

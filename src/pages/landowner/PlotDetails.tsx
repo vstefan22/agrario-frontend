@@ -1,7 +1,7 @@
-import Button from '../../components/common/Button';
-import imgDetails from '../../assets/images/details-document.png';
-import usePlotStore from '../../store/plot-store';
 import { useNavigate } from 'react-router-dom';
+import Button from '../../components/common/Button';
+import usePlotStore from '../../store/plot-store';
+import imgDetails from '../../assets/images/details-document.png';
 
 function PlotDetails() {
   const navigate = useNavigate();

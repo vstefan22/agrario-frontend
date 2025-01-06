@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import DynamicTable from '../../common/DynamicTable';
-import { OFFER_ITEM_COLUMNS } from '../../../types/table-data-types';
+import { PLOT_DETAILS_COLUMNS } from '../../../types/table-data-types';
 import { OfferItemType } from '../../../types/offer-types';
 import imgPlaceholder from '../../../assets/images/image-placeholder.png';
 
@@ -36,7 +36,7 @@ const OfferItem: FC<OfferItemProps> = ({ data }) => {
           </div>
         </div>
         <div className='flex flex-col'>
-          <DynamicTable data={data} columns={OFFER_ITEM_COLUMNS} />
+          <DynamicTable data={data} columns={PLOT_DETAILS_COLUMNS} />
         </div>
       </div>
     </div>

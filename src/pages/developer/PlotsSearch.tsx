@@ -1,18 +1,18 @@
-import PlotSearchList from '../../components/developer/my-plots/PlotSearchList';
-import { plotSearchData } from '../../../mockData';
 import { useState, ChangeEvent, useCallback } from 'react';
+import PlotSearchList from '../../components/developer/my-plots/PlotSearchList';
 import Search from '../../components/common/Search';
 import Select from '../../components/common/Select';
-import { sortOptions } from '../../types/select-options';
+import RangeSlider from '../../components/common/RangeSlider';
+import Button from '../../components/common/Button';
+import Checkbox from '../../components/common/Checkbox';
 import {
   filterPlotsSearchData,
   sortPlotsSearchData,
 } from '../../utils/helper-functions';
-import filtersImg from '../../assets/images/filters.png';
-import RangeSlider from '../../components/common/RangeSlider';
 import { filterPlotSearchDataRange } from '../../utils/helper-functions';
-import Button from '../../components/common/Button';
-import Checkbox from '../../components/common/Checkbox';
+import { sortOptions } from '../../types/select-options';
+import filtersImg from '../../assets/images/filters.png';
+import { plotSearchData } from '../../../mockData';
 
 const PlotsSearch = () => {
   const [searchTerm, setSearchTerm] = useState('');

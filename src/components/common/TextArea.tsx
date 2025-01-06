@@ -35,16 +35,7 @@ const TextArea: FC<TextAreaProps> = ({
         name={name}
         value={value}
         onChange={onChange}
-        className='
-          w-full
-          h-[240px]
-          p-4
-          border border-gray-medium/60
-          rounded-[8px]
-          focus:outline-none
-          focus:ring-2
-          focus:ring-blue-400
-        '
+        className='w-full h-[240px] p-4 border border-gray-medium/60 rounded-[8px] focus:outline-none focus:ring-2 focus:ring-blue-400'
         placeholder={placeholder}
       />
     </div>

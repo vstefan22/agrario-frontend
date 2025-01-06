@@ -1,4 +1,5 @@
 import { useState, ChangeEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import OfferItem from '../../components/landowner/my-plots/OfferItem';
 import Button from '../../components/common/Button';
 import DatePicker from '../../components/common/DatePicker';
@@ -8,7 +9,6 @@ import TextArea from '../../components/common/TextArea';
 import UploadFile from '../../components/common/UploadFile';
 import { defaultOptions } from '../../types/select-options';
 import { offerItemData } from '../../../mockData';
-import { useNavigate } from 'react-router-dom';
 
 const initialFormData = {
   availableDate: null as Date | null,

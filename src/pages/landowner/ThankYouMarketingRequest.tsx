@@ -1,7 +1,7 @@
-import { thankYouMarketingData } from '../../../mockData';
-import ThankYouMarketingList from '../../components/landowner/my-plots/ThankYouMarketingList';
-import Button from '../../components/common/Button';
 import { useNavigate } from 'react-router-dom';
+import Button from '../../components/common/Button';
+import ThankYouMarketingList from '../../components/landowner/my-plots/ThankYouMarketingList';
+import { thankYouMarketingData } from '../../../mockData';
 
 const ThankYouMarketingRequest = () => {
   const navigate = useNavigate();

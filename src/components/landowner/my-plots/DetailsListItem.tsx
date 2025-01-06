@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import DynamicTable from '../../common/DynamicTable';
-import { THANK_YOU_MARKETING_COLUMNS } from '../../../types/table-data-types';
+import { PLOT_DETAILS_COLUMNS } from '../../../types/table-data-types';
 import { DetailsType } from '../../../types/details-types';
 import active from '../../../assets/images/vermarktung-aktiv.png';
 import inactive from '../../../assets/images/vermarktung-in-vorbereitung.png';
@@ -38,7 +38,7 @@ const DetailsListItem: FC<DetailsListItemProps> = ({ data }) => {
           </div>
         </div>
         <div className='flex flex-col'>
-          <DynamicTable data={data} columns={THANK_YOU_MARKETING_COLUMNS} />
+          <DynamicTable data={data} columns={PLOT_DETAILS_COLUMNS} />
           <div className='flex justify-between items-center pt-5 gap-3 mt-auto'>
             <div>
               <h1 className='text-black-muted text-[14px]'>

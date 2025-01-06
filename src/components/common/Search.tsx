@@ -16,15 +16,7 @@ const Search: FC<SearchProps> = ({
 }) => {
   return (
     <div
-      className={`
-        flex items-center
-        w-[400px] h-[48px]
-        bg-white
-        border border-gray-light-150
-        rounded-[8px]
-        px-3
-        ${className}
-      `}
+      className={`flex items-center w-[400px] h-[48px] bg-white border border-gray-light-150 rounded-[8px] px-3 ${className}`}
       style={{ boxShadow: 'none' }}
     >
       <img src={searchIcon} alt='Search' className='w-4 h-4 mr-2' />
