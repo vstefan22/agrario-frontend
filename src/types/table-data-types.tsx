@@ -1,51 +1,29 @@
 export const MY_PLOTS_COLUMNS = [
-  { key: 'state', label: 'Bundesland' },
+  { key: 'state_name', label: 'Bundesland' },
   { key: 'plz', label: 'PLZ' },
-  { key: 'city', label: 'Gemeinde' },
-  { key: 'district', label: 'Gemarkung' },
-  { key: 'flur', label: 'Flur' },
-  { key: 'flurstuck', label: 'Flurstuck' },
-  { key: 'registry', label: 'Nutzung laut Liegenschaftskataster' },
-  { key: 'size', label: 'Größe' },
-  { key: 'parcelNumber', label: 'Parcel number' },
+  { key: 'municipality_name', label: 'Gemeinde' },
+  { key: 'district_name', label: 'Gemarkung' },
+  { key: 'cadastral_area', label: 'Flur' },
+  { key: 'cadastral_sector', label: 'Flurstuck' },
+  { key: 'land_use', label: 'Nutzung laut Liegenschaftskataster' },
+  { key: 'plot_number_main', label: 'Größe' },
+  { key: 'plot_number_secondary', label: 'Parcel number' },
 ];
 
-export const OFFER_ITEM_COLUMNS = [
-  { key: 'bundesland', label: 'Bundesland' },
+export const PLOT_DETAILS_COLUMNS = [
+  { key: 'state_name', label: 'Bundesland' },
   { key: 'plz', label: 'PLZ' },
-  { key: 'gemeinde', label: 'Gemeinde' },
-  { key: 'gemarkung', label: 'Gemarkung' },
-  { key: 'flur', label: 'Flur' },
-  { key: 'flurstuck', label: 'Flurstück' },
-  { key: 'nll', label: 'Nutzung laut Liegenschaftskataster' },
-  { key: 'grobe', label: 'Größe' },
-];
-
-export const ANALYSE_PLUS_CART_COLUMNS = [
-  { key: 'bundesland', label: 'Bundesland' },
-  { key: 'plz', label: 'PLZ' },
-  { key: 'gemeinde', label: 'Gemeinde' },
-  { key: 'gemarkung', label: 'Gemarkung' },
-  { key: 'flur', label: 'Flur' },
-  { key: 'flurstuck', label: 'Flurstück' },
-  { key: 'nll', label: 'Nutzung laut Liegenschaftskataster' },
-  { key: 'grobe', label: 'Größe' },
-];
-
-export const THANK_YOU_MARKETING_COLUMNS = [
-  { key: 'state', label: 'Bundesland' },
-  { key: 'plz', label: 'PLZ' },
-  { key: 'city', label: 'Gemeinde' },
-  { key: 'district', label: 'Gemarkung' },
-  { key: 'flur', label: 'Flur' },
-  { key: 'flurstuck', label: 'Flurstuck' },
-  { key: 'registry', label: 'Nutzung laut Liegenschaftskataster' },
-  { key: 'size', label: 'Größe' },
+  { key: 'municipality_name', label: 'Gemeinde' },
+  { key: 'district_name', label: 'Gemarkung' },
+  { key: 'cadastral_area', label: 'Flur' },
+  { key: 'cadastral_sector', label: 'Flurstuck' },
+  { key: 'land_use', label: 'Nutzung laut Liegenschaftskataster' },
+  { key: 'plot_number_main', label: 'Größe' },
 ];
 
 export const PLOT_SEARCH_COLUMNS = [
-  { key: 'state', label: 'Bundesland' },
-  { key: 'district', label: 'Landkreis' },
-  { key: 'registry', label: 'Nutzung laut Liegenschaftskataster' },
-  { key: 'size', label: 'Größe' },
+  { key: 'state_name', label: 'Bundesland' },
+  { key: 'district_name', label: 'Landkreis' },
+  { key: 'land_use', label: 'Nutzung laut Liegenschaftskataster' },
+  { key: 'plot_number_main', label: 'Größe' },
 ];

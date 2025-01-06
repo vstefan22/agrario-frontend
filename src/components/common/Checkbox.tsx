@@ -48,16 +48,7 @@ const Checkbox: FC<CheckboxProps> = ({
           `}
         />
         {variant === 'primary' && props.checked && (
-          <div
-            className='
-              absolute
-              inset-0
-              flex
-              justify-center
-              items-center
-              pointer-events-none
-            '
-          >
+          <div className='absolute inset-0 flex justify-center items-center pointer-events-none'>
             <CheckedIcon />
           </div>
         )}

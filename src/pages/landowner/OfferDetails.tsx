@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import DetailsList from '../../components/landowner/my-plots/DetailsList';
 import DatePicker from '../../components/common/DatePicker';
 import Select from '../../components/common/Select';
@@ -8,7 +9,6 @@ import UploadFile from '../../components/common/UploadFile';
 import Button from '../../components/common/Button';
 import { defaultOptions } from '../../types/select-options';
 import { detailsData } from '../../../mockData';
-import { useNavigate } from 'react-router-dom';
 
 const OfferDetails = () => {
   const [formData, setFormData] = useState<{

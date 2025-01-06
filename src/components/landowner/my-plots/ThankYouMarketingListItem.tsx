@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import DynamicTable from '../../common/DynamicTable';
-import { THANK_YOU_MARKETING_COLUMNS } from '../../../types/table-data-types';
+import { PLOT_DETAILS_COLUMNS } from '../../../types/table-data-types';
 import { ThankYouMarketingType } from '../../../types/thank-you-marketing-types';
 import imgPlaceholder from '../../../assets/images/image-placeholder.png';
 import preparationImg from '../../../assets/images/preparation.png';
@@ -39,7 +39,7 @@ const ThankYouMarketingListItem: FC<ThankYouMarketingItemProps> = ({
           </div>
         </div>
         <div className='flex flex-col'>
-          <DynamicTable data={data} columns={THANK_YOU_MARKETING_COLUMNS} />
+          <DynamicTable data={data} columns={PLOT_DETAILS_COLUMNS} />
           <div className='flex justify-end items-center gap-3 mt-auto'>
             <img
               src={preparationImg}

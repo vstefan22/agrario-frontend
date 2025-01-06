@@ -108,14 +108,7 @@ const Select: FC<SelectProps> = ({
       {variant === 'default' && label && (
         <div className={`flex justify-between ${divWidthClass}`}>
           <label
-            className={`
-              text-gray-dark-200
-              text-[16px]
-              font-[400]
-              leading-[24px]
-              mb-2
-              block ${labelClassName}
-            `}
+            className={`text-gray-dark-200 text-[16px] font-[400] leading-[24px] mb-2 block ${labelClassName}`}
             style={{ height: '24px' }}
           >
             {label}
@@ -159,9 +152,7 @@ const Select: FC<SelectProps> = ({
                   <button
                     key={option}
                     onClick={() => handleOptionClick(option)}
-                    className={`
-                      w-full h-[50px] px-4 text-[15px]
-                      flex items-center justify-center text-center
+                    className={`w-full h-[50px] px-4 text-[15px] flex items-center justify-center text-center
                       rounded-[6px] transition-colors duration-200
                       ${
                         isSelected

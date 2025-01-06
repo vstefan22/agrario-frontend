@@ -1,7 +1,7 @@
+import { useNavigate } from 'react-router-dom';
+import Button from '../../components/common/Button';
 import AnalysePlusCartList from '../../components/landowner/my-plots/AnalysePlusCartList';
 import { analysePlusCartData } from '../../../mockData';
-import Button from '../../components/common/Button';
-import { useNavigate } from 'react-router-dom';
 
 const ThankYouOrderRequest = () => {
   const navigate = useNavigate();

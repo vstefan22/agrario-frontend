@@ -20,7 +20,6 @@ const RangeSlider = ({
   min,
   max,
 }: rangeSliderTypes) => {
-  // Srediti podatke i funkcije da budu reusable kada se bude radio r2v4
   const [values, setValues] = useState<[number, number]>(initialValues);
   const STEP = 0.1;
   const MIN = min;

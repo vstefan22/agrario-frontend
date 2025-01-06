@@ -12,20 +12,21 @@ export default function Register2() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    company: '',
+    firstname: '',
+    lastname: '',
+    company_name: '',
     position: '',
-    street: '',
-    postalCode: '',
+    street_address: '',
+    zipcode: '',
     city: '',
-    website: '',
+    company_website: '',
     email: '',
-    mobile: '',
+    phone_number: '',
     password: '',
-    confirmPassword: '',
-    privacyAccepted: false,
-    termsAccepted: false,
+    confirm_password: '',
+    role: 'developer',
+    privacy_accepted: false,
+    terms_accepted: false,
     iAccept: false,
     windEnergy: false,
     solarEnergy: false,
@@ -50,7 +51,7 @@ export default function Register2() {
       checked = (e.target as HTMLInputElement).checked;
     }
 
-    if (name === 'mobile') {
+    if (name === 'phone_number') {
       const regex = /^\+?[0-9]*$/;
       if (!regex.test(value)) {
         return;
@@ -67,44 +68,51 @@ export default function Register2() {
     e.preventDefault();
 
     if (
-      !formData.firstName ||
-      !formData.lastName ||
-      !formData.company ||
+      !formData.firstname ||
+      !formData.lastname ||
+      !formData.company_name ||
       !formData.email ||
       !formData.password ||
-      !formData.confirmPassword
+      !formData.confirm_password
     ) {
       setError('Bitte füllen Sie alle erforderlichen Felder aus.');
       return;
     }
-    if (formData.password !== formData.confirmPassword) {
+    if (formData.password !== formData.confirm_password) {
       setError('Die Passwörter stimmen nicht überein.');
       return;
     }
-    if (!formData.privacyAccepted || !formData.termsAccepted || !formData.iAccept) {
+    if (
+      !formData.privacy_accepted ||
+      !formData.terms_accepted ||
+      !formData.iAccept
+    ) {
       setError('Bitte akzeptieren Sie die Datenschutzbedingungen und AGB.');
       return;
     }
 
-
-    if (!/^\+?[0-9]*$/.test(formData.mobile)) {
-      setError('Bitte geben Sie eine gültige Telefonnummer ein (z.B. +5316326236).');
+    if (!/^\+?[0-9]*$/.test(formData.phone_number)) {
+      setError(
+        'Bitte geben Sie eine gültige Telefonnummer ein (z.B. +5316326236).'
+      );
       return;
     }
 
-    if (!formData.batteryStorage &&
+    if (
+      !formData.batteryStorage &&
       !formData.chargingInfrastructure &&
       !formData.solarEnergy &&
       !formData.hydrogen &&
       !formData.windEnergy &&
       !formData.heatStorage &&
       !formData.ecological &&
-      formData.additionalText.trim() === ""
+      formData.additionalText.trim() === ''
     ) {
-      setError('Bitte wählen Sie mindestens eine Option oder geben Sie einen Text in das Feld "Sonstige" ein.');
+      setError(
+        'Bitte wählen Sie mindestens eine Option oder geben Sie einen Text in das Feld "Sonstige" ein.'
+      );
       return;
     }
-
 
     setError('');
     setLoading(true);
@@ -121,21 +129,20 @@ export default function Register2() {
       setUser({ email: user.email, id: user.uid });
 
       const userData = {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        company: formData.company,
+        firstname: formData.firstname,
+        lastname: formData.lastname,
+        company_name: formData.company_name,
         position: formData.position || null,
-        street: formData.street,
-        postalCode: formData.postalCode,
+        street_address: formData.street_address,
+        zipcode: formData.zipcode,
         city: formData.city,
-        website: formData.website || null,
+        company_website: formData.company_website || null,
         email: formData.email,
-        mobile: formData.mobile || null,
-        createdAt: new Date().toISOString(),
+        phone_number: formData.phone_number || null,
       };
       // TODO: poziv ka bekendu
       console.log('user data: ', userData);
-      navigate('/login');
+      navigate('/');
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message || 'Ein Fehler ist aufgetreten.');
@@ -148,9 +155,10 @@ export default function Register2() {
   };
 
   return (
-    // removed h-full -> added min-h-screen + p-12
     <div className='bg-primary flex flex-col items-center justify-center px-4 min-h-screen p-12'>
-      <h1 className='text-[46px] font-bold mb-3 text-white'>Neue Registrierung</h1>
+      <h1 className='text-[46px] font-bold mb-3 text-white'>
+        Neue Registrierung
+      </h1>
       <p className='text-white mb-6'>Daten zum Unternehmen</p>
       <div className='w-full max-w-[960px] bg-white/10 border-[3px] border-[rgba(255,255,255,0.06)] rounded-[44px] p-8'>
         {error && <div className='text-red-600 mb-6'>{error}</div>}
@@ -161,24 +169,24 @@ export default function Register2() {
           <Input
             label='Vorname'
             placeholder='Text hinzufügen'
-            name='firstName'
-            value={formData.firstName}
+            name='firstname'
+            value={formData.firstname}
             onChange={handleChange}
             required
           />
           <Input
             label='Nachname'
             placeholder='Text hinzufügen'
-            name='lastName'
-            value={formData.lastName}
+            name='lastname'
+            value={formData.lastname}
             onChange={handleChange}
             required
           />
           <Input
             label='Name des Unternehmens'
             placeholder='Text hinzufügen'
-            name='company'
-            value={formData.company}
+            name='company_name'
+            value={formData.company_name}
             onChange={handleChange}
             required
           />
@@ -192,8 +200,8 @@ export default function Register2() {
           <Input
             label='Anschrift/Strasse'
             placeholder='Text hinzufügen'
-            name='street'
-            value={formData.street}
+            name='street_address'
+            value={formData.street_address}
             onChange={handleChange}
             required
             className='md:col-span-1'
@@ -202,8 +210,8 @@ export default function Register2() {
             <Input
               label='PLZ'
               placeholder='66651'
-              name='postalCode'
-              value={formData.postalCode}
+              name='zipcode'
+              value={formData.zipcode}
               onChange={handleChange}
               required
             />
@@ -219,23 +227,26 @@ export default function Register2() {
           <Input
             label='Website des Unternehmens'
             placeholder='https://'
-            name='website'
-            value={formData.website}
+            name='company_website'
+            value={formData.company_website}
             onChange={handleChange}
           />
           <Input
             label='Telefonnummer'
             placeholder='0167498753'
-            name='mobile'
+            name='phone_number'
             type='tel'
-            value={formData.mobile}
+            value={formData.phone_number}
             onChange={handleChange}
             pattern='^\+?[0-9]*$'
           />
 
           <div className='col-span-2 text-white w-[72%] mt-8'>
             <h1 className='text-[24px]'>Ihr Suchprofii</h1>
-            <p className='text-[12px] mb-8 w-[70%]'>Unser Unternehmen interessiert sich für Grundstücke die für folgende Anwendungen geeignet sind</p>
+            <p className='text-[12px] mb-8 w-[70%]'>
+              Unser Unternehmen interessiert sich für Grundstücke die für
+              folgende Anwendungen geeignet sind
+            </p>
             <div className='grid grid-cols-2 gap-y-6 mb-8'>
               <Checkbox
                 label='Windenergie (On-Shore)'
@@ -281,8 +292,7 @@ export default function Register2() {
                   onChange={handleChange}
                 />
                 <div className='w-[433px]'>
-
-                  {/* TODO UBACITI FUNKCIONALNOST */}
+                  {/* TODO: add functionality */}
                   <Input
                     label='Sonstige'
                     placeholder='Beispiel'
@@ -296,8 +306,9 @@ export default function Register2() {
             </div>
           </div>
 
-
-          <h1 className='col-span-2 text-white text-[24px]'>Ihre Zugangsdaten</h1>
+          <h1 className='col-span-2 text-white text-[24px]'>
+            Ihre Zugangsdaten
+          </h1>
           <Input
             label='Email Adresse'
             placeholder='max@musteradresse.de'
@@ -319,9 +330,9 @@ export default function Register2() {
           <Input
             label='Passwort bestätigen'
             placeholder='asdasd'
-            name='confirmPassword'
+            name='confirm_password'
             type='password'
-            value={formData.confirmPassword}
+            value={formData.confirm_password}
             onChange={handleChange}
             required
             className='md:col-span-1'
@@ -330,21 +341,21 @@ export default function Register2() {
             <div className='col-span-2'>
               <Checkbox
                 label='Ich aktzeptiere die Datenschutzbedingungen'
-                name='privacyAccepted'
-                checked={formData.privacyAccepted}
+                name='privacy_accepted'
+                checked={formData.privacy_accepted}
                 onChange={handleChange}
               />
             </div>
             <Checkbox
-              label='Ich aktzeptiere..............'
+              label='Ich aktzeptiere...'
               name='iAccept'
               checked={formData.iAccept}
               onChange={handleChange}
             />
             <Checkbox
               label='Ich aktzeptiere die Allgemeinen Geschäftsbedingungen'
-              name='termsAccepted'
-              checked={formData.termsAccepted}
+              name='terms_accepted'
+              checked={formData.terms_accepted}
               onChange={handleChange}
             />
           </div>

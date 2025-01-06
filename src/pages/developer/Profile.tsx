@@ -6,13 +6,13 @@ import Button from '../../components/common/Button';
 import IconCircleButton from '../../components/common/IconCircleButton';
 import { EyeOpenIcon, EyeClosedIcon } from '../../assets/svgs/svg-icons';
 // import useAuthStore from '../../store/auth-store';
-import CompanyLogo from '../../assets/images/company-logo.png';
 import Select from '../../components/common/Select';
-import { profileOptions } from '../../types/select-options';
 import Checkbox from '../../components/common/Checkbox';
 import SlideCheckbox from '../../components/common/SlideCheckbox';
 import PackageCard from '../../components/profile/PackageCard';
+import { profileOptions } from '../../types/select-options';
 import { PACKAGE_FEATURES } from '../../types/package-types';
+import CompanyLogo from '../../assets/images/company-logo.png';
 
 interface UserData {
   companyName: string;
