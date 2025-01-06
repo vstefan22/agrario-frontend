@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import DynamicTable from '../../common/DynamicTable';
+import ItemImage from '../../common/ItemImage';
 import { PLOT_DETAILS_COLUMNS } from '../../../types/table-data-types';
 import { PlotOfferType } from '../../../types/plot-types';
-import ItemImage from '../../common/ItemImage';
 
 type OfferPreparationItemProps = {
   data: PlotOfferType;

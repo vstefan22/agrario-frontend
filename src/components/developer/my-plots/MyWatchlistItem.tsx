@@ -2,10 +2,10 @@ import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DynamicTable from '../../common/DynamicTable';
 import Button from '../../common/Button';
+import ItemImage from '../../common/ItemImage';
 import { PLOT_SEARCH_COLUMNS } from '../../../types/table-data-types';
 import { PlotSearchType } from '../../../types/plot-types';
 import delIcon from '../../../assets/images/del.png';
-import ItemImage from '../../common/ItemImage';
 
 type MyWatchlistItemProps = {
   data: PlotSearchType;

@@ -2,12 +2,12 @@ import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../common/Button';
 import DynamicTable from '../../common/DynamicTable';
+import ItemImage from '../../common/ItemImage';
 import usePlotStore from '../../../store/plot-store';
 import { MY_PLOTS_COLUMNS } from '../../../types/table-data-types';
 import { PlotType } from '../../../types/plot-types';
 import active from '../../../assets/images/active.png';
 import inactive from '../../../assets/images/inactive.png';
-import ItemImage from '../../common/ItemImage';
 
 type PlotItemProps = {
   data: PlotType;
