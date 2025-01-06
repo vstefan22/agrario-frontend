@@ -30,7 +30,6 @@ export default function Sidebar() {
     userRole = 'developer';
   }
 
-  // Helper: exact = true => mora da se poklapa tačno
   const isRouteActive = (basePath: string, exact = false) => {
     if (exact) {
       return location.pathname === basePath;
