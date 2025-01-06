@@ -2,9 +2,9 @@ import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../common/Button';
 import DynamicTable from '../../common/DynamicTable';
+import ItemImage from '../../common/ItemImage';
 import { PLOT_SEARCH_COLUMNS } from '../../../types/table-data-types';
 import { PlotSearchType } from '../../../types/plot-types';
-import ItemImage from '../../common/ItemImage';
 
 type PlotSearchItemProps = {
   data: PlotSearchType;
