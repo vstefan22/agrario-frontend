@@ -27,6 +27,7 @@ import Support from './pages/landowner/Support';
 import StartLandowner from './pages/landowner/Start';
 import StartDeveloper from './pages/developer/Start';
 import ParcelDetails from './pages/developer/ParcelDetails';
+import Messages from './pages/landowner/Messages';
 
 const App = () => {
   return (
@@ -44,6 +45,7 @@ const App = () => {
                 <Routes>
                   <Route path='/profile' element={<ProfileLandowner />} />
                   <Route path='/password-change' element={<PasswordChange />} />
+                  <Route path='/messages' element={<Messages />} />
                   <Route path='/' element={<StartLandowner />} />
                   <Route path='/new-plot' element={<NewPlot />} />
                   <Route path='/my-plots' element={<MyPlots />} />
