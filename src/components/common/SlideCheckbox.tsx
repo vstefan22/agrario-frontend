@@ -14,7 +14,7 @@ const SlideCheckbox: React.FC<TSlideCheckboxProps> = ({
   onChange,
 }) => {
   return (
-    <div className='bg-[#2179A1] rounded-3xl'>
+    <div className='bg-primary-blue rounded-3xl'>
       <label className='relative inline-flex items-center cursor-pointer rounded-full bg-blue-600 w-48 h-12 p-1'>
         <input
           type='checkbox'
