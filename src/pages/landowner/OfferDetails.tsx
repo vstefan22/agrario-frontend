@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import DetailsList from '../../components/my-plots/DetailsList';
+import DetailsList from '../../components/landowner/my-plots/DetailsList';
 import DatePicker from '../../components/common/DatePicker';
 import Select from '../../components/common/Select';
 import Checkbox from '../../components/common/Checkbox';

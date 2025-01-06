@@ -7,7 +7,7 @@ import GoogleMap, {
 } from '../../components/common/GoogleMap';
 // import useHttpRequest from '../hooks/http-request-hook';
 // import useAuthStore from '../store/auth-store';
-import SearchByAttributesUpdated from '../../components/my-plots/SearchByAttributesUpdated';
+import SearchByAttributesUpdated from '../../components/search-with-backup/SearchByAttributesUpdated';
 
 type SearchData = {
   federalState: string;

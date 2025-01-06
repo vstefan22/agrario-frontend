@@ -1,21 +1,20 @@
 import { FC } from 'react';
-import DynamicTable from '../common/DynamicTable';
-import { PLOT_SEARCH_COLUMNS } from '../../types/table-data-types';
-import { PlotSearchType } from '../../types/plot-search-types';
-import imgPlaceholder from '../../assets/images/image-placeholder.png';
-import Button from '../common/Button';
+import DynamicTable from '../../common/DynamicTable';
+import { PLOT_SEARCH_COLUMNS } from '../../../types/table-data-types';
+import { PlotSearchType } from '../../../types/plot-search-types';
+import imgPlaceholder from '../../../assets/images/image-placeholder.png';
+import Button from '../../common/Button';
 import { useNavigate } from 'react-router-dom';
-import delIcon from '../../assets/images/del.png';
 
-type MyWatchlistListItemProps = {
+type PlotSearchListItemProps = {
   data: PlotSearchType;
 };
 
-const MyWatchlistListItem: FC<MyWatchlistListItemProps> = ({ data }) => {
+const PlotSearchListItem: FC<PlotSearchListItemProps> = ({ data }) => {
   const navigate = useNavigate();
 
-  const handleDeletePlot = () => {
-    console.log('delete plot');
+  const AddToWatchList = () => {
+    console.log('add to watchlist');
   };
 
   return (
@@ -45,20 +44,11 @@ const MyWatchlistListItem: FC<MyWatchlistListItemProps> = ({ data }) => {
           </div>
         </div>
         <div className='flex flex-col'>
-          <div className='flex gap-6'>
-            <DynamicTable
-              data={data}
-              columns={PLOT_SEARCH_COLUMNS}
-              customClassName='px-10'
-            />
-
-            <button onClick={handleDeletePlot}>
-              <div className='border-[1.12px] border-[#C1D7E1] rounded-[50%] p-[11px] flex'>
-                <img src={delIcon} alt='Delete Icon' className='min-w-[14px]' />
-              </div>
-            </button>
-          </div>
-
+          <DynamicTable
+            data={data}
+            columns={PLOT_SEARCH_COLUMNS}
+            customClassName='px-10'
+          />
           <div className='flex justify-between items-center pt-5 gap-3 mt-auto'>
             <div>
               <h1 className='text-black-muted text-[14px]'>
@@ -68,7 +58,16 @@ const MyWatchlistListItem: FC<MyWatchlistListItemProps> = ({ data }) => {
                 {data.evaluation}
               </p>
             </div>
-            <div className='flex gap-6 mr-[60px]'>
+            <div className='flex gap-6'>
+              <Button
+                type='button'
+                variant='blueSecondary'
+                className='w-[200px]'
+                onClick={AddToWatchList}
+              >
+                Zu Watchlist hinzufügen
+              </Button>
+
               <Button
                 type='button'
                 variant='bluePrimary'
@@ -87,4 +86,4 @@ const MyWatchlistListItem: FC<MyWatchlistListItemProps> = ({ data }) => {
   );
 };
 
-export default MyWatchlistListItem;
+export default PlotSearchListItem;

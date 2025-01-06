@@ -1,6 +1,6 @@
 import { FC, Fragment } from 'react';
 import OfferListItem from './OfferListItem';
-import { ThankYouMarketingType } from '../../types/thank-you-marketing-types';
+import { ThankYouMarketingType } from '../../../types/thank-you-marketing-types';
 
 type OfferListProps = {
   data: ThankYouMarketingType[];

@@ -1,7 +1,7 @@
 import { useState, ChangeEvent } from 'react';
 import Search from '../../components/common/Search';
 import Select from '../../components/common/Select';
-import OfferList from '../../components/my-plots/OfferList';
+import OfferList from '../../components/landowner/my-plots/OfferList';
 import { sortOptions } from '../../types/select-options';
 import { filterData, sortData } from '../../utils/helper-functions';
 import { myOfferData } from '../../../mockData';

@@ -1,6 +1,6 @@
 import { FC, Fragment } from 'react';
 import DetailsListItem from './DetailsListItem';
-import { DetailsType } from '../../types/details-types';
+import { DetailsType } from '../../../types/details-types';
 
 type DetailsListProps = {
   data: DetailsType[];

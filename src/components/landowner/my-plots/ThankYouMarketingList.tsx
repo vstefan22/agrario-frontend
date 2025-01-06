@@ -1,6 +1,6 @@
 import { FC, Fragment } from 'react';
-import ThankYouMarketingListItem from './ThankYouMarketingListItem';
-import { PlotType } from '../../types/plot-types';
+import ThankYouMarketingListItem from '../my-plots/ThankYouMarketingListItem';
+import { PlotType } from '../../../types/plot-types';
 
 type PlotListProps = {
   data: PlotType[];

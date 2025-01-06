@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import DynamicTable from '../common/DynamicTable';
-import { ANALYSE_PLUS_CART_COLUMNS } from '../../types/table-data-types';
-import { AnalysePlusCartType } from '../../types/analyse-plus-cart-types';
-import delIcon from '../../assets/images/del.png';
+import DynamicTable from '../../common/DynamicTable';
+import { ANALYSE_PLUS_CART_COLUMNS } from '../../../types/table-data-types';
+import { AnalysePlusCartType } from '../../../types/analyse-plus-cart-types';
+import delIcon from '../../../assets/images/del.png';
 
 type AnalysePlusCartListItemProps = {
   data: AnalysePlusCartType;

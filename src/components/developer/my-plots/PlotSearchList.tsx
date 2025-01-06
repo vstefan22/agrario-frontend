@@ -1,6 +1,6 @@
 import { FC, Fragment } from 'react';
-import PlotSearchListItem from './PlotSearchListItem';
-import { PlotSearchType } from '../../types/plot-search-types';
+import PlotSearchListItem from '../my-plots/PlotSearchListItem';
+import { PlotSearchType } from '../../../types/plot-search-types';
 
 type PlotSearchListProps = {
   data: PlotSearchType[];
