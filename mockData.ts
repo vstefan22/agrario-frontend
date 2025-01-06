@@ -257,3 +257,78 @@ export const myWatchlistData = [
     evaluation: 'Potentiell geeignet',
   },
 ];
+
+export const receivedMessages = [
+  {
+    name: 'Jullu Jalal',
+    message: 'Our Bachelor of Commerce program is ACBSP-accredited.',
+    time: '8:38 AM',
+    category: '',
+  },
+  {
+    name: 'Minerva Barnett',
+    message: 'Get Best Advertiser In Your Side Pocket',
+    time: '8:13 AM',
+    category: '',
+  },
+  {
+    name: 'Peter Lewis',
+    message: 'Vacation Home Rental Success',
+    time: '7:52 PM',
+    category: '',
+  },
+  {
+    name: 'Anthony Briggs',
+    message: 'Free Classifieds Using Them To Promote Your Stuff Online',
+    time: '7:52 PM',
+    category: '',
+  },
+  {
+    name: 'Clifford Morgan',
+    message: 'Enhance Your Brand Potential With Giant Advertising Blimps',
+    time: '4:13 PM',
+    category: '',
+  },
+  {
+    name: 'Cecilia Webster',
+    message: 'Always Look On The Bright Side Of Life',
+    time: '3:52 PM',
+    category: '',
+  },
+  {
+    name: 'Harvey Manning',
+    message: 'Curling Irons Are As Individual As The Women Who Use Them',
+    time: '2:30 PM',
+    category: '',
+  },
+  {
+    name: 'Willie Blake',
+    message: 'Our Bachelor of Commerce program is ACBSP-accredited.',
+    time: '8:38 AM',
+    category: '',
+  },
+  {
+    name: 'Minerva Barnett',
+    message: 'Get Best Advertiser In Your Side Pocket',
+    time: '8:13 AM',
+    category: 'Work',
+  },
+  {
+    name: 'Fanny Weaver',
+    message: 'Free Classifieds Using Them To Promote Your Stuff Online',
+    time: '7:52 PM',
+    category: '',
+  },
+  {
+    name: 'Olga Hogan',
+    message: 'Enhance Your Brand Potential With Giant Advertising Blimps',
+    time: '4:13 PM',
+    category: 'Social',
+  },
+  {
+    name: 'Lora Houston',
+    message: 'Vacation Home Rental Success',
+    time: '7:52 AM',
+    category: 'Friends',
+  },
+];
