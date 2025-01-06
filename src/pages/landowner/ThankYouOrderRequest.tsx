@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/common/Button';
-import AnalysePlusCartList from '../../components/landowner/my-plots/AnalysePlusCartList';
+import GenericList from '../../components/common/GenericList';
+import ThankYouMarketingItem from '../../components/landowner/my-plots/ThankYouMarketingItem';
 import { analysePlusCartData } from '../../../mockData';
 
 const ThankYouOrderRequest = () => {
@@ -16,7 +17,12 @@ const ThankYouOrderRequest = () => {
         in der Ansicht " Meine Grundstücke" zur Verfügung gestellt
       </p>
 
-      <AnalysePlusCartList data={analysePlusCartData} />
+      <GenericList
+        data={analysePlusCartData}
+        renderItem={(plot) => (
+          <ThankYouMarketingItem key={plot.id} data={plot} />
+        )}
+      />
 
       <div className='ml-auto mt-6'>
         <Button
