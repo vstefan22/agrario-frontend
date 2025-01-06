@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../common/Button';
 import DynamicTable from '../../common/DynamicTable';
 import { PLOT_SEARCH_COLUMNS } from '../../../types/table-data-types';
-import { PlotSearchType } from '../../../types/plot-search-types';
+import { PlotSearchType } from '../../../types/plot-types';
 import imgPlaceholder from '../../../assets/images/image-placeholder.png';
 
-type PlotSearchListItemProps = {
+type PlotSearchItemProps = {
   data: PlotSearchType;
 };
 
-const PlotSearchListItem: FC<PlotSearchListItemProps> = ({ data }) => {
+const PlotSearchItem: FC<PlotSearchItemProps> = ({ data }) => {
   const navigate = useNavigate();
 
   const AddToWatchList = () => {
@@ -86,4 +86,4 @@ const PlotSearchListItem: FC<PlotSearchListItemProps> = ({ data }) => {
   );
 };
 
-export default PlotSearchListItem;
+export default PlotSearchItem;

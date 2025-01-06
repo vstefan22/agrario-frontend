@@ -1,10 +1,11 @@
 import { useState, ChangeEvent, useCallback } from 'react';
-import PlotSearchList from '../../components/developer/my-plots/PlotSearchList';
 import Search from '../../components/common/Search';
 import Select from '../../components/common/Select';
 import RangeSlider from '../../components/common/RangeSlider';
 import Button from '../../components/common/Button';
 import Checkbox from '../../components/common/Checkbox';
+import GenericList from '../../components/common/GenericList';
+import PlotSearchItem from '../../components/developer/my-plots/PlotSearchItem';
 import {
   filterPlotsSearchData,
   sortPlotsSearchData,
@@ -169,7 +170,10 @@ const PlotsSearch = () => {
           placeholder='Sortieren nach'
         />
       </div>
-      <PlotSearchList data={sortedData} />
+      <GenericList
+        data={sortedData}
+        renderItem={(plot) => <PlotSearchItem key={plot.id} data={plot} />}
+      />
     </div>
   );
 };

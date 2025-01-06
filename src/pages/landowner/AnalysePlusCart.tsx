@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/common/Button';
-import AnalysePlusCartList from '../../components/landowner/my-plots/AnalysePlusCartList';
+import GenericList from '../../components/common/GenericList';
+import AnalysePlusCartItem from '../../components/landowner/my-plots/AnalysePlusCartItem';
 import { analysePlusCartData, analysePlusValues } from '../../../mockData';
 
 const AnalysePlusCart = () => {
@@ -43,7 +44,16 @@ const AnalysePlusCart = () => {
         </Button>
       </div>
 
-      <AnalysePlusCartList data={analysePlusCartData} isEnable />
+      <GenericList
+        data={analysePlusCartData}
+        renderItem={(warenkorb) => (
+          <AnalysePlusCartItem
+            key={warenkorb.id}
+            data={warenkorb}
+            isEnable={true}
+          />
+        )}
+      />
 
       <div className='flex justify-between my-8'>
         <div className='mt-auto flex gap-6'>

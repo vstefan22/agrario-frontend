@@ -1,24 +1,15 @@
 import { FC } from 'react';
-import { useNavigate } from 'react-router-dom';
 import DynamicTable from '../../common/DynamicTable';
-import Button from '../../common/Button';
 import { PLOT_DETAILS_COLUMNS } from '../../../types/table-data-types';
-import { ThankYouMarketingType } from '../../../types/thank-you-marketing-types';
-import active from '../../../assets/images/vermarktung-aktiv.png';
-import inactive from '../../../assets/images/vermarktung-in-vorbereitung.png';
+import { PlotType } from '../../../types/plot-types';
 import imgPlaceholder from '../../../assets/images/image-placeholder.png';
+import preparationImg from '../../../assets/images/preparation.png';
 
-type OfferListItemProps = {
-  data: ThankYouMarketingType;
+type ThankYouMarketingItemProps = {
+  data: PlotType;
 };
 
-const OfferListItem: FC<OfferListItemProps> = ({ data }) => {
-  const navigate = useNavigate();
-
-  const handleViewDetails = () => {
-    navigate('/landowner/my-offers/details');
-  };
-
+const ThankYouMarketingItem: FC<ThankYouMarketingItemProps> = ({ data }) => {
   return (
     <div
       className='w-full bg-white rounded-[18px] p-4'
@@ -28,7 +19,7 @@ const OfferListItem: FC<OfferListItemProps> = ({ data }) => {
       }}
     >
       <div className='flex justify-between py-2 space-x-4'>
-        <div className='flex shadow-md w-[192px] border-gray-neutral rounded-xl flex-col justify-center items-center'>
+        <div className='flex border-[0.16px] w-[192px] border-gray-neutral rounded-xl flex-col justify-center items-center'>
           <div className='mb-2 h-full w-full'>
             <img
               src={data.image || imgPlaceholder}
@@ -47,20 +38,12 @@ const OfferListItem: FC<OfferListItemProps> = ({ data }) => {
         </div>
         <div className='flex flex-col'>
           <DynamicTable data={data} columns={PLOT_DETAILS_COLUMNS} />
-          <div className='flex justify-end items-center pt-5 gap-3'>
+          <div className='flex justify-end items-center gap-3 mt-auto'>
             <img
-              src={data.analyzePlus === 'active' ? active : inactive}
-              alt={`aktiv/inaktiv image`}
-              className='mr-4 h-[22px] object-cover'
+              src={preparationImg}
+              alt={'preparation image'}
+              className='object-cover'
             />
-
-            <Button
-              variant='bluePrimary'
-              type='button'
-              onClick={handleViewDetails}
-            >
-              Angebots-Details
-            </Button>
           </div>
         </div>
       </div>
@@ -68,4 +51,4 @@ const OfferListItem: FC<OfferListItemProps> = ({ data }) => {
   );
 };
 
-export default OfferListItem;
+export default ThankYouMarketingItem;

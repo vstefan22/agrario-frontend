@@ -1,23 +1,16 @@
 import { FC } from 'react';
-import { useNavigate } from 'react-router-dom';
 import DynamicTable from '../../common/DynamicTable';
-import Button from '../../common/Button';
-import { PLOT_SEARCH_COLUMNS } from '../../../types/table-data-types';
-import { PlotSearchType } from '../../../types/plot-search-types';
+import { PLOT_DETAILS_COLUMNS } from '../../../types/table-data-types';
+import { PlotDetailsType } from '../../../types/plot-types';
+import active from '../../../assets/images/vermarktung-aktiv.png';
+import inactive from '../../../assets/images/vermarktung-in-vorbereitung.png';
 import imgPlaceholder from '../../../assets/images/image-placeholder.png';
-import delIcon from '../../../assets/images/del.png';
 
-type MyWatchlistListItemProps = {
-  data: PlotSearchType;
+type DetailsItemProps = {
+  data: PlotDetailsType;
 };
 
-const MyWatchlistListItem: FC<MyWatchlistListItemProps> = ({ data }) => {
-  const navigate = useNavigate();
-
-  const handleDeletePlot = () => {
-    console.log('delete plot');
-  };
-
+const DetailsItem: FC<DetailsItemProps> = ({ data }) => {
   return (
     <div
       className='w-full bg-white rounded-[18px] p-4 mb-6'
@@ -45,20 +38,7 @@ const MyWatchlistListItem: FC<MyWatchlistListItemProps> = ({ data }) => {
           </div>
         </div>
         <div className='flex flex-col'>
-          <div className='flex gap-6'>
-            <DynamicTable
-              data={data}
-              columns={PLOT_SEARCH_COLUMNS}
-              customClassName='px-10'
-            />
-
-            <button onClick={handleDeletePlot}>
-              <div className='border-[1.12px] border-[#C1D7E1] rounded-[50%] p-[11px] flex'>
-                <img src={delIcon} alt='Delete Icon' className='min-w-[14px]' />
-              </div>
-            </button>
-          </div>
-
+          <DynamicTable data={data} columns={PLOT_DETAILS_COLUMNS} />
           <div className='flex justify-between items-center pt-5 gap-3 mt-auto'>
             <div>
               <h1 className='text-black-muted text-[14px]'>
@@ -68,18 +48,11 @@ const MyWatchlistListItem: FC<MyWatchlistListItemProps> = ({ data }) => {
                 {data.evaluation}
               </p>
             </div>
-            <div className='flex gap-6 mr-[60px]'>
-              <Button
-                type='button'
-                variant='bluePrimary'
-                className='w-[200px]'
-                onClick={() =>
-                  navigate('/developer/plots-search/parcel-details')
-                }
-              >
-                Detail ansehen
-              </Button>
-            </div>
+            <img
+              src={data.analyzePlus === 'active' ? active : inactive}
+              alt={'image-active/inactive'}
+              className='mr-4 h-[22px] object-cover'
+            />
           </div>
         </div>
       </div>
@@ -87,4 +60,4 @@ const MyWatchlistListItem: FC<MyWatchlistListItemProps> = ({ data }) => {
   );
 };
 
-export default MyWatchlistListItem;
+export default DetailsItem;

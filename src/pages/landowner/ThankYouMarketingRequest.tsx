@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/common/Button';
-import ThankYouMarketingList from '../../components/landowner/my-plots/ThankYouMarketingList';
+import GenericList from '../../components/common/GenericList';
 import { thankYouMarketingData } from '../../../mockData';
+import ThankYouMarketingItem from '../../components/landowner/my-plots/ThankYouMarketingItem';
 
 const ThankYouMarketingRequest = () => {
   const navigate = useNavigate();
@@ -22,7 +23,12 @@ const ThankYouMarketingRequest = () => {
         Vielen Dank für Vermarktungsanfrage
       </h1>
 
-      <ThankYouMarketingList data={thankYouMarketingData} />
+      <GenericList
+        data={thankYouMarketingData}
+        renderItem={(plot) => (
+          <ThankYouMarketingItem key={plot.id} data={plot} />
+        )}
+      />
 
       <p className='w-[978px] mt-12 text-gray-dark-100'>
         There are many variations of passages of Lorem Ipsum available, but the

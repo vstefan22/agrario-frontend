@@ -1,13 +1,14 @@
 import { useState, ChangeEvent } from 'react';
 import Search from '../../components/common/Search';
 import Select from '../../components/common/Select';
-import MyWatchlistList from '../../components/developer/my-plots/MyWatchlistList';
+import GenericList from '../../components/common/GenericList';
 import { sortOptions } from '../../types/select-options';
 import {
   sortPlotsSearchData,
   filterPlotsSearchData,
 } from '../../utils/helper-functions';
 import { myWatchlistData } from '../../../mockData';
+import MyWatchlistItem from '../../components/developer/my-plots/MyWatchlistItem';
 
 const MyWatchlist = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -55,7 +56,10 @@ const MyWatchlist = () => {
           placeholder='Sortieren nach'
         />
       </div>
-      <MyWatchlistList data={sortedData} />
+      <GenericList
+        data={sortedData}
+        renderItem={(plot) => <MyWatchlistItem key={plot.id} data={plot} />}
+      />
     </div>
   );
 };

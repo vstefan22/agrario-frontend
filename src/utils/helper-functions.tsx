@@ -1,5 +1,5 @@
 import { PlotType } from '../types/plot-types';
-import { PlotSearchType } from '../types/plot-search-types';
+import { PlotSearchType } from '../types/plot-types';
 
 export const filterData = (
   items: PlotType[],
@@ -8,7 +8,7 @@ export const filterData = (
   if (!searchValue) return items;
 
   return items.filter((item) =>
-    item.state.toLowerCase().includes(searchValue.toLowerCase())
+    item.state_name.toLowerCase().includes(searchValue.toLowerCase())
   );
 };
 
@@ -20,11 +20,13 @@ export const sortData = (
 
   switch (sortOption) {
     case 'Sortieren nach Eignung':
-      return [...items].sort((a, b) => a.registry.localeCompare(b.registry));
+      return [...items].sort((a, b) => a.land_use.localeCompare(b.land_use));
     case 'Sortieren nach Bundesland':
-      return [...items].sort((a, b) => a.state.localeCompare(b.state));
+      return [...items].sort((a, b) =>
+        a.state_name.localeCompare(b.state_name)
+      );
     case 'Sortieren nach Größe':
-      return [...items].sort((a, b) => a.size - b.size);
+      return [...items].sort((a, b) => a.plot_number_main - b.plot_number_main);
     default:
       return items;
   }
@@ -35,10 +37,12 @@ export const filterDataRange = (
   range: [number, number]
 ): PlotType[] => {
   const filteredItems = items.filter((item) => {
-    return item.size >= range[0] && item.size <= range[1];
+    return (
+      item.plot_number_main >= range[0] && item.plot_number_main <= range[1]
+    );
   });
 
-  return filteredItems.sort((a, b) => a.size - b.size);
+  return filteredItems.sort((a, b) => a.plot_number_main - b.plot_number_main);
 };
 
 export const filterPlotsSearchData = (
@@ -48,7 +52,7 @@ export const filterPlotsSearchData = (
   if (!searchValue) return items;
 
   return items.filter((item) =>
-    item.state.toLowerCase().includes(searchValue.toLowerCase())
+    item.state_name.toLowerCase().includes(searchValue.toLowerCase())
   );
 };
 
@@ -60,11 +64,13 @@ export const sortPlotsSearchData = (
 
   switch (sortOption) {
     case 'Sortieren nach Eignung':
-      return [...items].sort((a, b) => a.registry.localeCompare(b.registry));
+      return [...items].sort((a, b) => a.land_use.localeCompare(b.land_use));
     case 'Sortieren nach Bundesland':
-      return [...items].sort((a, b) => a.state.localeCompare(b.state));
+      return [...items].sort((a, b) =>
+        a.state_name.localeCompare(b.state_name)
+      );
     case 'Sortieren nach Größe':
-      return [...items].sort((a, b) => a.size - b.size);
+      return [...items].sort((a, b) => a.plot_number_main - b.plot_number_main);
     default:
       return items;
   }
@@ -75,8 +81,10 @@ export const filterPlotSearchDataRange = (
   range: [number, number]
 ): PlotSearchType[] => {
   const filteredItems = items.filter((item) => {
-    return item.size >= range[0] && item.size <= range[1];
+    return (
+      item.plot_number_main >= range[0] && item.plot_number_main <= range[1]
+    );
   });
 
-  return filteredItems.sort((a, b) => a.size - b.size);
+  return filteredItems.sort((a, b) => a.plot_number_main - b.plot_number_main);
 };

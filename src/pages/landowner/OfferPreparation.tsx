@@ -1,6 +1,6 @@
 import { useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import OfferItem from '../../components/landowner/my-plots/OfferItem';
+import OfferPreparationItem from '../../components/landowner/my-plots/OfferPreparationItem';
 import Button from '../../components/common/Button';
 import DatePicker from '../../components/common/DatePicker';
 import Select from '../../components/common/Select';
@@ -146,7 +146,7 @@ export default function MyOffer() {
       </h1>
 
       <div className='flex mt-6 flex-col gap-6'>
-        <OfferItem data={offerItemData} />
+        <OfferPreparationItem data={offerItemData} />
       </div>
 
       <div>
