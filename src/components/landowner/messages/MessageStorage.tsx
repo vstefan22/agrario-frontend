@@ -26,7 +26,7 @@ const MessageStorage = () => {
   };
 
   return (
-    <div className='w-full bg-white shadow-2xl p-4 rounded-xl'>
+    <div className='w-full bg-white shadow-lg p-4 rounded-xl mt-3 mb-6'>
       <div className='flex justify-between items-center h-[80px]'>
         <Search
           placeholder='Search mail'
