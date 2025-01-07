@@ -2,15 +2,15 @@ import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../common/Button';
 import DynamicTable from '../../common/DynamicTable';
+import ItemImage from '../../common/ItemImage';
 import { PLOT_SEARCH_COLUMNS } from '../../../types/table-data-types';
-import { PlotSearchType } from '../../../types/plot-search-types';
-import imgPlaceholder from '../../../assets/images/image-placeholder.png';
+import { PlotSearchType } from '../../../types/plot-types';
 
-type PlotSearchListItemProps = {
+type PlotSearchItemProps = {
   data: PlotSearchType;
 };
 
-const PlotSearchListItem: FC<PlotSearchListItemProps> = ({ data }) => {
+const PlotSearchItem: FC<PlotSearchItemProps> = ({ data }) => {
   const navigate = useNavigate();
 
   const AddToWatchList = () => {
@@ -26,23 +26,7 @@ const PlotSearchListItem: FC<PlotSearchListItemProps> = ({ data }) => {
       }}
     >
       <div className='flex justify-between py-2 space-x-4'>
-        <div className='flex shadow-md w-[192px] border-gray-neutral rounded-xl flex-col justify-center items-center'>
-          <div className='mb-2 h-full w-full'>
-            <img
-              src={data.image || imgPlaceholder}
-              width='100%'
-              alt={'flurstuck-image'}
-              className='object-cover h-full rounded-tl-xl rounded-tr-xl'
-            />
-          </div>
-          <div className='flex items-center mb-3'>
-            <h5 className='font-bold text-[16px] text-black-muted whitespace-nowrap mr-2'>
-              {/* TODO: replace this with actual data.id */}
-              {'FL-56141'}
-            </h5>
-            <p className='text-[12px] text-gray-dark-100 font-400'>ID-Nummer</p>
-          </div>
-        </div>
+        <ItemImage id={data.id} image={data.image} />
         <div className='flex flex-col'>
           <DynamicTable
             data={data}
@@ -86,4 +70,4 @@ const PlotSearchListItem: FC<PlotSearchListItemProps> = ({ data }) => {
   );
 };
 
-export default PlotSearchListItem;
+export default PlotSearchItem;

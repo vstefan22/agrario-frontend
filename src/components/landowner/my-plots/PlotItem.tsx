@@ -2,18 +2,18 @@ import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../common/Button';
 import DynamicTable from '../../common/DynamicTable';
+import ItemImage from '../../common/ItemImage';
 import usePlotStore from '../../../store/plot-store';
 import { MY_PLOTS_COLUMNS } from '../../../types/table-data-types';
 import { PlotType } from '../../../types/plot-types';
 import active from '../../../assets/images/active.png';
 import inactive from '../../../assets/images/inactive.png';
-import imgPlaceholder from '../../../assets/images/image-placeholder.png';
 
-type PlotListItemProps = {
+type PlotItemProps = {
   data: PlotType;
 };
 
-const PlotListItem: FC<PlotListItemProps> = ({ data }) => {
+const PlotItem: FC<PlotItemProps> = ({ data }) => {
   const navigate = useNavigate();
   const { setPlot } = usePlotStore();
 
@@ -35,23 +35,11 @@ const PlotListItem: FC<PlotListItemProps> = ({ data }) => {
       }}
     >
       <div className='flex justify-between py-2 space-x-4'>
-        <div className='flex border-[0.16px] w-[192px] border-gray-neutral rounded-xl flex-col justify-center items-center'>
-          <div className='mb-2 h-full w-full'>
-            <img
-              src={data.image || imgPlaceholder}
-              width='100%'
-              alt={'flurstuck image'}
-              className='object-cover h-full rounded-tl-xl rounded-tr-xl'
-            />
-          </div>
-          <div className='flex items-center mb-3'>
-            <h5 className='font-bold text-[16px] text-black-muted whitespace-nowrap mr-2'>
-              {/* TODO: replace this with actual data.id */}
-              {'FL-56141'}
-            </h5>
-            <p className='text-[12px] text-gray-dark-100 font-400'>ID-Nummer</p>
-          </div>
-        </div>
+        <ItemImage
+          id={data.id}
+          image={data.image}
+          className='border-[0.16px]'
+        />
         <div className='flex flex-col'>
           <DynamicTable data={data} columns={MY_PLOTS_COLUMNS} />
           <div className='flex justify-end items-center pt-5 gap-3'>
@@ -86,4 +74,4 @@ const PlotListItem: FC<PlotListItemProps> = ({ data }) => {
   );
 };
 
-export default PlotListItem;
+export default PlotItem;

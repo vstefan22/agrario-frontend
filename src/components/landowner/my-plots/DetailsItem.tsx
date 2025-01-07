@@ -1,16 +1,16 @@
 import { FC } from 'react';
 import DynamicTable from '../../common/DynamicTable';
+import ItemImage from '../../common/ItemImage';
 import { PLOT_DETAILS_COLUMNS } from '../../../types/table-data-types';
-import { DetailsType } from '../../../types/details-types';
+import { PlotDetailsType } from '../../../types/plot-types';
 import active from '../../../assets/images/vermarktung-aktiv.png';
 import inactive from '../../../assets/images/vermarktung-in-vorbereitung.png';
-import imgPlaceholder from '../../../assets/images/image-placeholder.png';
 
-type DetailsListItemProps = {
-  data: DetailsType;
+type DetailsItemProps = {
+  data: PlotDetailsType;
 };
 
-const DetailsListItem: FC<DetailsListItemProps> = ({ data }) => {
+const DetailsItem: FC<DetailsItemProps> = ({ data }) => {
   return (
     <div
       className='w-full bg-white rounded-[18px] p-4 mb-6'
@@ -20,23 +20,7 @@ const DetailsListItem: FC<DetailsListItemProps> = ({ data }) => {
       }}
     >
       <div className='flex justify-between py-2 space-x-4'>
-        <div className='flex shadow-md w-[192px] border-gray-neutral rounded-xl flex-col justify-center items-center'>
-          <div className='mb-2 h-full w-full'>
-            <img
-              src={data.image || imgPlaceholder}
-              width='100%'
-              alt={'flurstuck-image'}
-              className='object-cover h-full rounded-tl-xl rounded-tr-xl'
-            />
-          </div>
-          <div className='flex items-center mb-3'>
-            <h5 className='font-bold text-[16px] text-black-muted whitespace-nowrap mr-2'>
-              {/* TODO: replace this with actual data.id */}
-              {'FL-56141'}
-            </h5>
-            <p className='text-[12px] text-gray-dark-100 font-400'>ID-Nummer</p>
-          </div>
-        </div>
+        <ItemImage image={data.image} id={data.id} />
         <div className='flex flex-col'>
           <DynamicTable data={data} columns={PLOT_DETAILS_COLUMNS} />
           <div className='flex justify-between items-center pt-5 gap-3 mt-auto'>
@@ -60,4 +44,4 @@ const DetailsListItem: FC<DetailsListItemProps> = ({ data }) => {
   );
 };
 
-export default DetailsListItem;
+export default DetailsItem;

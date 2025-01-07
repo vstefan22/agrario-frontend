@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DetailsList from '../../components/landowner/my-plots/DetailsList';
+import GenericList from '../../components/common/GenericList';
+import DetailsItem from '../../components/landowner/my-plots/DetailsItem';
 import DatePicker from '../../components/common/DatePicker';
 import Select from '../../components/common/Select';
 import Checkbox from '../../components/common/Checkbox';
@@ -151,7 +152,12 @@ const OfferDetails = () => {
       <h1 className='text-[32px] font-bold text-black-muted mb-4'>
         Detailansicht Angebot
       </h1>
-      <DetailsList data={detailsData} />
+      <GenericList
+        data={detailsData}
+        renderItem={(warenkorb) => (
+          <DetailsItem key={warenkorb.id} data={warenkorb} />
+        )}
+      />
 
       <h1 className='text-black-muted text-[32px] mt-8'>Ihre Kriterien</h1>
       <p className='text-gray-dark-100 w-[40%]'>

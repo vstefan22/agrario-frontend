@@ -2,16 +2,16 @@ import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DynamicTable from '../../common/DynamicTable';
 import Button from '../../common/Button';
+import ItemImage from '../../common/ItemImage';
 import { PLOT_SEARCH_COLUMNS } from '../../../types/table-data-types';
-import { PlotSearchType } from '../../../types/plot-search-types';
-import imgPlaceholder from '../../../assets/images/image-placeholder.png';
+import { PlotSearchType } from '../../../types/plot-types';
 import delIcon from '../../../assets/images/del.png';
 
-type MyWatchlistListItemProps = {
+type MyWatchlistItemProps = {
   data: PlotSearchType;
 };
 
-const MyWatchlistListItem: FC<MyWatchlistListItemProps> = ({ data }) => {
+const MyWatchlistItem: FC<MyWatchlistItemProps> = ({ data }) => {
   const navigate = useNavigate();
 
   const handleDeletePlot = () => {
@@ -27,23 +27,7 @@ const MyWatchlistListItem: FC<MyWatchlistListItemProps> = ({ data }) => {
       }}
     >
       <div className='flex justify-between py-2 space-x-4'>
-        <div className='flex shadow-md w-[192px] border-gray-neutral rounded-xl flex-col justify-center items-center'>
-          <div className='mb-2 h-full w-full'>
-            <img
-              src={data.image || imgPlaceholder}
-              width='100%'
-              alt={'flurstuck-image'}
-              className='object-cover h-full rounded-tl-xl rounded-tr-xl'
-            />
-          </div>
-          <div className='flex items-center mb-3'>
-            <h5 className='font-bold text-[16px] text-black-muted whitespace-nowrap mr-2'>
-              {/* TODO: replace this with actual data.id */}
-              {'FL-56141'}
-            </h5>
-            <p className='text-[12px] text-gray-dark-100 font-400'>ID-Nummer</p>
-          </div>
-        </div>
+        <ItemImage id={data.id} image={data.image} />
         <div className='flex flex-col'>
           <div className='flex gap-6'>
             <DynamicTable
@@ -53,7 +37,7 @@ const MyWatchlistListItem: FC<MyWatchlistListItemProps> = ({ data }) => {
             />
 
             <button onClick={handleDeletePlot}>
-              <div className='border-[1.12px] border-[#C1D7E1] rounded-[50%] p-[11px] flex'>
+              <div className='border-[1.12px] border-gray-blue-light rounded-[50%] p-[11px] flex'>
                 <img src={delIcon} alt='Delete Icon' className='min-w-[14px]' />
               </div>
             </button>
@@ -87,4 +71,4 @@ const MyWatchlistListItem: FC<MyWatchlistListItemProps> = ({ data }) => {
   );
 };
 
-export default MyWatchlistListItem;
+export default MyWatchlistItem;
