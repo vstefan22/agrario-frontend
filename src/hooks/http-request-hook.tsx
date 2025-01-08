@@ -1,50 +1,54 @@
+// src/hooks/http-request-hook.ts
+
 import { useCallback } from 'react';
 import axiosInstance from '../api/axios-instance';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 type HttpMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE';
 
-interface UseHttpRequestReturn {
-  sendRequest: (
+type UseHttpRequestReturn = {
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  sendRequest: <T = any>(
     url: string,
     method?: HttpMethod,
-    headers?: AxiosRequestConfig,
+    config?: AxiosRequestConfig,
     body?: unknown
-  ) => Promise<unknown>;
-}
+  ) => Promise<T>;
+};
 
 const useHttpRequest = (): UseHttpRequestReturn => {
-  const sendRequest = useCallback<
-    (
+  const sendRequest = useCallback(
+    async <T = any,>(
       url: string,
-      method?: HttpMethod,
-      headers?: AxiosRequestConfig,
-      body?: unknown
-    ) => Promise<unknown>
-  >(async (url, method = 'GET', headers = {}, body = null) => {
-    const dataRequest = async (
-      httpMethod: HttpMethod,
-      urlData: string,
-      data: unknown,
-      config: AxiosRequestConfig
-    ): Promise<AxiosResponse> => {
-      switch (httpMethod) {
-        case 'GET':
-          return axiosInstance.get(urlData, config);
-        case 'POST':
-          return axiosInstance.post(urlData, data, config);
-        case 'PATCH':
-          return axiosInstance.patch(urlData, data, config);
-        case 'DELETE':
-          return axiosInstance.delete(urlData, config);
-        default:
-          throw new Error(`Unsupported HTTP method: ${httpMethod}`);
-      }
-    };
+      method: HttpMethod = 'GET',
+      config: AxiosRequestConfig = {},
+      body: unknown = null
+    ): Promise<T> => {
+      const dataRequest = async (
+        httpMethod: HttpMethod,
+        urlData: string,
+        data: unknown,
+        axiosConfig: AxiosRequestConfig
+      ): Promise<AxiosResponse<T>> => {
+        switch (httpMethod) {
+          case 'GET':
+            return axiosInstance.get<T>(urlData, axiosConfig);
+          case 'POST':
+            return axiosInstance.post<T>(urlData, data, axiosConfig);
+          case 'PATCH':
+            return axiosInstance.patch<T>(urlData, data, axiosConfig);
+          case 'DELETE':
+            return axiosInstance.delete<T>(urlData, axiosConfig);
+          default:
+            throw new Error(`Unsupported HTTP method: ${httpMethod}`);
+        }
+      };
 
-    const response = await dataRequest(method, url, body, headers);
-    return response.data;
-  }, []);
+      const response = await dataRequest(method, url, body, config);
+      return response.data;
+    },
+    []
+  );
 
   return { sendRequest };
 };

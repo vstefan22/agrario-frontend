@@ -1,17 +1,17 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import { StoreUser } from '../types/user-types';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 interface AuthState {
-  user: any | null;
+  user: StoreUser | null;
   isAuthenticated: boolean;
   token: string | null;
 
-  setUser: (user: any | null) => void;
+  setUser: (user: StoreUser | null) => void;
+  updateUser: (userData: Partial<StoreUser>) => void;
   setToken: (token: string) => void;
   clearAuth: () => void;
 }
-/* eslint-enable @typescript-eslint/no-explicit-any */
 
 const useAuthStore = create<AuthState>()(
   persist(
@@ -21,6 +21,15 @@ const useAuthStore = create<AuthState>()(
       token: null,
 
       setUser: (user) => set({ user, isAuthenticated: !!user }),
+      updateUser: (userData) =>
+        set((state) => {
+          if (!state.user) return {};
+          const updatedUser = { ...state.user, ...userData };
+          return {
+            user: updatedUser,
+            isAuthenticated: !!updatedUser,
+          };
+        }),
       setToken: (token) => set({ token }),
       clearAuth: () => set({ user: null, isAuthenticated: false, token: null }),
     }),

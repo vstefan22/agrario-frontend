@@ -46,7 +46,7 @@ const App = () => {
                   <Route path='/profile' element={<ProfileLandowner />} />
                   <Route path='/password-change' element={<PasswordChange />} />
                   <Route path='/messages' element={<Messages />} />
-                  <Route path='/' element={<StartLandowner />} />
+                  <Route path='' element={<StartLandowner />} />
                   <Route path='/new-plot' element={<NewPlot />} />
                   <Route path='/my-plots' element={<MyPlots />} />
                   <Route
@@ -85,7 +85,7 @@ const App = () => {
                     path='/profile/subscribe'
                     element={<ThankYouSubscribe />}
                   />
-                  <Route path='/' element={<StartDeveloper />} />
+                  <Route path='' element={<StartDeveloper />} />
                   <Route path='/plots-search' element={<PlotsSearch />} />
                   <Route
                     path='/plots-search/parcel-details'

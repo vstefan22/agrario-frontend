@@ -1,19 +1,21 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../../firebase/firebase-config';
-import {
-  signInWithEmailAndPassword,
-  setPersistence,
-  browserLocalPersistence,
-  browserSessionPersistence,
-} from 'firebase/auth';
 import Input from '../common/Input';
 import Button from '../common/Button';
+import useHttpRequest from '../../hooks/http-request-hook';
 import useAuthStore from '../../store/auth-store';
+import { UserType } from '../../types/user-types';
+
+type LoginResponse = {
+  firebase_token: string;
+  message: string;
+  user: UserType;
+};
 
 export default function Login() {
   const navigate = useNavigate();
-  const { setUser, setToken } = useAuthStore();
+  const { setToken, setUser } = useAuthStore();
+  const { sendRequest } = useHttpRequest();
 
   const [formData, setFormData] = useState({
     email: '',
@@ -52,33 +54,34 @@ export default function Login() {
     setLoading(true);
 
     try {
-      await setPersistence(
-        auth,
-        formData.rememberMe
-          ? browserLocalPersistence
-          : browserSessionPersistence
+      const { firebase_token, user } = await sendRequest<LoginResponse>(
+        '/accounts/login/',
+        'POST',
+        {},
+        formData
       );
+      setUser(user);
+      setToken(firebase_token);
 
-      const { user } = await signInWithEmailAndPassword(
-        auth,
-        formData.email,
-        formData.password
-      );
-      const accessToken = await user.getIdToken();
-
-      setUser({ email: user.email, id: user.uid });
-      setToken(accessToken);
-
-      // TODO: use actual role from user object
-      // if (user.role === 'landowner') {
-      //   navigate('/landowner');
-      // } else if (user.role === 'developer') {
-      //   navigate('/developer');
-      // } else {
-      //   navigate('/');
-      // }
-      navigate('/landowner');
-    } catch (err: unknown) {
+      if (user.role === 'landowner') {
+        navigate('/landowner');
+      } else if (user.role === 'developer') {
+        navigate('/developer');
+      } else {
+        navigate('/');
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      console.log('login error: ', err);
+      if (
+        err.response.data.error ===
+        'Please confirm your email address before logging in.'
+      ) {
+        setError(
+          'Bitte bestätigen Sie Ihre E-Mail Adresse, bevor Sie sich anmelden.'
+        );
+        return;
+      }
       if (err instanceof Error) {
         setError(err.message || 'Ein Fehler ist aufgetreten.');
       } else {
