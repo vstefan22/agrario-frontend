@@ -1,5 +1,5 @@
 import { FC } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import DynamicTable from '../../common/DynamicTable';
 import Button from '../../common/Button';
 import ItemImage from '../../common/ItemImage';
@@ -10,14 +10,17 @@ import inactive from '../../../assets/images/vermarktung-in-vorbereitung.png';
 
 type ActiveAuctionsItemProps = {
   data: ActiveAuctionsType;
+  isDetails?: boolean;
 };
 
-const ActiveAuctionsItem: FC<ActiveAuctionsItemProps> = ({ data }) => {
-  // const navigate = useNavigate();
+const ActiveAuctionsItem: FC<ActiveAuctionsItemProps> = ({
+  data,
+  isDetails,
+}) => {
+  const navigate = useNavigate();
 
   const handleViewDetails = () => {
-    // navigate('');
-    // Connect with -> R2 _V8 when it's ready
+    navigate('details');
   };
 
   return (
@@ -48,13 +51,17 @@ const ActiveAuctionsItem: FC<ActiveAuctionsItemProps> = ({ data }) => {
                 className='mr-4 h-[22px] object-cover'
               />
 
-              <Button
-                variant='bluePrimary'
-                type='button'
-                onClick={handleViewDetails}
-              >
-                Detail ansehen
-              </Button>
+              {isDetails ? (
+                ''
+              ) : (
+                <Button
+                  variant='bluePrimary'
+                  type='button'
+                  onClick={handleViewDetails}
+                >
+                  Detail ansehen
+                </Button>
+              )}
             </div>
           </div>
         </div>
