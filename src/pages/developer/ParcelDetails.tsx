@@ -1,6 +1,6 @@
+import ShowDetails from '../ShowDetails';
 import Button from '../../components/common/Button';
 import usePlotStore from '../../store/plot-store';
-import imgDetails from '../../assets/images/details-document.png';
 
 const ParcelDetails = () => {
   const { plot } = usePlotStore();
@@ -9,22 +9,23 @@ const ParcelDetails = () => {
     console.log('add to watchlist');
   };
 
+  // TODO: use actual user property for this
+  const isAnalizePlus = false;
+
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
-      <h1 className='text-[32px] font-bold text-black-muted mb-8'>
-        {`Detailansicht Flurstück ${plot?.id}`}
-      </h1>
-      <div className='flex flex-col justify-center bg-white h-[440px] rounded-[16px] shadow-[6px_6px_54px_0px_#0000000D]'>
-        <div className='flex flex-col items-center'>
-          <img
-            src={imgDetails}
-            alt='details documentation'
-            className='h-[100px] w-[100px]'
-          />
-          <p className='w-[560px] text-[32px] text-black-muted font-700 text-center mt-4'>
-            See Detailansicht flurstück requirements document for details
-          </p>
+      <div>
+        <h1 className='text-[32px] font-bold text-black-muted'>
+          Detailansicht Flurstück Analyse Basic
+        </h1>
+        <div className='flex items-center gap-4 mb-4'>
+          {/* dodati id */}
+          <p className='text-black-muted font-semibold'>{plot?.id}</p>
+          <p className='text-gray-dark-100/70 text-[12px]'>ID-Nummer</p>
         </div>
+      </div>
+      <div className='h-[440px] overflow-y-auto rounded-2xl'>
+        <ShowDetails paid={isAnalizePlus} />
       </div>
       <div className='ml-auto mt-8'>
         <Button
