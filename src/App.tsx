@@ -87,6 +87,7 @@ const App = () => {
                 <Routes>
                   <Route path='/messages' element={<Messages />} />
                   <Route path='/profile' element={<ProfileDeveloper />} />
+                  <Route path='/password-change' element={<PasswordChange />} />
                   <Route
                     path='/profile/subscribe'
                     element={<ThankYouSubscribe />}
@@ -117,6 +118,7 @@ const App = () => {
                     element={<MyAuctionDetails />}
                   />
                   <Route path='/questions-help' element={<QuestionsHelp />} />
+                  <Route path='/support' element={<Support />} />
                 </Routes>
               </ProtectedLayout>
             }

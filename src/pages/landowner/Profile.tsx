@@ -51,6 +51,19 @@ export default function Profile() {
   );
   const [showPassword, setShowPassword] = useState(false);
 
+  const [editMode, setEditMode] = useState<Record<string, boolean>>({
+    vorname: false,
+    nachname: false,
+    unternehmen: false,
+    position: false,
+    strasse: false,
+    plz: false,
+    stadt: false,
+    website: false,
+    email: false,
+    telefon: false,
+  });
+
   useEffect(() => {
     setUserName('Max Mustermann');
     // TODO: check if this is still needed
@@ -137,12 +150,19 @@ export default function Profile() {
     }
   };
 
-  const handleOnEdit = () => {
-    console.log('edit clicked.');
-  };
-
   const handleOnPasswordChange = () => {
     navigate('/landowner/password-change');
+  };
+
+  const toggleEditMode = (field: string) => {
+    setEditMode((prev) => ({
+      ...prev,
+      [field]: !prev[field],
+    }));
+  };
+
+  const handleSave = (field: string) => {
+    toggleEditMode(field);
   };
 
   return (
@@ -197,7 +217,9 @@ export default function Profile() {
               name='vorname'
               value={formData.vorname}
               onChange={handleChange}
-              onEdit={handleOnEdit}
+              onEdit={() => toggleEditMode('vorname')}
+              onSave={() => handleSave('vorname')}
+              isEditable={editMode.vorname}
             />
           </div>
           <div className='md:col-span-2'>
@@ -209,7 +231,9 @@ export default function Profile() {
               name='nachname'
               value={formData.nachname}
               onChange={handleChange}
-              onEdit={handleOnEdit}
+              onEdit={() => toggleEditMode('nachname')}
+              onSave={() => handleSave('nachname')}
+              isEditable={editMode.nachname}
             />
           </div>
           <div className='md:col-span-2'>
@@ -221,7 +245,9 @@ export default function Profile() {
               name='unternehmen'
               value={formData.unternehmen}
               onChange={handleChange}
-              onEdit={handleOnEdit}
+              onEdit={() => toggleEditMode('unternehmen')}
+              onSave={() => handleSave('unternehmen')}
+              isEditable={editMode.unternehmen}
             />
           </div>
           <div className='md:col-span-2'>
@@ -233,7 +259,9 @@ export default function Profile() {
               name='position'
               value={formData.position}
               onChange={handleChange}
-              onEdit={handleOnEdit}
+              onEdit={() => toggleEditMode('position')}
+              onSave={() => handleSave('position')}
+              isEditable={editMode.position}
             />
           </div>
           <div className='md:col-span-2'>
@@ -245,7 +273,9 @@ export default function Profile() {
               name='strasse'
               value={formData.strasse}
               onChange={handleChange}
-              onEdit={handleOnEdit}
+              onEdit={() => toggleEditMode('strasse')}
+              onSave={() => handleSave('strasse')}
+              isEditable={editMode.strasse}
             />
           </div>
           <div className='md:col-span-1'>
@@ -257,7 +287,9 @@ export default function Profile() {
               name='plz'
               value={formData.plz}
               onChange={handleChange}
-              onEdit={handleOnEdit}
+              onEdit={() => toggleEditMode('plz')}
+              onSave={() => handleSave('plz')}
+              isEditable={editMode.plz}
             />
           </div>
           <div className='md:col-span-1'>
@@ -267,9 +299,9 @@ export default function Profile() {
               required
               id='stadt'
               name='stadt'
-              value={formData.stadt}
-              onChange={handleChange}
-              onEdit={handleOnEdit}
+              onEdit={() => toggleEditMode('stadt')}
+              onSave={() => handleSave('stadt')}
+              isEditable={editMode.stadt}
             />
           </div>
           <div className='md:col-span-2'>
@@ -281,7 +313,9 @@ export default function Profile() {
               type='url'
               value={formData.website}
               onChange={handleChange}
-              onEdit={handleOnEdit}
+              onEdit={() => toggleEditMode('website')}
+              onSave={() => handleSave('website')}
+              isEditable={editMode.website}
             />
           </div>
           <div className='md:col-span-2'>
@@ -294,7 +328,9 @@ export default function Profile() {
               type='email'
               value={formData.email}
               onChange={handleChange}
-              onEdit={handleOnEdit}
+              onEdit={() => toggleEditMode('email')}
+              onSave={() => handleSave('email')}
+              isEditable={editMode.email}
             />
           </div>
           <div className='md:col-span-2'>
@@ -306,7 +342,9 @@ export default function Profile() {
               type='tel'
               value={formData.telefon}
               onChange={handleChange}
-              onEdit={handleOnEdit}
+              onEdit={() => toggleEditMode('telefon')}
+              onSave={() => handleSave('telefon')}
+              isEditable={editMode.telefon}
             />
           </div>
 
@@ -320,12 +358,13 @@ export default function Profile() {
               type={showPassword ? 'text' : 'password'}
               value={formData.password}
               onChange={handleChange}
+              disabled
             />
             <Button
               variant='blueSecondary'
               type='button'
               onClick={() => setShowPassword(!showPassword)}
-              className='absolute top-[40%] right-3 flex items-center text-gray-dim h-auto w-auto !border-none'
+              className='absolute top-[35%] right-3 flex items-center text-gray-dim h-auto w-auto !border-none'
             >
               {showPassword ? <EyeOpenIcon /> : <EyeClosedIcon />}
             </Button>

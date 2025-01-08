@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import EditButton from './EditButton';
 
 type InputVariant = 'default' | 'profile';
@@ -8,6 +8,8 @@ type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   required?: boolean;
   variant?: InputVariant;
   onEdit?: () => void;
+  onSave?: () => void;
+  isEditable?: boolean;
 };
 
 const Input: FC<InputProps> = ({
@@ -16,8 +18,18 @@ const Input: FC<InputProps> = ({
   variant = 'default',
   className = '',
   onEdit,
+  onSave,
+  isEditable = false,
   ...props
 }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (isEditable && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isEditable]);
+
   let inputClasses = '';
   switch (variant) {
     case 'profile':
@@ -45,7 +57,12 @@ const Input: FC<InputProps> = ({
             {label}
             {required && '*'}
           </label>
-          {onEdit && <EditButton onClick={onEdit} />}
+          {onEdit && (
+            <EditButton
+              onClick={isEditable ? onSave : onEdit}
+              mode={isEditable ? 'Save' : 'Edit'}
+            />
+          )}
         </div>
       ) : (
         label && (
@@ -58,7 +75,14 @@ const Input: FC<InputProps> = ({
           </label>
         )
       )}
-      <input {...props} className={`${inputClasses} ${className}`} />
+      <input
+        ref={inputRef}
+        {...props}
+        className={`${inputClasses} ${className} ${
+          isEditable && '!text-gray-dim'
+        }`}
+        readOnly={onEdit && !isEditable}
+      />
     </div>
   );
 };

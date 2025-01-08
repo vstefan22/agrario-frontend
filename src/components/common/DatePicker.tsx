@@ -11,6 +11,8 @@ type DatePickerProps = {
   placeholder?: string;
   required?: boolean;
   onEdit?: () => void;
+  onSave?: () => void;
+  isEditable?: boolean;
   divClassName?: string;
 };
 
@@ -21,6 +23,8 @@ const DatePicker: FC<DatePickerProps> = ({
   placeholder = 'DD/MM/YY',
   required = false,
   onEdit,
+  onSave,
+  isEditable,
   divClassName,
 }) => {
   return (
@@ -33,7 +37,10 @@ const DatePicker: FC<DatePickerProps> = ({
           </label>
           {onEdit && (
             <div className='mt-auto mb-2'>
-              <EditButton onClick={onEdit} />
+              <EditButton
+                onClick={isEditable ? onSave : onEdit}
+                mode={isEditable ? 'Save' : 'Edit'}
+              />
             </div>
           )}
         </div>
@@ -47,6 +54,7 @@ const DatePicker: FC<DatePickerProps> = ({
         className='w-[420px] h-[44px] px-3 py-2 border border-gray-medium/60 rounded-md text-black focus:outline-none focus:ring-2 focus:ring-blue-400'
         popperPlacement='bottom'
         portalId='date-picker-portal'
+        disabled={!isEditable && Boolean(onEdit)}
       />
     </div>
   );
