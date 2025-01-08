@@ -27,7 +27,6 @@ interface UserData {
   nachname: string;
   unternehmen: string;
   position: string;
-  website: string;
   email: string;
   telefon: string;
   password: string;
@@ -60,7 +59,6 @@ export default function Profile() {
     position: 'Softwareentwickler',
     postalCode: '66651',
     city: 'Text hinzufügen',
-    website: 'https://www.musterfirma.de',
     email: 'max.mustermann@example.com',
     telefon: '+49 123 456 7890',
     password: 'Password123!',
@@ -94,6 +92,23 @@ export default function Profile() {
   // }, [navigate]);
 
   const [isChecked, setIsChecked] = useState<boolean>(false);
+
+  const [editMode, setEditMode] = useState<Record<string, boolean>>({
+    companyName: false,
+    companyWebsite: false,
+    street: false,
+    companyFoundingYear: false,
+    installedMWCapacity: false,
+    employeesNumber: false,
+    vorname: false,
+    nachname: false,
+    unternehmen: false,
+    position: false,
+    postalCode: false,
+    city: false,
+    email: false,
+    telefon: false,
+  });
 
   const handleToggleChange = (checked: boolean) => {
     setIsChecked(checked);
@@ -200,8 +215,15 @@ export default function Profile() {
     }
   };
 
-  const handleOnEdit = () => {
-    console.log('edit clicked.');
+  const toggleEditMode = (field: string) => {
+    setEditMode((prev) => ({
+      ...prev,
+      [field]: !prev[field],
+    }));
+  };
+
+  const handleSave = (field: string) => {
+    toggleEditMode(field);
   };
 
   const handleSelectChange = (name: string, option: string) => {
@@ -220,7 +242,7 @@ export default function Profile() {
   };
 
   const handleOnPasswordChange = () => {
-    navigate('../../role-one/password-change'); // NEED TO ADD - navigate to role two pass change page
+    navigate('/developer/password-change'); // NEED TO ADD - navigate to role two pass change page
   };
 
   return (
@@ -311,7 +333,9 @@ export default function Profile() {
                     name='companyName'
                     value={formData.companyName}
                     onChange={handleChange}
-                    onEdit={handleOnEdit}
+                    onEdit={() => toggleEditMode('companyName')}
+                    onSave={() => handleSave('companyName')}
+                    isEditable={editMode.companyName}
                   />
                 </div>
                 <div className='md:col-span-2'>
@@ -322,8 +346,9 @@ export default function Profile() {
                     id='companyWebsite'
                     name='companyWebsite'
                     value={formData.companyWebsite}
-                    onChange={handleChange}
-                    onEdit={handleOnEdit}
+                    onEdit={() => toggleEditMode('companyWebsite')}
+                    onSave={() => handleSave('companyWebsite')}
+                    isEditable={editMode.companyWebsite}
                   />
                 </div>
                 <div className='md:col-span-2'>
@@ -335,7 +360,9 @@ export default function Profile() {
                     name='street'
                     value={formData.street}
                     onChange={handleChange}
-                    onEdit={handleOnEdit}
+                    onEdit={() => toggleEditMode('street')}
+                    onSave={() => handleSave('street')}
+                    isEditable={editMode.street}
                   />
                 </div>
                 <div className='md:col-span-1'>
@@ -347,7 +374,9 @@ export default function Profile() {
                     name='postalCode'
                     value={formData.postalCode}
                     onChange={handleChange}
-                    onEdit={handleOnEdit}
+                    onEdit={() => toggleEditMode('postalCode')}
+                    onSave={() => handleSave('postalCode')}
+                    isEditable={editMode.postalCode}
                   />
                 </div>
                 <div className='md:col-span-1'>
@@ -359,7 +388,9 @@ export default function Profile() {
                     name='city'
                     value={formData.city}
                     onChange={handleChange}
-                    onEdit={handleOnEdit}
+                    onEdit={() => toggleEditMode('city')}
+                    onSave={() => handleSave('city')}
+                    isEditable={editMode.city}
                   />
                 </div>
                 <div className='md:col-span-2'>
@@ -371,7 +402,9 @@ export default function Profile() {
                     name='companyFoundingYear'
                     value={formData.companyFoundingYear}
                     onChange={handleChange}
-                    onEdit={handleOnEdit}
+                    onEdit={() => toggleEditMode('companyFoundingYear')}
+                    onSave={() => handleSave('companyFoundingYear')}
+                    isEditable={editMode.companyFoundingYear}
                   />
                 </div>
                 <div className='md:col-span-2'>
@@ -383,7 +416,9 @@ export default function Profile() {
                     name='installedMWCapacity'
                     value={formData.installedMWCapacity}
                     onChange={handleChange}
-                    onEdit={handleOnEdit}
+                    onEdit={() => toggleEditMode('installedMWCapacity')}
+                    onSave={() => handleSave('installedMWCapacity')}
+                    isEditable={editMode.installedMWCapacity}
                   />
                 </div>
                 <div className='md:col-span-2'>
@@ -395,7 +430,9 @@ export default function Profile() {
                     value={formData.employeesNumber}
                     onChange={handleSelectChange}
                     options={profileOptions}
-                    onEdit={handleOnEdit}
+                    onEdit={() => toggleEditMode('employeesNumber')}
+                    onSave={() => handleSave('employeesNumber')}
+                    isEditable={editMode.employeesNumber}
                   />
                 </div>
               </form>
@@ -424,7 +461,9 @@ export default function Profile() {
                     name='vorname'
                     value={formData.vorname}
                     onChange={handleChange}
-                    onEdit={handleOnEdit}
+                    onEdit={() => toggleEditMode('vorname')}
+                    onSave={() => handleSave('vorname')}
+                    isEditable={editMode.vorname}
                   />
                 </div>
                 <div className='md:col-span-2'>
@@ -436,7 +475,9 @@ export default function Profile() {
                     name='nachname'
                     value={formData.nachname}
                     onChange={handleChange}
-                    onEdit={handleOnEdit}
+                    onEdit={() => toggleEditMode('nachname')}
+                    onSave={() => handleSave('nachname')}
+                    isEditable={editMode.nachname}
                   />
                 </div>
                 <div className='md:col-span-2'>
@@ -448,7 +489,9 @@ export default function Profile() {
                     name='position'
                     value={formData.position}
                     onChange={handleChange}
-                    onEdit={handleOnEdit}
+                    onEdit={() => toggleEditMode('position')}
+                    onSave={() => handleSave('position')}
+                    isEditable={editMode.position}
                   />
                 </div>
                 <div className='md:col-span-2'>
@@ -461,7 +504,9 @@ export default function Profile() {
                     type='email'
                     value={formData.email}
                     onChange={handleChange}
-                    onEdit={handleOnEdit}
+                    onEdit={() => toggleEditMode('email')}
+                    onSave={() => handleSave('email')}
+                    isEditable={editMode.email}
                   />
                 </div>
                 <div className='md:col-span-2'>
@@ -473,7 +518,9 @@ export default function Profile() {
                     type='tel'
                     value={formData.telefon}
                     onChange={handleChange}
-                    onEdit={handleOnEdit}
+                    onEdit={() => toggleEditMode('telefon')}
+                    onSave={() => handleSave('telefon')}
+                    isEditable={editMode.telefon}
                   />
                 </div>
                 <div className='md:col-span-2 relative'>
@@ -486,16 +533,28 @@ export default function Profile() {
                     type={showPassword ? 'text' : 'password'}
                     value={formData.password}
                     onChange={handleChange}
-                    onEdit={handleOnPasswordChange}
+                    disabled
                   />
                   <Button
                     variant='blueSecondary'
                     type='button'
                     onClick={() => setShowPassword(!showPassword)}
-                    className='absolute top-[45%] right-3 flex items-center text-gray-dim h-auto w-auto !border-none'
+                    className='absolute top-[35%] right-3 flex items-center text-gray-dim h-auto w-auto !border-none'
                   >
                     {showPassword ? <EyeOpenIcon /> : <EyeClosedIcon />}
                   </Button>
+                  <button
+                    type='button'
+                    className='flex justify-self-end text-gray-medium text-base font-normal leading-6
+                         hover:underline cursor-pointer mt-2'
+                    style={{
+                      textUnderlinePosition: 'from-font',
+                      textDecorationSkipInk: 'none',
+                    }}
+                    onClick={handleOnPasswordChange}
+                  >
+                    Passwort ändern
+                  </button>
                 </div>
               </form>
 

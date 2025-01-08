@@ -10,26 +10,12 @@ import GenericList from '../../components/common/GenericList';
 import ActiveAuctionsItem from '../../components/developer/my-plots/ActiveAuctionsItem';
 import { activeAuctionsData } from '../../../mockData';
 import { defaultOptions, bidOptions } from '../../types/select-options';
+import { placeABidData } from '../../../mockData';
 
-const initialFormData = {
-  select1: null as string | null,
-  select2: null as string | null,
-  select3: null as string | null,
-  select4: null as string | null,
-  select5: null as string | null,
-  input1: null as string | null,
-  input2: null as string | null,
-  input3: null as string | null,
-  input4: null as string | null,
-  textArea1: '',
-  textArea2: '',
-  checkbox1: false,
-  checkbox2: false,
-  checkbox3: false,
-};
+const userFormData = placeABidData;
 
-const PlaceABid = () => {
-  const [formData, setFormData] = useState(initialFormData);
+const MyAuctionDetails = () => {
+  const [formData, setFormData] = useState(userFormData);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const navigate = useNavigate();
 
@@ -78,6 +64,14 @@ const PlaceABid = () => {
         [name]: '',
       }));
     }
+  };
+
+  const handleUpdateBid = () => {
+    console.log('update bid');
+  };
+
+  const handleWithdrawBid = () => {
+    console.log('withdraw bid');
   };
 
   return (
@@ -274,15 +268,15 @@ const PlaceABid = () => {
           <div className='flex justify-end gap-6'>
             <Button
               variant='blueSecondary'
-              onClick={() => navigate('../active-auctions/')}
+              onClick={() => navigate('../my-auctions/')}
             >
               Abbrechen
             </Button>
-            <Button
-              variant='bluePrimary'
-              onClick={() => navigate('../active-auctions/thanks')}
-            >
-              Gebot abgeben
+            <Button variant='blueSecondary' onClick={handleUpdateBid}>
+              Gebot aktualisieren
+            </Button>
+            <Button variant='bluePrimary' onClick={handleWithdrawBid}>
+              Gebot zurückziehen
             </Button>
           </div>
         </div>
@@ -295,4 +289,4 @@ const PlaceABid = () => {
   );
 };
 
-export default PlaceABid;
+export default MyAuctionDetails;

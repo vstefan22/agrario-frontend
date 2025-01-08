@@ -30,6 +30,14 @@ const OfferDetails = () => {
     acceptTermsAndConditions: boolean;
     other: boolean;
   }>(myOfferDetailsData);
+
+  const [editMode, setEditMode] = useState<Record<string, boolean>>({
+    datePicker: false,
+    select1: false,
+    select2: false,
+    select3: false,
+  });
+
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const navigate = useNavigate();
@@ -65,10 +73,6 @@ const OfferDetails = () => {
         availableDate: '',
       }));
     }
-  };
-
-  const handleOnEdit = () => {
-    console.log('edit clicked.');
   };
 
   const handleSelectChange = (name: string, option: string) => {
@@ -132,6 +136,17 @@ const OfferDetails = () => {
     }
   };
 
+  const toggleEditMode = (field: string) => {
+    setEditMode((prev) => ({
+      ...prev,
+      [field]: !prev[field],
+    }));
+  };
+
+  const handleSave = (field: string) => {
+    toggleEditMode(field);
+  };
+
   return (
     <div className='bg-gray-lightest min-h-screen flex flex-col px-7 p-4'>
       <h1 className='text-[32px] font-bold text-black-muted mb-4'>
@@ -157,7 +172,9 @@ const OfferDetails = () => {
             value={formData.availableDate}
             onChange={handleDateChange}
             placeholder='DD/MM/YY'
-            onEdit={handleOnEdit}
+            onEdit={() => toggleEditMode('datePicker')}
+            onSave={() => handleSave('datePicker')}
+            isEditable={editMode.datePicker}
             divClassName='mt-auto'
           />
           {errors.availableDate && (
@@ -167,7 +184,9 @@ const OfferDetails = () => {
             name='select1'
             label='Sind Sie offen für Verpachtung oder für Verkauf'
             required
-            onEdit={handleOnEdit}
+            onEdit={() => toggleEditMode('select1')}
+            onSave={() => handleSave('select1')}
+            isEditable={editMode.select1}
             onChange={handleSelectChange}
             options={defaultOptions}
             value={formData.select1}
@@ -182,7 +201,9 @@ const OfferDetails = () => {
             name='select2'
             label='Regionalität des Projektentwicklers'
             required
-            onEdit={handleOnEdit}
+            onEdit={() => toggleEditMode('select2')}
+            onSave={() => handleSave('select2')}
+            isEditable={editMode.select2}
             onChange={handleSelectChange}
             options={defaultOptions}
             value={formData.select2}
@@ -196,7 +217,9 @@ const OfferDetails = () => {
             name='select3'
             label='Sind Sie offen für Verpachtung oder für Verkauf'
             required
-            onEdit={handleOnEdit}
+            onEdit={() => toggleEditMode('select3')}
+            onSave={() => handleSave('select3')}
+            isEditable={editMode.select3}
             onChange={handleSelectChange}
             options={defaultOptions}
             value={formData.select3}

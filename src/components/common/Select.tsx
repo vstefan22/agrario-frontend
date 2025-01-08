@@ -13,6 +13,8 @@ interface BaseSelectProps {
   label?: string;
   required?: boolean;
   onEdit?: () => void;
+  onSave?: () => void;
+  isEditable?: boolean;
   divClassName?: string;
   labelClassName?: string;
   divWidthClass?: string;
@@ -49,6 +51,8 @@ const Select: FC<SelectProps> = ({
   label,
   required = false,
   onEdit,
+  onSave,
+  isEditable = false,
   divClassName,
   labelClassName,
   divWidthClass,
@@ -116,7 +120,10 @@ const Select: FC<SelectProps> = ({
           </label>
           {onEdit && (
             <div className='mt-auto mb-2'>
-              <EditButton onClick={onEdit} />
+              <EditButton
+                onClick={isEditable ? onSave : onEdit}
+                mode={isEditable ? 'Save' : 'Edit'}
+              />
             </div>
           )}
         </div>
@@ -126,7 +133,12 @@ const Select: FC<SelectProps> = ({
         <button
           type='button'
           onClick={() => setIsOpen(!isOpen)}
-          className={getButtonClasses()}
+          className={`${getButtonClasses()} ${
+            !isEditable && onEdit
+              ? 'opacity-50 cursor-not-allowed'
+              : 'cursor-pointer'
+          }`}
+          disabled={!isEditable && Boolean(onEdit)}
         >
           <span>{value || placeholder}</span>
           <ArrowDown />

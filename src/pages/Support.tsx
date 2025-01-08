@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import Select from '../../components/common/Select';
-import TextArea from '../../components/common/TextArea';
-import UploadFile from '../../components/common/UploadFile';
-import Button from '../../components/common/Button';
-import MessageHistoryCard from '../../components/landowner/messages/MessageHistoryCard';
-import { defaultOptions } from '../../types/select-options';
+import Select from '../components/common/Select';
+import TextArea from '../components/common/TextArea';
+import UploadFile from '../components/common/UploadFile';
+import Button from '../components/common/Button';
+import MessageHistoryCard from '../components/landowner/messages/MessageHistoryCard';
+import { defaultOptions } from '../types/select-options';
 
 const initialFormData = {
   select1: defaultOptions[0],
