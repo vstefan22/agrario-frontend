@@ -1,6 +1,6 @@
-import Button from '../../components/common/Button';
-import MessageStorage from '../../components/landowner/messages/MessageStorage';
-import plusImg from '../../assets/images/plus.png';
+import Button from '../components/common/Button';
+import MessageStorage from '../components/landowner/messages/MessageStorage';
+import plusImg from '../assets/images/plus.png';
 
 const Messages = () => {
   const handleCreateMessage = () => {

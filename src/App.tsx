@@ -15,7 +15,7 @@ import MyOffers from './pages/landowner/MyOffers';
 import OfferDetails from './pages/landowner/OfferDetails';
 import OfferPreparation from './pages/landowner/OfferPreparation';
 import FriendInvite from './pages/landowner/FriendInvite';
-import QuestionsHelp from './pages/landowner/QuestionsHelp';
+import QuestionsHelp from './pages/QuestionsHelp';
 import AnalysePlusCart from './pages/landowner/AnalysePlusCart';
 import ThankYouOrderRequest from './pages/landowner/ThankYouOrderRequest';
 import ThankYouMarketingRequest from './pages/landowner/ThankYouMarketingRequest';
@@ -23,11 +23,11 @@ import PlotsSearch from './pages/developer/PlotsSearch';
 import MyWatchlist from './pages/developer/MyWatchlist';
 import ActiveAuctions from './pages/developer/ActiveAuctions';
 import ThankYouSubscribe from './pages/developer/ThankYouSubscribe';
-import Support from './pages/landowner/Support';
+import Support from './pages/Support';
 import StartLandowner from './pages/landowner/Start';
 import StartDeveloper from './pages/developer/Start';
 import ParcelDetails from './pages/developer/ParcelDetails';
-import Messages from './pages/landowner/Messages';
+import Messages from './pages/Messages';
 import AuctionDetails from './pages/developer/AuctionDetails';
 import PlaceABid from './pages/developer/PlaceABid';
 import ThankYouInterest from './pages/developer/ThankYouInterest';
@@ -85,6 +85,7 @@ const App = () => {
             element={
               <ProtectedLayout>
                 <Routes>
+                  <Route path='/messages' element={<Messages />} />
                   <Route path='/profile' element={<ProfileDeveloper />} />
                   <Route
                     path='/profile/subscribe'
@@ -110,12 +111,12 @@ const App = () => {
                     path='active-auctions/thanks'
                     element={<ThankYouInterest />}
                   />
-
                   <Route path='my-auctions' element={<MyAuctions />} />
                   <Route
                     path='my-auctions/details'
                     element={<MyAuctionDetails />}
                   />
+                  <Route path='/questions-help' element={<QuestionsHelp />} />
                 </Routes>
               </ProtectedLayout>
             }
