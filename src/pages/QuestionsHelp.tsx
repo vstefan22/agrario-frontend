@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import Accordion from '../../components/common/Accordion';
-import questionsHelpImg from '../../assets/images/questions-help.png';
-import { questionsHelpData } from '../../../mockData';
+import Accordion from '../components/common/Accordion';
+import questionsHelpImg from '../assets/images/questions-help.png';
+import { questionsHelpData } from '../../mockData';
 
 function QuestionsHelp() {
   const [opened, setOpened] = useState<boolean[]>(

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState, useRef } from 'react';
 import EditButton from './EditButton';
 import SaveButton from './SaveButton';
 
@@ -23,6 +23,20 @@ const TextArea: FC<TextAreaProps> = ({
   required = false,
   editBtn = false,
 }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+  const handleEditBtn = () => {
+    setIsEditing(true);
+    setTimeout(() => {
+      textAreaRef.current?.focus();
+    }, 0);
+  };
+
+  const handleSaveBtn = () => {
+    setIsEditing(false);
+  };
+
   return (
     <div className='flex flex-col mt-6'>
       {label && (
@@ -41,13 +55,15 @@ const TextArea: FC<TextAreaProps> = ({
         onChange={onChange}
         className='w-full h-[240px] p-4 border border-gray-medium/60 rounded-[8px] focus:outline-none focus:ring-2 focus:ring-blue-400'
         placeholder={placeholder}
+        disabled={!isEditing && editBtn}
+        ref={textAreaRef}
       />
 
       {editBtn && (
         <div className='ml-auto mt-3'>
           <div className='flex gap-3'>
-            <SaveButton />
-            <EditButton />
+            <SaveButton onClick={handleSaveBtn} />
+            <EditButton onClick={handleEditBtn} />
           </div>
         </div>
       )}

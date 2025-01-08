@@ -37,6 +37,18 @@ export default function Profile() {
     'https://s3-alpha-sig.figma.com/img/01cc/5d61/f928befeeece4a5c1e2f09ab88eac5cc?Expires=1735516800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=IZe3UOdo59zO4aHKULYUvDhMUIHSDdU7ikD3n3c2CVQZMVYmnmhRDWPKGCoJoP7sbSY6wmm5eQ8aKphj8xU8ymJaj0zkI90mpfr0ki4MiUcz5xBOKFsN3iPumxdxH~LU6dAFKKPUS6NFzW~ywx-RICjvhYBDoeaG3UqgtdAzr747DxDqzTM4JzktYyChDO-3d5e0fDatlraLgZTCsIWzTImROLt8cKyz1glTQoXg4IXF778SNN-lNSuzDut2nYCxTgq3uam8RwMOEWjitxUT0h0-9A0JYvPaXTflAYgIfE4AnCPIJvgp3w1Y~buDyMA~Vd3jJTXVUMp8FaDoYrOG6Q__'
   );
   // const [showPassword, setShowPassword] = useState(false);
+  const [editMode, setEditMode] = useState<Record<string, boolean>>({
+    firstname: false,
+    lastname: false,
+    company_name: false,
+    position: false,
+    address: false,
+    zipcode: false,
+    city: false,
+    company_website: false,
+    email: false,
+    phone_number: false,
+  });
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -125,15 +137,21 @@ export default function Profile() {
     }
   };
 
-  const handleOnEdit = () => {
-    console.log('edit clicked.');
-  };
-
   const handleOnPasswordChange = () => {
     navigate('/landowner/password-change');
   };
 
   console.log('user: ', user);
+  const toggleEditMode = (field: string) => {
+    setEditMode((prev) => ({
+      ...prev,
+      [field]: !prev[field],
+    }));
+  };
+
+  const handleSave = (field: string) => {
+    toggleEditMode(field);
+  };
 
   return (
     <div className='bg-gray-lightest min-h-screen flex flex-col items-center justify-start px-4 py-8'>
@@ -187,7 +205,9 @@ export default function Profile() {
               name='firstname'
               value={formData.firstname}
               onChange={handleChange}
-              onEdit={handleOnEdit}
+              onEdit={() => toggleEditMode('firstname')}
+              onSave={() => handleSave('firstname')}
+              isEditable={editMode.firstname}
             />
           </div>
           <div className='md:col-span-2'>
@@ -199,7 +219,9 @@ export default function Profile() {
               name='lastname'
               value={formData.lastname}
               onChange={handleChange}
-              onEdit={handleOnEdit}
+              onEdit={() => toggleEditMode('lastname')}
+              onSave={() => handleSave('lastname')}
+              isEditable={editMode.lastname}
             />
           </div>
           <div className='md:col-span-2'>
@@ -211,7 +233,9 @@ export default function Profile() {
               name='company_name'
               value={formData.company_name}
               onChange={handleChange}
-              onEdit={handleOnEdit}
+              onEdit={() => toggleEditMode('company_name')}
+              onSave={() => handleSave('company_name')}
+              isEditable={editMode.company_name}
             />
           </div>
           <div className='md:col-span-2'>
@@ -223,7 +247,9 @@ export default function Profile() {
               name='position'
               value={formData.position}
               onChange={handleChange}
-              onEdit={handleOnEdit}
+              onEdit={() => toggleEditMode('position')}
+              onSave={() => handleSave('position')}
+              isEditable={editMode.position}
             />
           </div>
           <div className='md:col-span-2'>
@@ -235,7 +261,9 @@ export default function Profile() {
               name='address'
               value={formData.address}
               onChange={handleChange}
-              onEdit={handleOnEdit}
+              onEdit={() => toggleEditMode('address')}
+              onSave={() => handleSave('address')}
+              isEditable={editMode.address}
             />
           </div>
           <div className='md:col-span-1'>
@@ -247,7 +275,9 @@ export default function Profile() {
               name='zipcode'
               value={formData.zipcode}
               onChange={handleChange}
-              onEdit={handleOnEdit}
+              onEdit={() => toggleEditMode('zipcode')}
+              onSave={() => handleSave('zipcode')}
+              isEditable={editMode.zipcode}
             />
           </div>
           <div className='md:col-span-1'>
@@ -257,9 +287,9 @@ export default function Profile() {
               required
               id='city'
               name='city'
-              value={formData.city}
-              onChange={handleChange}
-              onEdit={handleOnEdit}
+              onEdit={() => toggleEditMode('city')}
+              onSave={() => handleSave('city')}
+              isEditable={editMode.city}
             />
           </div>
           <div className='md:col-span-2'>
@@ -271,7 +301,9 @@ export default function Profile() {
               type='url'
               value={formData.company_website}
               onChange={handleChange}
-              onEdit={handleOnEdit}
+              onEdit={() => toggleEditMode('company_website')}
+              onSave={() => handleSave('company_website')}
+              isEditable={editMode.company_website}
             />
           </div>
           <div className='md:col-span-2'>
@@ -284,7 +316,9 @@ export default function Profile() {
               type='email'
               value={formData.email}
               onChange={handleChange}
-              onEdit={handleOnEdit}
+              onEdit={() => toggleEditMode('email')}
+              onSave={() => handleSave('email')}
+              isEditable={editMode.email}
             />
           </div>
           <div className='md:col-span-2'>
@@ -296,7 +330,9 @@ export default function Profile() {
               type='tel'
               value={formData.phone_number}
               onChange={handleChange}
-              onEdit={handleOnEdit}
+              onEdit={() => toggleEditMode('phone_number')}
+              onSave={() => handleSave('phone_number')}
+              isEditable={editMode.phone_number}
             />
           </div>
 
@@ -310,12 +346,13 @@ export default function Profile() {
               type={showPassword ? 'text' : 'password'}
               value={formData.password}
               onChange={handleChange}
+              disabled
             />
             <Button
               variant='blueSecondary'
               type='button'
               onClick={() => setShowPassword(!showPassword)}
-              className='absolute top-[40%] right-3 flex items-center text-gray-dim h-auto w-auto !border-none'
+              className='absolute top-[35%] right-3 flex items-center text-gray-dim h-auto w-auto !border-none'
             >
               {showPassword ? <EyeOpenIcon /> : <EyeClosedIcon />}
             </Button> */}

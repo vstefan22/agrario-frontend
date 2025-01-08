@@ -377,6 +377,41 @@ export const activeAuctionsData = [
   },
 ];
 
+export const myAuctionsData = [
+  {
+    id: 'FL-56141',
+    state_name: 'Hessen',
+    plz: 65366,
+    municipality_name: 'Rüdesheim',
+    district_name: 'Hasensprung',
+    cadastral_area: '2',
+    cadastral_sector: '35-6',
+    land_use: 'Grünland',
+    plot_number_main: 10000,
+    plot_number_secondary: '987-654-321',
+    image: fieldsImg,
+    analyzePlus: 'active',
+    infrastructure: 'Freiflächensolar',
+    evaluation: 'Potentiell geeignet',
+  },
+  {
+    id: 'FL-56142',
+    state_name: 'Hessen',
+    plz: 65366,
+    municipality_name: 'Rüdesheim',
+    district_name: 'Hasensprung',
+    cadastral_area: '2',
+    cadastral_sector: '35-6',
+    land_use: 'Grünland',
+    plot_number_main: 10000,
+    plot_number_secondary: '987-654-321',
+    image: fieldsImg,
+    analyzePlus: 'active',
+    infrastructure: 'Freiflächensolar',
+    evaluation: 'Potentiell geeignet',
+  },
+];
+
 export const myOfferDetailsData = {
   availableDate: new Date('2024-08-11'),
   select1: 'Option 1',
@@ -405,4 +440,21 @@ export const tenderCriteriaData = {
   ],
   sonstiges:
     'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.',
+};
+
+export const placeABidData = {
+  select1: 'Option 3',
+  select2: 'Ja',
+  select3: 'Ja',
+  select4: 'Nein',
+  select5: 'Keine Angabe',
+  input1: 'Asdfgg',
+  input2: 'Fsadjdg sdfbb',
+  input3: 'Lfmdsm fsdmpf fasda',
+  input4: '100 €',
+  textArea1: 'This is some random text by user....',
+  textArea2: 'This is sec rand text.......',
+  checkbox1: true,
+  checkbox2: true,
+  checkbox3: true,
 };
