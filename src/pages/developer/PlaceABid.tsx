@@ -84,6 +84,7 @@ const PlaceABid = () => {
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
       <h1 className='text-[32px] font-bold text-black-muted'>
         Gebot abgeben AN-561345
+        {/* Replace AN-561345 with original ID */}
       </h1>
       <p className='text-gray-dark-100 w-[50%] mt-2 mb-6'>
         There are many variations of passages of Lorem Ipsum available, but the
@@ -277,7 +278,12 @@ const PlaceABid = () => {
             >
               Abbrechen
             </Button>
-            <Button variant='bluePrimary'>Gebot abgeben</Button>
+            <Button
+              variant='bluePrimary'
+              onClick={() => navigate('../active-auctions/thanks')}
+            >
+              Gebot abgeben
+            </Button>
           </div>
         </div>
         <div className='w-1/2 space-y-8'>

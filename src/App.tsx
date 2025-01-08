@@ -30,6 +30,7 @@ import ParcelDetails from './pages/developer/ParcelDetails';
 import Messages from './pages/landowner/Messages';
 import AuctionDetails from './pages/developer/AuctionDetails';
 import PlaceABid from './pages/developer/PlaceABid';
+import ThankYouInterest from './pages/developer/ThankYouInterest';
 
 const App = () => {
   return (
@@ -102,6 +103,10 @@ const App = () => {
                   <Route
                     path='active-auctions/place-a-bid'
                     element={<PlaceABid />}
+                  />
+                  <Route
+                    path='active-auctions/thanks'
+                    element={<ThankYouInterest />}
                   />
                 </Routes>
               </ProtectedLayout>
