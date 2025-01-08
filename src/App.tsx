@@ -28,6 +28,8 @@ import StartLandowner from './pages/landowner/Start';
 import StartDeveloper from './pages/developer/Start';
 import ParcelDetails from './pages/developer/ParcelDetails';
 import Messages from './pages/landowner/Messages';
+import AuctionDetails from './pages/developer/AuctionDetails';
+import PlaceABid from './pages/developer/PlaceABid';
 
 const App = () => {
   return (
@@ -93,6 +95,14 @@ const App = () => {
                   />
                   <Route path='/my-watchlist' element={<MyWatchlist />} />
                   <Route path='/active-auctions' element={<ActiveAuctions />} />
+                  <Route
+                    path='active-auctions/details'
+                    element={<AuctionDetails />}
+                  />
+                  <Route
+                    path='active-auctions/place-a-bid'
+                    element={<PlaceABid />}
+                  />
                 </Routes>
               </ProtectedLayout>
             }

@@ -1,4 +1,6 @@
 import { FC } from 'react';
+import EditButton from './EditButton';
+import SaveButton from './SaveButton';
 
 interface TextAreaProps {
   id: string;
@@ -8,6 +10,7 @@ interface TextAreaProps {
   label?: string;
   placeholder?: string;
   required?: boolean;
+  editBtn?: boolean;
 }
 
 const TextArea: FC<TextAreaProps> = ({
@@ -18,6 +21,7 @@ const TextArea: FC<TextAreaProps> = ({
   label,
   placeholder = '',
   required = false,
+  editBtn = false,
 }) => {
   return (
     <div className='flex flex-col mt-6'>
@@ -38,6 +42,15 @@ const TextArea: FC<TextAreaProps> = ({
         className='w-full h-[240px] p-4 border border-gray-medium/60 rounded-[8px] focus:outline-none focus:ring-2 focus:ring-blue-400'
         placeholder={placeholder}
       />
+
+      {editBtn && (
+        <div className='ml-auto mt-3'>
+          <div className='flex gap-3'>
+            <SaveButton />
+            <EditButton />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

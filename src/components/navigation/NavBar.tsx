@@ -18,7 +18,7 @@ const NavBar: FC = () => {
   return (
     <Navbar className='w-full h-[80px] flex justify-between items-center px-6'>
       <div className='flex-shrink-0'>
-        <NavLink href='/'>
+        <NavLink href={`/${userRole}`}>
           <img
             src={headerLogo}
             alt='Header Logo'
