@@ -56,9 +56,7 @@ const PlotSearchItem: FC<PlotSearchItemProps> = ({ data }) => {
                 type='button'
                 variant='bluePrimary'
                 className='w-[200px]'
-                onClick={() =>
-                  navigate('/developer/plots-search/parcel-details')
-                }
+                onClick={() => navigate('parcel-details')}
               >
                 Detail ansehen
               </Button>

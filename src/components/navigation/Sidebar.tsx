@@ -19,16 +19,9 @@ import useAuthStore from '../../store/auth-store';
 export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
-
   const { clearAuth, user } = useAuthStore();
-  const role = user.role;
 
-  let userRole = 'landowner';
-  if (user && role === 'landowner') {
-    userRole = 'landowner';
-  } else if (user && role === 'developer') {
-    userRole = 'developer';
-  }
+  const userRole = user?.role;
 
   const isRouteActive = (basePath: string, exact = false) => {
     if (exact) {

@@ -98,7 +98,9 @@ export default function PasswordChange() {
             <div className='relative w-24 h-24 mr-4'>
               <div className='relative w-24 h-24 rounded-full border-4 border-primary overflow-hidden'>
                 <img
-                  src={user.profilePic ? user.profilePic : profilePic}
+                  src={
+                    user?.profile_picture ? user.profile_picture : profilePic
+                  }
                   alt='Profilbild'
                   className='w-full h-full object-cover rounded-full'
                 />
@@ -116,8 +118,8 @@ export default function PasswordChange() {
                 Ihr Profil,
               </h2>
               <p className='text-lg text-gray-dim'>
-                {user && user.vorname && user.nachname
-                  ? `${user.vorname} ${user.nachname}`
+                {user && user.firstname && user.lastname
+                  ? `${user.firstname} ${user.lastname}`
                   : userName}
               </p>
             </div>

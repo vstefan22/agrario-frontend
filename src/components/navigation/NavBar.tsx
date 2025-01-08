@@ -8,17 +8,11 @@ import messageIcon from '../../assets/images/msg-icon.png';
 
 const NavBar: FC = () => {
   const { isAuthenticated, user } = useAuthStore();
-  let userRole = 'landowner';
-  if (user && user.role === 'landowner') {
-    userRole = 'landowner';
-  }
-  if (user && user.role === 'developer') {
-    userRole = 'developer';
-  }
+  const userRole = user?.role;
   return (
     <Navbar className='w-full h-[80px] flex justify-between items-center px-6'>
       <div className='flex-shrink-0'>
-        <NavLink href='/'>
+        <NavLink href={`/${userRole}`}>
           <img
             src={headerLogo}
             alt='Header Logo'
@@ -39,11 +33,11 @@ const NavBar: FC = () => {
           className='bg-primary/50 text-primary w-[50px] h-[50px] rounded-full flex items-center justify-center overflow-hidden hover:bg-primary/30'
           ariaLabel='Go to Profile'
         >
-          {isAuthenticated && user?.profilePicture ? (
+          {isAuthenticated && user?.profile_picture ? (
             <img
               height={40}
               width={40}
-              src={user.profilePicture}
+              src={user.profile_picture}
               alt='User Profile'
               className='w-full h-full object-cover'
             />

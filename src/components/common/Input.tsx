@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import EditButton from './EditButton';
 
 type InputVariant = 'default' | 'profile';

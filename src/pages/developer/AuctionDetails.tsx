@@ -1,34 +1,31 @@
 import { useNavigate } from 'react-router-dom';
+import ShowDetails from '../ShowDetails';
 import Button from '../../components/common/Button';
 import usePlotStore from '../../store/plot-store';
-import ShowDetails from '../ShowDetails';
 
-function PlotDetails() {
-  const navigate = useNavigate();
+const AuctionDetails = () => {
   const { plot } = usePlotStore();
+  const navigate = useNavigate();
 
-  const handleRequestOffer = () => {
-    navigate('/landowner/my-plots/offer-preparation');
+  const handleDownloadGeodata = () => {
+    console.log('download geodata');
   };
 
-  const handleDownloadReport = () => {
-    console.log('Download report clicked.');
-  };
-
-  const handleAnalysePlus = () => {
-    navigate('/landowner/my-plots/analyse-plus');
+  const handlePlaceABid = () => {
+    navigate('../active-auctions/place-a-bid');
   };
 
   // TODO: use actual user property for this
   const isAnalizePlus = false;
 
   return (
-    <div className='bg-gray-lightest min-h-screen flex flex-col px-7 pt-4'>
+    <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
       <div>
         <h1 className='text-[32px] font-bold text-black-muted'>
           Detailansicht Flurstück Analyse Basic
         </h1>
         <div className='flex items-center gap-4 mb-4'>
+          {/* dodati id */}
           <p className='text-black-muted font-semibold'>{plot?.id}</p>
           <p className='text-gray-dark-100/70 text-[12px]'>ID-Nummer</p>
         </div>
@@ -36,31 +33,25 @@ function PlotDetails() {
       <div className='h-[440px] overflow-y-auto rounded-2xl'>
         <ShowDetails paid={isAnalizePlus} />
       </div>
-
-      <div className='flex justify-end items-center py-5 gap-3'>
+      <div className='ml-auto mt-8 flex gap-6'>
         <Button
-          variant='blueSecondary'
           type='button'
-          onClick={handleRequestOffer}
-          className='mr-3'
+          variant='blueSecondary'
+          onClick={handleDownloadGeodata}
         >
-          Angebot einholen
+          Download Geodaten
         </Button>
         <Button
-          variant='blueSecondary'
           type='button'
-          onClick={handleDownloadReport}
-          className='mr-3'
+          variant='bluePrimary'
+          className='w-[188px]'
+          onClick={handlePlaceABid}
         >
-          Bericht herunterladen
-        </Button>
-
-        <Button variant='bluePrimary' type='button' onClick={handleAnalysePlus}>
-          Analyse PLUS kaufen
+          Gebot abgeben
         </Button>
       </div>
     </div>
   );
-}
+};
 
-export default PlotDetails;
+export default AuctionDetails;
