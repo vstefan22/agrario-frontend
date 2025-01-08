@@ -31,6 +31,8 @@ import Messages from './pages/landowner/Messages';
 import AuctionDetails from './pages/developer/AuctionDetails';
 import PlaceABid from './pages/developer/PlaceABid';
 import ThankYouInterest from './pages/developer/ThankYouInterest';
+import MyAuctions from './pages/developer/MyAuctions';
+import MyAuctionDetails from './pages/developer/MyAuctionDetails';
 
 const App = () => {
   return (
@@ -107,6 +109,12 @@ const App = () => {
                   <Route
                     path='active-auctions/thanks'
                     element={<ThankYouInterest />}
+                  />
+
+                  <Route path='my-auctions' element={<MyAuctions />} />
+                  <Route
+                    path='my-auctions/details'
+                    element={<MyAuctionDetails />}
                   />
                 </Routes>
               </ProtectedLayout>
