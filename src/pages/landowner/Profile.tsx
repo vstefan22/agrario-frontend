@@ -4,70 +4,64 @@ import { TbCameraPlus } from 'react-icons/tb';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import IconCircleButton from '../../components/common/IconCircleButton';
-import { EyeOpenIcon, EyeClosedIcon } from '../../assets/svgs/svg-icons';
-// import useAuthStore from '../../store/auth-store';
+// import { EyeOpenIcon, EyeClosedIcon } from '../../assets/svgs/svg-icons';
+import useHttpRequest from '../../hooks/http-request-hook';
+import useAuthStore from '../../store/auth-store';
+import { StoreUser } from '../../types/user-types';
 
-interface UserData {
-  vorname: string;
-  nachname: string;
-  unternehmen: string;
-  position: string;
-  strasse: string;
-  plz: string;
-  stadt: string;
-  website: string;
-  email: string;
-  telefon: string;
-  password: string;
-  confirmPassword: string;
-}
+type ProfileType = Omit<StoreUser, 'id' | 'role'>;
 
 export default function Profile() {
   const navigate = useNavigate();
-  // const { user } = useAuthStore();
+  const { sendRequest } = useHttpRequest();
+  const { setUser, token, user, updateUser } = useAuthStore();
 
-  // TODO: use actual user data here
-  const [formData, setFormData] = useState<UserData>({
-    vorname: 'Max',
-    nachname: 'Mustermann',
-    unternehmen: 'Musterfirma GmbH',
-    position: 'Softwareentwickler',
-    strasse: 'Musterstraße 123',
-    plz: '12345',
-    stadt: 'Musterstadt',
-    website: 'https://www.musterfirma.de',
-    email: 'max.mustermann@example.com',
-    telefon: '+49 123 456 7890',
-    password: 'Password123!',
-    confirmPassword: 'Password123!',
+  const [formData, setFormData] = useState<ProfileType>({
+    firstname: user?.firstname || '',
+    lastname: user?.lastname || '',
+    email: user?.email || '',
+    company_name: user?.company_name || '',
+    position: user?.position || '',
+    address: user?.address || '',
+    zipcode: user?.zipcode || '',
+    city: user?.city || '',
+    company_website: user?.company_website || '',
+    phone_number: user?.phone_number || '',
+    // password: user?.password || '',
   });
 
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
-  const [userName, setUserName] = useState('');
   const [profilePic, setProfilePic] = useState(
     'https://s3-alpha-sig.figma.com/img/01cc/5d61/f928befeeece4a5c1e2f09ab88eac5cc?Expires=1735516800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=IZe3UOdo59zO4aHKULYUvDhMUIHSDdU7ikD3n3c2CVQZMVYmnmhRDWPKGCoJoP7sbSY6wmm5eQ8aKphj8xU8ymJaj0zkI90mpfr0ki4MiUcz5xBOKFsN3iPumxdxH~LU6dAFKKPUS6NFzW~ywx-RICjvhYBDoeaG3UqgtdAzr747DxDqzTM4JzktYyChDO-3d5e0fDatlraLgZTCsIWzTImROLt8cKyz1glTQoXg4IXF778SNN-lNSuzDut2nYCxTgq3uam8RwMOEWjitxUT0h0-9A0JYvPaXTflAYgIfE4AnCPIJvgp3w1Y~buDyMA~Vd3jJTXVUMp8FaDoYrOG6Q__'
   );
-  const [showPassword, setShowPassword] = useState(false);
-
+  // const [showPassword, setShowPassword] = useState(false);
   const [editMode, setEditMode] = useState<Record<string, boolean>>({
-    vorname: false,
-    nachname: false,
-    unternehmen: false,
+    firstname: false,
+    lastname: false,
+    company_name: false,
     position: false,
-    strasse: false,
-    plz: false,
-    stadt: false,
-    website: false,
+    address: false,
+    zipcode: false,
+    city: false,
+    company_website: false,
     email: false,
-    telefon: false,
+    phone_number: false,
   });
 
   useEffect(() => {
-    setUserName('Max Mustermann');
-    // TODO: check if this is still needed
-  }, [navigate]);
+    const fetchUserProfile = async () => {
+      const user = await sendRequest<StoreUser>('/accounts/profile/', 'GET', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUser(user);
+    };
+
+    fetchUserProfile();
+  }, [sendRequest, setUser, token]);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -104,9 +98,9 @@ export default function Profile() {
     e.preventDefault();
 
     if (
-      !formData.vorname ||
-      !formData.nachname ||
-      !formData.unternehmen ||
+      !formData.firstname ||
+      !formData.lastname ||
+      !formData.company_name ||
       !formData.email
     ) {
       setError('Bitte füllen Sie alle erforderlichen Felder aus.');
@@ -114,32 +108,25 @@ export default function Profile() {
       return;
     }
 
-    if (formData.password || formData.confirmPassword) {
-      if (formData.password !== formData.confirmPassword) {
-        setError('Die Passwörter stimmen nicht überein.');
-        setSuccess('');
-        return;
-      }
-    }
-
     setError('');
     setSuccess('');
     setLoading(true);
 
     try {
-      // TODO: create update request for user
-      // const data = await sendRequest(
-      //   '/user-update/',
-      //   'POST',
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${token}`,
-      //     },
-      //   },
-      //   formData
-      // );
+      const userUpdated = await sendRequest(
+        '/accounts/profile/',
+        'PATCH',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+        formData
+      );
+      updateUser(userUpdated);
       setSuccess('Profil erfolgreich aktualisiert.');
     } catch (err: unknown) {
+      console.log('error update profile: ', err);
       if (err instanceof Error) {
         setError(err.message || 'Ein Fehler ist aufgetreten.');
       } else {
@@ -154,6 +141,7 @@ export default function Profile() {
     navigate('/landowner/password-change');
   };
 
+  console.log('user: ', user);
   const toggleEditMode = (field: string) => {
     setEditMode((prev) => ({
       ...prev,
@@ -198,7 +186,7 @@ export default function Profile() {
           </div>
           <div>
             <h2 className='text-sm font-semibold text-gray-dim'>Ihr Profil,</h2>
-            <p className='text-lg text-gray-dim'>{userName}</p>
+            <p className='text-lg text-gray-dim'>{'m profile'}</p>
           </div>
         </div>
 
@@ -211,49 +199,49 @@ export default function Profile() {
           <div className='md:col-span-2'>
             <Input
               variant='profile'
-              label='Vorname'
+              label='firstname'
               required
-              id='vorname'
-              name='vorname'
-              value={formData.vorname}
+              id='firstname'
+              name='firstname'
+              value={formData.firstname}
               onChange={handleChange}
-              onEdit={() => toggleEditMode('vorname')}
-              onSave={() => handleSave('vorname')}
-              isEditable={editMode.vorname}
+              onEdit={() => toggleEditMode('firstname')}
+              onSave={() => handleSave('firstname')}
+              isEditable={editMode.firstname}
             />
           </div>
           <div className='md:col-span-2'>
             <Input
               variant='profile'
-              label='Nachname'
+              label='lastname'
               required
-              id='nachname'
-              name='nachname'
-              value={formData.nachname}
+              id='lastname'
+              name='lastname'
+              value={formData.lastname}
               onChange={handleChange}
-              onEdit={() => toggleEditMode('nachname')}
-              onSave={() => handleSave('nachname')}
-              isEditable={editMode.nachname}
+              onEdit={() => toggleEditMode('lastname')}
+              onSave={() => handleSave('lastname')}
+              isEditable={editMode.lastname}
             />
           </div>
           <div className='md:col-span-2'>
             <Input
               variant='profile'
-              label='Name des Unternehmens'
+              label='Name des company_names'
               required
-              id='unternehmen'
-              name='unternehmen'
-              value={formData.unternehmen}
+              id='company_name'
+              name='company_name'
+              value={formData.company_name}
               onChange={handleChange}
-              onEdit={() => toggleEditMode('unternehmen')}
-              onSave={() => handleSave('unternehmen')}
-              isEditable={editMode.unternehmen}
+              onEdit={() => toggleEditMode('company_name')}
+              onSave={() => handleSave('company_name')}
+              isEditable={editMode.company_name}
             />
           </div>
           <div className='md:col-span-2'>
             <Input
               variant='profile'
-              label='Ihre Position im Unternehmen'
+              label='Ihre Position im company_name'
               required
               id='position'
               name='position'
@@ -267,55 +255,55 @@ export default function Profile() {
           <div className='md:col-span-2'>
             <Input
               variant='profile'
-              label='Anschrift/Strasse'
+              label='Anschrift/address'
               required
-              id='strasse'
-              name='strasse'
-              value={formData.strasse}
+              id='address'
+              name='address'
+              value={formData.address}
               onChange={handleChange}
-              onEdit={() => toggleEditMode('strasse')}
-              onSave={() => handleSave('strasse')}
-              isEditable={editMode.strasse}
+              onEdit={() => toggleEditMode('address')}
+              onSave={() => handleSave('address')}
+              isEditable={editMode.address}
             />
           </div>
           <div className='md:col-span-1'>
             <Input
               variant='profile'
-              label='PLZ'
+              label='zipcode'
               required
-              id='plz'
-              name='plz'
-              value={formData.plz}
+              id='zipcode'
+              name='zipcode'
+              value={formData.zipcode}
               onChange={handleChange}
-              onEdit={() => toggleEditMode('plz')}
-              onSave={() => handleSave('plz')}
-              isEditable={editMode.plz}
+              onEdit={() => toggleEditMode('zipcode')}
+              onSave={() => handleSave('zipcode')}
+              isEditable={editMode.zipcode}
             />
           </div>
           <div className='md:col-span-1'>
             <Input
               variant='profile'
-              label='Stadt'
+              label='city'
               required
-              id='stadt'
-              name='stadt'
-              onEdit={() => toggleEditMode('stadt')}
-              onSave={() => handleSave('stadt')}
-              isEditable={editMode.stadt}
+              id='city'
+              name='city'
+              onEdit={() => toggleEditMode('city')}
+              onSave={() => handleSave('city')}
+              isEditable={editMode.city}
             />
           </div>
           <div className='md:col-span-2'>
             <Input
               variant='profile'
-              label='Website des Unternehmens'
-              id='website'
-              name='website'
+              label='company_website des company_names'
+              id='company_website'
+              name='company_website'
               type='url'
-              value={formData.website}
+              value={formData.company_website}
               onChange={handleChange}
-              onEdit={() => toggleEditMode('website')}
-              onSave={() => handleSave('website')}
-              isEditable={editMode.website}
+              onEdit={() => toggleEditMode('company_website')}
+              onSave={() => handleSave('company_website')}
+              isEditable={editMode.company_website}
             />
           </div>
           <div className='md:col-span-2'>
@@ -336,20 +324,20 @@ export default function Profile() {
           <div className='md:col-span-2'>
             <Input
               variant='profile'
-              label='Telefonnummer'
-              id='telefon'
-              name='telefon'
+              label='phone_numbernummer'
+              id='phone_number'
+              name='phone_number'
               type='tel'
-              value={formData.telefon}
+              value={formData.phone_number}
               onChange={handleChange}
-              onEdit={() => toggleEditMode('telefon')}
-              onSave={() => handleSave('telefon')}
-              isEditable={editMode.telefon}
+              onEdit={() => toggleEditMode('phone_number')}
+              onSave={() => handleSave('phone_number')}
+              isEditable={editMode.phone_number}
             />
           </div>
 
           <div className='md:col-span-2 relative'>
-            <Input
+            {/* <Input
               variant='profile'
               label='Passwort'
               required
@@ -367,7 +355,7 @@ export default function Profile() {
               className='absolute top-[35%] right-3 flex items-center text-gray-dim h-auto w-auto !border-none'
             >
               {showPassword ? <EyeOpenIcon /> : <EyeClosedIcon />}
-            </Button>
+            </Button> */}
             <button
               type='button'
               className='flex justify-self-end text-gray-medium text-base font-normal leading-6

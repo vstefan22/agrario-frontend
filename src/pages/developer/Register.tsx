@@ -1,22 +1,20 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../../firebase/firebase-config';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import Checkbox from '../../components/common/Checkbox';
-import useAuthStore from '../../store/auth-store';
+import useHttpRequest from '../../hooks/http-request-hook';
 
-export default function Register2() {
-  const { setUser, setToken } = useAuthStore();
+export default function Register() {
   const navigate = useNavigate();
+  const { sendRequest } = useHttpRequest();
 
   const [formData, setFormData] = useState({
     firstname: '',
     lastname: '',
     company_name: '',
     position: '',
-    street_address: '',
+    address: '',
     zipcode: '',
     city: '',
     company_website: '',
@@ -51,13 +49,6 @@ export default function Register2() {
       checked = (e.target as HTMLInputElement).checked;
     }
 
-    if (name === 'phone_number') {
-      const regex = /^\+?[0-9]*$/;
-      if (!regex.test(value)) {
-        return;
-      }
-    }
-
     setFormData((prev) => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value,
@@ -71,6 +62,11 @@ export default function Register2() {
       !formData.firstname ||
       !formData.lastname ||
       !formData.company_name ||
+      !formData.position ||
+      !formData.address ||
+      !formData.zipcode ||
+      !formData.city ||
+      !formData.phone_number ||
       !formData.email ||
       !formData.password ||
       !formData.confirm_password
@@ -88,13 +84,6 @@ export default function Register2() {
       !formData.iAccept
     ) {
       setError('Bitte akzeptieren Sie die Datenschutzbedingungen und AGB.');
-      return;
-    }
-
-    if (!/^\+?[0-9]*$/.test(formData.phone_number)) {
-      setError(
-        'Bitte geben Sie eine gültige Telefonnummer ein (z.B. +5316326236).'
-      );
       return;
     }
 
@@ -118,32 +107,23 @@ export default function Register2() {
     setLoading(true);
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        formData.email,
-        formData.password
-      );
-      const user = userCredential.user;
-      const accessToken = await user.getIdToken();
-      setToken(accessToken);
-      setUser({ email: user.email, id: user.uid });
-
-      const userData = {
-        firstname: formData.firstname,
-        lastname: formData.lastname,
-        company_name: formData.company_name,
-        position: formData.position || null,
-        street_address: formData.street_address,
-        zipcode: formData.zipcode,
-        city: formData.city,
-        company_website: formData.company_website || null,
-        email: formData.email,
-        phone_number: formData.phone_number || null,
-      };
-      // TODO: poziv ka bekendu
-      console.log('user data: ', userData);
+      await sendRequest('/accounts/users/', 'POST', {}, formData);
       navigate('/');
-    } catch (err: unknown) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      if (
+        err.response.data.email[0] === 'user with this email already exists.'
+      ) {
+        setError('Ein Konto mit dieser E-Mail-Adresse existiert bereits.');
+        return;
+      }
+      if (
+        err.response.data.phone_number ===
+        'The phone number entered is not valid.'
+      ) {
+        setError('Die eingegebene Telefonnummer ist ungültig.');
+        return;
+      }
       if (err instanceof Error) {
         setError(err.message || 'Ein Fehler ist aufgetreten.');
       } else {
@@ -200,8 +180,8 @@ export default function Register2() {
           <Input
             label='Anschrift/Strasse'
             placeholder='Text hinzufügen'
-            name='street_address'
-            value={formData.street_address}
+            name='address'
+            value={formData.address}
             onChange={handleChange}
             required
             className='md:col-span-1'
@@ -233,12 +213,11 @@ export default function Register2() {
           />
           <Input
             label='Telefonnummer'
-            placeholder='0167498753'
+            placeholder='+49 ...'
             name='phone_number'
             type='tel'
             value={formData.phone_number}
             onChange={handleChange}
-            pattern='^\+?[0-9]*$'
           />
 
           <div className='col-span-2 text-white w-[72%] mt-8'>

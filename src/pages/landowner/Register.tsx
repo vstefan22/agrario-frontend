@@ -1,16 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../../firebase/firebase-config';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import Checkbox from '../../components/common/Checkbox';
-import useAuthStore from '../../store/auth-store';
 import useHttpRequest from '../../hooks/http-request-hook';
 
 export default function Register() {
   const navigate = useNavigate();
-  const { setUser, setToken } = useAuthStore();
   const { sendRequest } = useHttpRequest();
 
   const [formData, setFormData] = useState({
@@ -18,7 +14,7 @@ export default function Register() {
     lastname: '',
     company_name: '',
     position: '',
-    street_address: '',
+    address: '',
     zipcode: '',
     city: '',
     company_website: '',
@@ -58,7 +54,7 @@ export default function Register() {
       !formData.lastname ||
       !formData.company_name ||
       !formData.position ||
-      !formData.street_address ||
+      !formData.address ||
       !formData.zipcode ||
       !formData.city ||
       !formData.phone_number ||
@@ -82,21 +78,23 @@ export default function Register() {
     setLoading(true);
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        formData.email,
-        formData.password
-      );
-      const user = userCredential.user;
-      const accessToken = await user.getIdToken();
-      setToken(accessToken);
-      setUser({ email: user.email, id: user.uid });
-
-      const data = await sendRequest('/accounts/users/', 'POST', {}, formData);
-
-      console.log('user data: ', data);
+      await sendRequest('/accounts/users/', 'POST', {}, formData);
       navigate('/');
-    } catch (err: unknown) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      if (
+        err.response.data.email[0] === 'user with this email already exists.'
+      ) {
+        setError('Ein Konto mit dieser E-Mail-Adresse existiert bereits.');
+        return;
+      }
+      if (
+        err.response.data.phone_number ===
+        'The phone number entered is not valid.'
+      ) {
+        setError('Die eingegebene Telefonnummer ist ungültig.');
+        return;
+      }
       if (err instanceof Error) {
         setError(err.message || 'Ein Fehler ist aufgetreten.');
       } else {
@@ -146,12 +144,13 @@ export default function Register() {
           />
           <Input
             label='Anschrift/Strasse'
-            name='street_address'
-            value={formData.street_address}
+            name='address'
+            value={formData.address}
             onChange={handleChange}
             required
             className='md:col-span-1'
           />
+
           <div className='grid grid-cols-2 gap-4 md:col-span-1'>
             <Input
               label='PLZ'
@@ -186,6 +185,7 @@ export default function Register() {
             label='Telefonnummer'
             name='phone_number'
             type='tel'
+            placeholder='+49 ...'
             value={formData.phone_number}
             onChange={handleChange}
           />
