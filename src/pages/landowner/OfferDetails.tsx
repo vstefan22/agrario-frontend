@@ -10,6 +10,7 @@ import UploadFile from '../../components/common/UploadFile';
 import Button from '../../components/common/Button';
 import { defaultOptions } from '../../types/select-options';
 import { detailsData } from '../../../mockData';
+import { myOfferDetailsData } from '../../../mockData';
 
 const OfferDetails = () => {
   const [formData, setFormData] = useState<{
@@ -28,23 +29,7 @@ const OfferDetails = () => {
     acceptPrivacyPolicy: boolean;
     acceptTermsAndConditions: boolean;
     other: boolean;
-  }>({
-    availableDate: new Date('2024-08-11'),
-    select1: 'Option 1',
-    select2: 'Option 2',
-    select3: 'Option 3',
-    noUsageRestriction: false,
-    windEnergyRestriction: true,
-    solarEnergyRestriction: true,
-    energyStorageRestriction: false,
-    ecoEnhancementsRestriction: true,
-    message: 'This is message from user...',
-    files: [] as File[],
-    isOwnerOrAuthorized: true,
-    acceptPrivacyPolicy: true,
-    acceptTermsAndConditions: true,
-    other: true,
-  });
+  }>(myOfferDetailsData);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const navigate = useNavigate();
