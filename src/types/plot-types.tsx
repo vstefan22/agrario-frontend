@@ -64,3 +64,19 @@ export type PlotAnalysePlusType = {
   land_use: string;
   plot_number_main: number;
 };
+
+export type ActiveAuctionsType = {
+  id: string;
+  state_name: string;
+  plz: number;
+  municipality_name: string;
+  district_name: string;
+  cadastral_area: string;
+  cadastral_sector: string;
+  land_use: string;
+  plot_number_main: number;
+  image: string;
+  analyzePlus: string;
+  infrastructure: string;
+  evaluation: string;
+};

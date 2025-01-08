@@ -1,5 +1,6 @@
 import { PlotType } from '../types/plot-types';
 import { PlotSearchType } from '../types/plot-types';
+import { ActiveAuctionsType } from '../types/plot-types';
 
 export const filterData = (
   items: PlotType[],
@@ -87,4 +88,35 @@ export const filterPlotSearchDataRange = (
   });
 
   return filteredItems.sort((a, b) => a.plot_number_main - b.plot_number_main);
+};
+
+export const filterActiveAuctionsData = (
+  items: ActiveAuctionsType[],
+  searchValue: string
+): ActiveAuctionsType[] => {
+  if (!searchValue) return items;
+
+  return items.filter((item) =>
+    item.state_name.toLowerCase().includes(searchValue.toLowerCase())
+  );
+};
+
+export const sortActiveAuctionsData = (
+  items: ActiveAuctionsType[],
+  sortOption: string | null
+): ActiveAuctionsType[] => {
+  if (!sortOption) return items;
+
+  switch (sortOption) {
+    case 'Sortieren nach Eignung':
+      return [...items].sort((a, b) => a.land_use.localeCompare(b.land_use));
+    case 'Sortieren nach Bundesland':
+      return [...items].sort((a, b) =>
+        a.state_name.localeCompare(b.state_name)
+      );
+    case 'Sortieren nach Größe':
+      return [...items].sort((a, b) => a.plot_number_main - b.plot_number_main);
+    default:
+      return items;
+  }
 };

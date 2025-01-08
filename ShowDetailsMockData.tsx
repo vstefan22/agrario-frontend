@@ -371,7 +371,7 @@ export const showDetailsData = [
       { key: 'Bezeichnung', label: 'Bezeichnung' },
       { key: 'Established1', label: 'Established fact' },
       { key: 'Reader1', label: 'Reader will be distracted' },
-      { key: 'Naturparke', label: 'Naturparke (§ 27 BNatSchG)' },
+      { key: 'Naturparke1', label: 'Naturparke (§ 27 BNatSchG)' },
       { key: 'Variations', label: 'Variations of passages' },
       { key: 'Contrary', label: 'Contrary to popular belief' },
 
@@ -382,7 +382,7 @@ export const showDetailsData = [
         label: 'Landschaftsschutzgebiete (§ 26 BNatSchG )',
       },
       {
-        key: 'Naturparke',
+        key: 'Naturparke2',
         label: 'Naturparke (§ 27 BNatSchG)',
       },
     ],
@@ -399,7 +399,7 @@ export const showDetailsData = [
       { key: 'Bezeichnung', label: 'Bezeichnung' },
       { key: 'Established1', label: 'Established fact' },
       { key: 'Reader1', label: 'Reader will be distracted' },
-      { key: 'Naturparke', label: 'Naturparke (§ 27 BNatSchG)' },
+      { key: 'Naturparke1', label: 'Naturparke (§ 27 BNatSchG)' },
       { key: 'Variations', label: 'Variations of passages' },
       { key: 'Contrary', label: 'Contrary to popular belief' },
       { key: 'Established2', label: 'Established fact' },
@@ -409,7 +409,7 @@ export const showDetailsData = [
         label: 'Landschaftsschutzgebiete (§ 26 BNatSchG )',
       },
       {
-        key: 'Naturparke',
+        key: 'Naturparke2',
         label: 'Naturparke (§ 27 BNatSchG)',
       },
     ],
