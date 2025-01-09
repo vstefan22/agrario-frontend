@@ -117,6 +117,7 @@ export default function Register() {
           <Input
             label='Vorname'
             name='firstname'
+            placeholder='Text hinzufügen'
             value={formData.firstname}
             onChange={handleChange}
             required
@@ -124,6 +125,7 @@ export default function Register() {
           <Input
             label='Nachname'
             name='lastname'
+            placeholder='Text hinzufügen'
             value={formData.lastname}
             onChange={handleChange}
             required
@@ -131,6 +133,7 @@ export default function Register() {
           <Input
             label='Name des Unternehmens'
             name='company_name'
+            placeholder='Text hinzufügen'
             value={formData.company_name}
             onChange={handleChange}
             required
@@ -138,6 +141,7 @@ export default function Register() {
           <Input
             label='Ihre Position im Unternehmen'
             name='position'
+            placeholder='Text hinzufügen'
             value={formData.position}
             onChange={handleChange}
             required
@@ -145,6 +149,7 @@ export default function Register() {
           <Input
             label='Anschrift/Strasse'
             name='address'
+            placeholder='Text hinzufügen'
             value={formData.address}
             onChange={handleChange}
             required
@@ -155,6 +160,7 @@ export default function Register() {
             <Input
               label='PLZ'
               name='zipcode'
+              placeholder='66651'
               value={formData.zipcode}
               onChange={handleChange}
               required
@@ -162,6 +168,7 @@ export default function Register() {
             <Input
               label='Stadt'
               name='city'
+              placeholder='Text hinzufügen'
               value={formData.city}
               onChange={handleChange}
               required
@@ -170,6 +177,7 @@ export default function Register() {
           <Input
             label='Website des Unternehmens'
             name='company_website'
+            placeholder='https://'
             value={formData.company_website}
             onChange={handleChange}
           />
@@ -177,6 +185,7 @@ export default function Register() {
             label='Email Adresse'
             name='email'
             type='email'
+            placeholder='https://'
             value={formData.email}
             onChange={handleChange}
             required
@@ -185,14 +194,16 @@ export default function Register() {
             label='Telefonnummer'
             name='phone_number'
             type='tel'
-            placeholder='+49 ...'
+            placeholder='0167498753'
             value={formData.phone_number}
             onChange={handleChange}
+            required
           />
           <Input
             label='Passwort'
             name='password'
             type='password'
+            placeholder='asdasd'
             value={formData.password}
             onChange={handleChange}
             required
@@ -201,6 +212,7 @@ export default function Register() {
             label='Passwort bestätigen'
             name='confirm_password'
             type='password'
+            placeholder='asdasd'
             value={formData.confirm_password}
             onChange={handleChange}
             required
@@ -218,6 +230,7 @@ export default function Register() {
               name='terms_accepted'
               checked={formData.terms_accepted}
               onChange={handleChange}
+              labelClassName='whitespace-nowrap max-md:whitespace-normal'
             />
           </div>
 
