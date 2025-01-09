@@ -11,7 +11,7 @@ type DynamicTableProps = {
 const DynamicTable: FC<DynamicTableProps> = ({
   columns,
   data,
-  customClassName,
+  customClassName = '',
   isVertical,
 }) => {
   return (

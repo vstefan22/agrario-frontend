@@ -1,11 +1,7 @@
 /// <reference types="@types/google.maps" />
 
 import { useEffect, useRef, useState } from 'react';
-import {
-  PolygonData,
-  PolygonType,
-  LocationType,
-} from '../../types/google-maps-types';
+import { PolygonData, GoogleMapDataType } from '../../types/google-maps-types';
 
 const MAP_DISPLAY_OPTIONS: google.maps.PolygonOptions = {
   fillColor: '#206f6a',
@@ -17,7 +13,7 @@ const MAP_DISPLAY_OPTIONS: google.maps.PolygonOptions = {
 
 type GoogleMapProps = {
   polygonData?: PolygonData;
-  onMapClick?: (polygonData: PolygonType, locationData: LocationType) => void;
+  onMapClick?: (googleMapData: GoogleMapDataType) => void;
   mapSearchTerm?: string;
 };
 
@@ -86,7 +82,6 @@ const GoogleMap = ({
             if (status === 'OK' && results && results.length) {
               const place = results[0];
               const addressComponents = place.address_components;
-              console.log('addressComponents: ', addressComponents);
 
               const state = addressComponents.find((comp) =>
                 comp.types.includes('administrative_area_level_1')
@@ -107,18 +102,20 @@ const GoogleMap = ({
                 comp.types.includes('postal_code')
               );
 
-              const polygonData: PolygonType = { lat, lng };
-
-              const locationData: LocationType = {
+              const googleMapData: GoogleMapDataType = {
                 state_name: state?.long_name || '',
                 district_name: district?.long_name || '',
                 municipality_name: municipality?.long_name || '',
                 cadastral_area: address?.long_name || '',
                 cadastral_sector: addressNumber?.long_name || '',
                 zipcode: zipCode?.long_name || '',
+                polygon: {
+                  type: 'Polygon',
+                  coordinates: [{ lat, lng }],
+                },
               };
 
-              onMapClick(polygonData, locationData);
+              onMapClick(googleMapData);
             } else {
               console.error('Reverse Geocoding failed:', status);
             }
