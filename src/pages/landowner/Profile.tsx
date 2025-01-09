@@ -14,7 +14,7 @@ type ProfileType = Omit<StoreUser, 'id' | 'role'>;
 export default function Profile() {
   const navigate = useNavigate();
   const { sendRequest } = useHttpRequest();
-  const { setUser, token, user, updateUser } = useAuthStore();
+  const { token, user, updateUser } = useAuthStore();
 
   const [formData, setFormData] = useState<ProfileType>({
     firstname: user?.firstname || '',
@@ -57,11 +57,11 @@ export default function Profile() {
           Authorization: `Bearer ${token}`,
         },
       });
-      setUser(user);
+      updateUser(user);
     };
 
     fetchUserProfile();
-  }, [sendRequest, setUser, token]);
+  }, [sendRequest, updateUser, token]);
 
   const handleChange = (
     e: React.ChangeEvent<
