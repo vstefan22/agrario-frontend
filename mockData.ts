@@ -6,7 +6,7 @@ export const plotsListData = [
   {
     id: 'FL-001',
     state_name: 'Hessen',
-    plz: 60306,
+    zipcode: 60306,
     municipality_name: 'Frankfurt',
     district_name: 'Westend',
     cadastral_area: 'Field 12',
@@ -20,7 +20,7 @@ export const plotsListData = [
   {
     id: 'FL-002',
     state_name: 'Bayern',
-    plz: 80331,
+    zipcode: 80331,
     municipality_name: 'Munich',
     district_name: 'Altstadt',
     cadastral_area: 'Field 15',
@@ -34,7 +34,7 @@ export const plotsListData = [
   {
     id: 'FL-003',
     state_name: 'Baden-Württemberg',
-    plz: 70173,
+    zipcode: 70173,
     municipality_name: 'Stuttgart',
     district_name: 'Mitte',
     cadastral_area: 'Field 20',
@@ -74,7 +74,7 @@ export const questionsHelpData: QuestionsHelpItem[] = [
 export const flurstuckData = {
   id: 'FL-001',
   state_name: 'Hessen',
-  plz: 60306,
+  zipcode: 60306,
   municipality_name: 'Frankfurt',
   district_name: 'Westend',
   cadastral_area: 'Field 12',
@@ -89,7 +89,7 @@ export const flurstuckData = {
 export const offerItemData = {
   id: 'FL-001',
   state_name: 'Hessen',
-  plz: 60306,
+  zipcode: 60306,
   municipality_name: 'Frankfurt',
   district_name: 'Westend',
   cadastral_area: 'Field 12',
@@ -103,7 +103,7 @@ export const analysePlusCartData = [
   {
     id: 'FL-56141',
     state_name: 'Hessen',
-    plz: 65366,
+    zipcode: 65366,
     municipality_name: 'Rüdesheim',
     district_name: 'Hasensprung',
     cadastral_area: '2',
@@ -117,7 +117,7 @@ export const analysePlusCartData = [
   {
     id: 'FL-56142',
     state_name: 'Hessen',
-    plz: 65366,
+    zipcode: 65366,
     municipality_name: 'Rüdesheim',
     district_name: 'Hasensprung',
     cadastral_area: '2',
@@ -131,7 +131,7 @@ export const analysePlusCartData = [
   {
     id: 'FL-56143',
     state_name: 'Hessen',
-    plz: 65366,
+    zipcode: 65366,
     municipality_name: 'Rüdesheim',
     district_name: 'Hasensprung',
     cadastral_area: '2',
@@ -148,7 +148,7 @@ export const thankYouMarketingData = [
   {
     id: 'FL-001',
     state_name: 'Hessen',
-    plz: 60306,
+    zipcode: 60306,
     municipality_name: 'Frankfurt',
     district_name: 'Westend',
     cadastral_area: 'Field 12',
@@ -165,7 +165,7 @@ export const detailsData = [
   {
     id: 'FL-001',
     state_name: 'Hessen',
-    plz: 60306,
+    zipcode: 60306,
     municipality_name: 'Frankfurt',
     district_name: 'Westend',
     cadastral_area: 'Field 12',
@@ -184,7 +184,7 @@ export const myOfferData = [
   {
     id: 'FL-56141',
     state_name: 'Hessen',
-    plz: 65366,
+    zipcode: 65366,
     municipality_name: 'Rüdesheim',
     district_name: 'Hasensprung',
     cadastral_area: '2',
@@ -198,7 +198,7 @@ export const myOfferData = [
   {
     id: 'FL-56142',
     state_name: 'Hessen',
-    plz: 65366,
+    zipcode: 65366,
     municipality_name: 'Rüdesheim',
     district_name: 'Hasensprung',
     cadastral_area: '2',
@@ -346,7 +346,7 @@ export const activeAuctionsData = [
   {
     id: 'FL-56141',
     state_name: 'Hessen',
-    plz: 65366,
+    zipcode: 65366,
     municipality_name: 'Rüdesheim',
     district_name: 'Hasensprung',
     cadastral_area: '2',
@@ -362,7 +362,7 @@ export const activeAuctionsData = [
   {
     id: 'FL-56142',
     state_name: 'Hessen',
-    plz: 65366,
+    zipcode: 65366,
     municipality_name: 'Rüdesheim',
     district_name: 'Hasensprung',
     cadastral_area: '2',
@@ -381,7 +381,7 @@ export const myAuctionsData = [
   {
     id: 'FL-56141',
     state_name: 'Hessen',
-    plz: 65366,
+    zipcode: 65366,
     municipality_name: 'Rüdesheim',
     district_name: 'Hasensprung',
     cadastral_area: '2',
@@ -397,7 +397,7 @@ export const myAuctionsData = [
   {
     id: 'FL-56142',
     state_name: 'Hessen',
-    plz: 65366,
+    zipcode: 65366,
     municipality_name: 'Rüdesheim',
     district_name: 'Hasensprung',
     cadastral_area: '2',

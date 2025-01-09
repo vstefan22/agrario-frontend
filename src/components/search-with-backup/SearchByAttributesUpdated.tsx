@@ -1,15 +1,9 @@
 import Input from '../common/Input';
 import Button from '../common/Button';
+import { PlotSearchData } from '../../types/plot-types';
 
 type SearchByAttributesProps = {
-  formData: {
-    federalState: string;
-    zipCode: string;
-    municipal: string;
-    gemarkung: string;
-    flur: string;
-    flurstuck: string;
-  };
+  formData: PlotSearchData;
   handleChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
@@ -44,10 +38,10 @@ const SearchByAttributesUpdated = ({
             variant='profile'
             label='Federal state'
             required
-            id='federalState'
-            name='federalState'
-            placeholder='Enter Municipal'
-            value={formData.federalState}
+            id='state_name'
+            name='state_name'
+            placeholder='Enter federal state'
+            value={formData.state_name}
             onChange={handleChange}
           />
         </div>
@@ -56,10 +50,10 @@ const SearchByAttributesUpdated = ({
             variant='profile'
             label='ZipCode'
             required
-            id='zipCode'
-            name='zipCode'
-            placeholder='Enter Gemarkung'
-            value={formData.zipCode}
+            id='zipcode'
+            name='zipcode'
+            placeholder='Enter zipcode'
+            value={formData.zipcode}
             onChange={handleChange}
           />
         </div>
@@ -68,10 +62,10 @@ const SearchByAttributesUpdated = ({
             variant='profile'
             label='Municipal'
             required
-            id='municipal'
-            name='municipal'
+            id='municipality_name'
+            name='municipality_name'
             placeholder='Enter Municipal'
-            value={formData.municipal}
+            value={formData.municipality_name}
             onChange={handleChange}
           />
         </div>
@@ -80,10 +74,10 @@ const SearchByAttributesUpdated = ({
             variant='profile'
             label='Gemarkung'
             required
-            id='gemarkung'
-            name='gemarkung'
+            id='district_name'
+            name='district_name'
             placeholder='Enter Gemarkung'
-            value={formData.gemarkung}
+            value={formData.district_name}
             onChange={handleChange}
           />
         </div>
@@ -92,10 +86,10 @@ const SearchByAttributesUpdated = ({
             variant='profile'
             label='Flur'
             required
-            id='flur'
-            name='flur'
+            id='cadastral_area'
+            name='cadastral_area'
             placeholder='Enter Flur'
-            value={formData.flur}
+            value={formData.cadastral_area}
             onChange={handleChange}
           />
         </div>
@@ -104,10 +98,10 @@ const SearchByAttributesUpdated = ({
             variant='profile'
             label='Flurstück'
             required
-            id='flurstuck'
-            name='flurstuck'
+            id='cadastral_sector'
+            name='cadastral_sector'
             placeholder='Enter Flurstück'
-            value={formData.flurstuck}
+            value={formData.cadastral_sector}
             onChange={handleChange}
           />
         </div>
