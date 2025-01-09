@@ -25,7 +25,9 @@ const NavBar: FC = () => {
 
       <div className='flex items-center'>
         <NavLink href={`/${userRole}/messages`} ariaLabel='Go to Messages'>
-          <img src={messageIcon} alt='msg icon' className='mr-8' />
+          {isAuthenticated && (
+            <img src={messageIcon} alt='msg icon' className='mr-8' />
+          )}
         </NavLink>
 
         <NavLink
