@@ -246,7 +246,7 @@ export default function Profile() {
   };
 
   return (
-    <div className='bg-gray-lightest min-h-screen flex flex-col justify-start items-center px-4 py-8'>
+    <div className='bg-gray-lightest min-h-screen flex flex-col justify-start items-center px-4 py-8 auto-fill-profile'>
       <div className='w-[962px]'>
         <h1 className='text-[32px] font-bold text-black-muted mb-4'>
           Ihr Profil, Firma GmbH

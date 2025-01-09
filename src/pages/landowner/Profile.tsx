@@ -8,6 +8,7 @@ import IconCircleButton from '../../components/common/IconCircleButton';
 import useHttpRequest from '../../hooks/http-request-hook';
 import useAuthStore from '../../store/auth-store';
 import { StoreUser } from '../../types/user-types';
+import profilePlaceholder from '../../assets/images/profile-placeholder.png';
 
 type ProfileType = Omit<StoreUser, 'id'>;
 
@@ -34,8 +35,9 @@ export default function Profile() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
-  const [profilePic, setProfilePic] = useState(
-    'https://s3-alpha-sig.figma.com/img/01cc/5d61/f928befeeece4a5c1e2f09ab88eac5cc?Expires=1735516800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=IZe3UOdo59zO4aHKULYUvDhMUIHSDdU7ikD3n3c2CVQZMVYmnmhRDWPKGCoJoP7sbSY6wmm5eQ8aKphj8xU8ymJaj0zkI90mpfr0ki4MiUcz5xBOKFsN3iPumxdxH~LU6dAFKKPUS6NFzW~ywx-RICjvhYBDoeaG3UqgtdAzr747DxDqzTM4JzktYyChDO-3d5e0fDatlraLgZTCsIWzTImROLt8cKyz1glTQoXg4IXF778SNN-lNSuzDut2nYCxTgq3uam8RwMOEWjitxUT0h0-9A0JYvPaXTflAYgIfE4AnCPIJvgp3w1Y~buDyMA~Vd3jJTXVUMp8FaDoYrOG6Q__'
+  const [profilePic, setProfilePic] = useState<any>(null);
+  const [profilePreview, setProfilePreview] = useState<any>(
+    user?.profile_picture || profilePlaceholder
   );
   // const [showPassword, setShowPassword] = useState(false);
   const [editMode, setEditMode] = useState<Record<string, boolean>>({
@@ -85,13 +87,9 @@ export default function Profile() {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (reader.result) {
-          setProfilePic(reader.result as string);
-        }
-      };
-      reader.readAsDataURL(file);
+      setProfilePic(file);
+      const previewURL = URL.createObjectURL(file);
+      setProfilePreview(previewURL);
     }
   };
 
@@ -113,6 +111,15 @@ export default function Profile() {
     setSuccess('');
     setLoading(true);
 
+    const formDataSend = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      formDataSend.append(key, value);
+    });
+
+    if (profilePic) {
+      formDataSend.append('profile_picture', profilePic);
+    }
+
     try {
       const userUpdated = await sendRequest(
         '/accounts/profile/',
@@ -122,9 +129,14 @@ export default function Profile() {
             Authorization: `Bearer ${token}`,
           },
         },
-        formData
+        formDataSend
       );
       updateUser(userUpdated);
+
+      if (userUpdated.profile_picture) {
+        setProfilePreview(userUpdated.profile_picture);
+      }
+
       setSuccess('Profil erfolgreich aktualisiert.');
     } catch (err: unknown) {
       console.log('error update profile: ', err);
@@ -154,7 +166,7 @@ export default function Profile() {
   };
 
   return (
-    <div className='bg-gray-lightest min-h-screen flex flex-col items-center justify-start px-4 py-8'>
+    <div className='bg-gray-lightest min-h-screen flex flex-col items-center justify-start px-4 py-8 auto-fill-profile'>
       <div className='w-full max-w-[960px] bg-white border border-gray-medium rounded-[44px] p-8'>
         {error && <div className='text-red-600 mb-6'>{error}</div>}
         {success && <div className='text-green-600 mb-6'>{success}</div>}
@@ -163,7 +175,7 @@ export default function Profile() {
           <div className='relative w-24 h-24 mr-4'>
             <div className='relative w-24 h-24 rounded-full border-4 border-primary overflow-hidden'>
               <img
-                src={profilePic}
+                src={profilePreview || profilePlaceholder}
                 alt='Profilbild'
                 className='w-full h-full object-cover rounded-full'
               />
@@ -186,7 +198,9 @@ export default function Profile() {
           </div>
           <div>
             <h2 className='text-sm font-semibold text-gray-dim'>Ihr Profil,</h2>
-            <p className='text-lg text-gray-dim'>{'m profile'}</p>
+            <p className='text-lg text-gray-dim'>
+              {user?.firstname} {user?.lastname}
+            </p>
           </div>
         </div>
 
@@ -199,7 +213,7 @@ export default function Profile() {
           <div className='md:col-span-2'>
             <Input
               variant='profile'
-              label='firstname'
+              label='Vorname'
               required
               id='firstname'
               name='firstname'
@@ -213,7 +227,7 @@ export default function Profile() {
           <div className='md:col-span-2'>
             <Input
               variant='profile'
-              label='lastname'
+              label='Nachname'
               required
               id='lastname'
               name='lastname'
@@ -227,7 +241,7 @@ export default function Profile() {
           <div className='md:col-span-2'>
             <Input
               variant='profile'
-              label='Name des company_names'
+              label='Name des Unternechmens'
               required
               id='company_name'
               name='company_name'
@@ -241,7 +255,7 @@ export default function Profile() {
           <div className='md:col-span-2'>
             <Input
               variant='profile'
-              label='Ihre Position im company_name'
+              label='Ihre Position i Untermehmen'
               required
               id='position'
               name='position'
@@ -255,7 +269,7 @@ export default function Profile() {
           <div className='md:col-span-2'>
             <Input
               variant='profile'
-              label='Anschrift/address'
+              label='Anschrift/Straβe'
               required
               id='address'
               name='address'
@@ -269,7 +283,7 @@ export default function Profile() {
           <div className='md:col-span-1'>
             <Input
               variant='profile'
-              label='zipcode'
+              label='PLZ'
               required
               id='zipcode'
               name='zipcode'
@@ -283,9 +297,10 @@ export default function Profile() {
           <div className='md:col-span-1'>
             <Input
               variant='profile'
-              label='city'
+              label='Stadt'
               required
               id='city'
+              value={formData.city}
               name='city'
               onEdit={() => toggleEditMode('city')}
               onSave={() => handleSave('city')}
@@ -295,7 +310,7 @@ export default function Profile() {
           <div className='md:col-span-2'>
             <Input
               variant='profile'
-              label='company_website des company_names'
+              label='Website des Unternechmens'
               id='company_website'
               name='company_website'
               type='url'
@@ -309,7 +324,7 @@ export default function Profile() {
           <div className='md:col-span-2'>
             <Input
               variant='profile'
-              label='Email Adresse'
+              label='Email Adress'
               required
               id='email'
               name='email'
@@ -324,7 +339,7 @@ export default function Profile() {
           <div className='md:col-span-2'>
             <Input
               variant='profile'
-              label='phone_numbernummer'
+              label='Telefonnummer'
               id='phone_number'
               name='phone_number'
               type='tel'
@@ -358,8 +373,8 @@ export default function Profile() {
             </Button> */}
             <button
               type='button'
-              className='flex justify-self-end text-gray-medium text-base font-normal leading-6
-                         hover:underline cursor-pointer mt-2'
+              className='flex justify-self-end text-gray-medium font-normal leading-6
+                         hover:underline cursor-pointer mt-0 text-[1rem]'
               style={{
                 textUnderlinePosition: 'from-font',
                 textDecorationSkipInk: 'none',

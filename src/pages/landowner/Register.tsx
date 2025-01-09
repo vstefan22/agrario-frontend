@@ -79,7 +79,12 @@ export default function Register() {
 
     try {
       await sendRequest('/accounts/users/', 'POST', {}, formData);
-      navigate('/');
+      navigate('/', {
+        state: {
+          message:
+            'Bestätigungslink wurde an Ihre E-Mail-Adresse gesendet. Bitte überprüfen Sie Ihr Konto.',
+        },
+      });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       if (
