@@ -1,10 +1,12 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import Input from '../common/Input';
 import Button from '../common/Button';
 import useHttpRequest from '../../hooks/http-request-hook';
 import useAuthStore from '../../store/auth-store';
 import { UserType } from '../../types/user-types';
+import 'react-toastify/dist/ReactToastify.css';
 
 type LoginResponse = {
   firebase_token: string;
@@ -14,6 +16,7 @@ type LoginResponse = {
 
 export default function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { setToken, setUser } = useAuthStore();
   const { sendRequest } = useHttpRequest();
 
@@ -90,6 +93,22 @@ export default function Login() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (location.state?.message) {
+      toast.success(location.state.message, {
+        position: 'top-center',
+        autoClose: 7500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      navigate(location.pathname, { replace: true });
+    }
+  }, [location.state, navigate]);
 
   return (
     <div className='bg-primary h-full flex flex-col items-center justify-center px-4'>
@@ -173,6 +192,8 @@ export default function Login() {
               Login
             </Button>
           </div>
+
+          <ToastContainer />
 
           <div className='md:col-span-4 text-center mt-6'>
             <p className='text-white'>

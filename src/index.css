@@ -49,6 +49,19 @@ input:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
 }
 
+.auto-fill-profile input:-webkit-autofill,
+.auto-fill-profile input:-webkit-autofill:hover,
+.auto-fill-profile input:-webkit-autofill:focus,
+.auto-fill-profile input:-webkit-autofill:active {
+  box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.08) inset !important;
+  -webkit-box-shadow: 0 0 0px 1000px rgba(151, 151, 151, 0.1) inset !important;
+  -webkit-text-fill-color: rgb(
+    105 105 105 / var(--tw-text-opacity, 1)
+  ) !important;
+  caret-color: #000 !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 .react-datepicker-popper {
   left: -20px !important;
 }
