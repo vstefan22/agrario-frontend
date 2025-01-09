@@ -9,12 +9,12 @@ import useHttpRequest from '../../hooks/http-request-hook';
 import useAuthStore from '../../store/auth-store';
 import { StoreUser } from '../../types/user-types';
 
-type ProfileType = Omit<StoreUser, 'id' | 'role'>;
+type ProfileType = Omit<StoreUser, 'id'>;
 
 export default function Profile() {
   const navigate = useNavigate();
   const { sendRequest } = useHttpRequest();
-  const { setUser, token, user, updateUser } = useAuthStore();
+  const { token, user, updateUser } = useAuthStore();
 
   const [formData, setFormData] = useState<ProfileType>({
     firstname: user?.firstname || '',
@@ -27,6 +27,7 @@ export default function Profile() {
     city: user?.city || '',
     company_website: user?.company_website || '',
     phone_number: user?.phone_number || '',
+    role: user?.role || '',
     // password: user?.password || '',
   });
 
@@ -57,11 +58,11 @@ export default function Profile() {
           Authorization: `Bearer ${token}`,
         },
       });
-      setUser(user);
+      updateUser(user);
     };
 
     fetchUserProfile();
-  }, [sendRequest, setUser, token]);
+  }, [sendRequest, updateUser, token]);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -141,7 +142,6 @@ export default function Profile() {
     navigate('/landowner/password-change');
   };
 
-  console.log('user: ', user);
   const toggleEditMode = (field: string) => {
     setEditMode((prev) => ({
       ...prev,

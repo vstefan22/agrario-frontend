@@ -72,7 +72,6 @@ export default function Login() {
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
-      console.log('login error: ', err);
       if (
         err.response.data.error ===
         'Please confirm your email address before logging in.'
