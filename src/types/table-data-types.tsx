@@ -1,6 +1,6 @@
 export const MY_PLOTS_COLUMNS = [
   { key: 'state_name', label: 'Bundesland' },
-  { key: 'plz', label: 'PLZ' },
+  { key: 'zipcode', label: 'PLZ' },
   { key: 'municipality_name', label: 'Gemeinde' },
   { key: 'district_name', label: 'Gemarkung' },
   { key: 'cadastral_area', label: 'Flur' },
@@ -12,7 +12,7 @@ export const MY_PLOTS_COLUMNS = [
 
 export const PLOT_DETAILS_COLUMNS = [
   { key: 'state_name', label: 'Bundesland' },
-  { key: 'plz', label: 'PLZ' },
+  { key: 'zipcode', label: 'PLZ' },
   { key: 'municipality_name', label: 'Gemeinde' },
   { key: 'district_name', label: 'Gemarkung' },
   { key: 'cadastral_area', label: 'Flur' },
