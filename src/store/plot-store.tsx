@@ -2,31 +2,55 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { PlotType } from '../types/plot-types';
 
-type plotState = {
+type PlotState = {
   plot: PlotType | null;
+  plotAnalyseDetails: null | null;
+  basketPlots: PlotType[];
   plots: PlotType[];
   plotId: string | null;
 
   setPlot: (plot: PlotType) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setPlotAnalyseDetails: (plot: any) => void;
+  setBasketPlots: (plot: PlotType) => void;
   setPlots: (plots: PlotType[]) => void;
   setPlotId: (plotId: string) => void;
   addPlotToList: (plot: PlotType) => void;
   updatePlotToList: (plot: PlotType) => void;
   updatePlot: (plot: PlotType) => void;
   removePlotFromList: (plotId: string) => void;
+  removePlotAnalyseFromList: (plotId: string) => void;
   removePlot: (plotId: string) => void;
 };
 
-const usePlotStore = create<plotState>()(
+const usePlotStore = create<PlotState>()(
   persist(
     (set) => ({
       plot: null,
+      plotAnalyseDetails: null,
+      basketPlots: [],
       plots: [],
       plotId: null,
 
       setPlot: (plot) => {
         set(() => ({
           plot,
+        }));
+      },
+
+      setPlotAnalyseDetails: (plot) => {
+        set(() => ({
+          plotAnalyseDetails: plot,
+        }));
+      },
+
+      setBasketPlots: (updatePlot) => {
+        set((state) => ({
+          basketPlots: state.basketPlots.map((plot) =>
+            String(plot.id) === String(updatePlot.id)
+              ? { ...plot, ...updatePlot }
+              : plot
+          ),
         }));
       },
 
@@ -64,6 +88,14 @@ const usePlotStore = create<plotState>()(
       removePlotFromList: (plotId) => {
         set((state) => ({
           plots: state.plots.filter(
+            (plot) => String(plot.id) !== String(plotId)
+          ),
+        }));
+      },
+
+      removePlotAnalyseFromList: (plotId) => {
+        set((state) => ({
+          basketPlots: state.basketPlots.filter(
             (plot) => String(plot.id) !== String(plotId)
           ),
         }));
