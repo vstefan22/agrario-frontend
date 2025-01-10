@@ -91,18 +91,30 @@ export default function Register() {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       if (
+        err.response?.data?.email?.[0] &&
         err.response.data.email[0] === 'user with this email already exists.'
       ) {
         setError('Ein Konto mit dieser E-Mail-Adresse existiert bereits.');
         return;
       }
+
       if (
+        err.response?.data?.phone_number &&
         err.response.data.phone_number ===
-        'The phone number entered is not valid.'
+          'The phone number entered is not valid.'
       ) {
         setError('Die eingegebene Telefonnummer ist ungültig.');
         return;
       }
+
+      if (
+        err.response?.data?.company_website?.[0] &&
+        err.response.data.company_website[0] === 'Enter a valid URL.'
+      ) {
+        setError('Geben Sie eine gültige URL ein.');
+        return;
+      }
+
       if (err instanceof Error) {
         setError(err.message || 'Ein Fehler ist aufgetreten.');
       } else {
@@ -191,7 +203,7 @@ export default function Register() {
             label='Email Adresse'
             name='email'
             type='email'
-            placeholder='https://'
+            placeholder='max@musteradresse.de'
             value={formData.email}
             onChange={handleChange}
             required
@@ -200,7 +212,7 @@ export default function Register() {
             label='Telefonnummer'
             name='phone_number'
             type='tel'
-            placeholder='0167498753'
+            placeholder='+49 ...'
             value={formData.phone_number}
             onChange={handleChange}
             required
@@ -210,7 +222,7 @@ export default function Register() {
               label='Passwort'
               name='password'
               type={showPassword ? 'text' : 'password'}
-              placeholder='asdasd'
+              placeholder='******'
               value={formData.password}
               onChange={handleChange}
               required
@@ -233,7 +245,7 @@ export default function Register() {
               label='Passwort bestätigen'
               name='confirm_password'
               type={showConfirmPassword ? 'text' : 'password'}
-              placeholder='asdasd'
+              placeholder='******'
               value={formData.confirm_password}
               onChange={handleChange}
               required

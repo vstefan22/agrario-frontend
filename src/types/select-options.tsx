@@ -4,18 +4,7 @@ export const sortOptions = [
   'Sortieren nach Größe',
 ];
 
-export const profileOptions = [
-  '1',
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9',
-  '10',
-];
+export const profileOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 export const bidOptions = ['Ja', 'Nein', 'Keine Angabe'];
 

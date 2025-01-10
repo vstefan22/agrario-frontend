@@ -5,9 +5,9 @@ import RangeSlider from './RangeSlider';
 
 interface BaseSelectProps {
   name: string;
-  options: string[];
+  options: string[] | number[];
   placeholder?: string;
-  value: string | null;
+  value: any;
   onChange: (name: string, option: string) => void;
   variant?: 'sort' | 'default';
   label?: string;
@@ -163,7 +163,7 @@ const Select: FC<SelectProps> = ({
                 return (
                   <button
                     key={option}
-                    onClick={() => handleOptionClick(option)}
+                    onClick={() => handleOptionClick(option.toString())}
                     className={`w-full h-[50px] px-4 text-[15px] flex items-center justify-center text-center
                       rounded-[6px] transition-colors duration-200
                       ${
