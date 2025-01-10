@@ -18,17 +18,17 @@ export default function Profile() {
   const { token, user, updateUser } = useAuthStore();
 
   const [formData, setFormData] = useState<ProfileType>({
-    firstname: user?.firstname || '',
-    lastname: user?.lastname || '',
-    email: user?.email || '',
-    company_name: user?.company_name || '',
-    position: user?.position || '',
-    address: user?.address || '',
-    zipcode: user?.zipcode || '',
-    city: user?.city || '',
-    company_website: user?.company_website || '',
-    phone_number: user?.phone_number || '',
-    role: user?.role || '',
+    firstname: '',
+    lastname: '',
+    email: '',
+    company_name: '',
+    position: '',
+    address: '',
+    zipcode: '',
+    city: '',
+    company_website: '',
+    phone_number: '',
+    role: '',
     // password: user?.password || '',
   });
 
@@ -65,6 +65,24 @@ export default function Profile() {
 
     fetchUserProfile();
   }, [sendRequest, updateUser, token]);
+
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        firstname: user?.firstname || '',
+        lastname: user?.lastname || '',
+        email: user?.email || '',
+        company_name: user?.company_name || '',
+        position: user?.position || '',
+        address: user?.address || '',
+        zipcode: user?.zipcode || '',
+        city: user?.city || '',
+        company_website: user?.company_website || '',
+        phone_number: user?.phone_number || '',
+        role: user?.role || '',
+      });
+    }
+  }, [user]);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -116,7 +134,7 @@ export default function Profile() {
       if (typeof value === 'boolean') {
         formDataSend.append(key, value ? 'true' : 'false');
       } else {
-        formDataSend.append(key, value);
+        formDataSend.append(key, value.toString());
       }
     });
 
@@ -143,7 +161,6 @@ export default function Profile() {
 
       setSuccess('Profil erfolgreich aktualisiert.');
     } catch (err: unknown) {
-      console.log('error update profile: ', err);
       if (err instanceof Error) {
         setError(err.message || 'Ein Fehler ist aufgetreten.');
       } else {
