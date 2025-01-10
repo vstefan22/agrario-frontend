@@ -34,6 +34,8 @@ import PlaceABid from './pages/developer/PlaceABid';
 import ThankYouInterest from './pages/developer/ThankYouInterest';
 import MyAuctions from './pages/developer/MyAuctions';
 import MyAuctionDetails from './pages/developer/MyAuctionDetails';
+import Redirect from './components/navigation/Redirect';
+import NotFound from './pages/NotFound';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -42,10 +44,38 @@ const App = () => {
     <Router>
       <Layout>
         <Routes>
-          <Route path='/' element={<Login />} />
-          <Route path='/new-register' element={<NewRegister />} />
-          <Route path='/register/landowner' element={<RegisterLandowner />} />
-          <Route path='/register/developer' element={<RegisterDeveloper />} />
+          <Route
+            path='/'
+            element={
+              <Redirect>
+                <Login />
+              </Redirect>
+            }
+          />
+          <Route
+            path='/new-register'
+            element={
+              <Redirect>
+                <NewRegister />
+              </Redirect>
+            }
+          />
+          <Route
+            path='/register/landowner'
+            element={
+              <Redirect>
+                <RegisterLandowner />
+              </Redirect>
+            }
+          />
+          <Route
+            path='/register/developer'
+            element={
+              <Redirect>
+                <RegisterDeveloper />
+              </Redirect>
+            }
+          />
           <Route
             path='/landowner/*'
             element={
@@ -79,6 +109,7 @@ const App = () => {
                   <Route path='/friend-invite' element={<FriendInvite />} />
                   <Route path='/questions-help' element={<QuestionsHelp />} />
                   <Route path='/support' element={<Support />} />
+                  <Route path='*' element={<NotFound />} />
                 </Routes>
               </ProtectedLayout>
             }
@@ -122,10 +153,12 @@ const App = () => {
                   />
                   <Route path='/questions-help' element={<QuestionsHelp />} />
                   <Route path='/support' element={<Support />} />
+                  <Route path='*' element={<NotFound />} />
                 </Routes>
               </ProtectedLayout>
             }
           />
+          <Route path='*' element={<NotFound />} />
         </Routes>
         <ToastContainer
           position='top-center'

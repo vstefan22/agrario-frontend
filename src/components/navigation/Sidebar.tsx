@@ -8,6 +8,7 @@ import {
   FaUserPlus,
   FaQuestionCircle,
   FaSignOutAlt,
+  FaGavel,
 } from 'react-icons/fa';
 import { FaMapLocationDot } from 'react-icons/fa6';
 import { RiDiscountPercentLine } from 'react-icons/ri';
@@ -172,8 +173,20 @@ export default function Sidebar() {
               }
               onClick={() => handleNavigate('/developer/active-auctions')}
             >
-              <FaSignOutAlt className='mr-3' />
+              <FaGavel className='mr-3 scale-x-[-1]' />
               Aktive Auktionen
+            </Button>
+
+            <Button
+              variant={
+                isRouteActive('/developer/my-auctions')
+                  ? 'sidebarPrimary'
+                  : 'sidebarSecondary'
+              }
+              onClick={() => handleNavigate('/developer/my-auctions')}
+            >
+              <FaGavel className='mr-3 scale-x-[-1]' />
+              Meine Auktionen
             </Button>
           </Fragment>
         )}

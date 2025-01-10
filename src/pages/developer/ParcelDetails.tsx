@@ -25,7 +25,7 @@ const ParcelDetails = () => {
         </div>
       </div>
       <div className='h-[440px] overflow-y-auto rounded-2xl'>
-        <ShowDetails paid={isAnalizePlus} />
+        <ShowDetails paid={isAnalizePlus} data={[]} />
       </div>
       <div className='ml-auto mt-8'>
         <Button

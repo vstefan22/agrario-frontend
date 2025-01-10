@@ -1,87 +1,98 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TbCameraPlus } from 'react-icons/tb';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import IconCircleButton from '../../components/common/IconCircleButton';
-import { EyeOpenIcon, EyeClosedIcon } from '../../assets/svgs/svg-icons';
-// import useAuthStore from '../../store/auth-store';
+// import { EyeOpenIcon, EyeClosedIcon } from '../../assets/svgs/svg-icons';
 import Select from '../../components/common/Select';
 import Checkbox from '../../components/common/Checkbox';
 import SlideCheckbox from '../../components/common/SlideCheckbox';
 import PackageCard from '../../components/profile/PackageCard';
 import { profileOptions } from '../../types/select-options';
 import { PACKAGE_FEATURES } from '../../types/package-types';
-import CompanyLogo from '../../assets/images/company-logo.png';
+// import CompanyLogo from '../../assets/images/company-logo.png';
+import useHttpRequest from '../../hooks/http-request-hook';
+import useAuthStore from '../../store/auth-store';
+import profilePlaceholder from '../../assets/images/profile-placeholder.png';
 
 interface UserData {
-  companyName: string;
-  companyWebsite: string;
-  street: string;
-  postalCode: string;
+  company_name: string;
+  company_website: string;
+  address: string;
+  zipcode: string;
   city: string;
   companyFoundingYear: number;
   installedMWCapacity: number;
   employeesNumber: string;
-  vorname: string;
-  nachname: string;
-  unternehmen: string;
+  firstname: string;
+  lastname: string;
+  // unternehmen: string;
   position: string;
   email: string;
-  telefon: string;
-  password: string;
-  confirmPassword: string;
-  windEnergy: boolean;
-  solarEnergy: boolean;
-  batteryStorage: boolean;
-  heatStorage: boolean;
+  phone_number: string;
+  // password: string;
+  // confirm_password: string;
+  wind: boolean;
+  ground_mounted_solar: boolean;
+  battery: boolean;
+  heat: boolean;
   hydrogen: boolean;
-  chargingInfrastructure: boolean;
-  ecological: boolean;
-  additionalText: string;
+  electromobility: boolean;
+  ecological_upgrading: boolean;
+  other: string;
+  role: string;
+  current_plan: string;
 }
 
 export default function Profile() {
   const navigate = useNavigate();
-  // const { user } = useAuthStore();
+  const { sendRequest } = useHttpRequest();
+  const { token, user, updateUser } = useAuthStore();
 
   // TODO: use actual user data here
   const [formData, setFormData] = useState<UserData>({
-    companyName: 'Text hinzufügen',
-    companyWebsite: 'https://',
-    street: 'Text hinzufügen',
+    company_name: user?.company_name || '',
+    company_website: user?.company_website || '',
+    address: user?.address || '',
     companyFoundingYear: 2012,
     installedMWCapacity: 2020,
     employeesNumber: '1',
-    vorname: 'Max',
-    nachname: 'Mustermann',
-    unternehmen: 'Musterfirma GmbH',
-    position: 'Softwareentwickler',
-    postalCode: '66651',
-    city: 'Text hinzufügen',
-    email: 'max.mustermann@example.com',
-    telefon: '+49 123 456 7890',
-    password: 'Password123!',
-    confirmPassword: 'Password123!',
-    windEnergy: true,
-    solarEnergy: false,
-    batteryStorage: true,
-    heatStorage: true,
-    hydrogen: false,
-    chargingInfrastructure: false,
-    ecological: false,
-    additionalText: 'Text hinzufügen',
+    firstname: user?.firstname || '',
+    lastname: user?.lastname || '',
+    // unternehmen: 'Musterfirma GmbH',
+    position: user?.position || '',
+    zipcode: user?.zipcode || '',
+    city: user?.city || '',
+    email: user?.email || '',
+    phone_number: user?.phone_number || '',
+    // password: 'Password123!',
+    // confirm_password: 'Password123!',
+    wind: user?.wind || false,
+    ground_mounted_solar: user?.ground_mounted_solar || false,
+    battery: user?.battery || false,
+    heat: user?.heat || false,
+    hydrogen: user?.hydrogen || false,
+    electromobility: user?.electromobility || false,
+    ecological_upgrading: user?.ecological_upgrading || false,
+    other: user?.other || '',
+    role: user?.role || '',
+    current_plan: user?.current_plan || 'Free',
   });
 
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
   // const [userName, setUserName] = useState('');
-  const [profilePic, setProfilePic] = useState(
-    'https://s3-alpha-sig.figma.com/img/01cc/5d61/f928befeeece4a5c1e2f09ab88eac5cc?Expires=1735516800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=IZe3UOdo59zO4aHKULYUvDhMUIHSDdU7ikD3n3c2CVQZMVYmnmhRDWPKGCoJoP7sbSY6wmm5eQ8aKphj8xU8ymJaj0zkI90mpfr0ki4MiUcz5xBOKFsN3iPumxdxH~LU6dAFKKPUS6NFzW~ywx-RICjvhYBDoeaG3UqgtdAzr747DxDqzTM4JzktYyChDO-3d5e0fDatlraLgZTCsIWzTImROLt8cKyz1glTQoXg4IXF778SNN-lNSuzDut2nYCxTgq3uam8RwMOEWjitxUT0h0-9A0JYvPaXTflAYgIfE4AnCPIJvgp3w1Y~buDyMA~Vd3jJTXVUMp8FaDoYrOG6Q__'
+  const [profilePic, setProfilePic] = useState<any>(null);
+  const [profilePreview, setProfilePreview] = useState<any>(
+    user?.profile_picture || profilePlaceholder
   );
-  const [companyProfilePic, setCompanyProfilePic] = useState(CompanyLogo);
-  const [showPassword, setShowPassword] = useState(false);
+  const [companyPic, setCompanyPic] = useState<any>(null);
+  const [companyPreview, setCompanyPreview] = useState<any>(
+    user?.company_logo || profilePlaceholder
+  );
+  // const [showPassword, setShowPassword] = useState(false);
   // const [filters, setFilters] = useState<Record<string, string | null>>({
   //   profileOptions: null,
   // });
@@ -94,21 +105,34 @@ export default function Profile() {
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
   const [editMode, setEditMode] = useState<Record<string, boolean>>({
-    companyName: false,
-    companyWebsite: false,
-    street: false,
+    company_name: false,
+    company_website: false,
+    address: false,
     companyFoundingYear: false,
     installedMWCapacity: false,
     employeesNumber: false,
-    vorname: false,
-    nachname: false,
-    unternehmen: false,
+    firstname: false,
+    lastname: false,
+    // unternehmen: false,
     position: false,
-    postalCode: false,
+    zipcode: false,
     city: false,
     email: false,
-    telefon: false,
+    phone_number: false,
   });
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      const user = await sendRequest('/accounts/profile/', 'GET', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      updateUser(user);
+    };
+
+    fetchUserProfile();
+  }, [sendRequest, updateUser, token]);
 
   const handleToggleChange = (checked: boolean) => {
     setIsChecked(checked);
@@ -135,26 +159,18 @@ export default function Profile() {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (reader.result) {
-          setProfilePic(reader.result as string);
-        }
-      };
-      reader.readAsDataURL(file);
+      setProfilePic(file);
+      const previewURL = URL.createObjectURL(file);
+      setProfilePreview(previewURL);
     }
   };
 
   const handleCompanyImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (reader.result) {
-          setCompanyProfilePic(reader.result as string);
-        }
-      };
-      reader.readAsDataURL(file);
+      setCompanyPic(file);
+      const previewURL = URL.createObjectURL(file);
+      setCompanyPreview(previewURL);
     }
   };
 
@@ -162,16 +178,16 @@ export default function Profile() {
     e.preventDefault();
 
     if (
-      !formData.companyName ||
-      !formData.companyWebsite ||
-      !formData.street ||
-      !formData.postalCode ||
+      !formData.company_name ||
+      !formData.company_website ||
+      !formData.address ||
+      !formData.zipcode ||
       !formData.city ||
       !formData.companyFoundingYear ||
       !formData.installedMWCapacity ||
-      !formData.vorname ||
-      !formData.nachname ||
-      !formData.unternehmen ||
+      !formData.firstname ||
+      !formData.lastname ||
+      // !formData.unternehmen ||
       !formData.email
     ) {
       setError('Bitte füllen Sie alle erforderlichen Felder aus.');
@@ -179,30 +195,60 @@ export default function Profile() {
       return;
     }
 
-    if (formData.password || formData.confirmPassword) {
-      if (formData.password !== formData.confirmPassword) {
-        setError('Die Passwörter stimmen nicht überein.');
-        setSuccess('');
-        return;
-      }
-    }
+    // if (formData.password || formData.confirm_password) {
+    //   if (formData.password !== formData.confirm_password) {
+    //     setError('Die Passwörter stimmen nicht überein.');
+    //     setSuccess('');
+    //     return;
+    //   }
+    // }
 
     setError('');
     setSuccess('');
     setLoading(true);
 
+    const formDataSend = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      formDataSend.append(key, value);
+    });
+
+    if (profilePic) {
+      formDataSend.append('profile_picture', profilePic);
+    }
+
+    if (companyPic) {
+      formDataSend.append('company_logo', companyPic);
+    }
+
     try {
       // TODO: create update request for user
-      // const data = await sendRequest(
-      //   '/user-update/',
-      //   'POST',
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${token}`,
-      //     },
-      //   },
-      //   formData
-      // );
+      const userUpdated = await sendRequest(
+        '/accounts/profile/',
+        'PATCH',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+
+        formDataSend
+      );
+      updateUser(userUpdated);
+
+      if (userUpdated.profile_picture) {
+        setProfilePreview(userUpdated.profile_picture);
+      }
+
+      if (userUpdated.company_logo) {
+        setCompanyPreview(userUpdated.company_logo);
+      } else {
+        console.log('Update company logo Failed');
+      }
+
+      console.log(userUpdated.profile_picture);
+      console.log(userUpdated.company_logo);
+      console.log('Server Response:', userUpdated);
+
       setSuccess('Profil erfolgreich aktualisiert.');
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -233,16 +279,8 @@ export default function Profile() {
     }));
   };
 
-  const saveChanges = () => {
-    console.log('Save changes');
-  };
-
-  const editSearchProfile = () => {
-    console.log('edit search profile');
-  };
-
   const handleOnPasswordChange = () => {
-    navigate('/developer/password-change'); // NEED TO ADD - navigate to role two pass change page
+    navigate('/developer/password-change');
   };
 
   return (
@@ -260,7 +298,7 @@ export default function Profile() {
               <div className='relative w-24 h-24 pt-1'>
                 <div className='relative w-24 h-24 rounded-full border-4 border-primary overflow-hidden'>
                   <img
-                    src={profilePic}
+                    src={profilePreview || profilePlaceholder}
                     alt='Profilbild'
                     className='w-full h-full object-cover rounded-full'
                   />
@@ -287,22 +325,24 @@ export default function Profile() {
               <div className='relative w-24 h-24 pt-1'>
                 <div className='relative w-24 h-24 rounded-full border-4 border-primary overflow-hidden flex justify-center items-center'>
                   <img
-                    src={companyProfilePic}
+                    src={companyPreview || profilePlaceholder}
                     alt='Profilbild'
                     // className='w-full h-full object-cover rounded-full'
-                    className='w-[40%] h-[40%] object-cover rounded-full' // ovaj deo ne pokazuje full sliku, koristiti kod iznad
+                    className='w-full h-full object-cover rounded-full' // ovaj deo ne pokazuje full sliku, koristiti kod iznad
                   />
                 </div>
 
                 <IconCircleButton
-                  onClick={() => document.getElementById('fileInput')?.click()}
+                  onClick={() =>
+                    document.getElementById('companyFileInput')?.click()
+                  }
                   icon={<TbCameraPlus />}
                   ariaLabel='Profilbild ändern'
                   className='absolute top-0 right-0'
                 />
 
                 <input
-                  id='fileInput'
+                  id='companyFileInput'
                   type='file'
                   accept='image/*'
                   onChange={handleCompanyImageChange}
@@ -329,13 +369,13 @@ export default function Profile() {
                     variant='profile'
                     label='Name des Unternehmens'
                     required
-                    id='companyName'
-                    name='companyName'
-                    value={formData.companyName}
+                    id='company_name'
+                    name='company_name'
+                    value={formData.company_name}
                     onChange={handleChange}
-                    onEdit={() => toggleEditMode('companyName')}
-                    onSave={() => handleSave('companyName')}
-                    isEditable={editMode.companyName}
+                    onEdit={() => toggleEditMode('company_name')}
+                    onSave={() => handleSave('company_name')}
+                    isEditable={editMode.company_name}
                   />
                 </div>
                 <div className='md:col-span-2'>
@@ -343,12 +383,13 @@ export default function Profile() {
                     variant='profile'
                     label='Website des Unternehmens'
                     required
-                    id='companyWebsite'
-                    name='companyWebsite'
-                    value={formData.companyWebsite}
-                    onEdit={() => toggleEditMode('companyWebsite')}
-                    onSave={() => handleSave('companyWebsite')}
-                    isEditable={editMode.companyWebsite}
+                    id='company_website'
+                    name='company_website'
+                    value={formData.company_website}
+                    onChange={handleChange}
+                    onEdit={() => toggleEditMode('company_website')}
+                    onSave={() => handleSave('company_website')}
+                    isEditable={editMode.company_website}
                   />
                 </div>
                 <div className='md:col-span-2'>
@@ -356,13 +397,13 @@ export default function Profile() {
                     variant='profile'
                     label='Anschrift/Straße'
                     required
-                    id='street'
-                    name='street'
-                    value={formData.street}
+                    id='address'
+                    name='address'
+                    value={formData.address}
                     onChange={handleChange}
-                    onEdit={() => toggleEditMode('street')}
-                    onSave={() => handleSave('street')}
-                    isEditable={editMode.street}
+                    onEdit={() => toggleEditMode('address')}
+                    onSave={() => handleSave('address')}
+                    isEditable={editMode.address}
                   />
                 </div>
                 <div className='md:col-span-1'>
@@ -370,13 +411,13 @@ export default function Profile() {
                     variant='profile'
                     label='PLZ'
                     required
-                    id='postalCode'
-                    name='postalCode'
-                    value={formData.postalCode}
+                    id='zipcode'
+                    name='zipcode'
+                    value={formData.zipcode}
                     onChange={handleChange}
-                    onEdit={() => toggleEditMode('postalCode')}
-                    onSave={() => handleSave('postalCode')}
-                    isEditable={editMode.postalCode}
+                    onEdit={() => toggleEditMode('zipcode')}
+                    onSave={() => handleSave('zipcode')}
+                    isEditable={editMode.zipcode}
                   />
                 </div>
                 <div className='md:col-span-1'>
@@ -439,8 +480,8 @@ export default function Profile() {
             </div>
 
             <div className='flex mt-4 justify-end'>
-              <Button variant='bluePrimary' onClick={saveChanges}>
-                Zugangsdaten ändern
+              <Button variant='bluePrimary' onClick={handleSubmit}>
+                {loading ? 'Zugangsdaten ändern...' : 'Zugangsdaten ändern'}
               </Button>
             </div>
 
@@ -457,13 +498,13 @@ export default function Profile() {
                     variant='profile'
                     label='Vorname'
                     required
-                    id='vorname'
-                    name='vorname'
-                    value={formData.vorname}
+                    id='firstname'
+                    name='firstname'
+                    value={formData.firstname}
                     onChange={handleChange}
-                    onEdit={() => toggleEditMode('vorname')}
-                    onSave={() => handleSave('vorname')}
-                    isEditable={editMode.vorname}
+                    onEdit={() => toggleEditMode('firstname')}
+                    onSave={() => handleSave('firstname')}
+                    isEditable={editMode.firstname}
                   />
                 </div>
                 <div className='md:col-span-2'>
@@ -471,13 +512,13 @@ export default function Profile() {
                     variant='profile'
                     label='Nachname'
                     required
-                    id='nachname'
-                    name='nachname'
-                    value={formData.nachname}
+                    id='lastname'
+                    name='lastname'
+                    value={formData.lastname}
                     onChange={handleChange}
-                    onEdit={() => toggleEditMode('nachname')}
-                    onSave={() => handleSave('nachname')}
-                    isEditable={editMode.nachname}
+                    onEdit={() => toggleEditMode('lastname')}
+                    onSave={() => handleSave('lastname')}
+                    isEditable={editMode.lastname}
                   />
                 </div>
                 <div className='md:col-span-2'>
@@ -513,18 +554,18 @@ export default function Profile() {
                   <Input
                     variant='profile'
                     label='Telefonnummer'
-                    id='telefon'
-                    name='telefon'
+                    id='phone_number'
+                    name='phone_number'
                     type='tel'
-                    value={formData.telefon}
+                    value={formData.phone_number}
                     onChange={handleChange}
-                    onEdit={() => toggleEditMode('telefon')}
-                    onSave={() => handleSave('telefon')}
-                    isEditable={editMode.telefon}
+                    onEdit={() => toggleEditMode('phone_number')}
+                    onSave={() => handleSave('phone_number')}
+                    isEditable={editMode.phone_number}
                   />
                 </div>
                 <div className='md:col-span-2 relative'>
-                  <Input
+                  {/* <Input
                     variant='profile'
                     label='Passwort'
                     required
@@ -542,11 +583,11 @@ export default function Profile() {
                     className='absolute top-[35%] right-3 flex items-center text-gray-dim h-auto w-auto !border-none'
                   >
                     {showPassword ? <EyeOpenIcon /> : <EyeClosedIcon />}
-                  </Button>
+                  </Button> */}
                   <button
                     type='button'
                     className='flex justify-self-end text-gray-medium text-base font-normal leading-6
-                         hover:underline cursor-pointer mt-2'
+                         hover:underline cursor-pointer mt-0 text-[1rem]'
                     style={{
                       textUnderlinePosition: 'from-font',
                       textDecorationSkipInk: 'none',
@@ -573,29 +614,29 @@ export default function Profile() {
                   <div className='grid grid-cols-2 gap-y-6 mb-4'>
                     <Checkbox
                       label='Windenergie (On-Shore)'
-                      name='windEnergy'
-                      checked={formData.windEnergy}
+                      name='wind'
+                      checked={formData.wind}
                       onChange={handleChange}
                       variant='primary'
                     />
                     <Checkbox
                       label='Freiflächen-Solarenergie'
-                      name='solarEnergy'
-                      checked={formData.solarEnergy}
+                      name='ground_mounted_solar'
+                      checked={formData.ground_mounted_solar}
                       onChange={handleChange}
                       variant='primary'
                     />
                     <Checkbox
                       label='Batteriespeicher'
-                      name='batteryStorage'
-                      checked={formData.batteryStorage}
+                      name='battery'
+                      checked={formData.battery}
                       onChange={handleChange}
                       variant='primary'
                     />
                     <Checkbox
                       label='Wärmespeicher'
-                      name='heatStorage'
-                      checked={formData.heatStorage}
+                      name='heat'
+                      checked={formData.heat}
                       onChange={handleChange}
                       variant='primary'
                     />
@@ -608,16 +649,16 @@ export default function Profile() {
                     />
                     <Checkbox
                       label='Elektromobilität-Ladeinfrastruktur'
-                      name='chargingInfrastructure'
-                      checked={formData.chargingInfrastructure}
+                      name='electromobility'
+                      checked={formData.electromobility}
                       onChange={handleChange}
                       variant='primary'
                     />
                     <div className='col-span-2 space-y-10'>
                       <Checkbox
                         label='Ökologische Aufwertungsmaßnahmen (z.B. Ökopunkte)'
-                        name='ecological'
-                        checked={formData.ecological}
+                        name='ecological_upgrading'
+                        checked={formData.ecological_upgrading}
                         onChange={handleChange}
                         variant='primary'
                         labelClassName='w-full'
@@ -626,10 +667,10 @@ export default function Profile() {
                         <Input
                           label='Sonstige'
                           placeholder='Beispiel'
-                          name='additionalText'
+                          name='other'
                           type='profile'
                           variant='profile'
-                          value={formData.additionalText}
+                          value={formData.other}
                           onChange={handleChange}
                         />
                       </div>
@@ -637,8 +678,8 @@ export default function Profile() {
                   </div>
                 </form>
 
-                <Button variant='bluePrimary' onClick={editSearchProfile}>
-                  Suchprofil ändern
+                <Button variant='bluePrimary' onClick={handleSubmit}>
+                  {loading ? 'Suchprofil ändern...' : 'Suchprofil ändern'}
                 </Button>
               </div>
             </div>
@@ -742,6 +783,7 @@ export default function Profile() {
                 disabled={loading}
                 variant='bluePrimary'
                 className='mt-6'
+                onClick={handleSubmit}
               >
                 {loading ? 'Suchprofil ändern...' : 'Suchprofil ändern'}
               </Button>

@@ -110,6 +110,9 @@ export const analysePlusCartData = [
     cadastral_sector: '35-6',
     land_use: 'Grünland',
     plot_number_main: 10000,
+    plot_number_secondary: '123-456-789',
+    image: flImage,
+    analyzePlus: 'active',
   },
   {
     id: 'FL-56142',
@@ -121,6 +124,9 @@ export const analysePlusCartData = [
     cadastral_sector: '35-6',
     land_use: 'Grünland',
     plot_number_main: 10000,
+    plot_number_secondary: '123-456-789',
+    image: flImage,
+    analyzePlus: 'active',
   },
   {
     id: 'FL-56143',
@@ -132,6 +138,9 @@ export const analysePlusCartData = [
     cadastral_sector: '35-6',
     land_use: 'Grünland',
     plot_number_main: 10000,
+    plot_number_secondary: '123-456-789',
+    image: flImage,
+    analyzePlus: 'active',
   },
 ];
 
@@ -402,24 +411,6 @@ export const myAuctionsData = [
     evaluation: 'Potentiell geeignet',
   },
 ];
-
-export const myOfferDetailsData = {
-  availableDate: new Date('2024-08-11'),
-  select1: 'Option 1',
-  select2: 'Option 2',
-  select3: 'Option 3',
-  noUsageRestriction: false,
-  windEnergyRestriction: true,
-  solarEnergyRestriction: true,
-  energyStorageRestriction: false,
-  ecoEnhancementsRestriction: true,
-  message: 'This is message from user...',
-  files: [] as File[],
-  isOwnerOrAuthorized: true,
-  acceptPrivacyPolicy: true,
-  acceptTermsAndConditions: true,
-  other: true,
-};
 
 export const tenderCriteriaData = {
   list: [

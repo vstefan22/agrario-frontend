@@ -90,7 +90,7 @@ const PlotsSearch = () => {
                   Nutzung laut ALKIS
                 </p>
 
-                <div className='grid grid-cols-2 gap-y-3'>
+                <div className='grid grid-cols-2 gap-y-3 gap-x-[4.6rem]'>
                   <Checkbox label='Siedlung' variant='primary' />
                   <Checkbox label='Verkehr' variant='primary' />
                   <Checkbox
@@ -150,10 +150,18 @@ const PlotsSearch = () => {
                 </div>
 
                 <div className='flex gap-4 mt-8'>
-                  <Button type='button' variant='blueSecondary'>
+                  <Button
+                    type='button'
+                    variant='blueSecondary'
+                    className='max-w-[204px]'
+                  >
                     Filter zurücksetzen
                   </Button>
-                  <Button type='button' variant='bluePrimary'>
+                  <Button
+                    type='button'
+                    variant='bluePrimary'
+                    className='max-w-[204px]'
+                  >
                     Filter anwenden
                   </Button>
                 </div>
