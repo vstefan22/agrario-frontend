@@ -7,15 +7,14 @@ import delIcon from '../../../assets/images/del.png';
 
 type AnalysePlusCartItemProps = {
   data: PlotAnalysePlusType;
-  isEnable?: boolean;
+  onDelete?: (id: string) => void;
 };
 
 const AnalysePlusCartItem: FC<AnalysePlusCartItemProps> = ({
   data,
-  isEnable,
+  onDelete,
 }) => {
-  const IDNummerClass = !isEnable ? 'min-w-[188px]' : '';
-
+  const IDNummerClass = !onDelete ? 'min-w-[188px]' : '';
   return (
     <div
       className='w-full bg-white rounded-[18px] p-4 py-10 my-3'
@@ -37,8 +36,8 @@ const AnalysePlusCartItem: FC<AnalysePlusCartItemProps> = ({
           />
         </div>
 
-        {isEnable && (
-          <button>
+        {onDelete && (
+          <button className='cursor-pointer' onClick={() => onDelete(data.id)}>
             <div className='border-[1.12px] border-gray-blue-light rounded-[50%] p-[11px] flex'>
               <img src={delIcon} alt='Delete Icon' className='min-w-[14px]' />
             </div>

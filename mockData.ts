@@ -110,9 +110,6 @@ export const analysePlusCartData = [
     cadastral_sector: '35-6',
     land_use: 'Grünland',
     plot_number_main: 10000,
-    plot_number_secondary: '123-456-789',
-    image: flImage,
-    analyzePlus: 'active',
   },
   {
     id: 'FL-56142',
@@ -124,9 +121,6 @@ export const analysePlusCartData = [
     cadastral_sector: '35-6',
     land_use: 'Grünland',
     plot_number_main: 10000,
-    plot_number_secondary: '123-456-789',
-    image: flImage,
-    analyzePlus: 'active',
   },
   {
     id: 'FL-56143',
@@ -138,9 +132,6 @@ export const analysePlusCartData = [
     cadastral_sector: '35-6',
     land_use: 'Grünland',
     plot_number_main: 10000,
-    plot_number_secondary: '123-456-789',
-    image: flImage,
-    analyzePlus: 'active',
   },
 ];
 

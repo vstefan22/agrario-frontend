@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import Layout from './layout/Layout';
 import ProtectedLayout from './layout/ProtectedLayout';
 import NewRegister from './components/auth/NewRegister';
@@ -33,6 +34,8 @@ import PlaceABid from './pages/developer/PlaceABid';
 import ThankYouInterest from './pages/developer/ThankYouInterest';
 import MyAuctions from './pages/developer/MyAuctions';
 import MyAuctionDetails from './pages/developer/MyAuctionDetails';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   return (
@@ -124,6 +127,14 @@ const App = () => {
             }
           />
         </Routes>
+        <ToastContainer
+          position='top-center'
+          autoClose={7500}
+          hideProgressBar={false}
+          closeOnClick
+          pauseOnHover
+          draggable
+        />
       </Layout>
     </Router>
   );
