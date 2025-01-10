@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import Input from '../common/Input';
 import Button from '../common/Button';
-import { TbCameraPlus } from 'react-icons/tb';
-import IconCircleButton from '../../components/common/IconCircleButton';
 import { ArrowLeft } from '../../assets/svgs/svg-icons';
 import useAuthStore from '../../store/auth-store';
 import { useNavigate } from 'react-router-dom';
 // import useHttpRequest from '../../hooks/http-request-hook';
+import profilePlaceholder from '../../assets/images/profile-placeholder.png';
 
 type PasswordChangeProps = {
   password: string;
@@ -20,11 +19,6 @@ export default function PasswordChange() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
-
-  // TODO: remove hardcoded data after actual user data is used
-  const userName = 'Max Mustermann';
-  const profilePic =
-    'https://s3-alpha-sig.figma.com/img/01cc/5d61/f928befeeece4a5c1e2f09ab88eac5cc?Expires=1735516800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=IZe3UOdo59zO4aHKULYUvDhMUIHSDdU7ikD3n3c2CVQZMVYmnmhRDWPKGCoJoP7sbSY6wmm5eQ8aKphj8xU8ymJaj0zkI90mpfr0ki4MiUcz5xBOKFsN3iPumxdxH~LU6dAFKKPUS6NFzW~ywx-RICjvhYBDoeaG3UqgtdAzr747DxDqzTM4JzktYyChDO-3d5e0fDatlraLgZTCsIWzTImROLt8cKyz1glTQoXg4IXF778SNN-lNSuzDut2nYCxTgq3uam8RwMOEWjitxUT0h0-9A0JYvPaXTflAYgIfE4AnCPIJvgp3w1Y~buDyMA~Vd3jJTXVUMp8FaDoYrOG6Q__';
 
   const [formData, setFormData] = useState<PasswordChangeProps>({
     password: '',
@@ -99,19 +93,14 @@ export default function PasswordChange() {
               <div className='relative w-24 h-24 rounded-full border-4 border-primary overflow-hidden'>
                 <img
                   src={
-                    user?.profile_picture ? user.profile_picture : profilePic
+                    user?.profile_picture
+                      ? user.profile_picture
+                      : profilePlaceholder
                   }
                   alt='Profilbild'
                   className='w-full h-full object-cover rounded-full'
                 />
               </div>
-
-              <IconCircleButton
-                onClick={() => document.getElementById('fileInput')?.click()}
-                icon={<TbCameraPlus />}
-                ariaLabel='Profilbild ändern'
-                className='absolute top-0 right-0'
-              />
             </div>
             <div>
               <h2 className='text-sm font-semibold text-gray-dim'>
@@ -120,7 +109,7 @@ export default function PasswordChange() {
               <p className='text-lg text-gray-dim'>
                 {user && user.firstname && user.lastname
                   ? `${user.firstname} ${user.lastname}`
-                  : userName}
+                  : ''}
               </p>
             </div>
           </div>
