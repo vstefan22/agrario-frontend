@@ -34,7 +34,9 @@ const Input: FC<InputProps> = ({
   switch (variant) {
     case 'profile':
       inputClasses =
-        'bg-gray-medium/10 text-gray-light-200 ' +
+        `bg-gray-medium/10 ${
+          !isEditable && onEdit ? 'text-gray-light-200' : 'text-gray-dim'
+        } ` +
         'rounded-md h-[44px] p-0 px-3 w-full ' +
         'focus:outline-none focus:ring-2 focus:ring-gray-medium';
       break;

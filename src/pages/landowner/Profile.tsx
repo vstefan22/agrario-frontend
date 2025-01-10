@@ -113,7 +113,11 @@ export default function Profile() {
 
     const formDataSend = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
-      formDataSend.append(key, value);
+      if (typeof value === 'boolean') {
+        formDataSend.append(key, value ? 'true' : 'false');
+      } else {
+        formDataSend.append(key, value);
+      }
     });
 
     if (profilePic) {
@@ -301,6 +305,7 @@ export default function Profile() {
               required
               id='city'
               value={formData.city}
+              onChange={handleChange}
               name='city'
               onEdit={() => toggleEditMode('city')}
               onSave={() => handleSave('city')}

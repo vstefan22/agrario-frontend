@@ -17,4 +17,19 @@ export type UserProfile = {
   profile_picture: string;
 };
 
-export type StoreUser = UserType & Partial<UserProfile>;
+export type UserDeveloperProfile = {
+  wind: boolean;
+  ground_mounted_solar: boolean;
+  battery: boolean;
+  heat: boolean;
+  hydrogen: boolean;
+  electromobility: boolean;
+  ecological_upgrading: boolean;
+  other: string;
+  company_logo: string;
+  current_plan: string;
+};
+
+export type StoreUser = UserType &
+  Partial<UserProfile> &
+  Partial<UserDeveloperProfile>;

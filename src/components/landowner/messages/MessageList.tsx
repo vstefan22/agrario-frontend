@@ -36,7 +36,7 @@ const MessageList = ({ name, message, time, category }: MessageListTypes) => {
           type='checkbox'
           id='checkMsg'
           checked={isChecked}
-          onClick={checkMessage}
+          onChange={checkMessage}
           className='
   appearance-none
   w-[16px] h-[16px]
