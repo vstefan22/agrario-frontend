@@ -10,7 +10,6 @@ import UploadFile from '../../components/common/UploadFile';
 import Button from '../../components/common/Button';
 import { defaultOptions } from '../../types/select-options';
 import { detailsData } from '../../../mockData';
-import { myOfferDetailsData } from '../../../mockData';
 
 const OfferDetails = () => {
   const [formData, setFormData] = useState<{
@@ -29,7 +28,23 @@ const OfferDetails = () => {
     acceptPrivacyPolicy: boolean;
     acceptTermsAndConditions: boolean;
     other: boolean;
-  }>(myOfferDetailsData);
+  }>({
+    availableDate: new Date('2024-08-11'),
+    select1: 'Option 1',
+    select2: 'Option 2',
+    select3: 'Option 3',
+    noUsageRestriction: false,
+    windEnergyRestriction: true,
+    solarEnergyRestriction: true,
+    energyStorageRestriction: false,
+    ecoEnhancementsRestriction: true,
+    message: 'This is message from user...',
+    files: [] as File[],
+    isOwnerOrAuthorized: true,
+    acceptPrivacyPolicy: true,
+    acceptTermsAndConditions: true,
+    other: true,
+  });
 
   const [editMode, setEditMode] = useState<Record<string, boolean>>({
     datePicker: false,
@@ -241,30 +256,35 @@ const OfferDetails = () => {
             <Checkbox
               label='Keine Auschluss von Nutzungsmöglichkeiten'
               variant='primary'
+              name='noUsageRestriction'
               onChange={handleChange}
               checked={formData.noUsageRestriction}
             />
             <Checkbox
               label='Keine Nutzung von Windenergie'
               variant='primary'
+              name='windEnergyRestriction'
               onChange={handleChange}
               checked={formData.windEnergyRestriction}
             />
             <Checkbox
               label='Keine Nutzung von Solarenergie'
               variant='primary'
+              name='solarEnergyRestriction'
               onChange={handleChange}
               checked={formData.solarEnergyRestriction}
             />
             <Checkbox
               label='Keine Nutzung von Energiespeicher'
               variant='primary'
+              name='energyStorageRestriction'
               onChange={handleChange}
               checked={formData.energyStorageRestriction}
             />
             <Checkbox
               label='Keine Nutzung für ökologische Aufwertungen'
               variant='primary'
+              name='ecoEnhancementsRestriction'
               onChange={handleChange}
               checked={formData.ecoEnhancementsRestriction}
             />
@@ -291,24 +311,28 @@ const OfferDetails = () => {
             label='Ja, ich bestätige Eigentümer des Grundstückes oder von den Eigentümern beauftragt oder mandatiert zu sein .'
             variant='primary'
             labelClassName='w-full'
+            name='isOwnerOrAuthorized'
             checked={formData.isOwnerOrAuthorized}
             onChange={handleChange}
           />
           <Checkbox
             label='Ja, ich akzeptiere die Datenschutzbedingungen'
             variant='primary'
+            name='acceptPrivacyPolicy'
             checked={formData.acceptPrivacyPolicy}
             onChange={handleChange}
           />
           <Checkbox
             label='Ja, ich akzeptiere die AGBs'
             variant='primary'
+            name='acceptTermsAndConditions'
             checked={formData.acceptTermsAndConditions}
             onChange={handleChange}
           />
           <Checkbox
             label='Ja, ich.......'
             variant='primary'
+            name='other'
             checked={formData.other}
             onChange={handleChange}
           />

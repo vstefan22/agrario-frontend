@@ -26,21 +26,21 @@ const ActionCard = ({
   onClick,
 }: ActionCardTypes) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleVideoClick = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
+  const openModal = () => {
+    setIsModalOpen(true);
   };
 
-  const handleVideoEnded = () => {
-    setIsPlaying(false);
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleButtonClick = () => {
+    if (isVideo) {
+      openModal();
+    }
+    onClick();
   };
 
   return (
@@ -59,26 +59,41 @@ const ActionCard = ({
             muted
             preload='metadata'
             ref={videoRef}
-            onClick={handleVideoClick}
-            onEnded={handleVideoEnded}
+            onClick={openModal}
           >
             Your browser does not support the video tag.
           </video>
-          {!isPlaying && (
-            <img
-              src={playIcon}
-              alt='Play Icon'
-              className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92px] h-[92px] cursor-pointer'
-              onClick={handleVideoClick}
-            />
-          )}
+
+          <img
+            src={playIcon}
+            alt='Play Icon'
+            className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92px] h-[92px] cursor-pointer'
+            onClick={handleButtonClick}
+          />
         </div>
       )}
       <div className='h-full flex justify-center items-center'>
-        <Button type='button' variant='bluePrimary' onClick={onClick}>
+        <Button type='button' variant='bluePrimary' onClick={handleButtonClick}>
           {buttonText}
         </Button>
       </div>
+      {isModalOpen && (
+        <div
+          className='fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50'
+          onClick={closeModal}
+        >
+          <div className='rounded-lg' onClick={(e) => e.stopPropagation()}>
+            <video
+              src={videoSrc}
+              className='w-[840px] rounded-lg'
+              controls
+              autoPlay
+            >
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

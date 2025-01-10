@@ -412,24 +412,6 @@ export const myAuctionsData = [
   },
 ];
 
-export const myOfferDetailsData = {
-  availableDate: new Date('2024-08-11'),
-  select1: 'Option 1',
-  select2: 'Option 2',
-  select3: 'Option 3',
-  noUsageRestriction: false,
-  windEnergyRestriction: true,
-  solarEnergyRestriction: true,
-  energyStorageRestriction: false,
-  ecoEnhancementsRestriction: true,
-  message: 'This is message from user...',
-  files: [] as File[],
-  isOwnerOrAuthorized: true,
-  acceptPrivacyPolicy: true,
-  acceptTermsAndConditions: true,
-  other: true,
-};
-
 export const tenderCriteriaData = {
   list: [
     'There are many variations of passages of Lorem.',

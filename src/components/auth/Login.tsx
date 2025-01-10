@@ -7,6 +7,9 @@ import useHttpRequest from '../../hooks/http-request-hook';
 import useAuthStore from '../../store/auth-store';
 import { UserType } from '../../types/user-types';
 import 'react-toastify/dist/ReactToastify.css';
+import { TbEye, TbEyeOff } from 'react-icons/tb';
+import lockImg from '../../assets/images/lock.png';
+import userCircleImg from '../../assets/images/user-circle.png';
 
 type LoginResponse = {
   firebase_token: string;
@@ -15,6 +18,7 @@ type LoginResponse = {
 };
 
 export default function Login() {
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { setToken, setUser } = useAuthStore();
@@ -119,28 +123,54 @@ export default function Login() {
           onSubmit={handleSubmit}
           className='grid grid-cols-1 md:grid-cols-4 gap-6'
         >
-          <div className='md:col-span-4'>
+          <div className='md:col-span-4 relative'>
             <Input
               label='Email Adresse'
+              placeholder='info@example.de'
               id='email'
               name='email'
               type='email'
               value={formData.email}
               onChange={handleChange}
               required
+              className='pl-10'
+            />
+            <img
+              src={userCircleImg}
+              alt='user circle image'
+              className='absolute left-3 top-[60%] transform -translate-y-1/2'
             />
           </div>
 
-          <div className='md:col-span-4'>
+          <div className='md:col-span-4 relative'>
             <Input
-              label='Passwort'
+              label='Password'
+              placeholder='Password'
               id='password'
               name='password'
-              type='password'
+              type={showPassword ? 'text' : 'password'}
               value={formData.password}
               onChange={handleChange}
               required
+              className='pl-10'
             />
+            <img
+              src={lockImg}
+              alt='lock image'
+              className='absolute left-3 top-[60%] transform -translate-y-1/2'
+            />
+            <Button
+              variant='bluePrimary'
+              type='button'
+              onClick={() => setShowPassword(!showPassword)}
+              className='absolute top-[47%] right-3 flex items-center text-gray-dim h-auto w-auto !border-none bg-transparent hover:bg-transparent'
+            >
+              {showPassword ? (
+                <TbEye color='white' size={24} />
+              ) : (
+                <TbEyeOff color='white' size={24} />
+              )}
+            </Button>
           </div>
 
           <div className='md:col-span-4'>

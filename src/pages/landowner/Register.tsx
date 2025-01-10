@@ -4,10 +4,13 @@ import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import Checkbox from '../../components/common/Checkbox';
 import useHttpRequest from '../../hooks/http-request-hook';
+import { TbEye, TbEyeOff } from 'react-icons/tb';
 
 export default function Register() {
   const navigate = useNavigate();
   const { sendRequest } = useHttpRequest();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [formData, setFormData] = useState({
     firstname: '',
@@ -141,7 +144,6 @@ export default function Register() {
             placeholder='Text hinzufügen'
             value={formData.company_name}
             onChange={handleChange}
-            required
           />
           <Input
             label='Ihre Position im Unternehmen'
@@ -149,7 +151,6 @@ export default function Register() {
             placeholder='Text hinzufügen'
             value={formData.position}
             onChange={handleChange}
-            required
           />
           <Input
             label='Anschrift/Strasse'
@@ -204,25 +205,53 @@ export default function Register() {
             onChange={handleChange}
             required
           />
-          <Input
-            label='Passwort'
-            name='password'
-            type='password'
-            placeholder='asdasd'
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-          <Input
-            label='Passwort bestätigen'
-            name='confirm_password'
-            type='password'
-            placeholder='asdasd'
-            value={formData.confirm_password}
-            onChange={handleChange}
-            required
-            className='md:col-span-1'
-          />
+          <div className='relative'>
+            <Input
+              label='Passwort'
+              name='password'
+              type={showPassword ? 'text' : 'password'}
+              placeholder='asdasd'
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+            <Button
+              variant='bluePrimary'
+              type='button'
+              onClick={() => setShowPassword(!showPassword)}
+              className='absolute top-[47%] right-3 flex items-center text-gray-dim h-auto w-auto !border-none bg-transparent hover:bg-transparent'
+            >
+              {showPassword ? (
+                <TbEye color='white' size={24} />
+              ) : (
+                <TbEyeOff color='white' size={24} />
+              )}
+            </Button>
+          </div>
+          <div className='relative'>
+            <Input
+              label='Passwort bestätigen'
+              name='confirm_password'
+              type={showConfirmPassword ? 'text' : 'password'}
+              placeholder='asdasd'
+              value={formData.confirm_password}
+              onChange={handleChange}
+              required
+              className='md:col-span-1'
+            />
+            <Button
+              variant='bluePrimary'
+              type='button'
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className='absolute top-[47%] right-3 flex items-center text-gray-dim h-auto w-auto !border-none bg-transparent hover:bg-transparent'
+            >
+              {showConfirmPassword ? (
+                <TbEye color='white' size={24} />
+              ) : (
+                <TbEyeOff color='white' size={24} />
+              )}
+            </Button>
+          </div>
           <div className='md:col-span-2 flex justify-between items-center'>
             <Checkbox
               label='Ich aktzeptiere die Datenschutzbedingungen'
