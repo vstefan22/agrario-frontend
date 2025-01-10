@@ -10,47 +10,32 @@ import UploadFile from '../../components/common/UploadFile';
 import Button from '../../components/common/Button';
 import { defaultOptions } from '../../types/select-options';
 import { detailsData } from '../../../mockData';
+import { OfferType } from '../../types/offer-types';
 
 const OfferDetails = () => {
-  const [formData, setFormData] = useState<{
-    availableDate: Date | null;
-    select1: string;
-    select2: string;
-    select3: string;
-    noUsageRestriction: boolean;
-    windEnergyRestriction: boolean;
-    solarEnergyRestriction: boolean;
-    energyStorageRestriction: boolean;
-    ecoEnhancementsRestriction: boolean;
-    message: string;
-    files: File[];
-    isOwnerOrAuthorized: boolean;
-    acceptPrivacyPolicy: boolean;
-    acceptTermsAndConditions: boolean;
-    other: boolean;
-  }>({
-    availableDate: new Date('2024-08-11'),
-    select1: 'Option 1',
-    select2: 'Option 2',
-    select3: 'Option 3',
-    noUsageRestriction: false,
-    windEnergyRestriction: true,
-    solarEnergyRestriction: true,
-    energyStorageRestriction: false,
-    ecoEnhancementsRestriction: true,
+  const [formData, setFormData] = useState<OfferType>({
+    available_from: new Date('2024-08-11'),
+    criteria1: 'Option 1',
+    criteria2: 'Option 2',
+    criteria3: 'Option 3',
+    no_usage_restriction: false,
+    wind_energy_restriction: true,
+    solar_energy_restriction: true,
+    energy_storage_restriction: false,
+    eco_enhancements_restriction: true,
     message: 'This is message from user...',
     files: [] as File[],
-    isOwnerOrAuthorized: true,
-    acceptPrivacyPolicy: true,
-    acceptTermsAndConditions: true,
+    is_owner_or_authorized: true,
+    accept_privacy_policy: true,
+    accept_terms: true,
     other: true,
   });
 
   const [editMode, setEditMode] = useState<Record<string, boolean>>({
     datePicker: false,
-    select1: false,
-    select2: false,
-    select3: false,
+    criteria1: false,
+    criteria2: false,
+    criteria3: false,
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -80,12 +65,12 @@ const OfferDetails = () => {
   const handleDateChange = (date: Date | null) => {
     setFormData((prev) => ({
       ...prev,
-      availableDate: date,
+      available_from: date,
     }));
-    if (errors.availableDate) {
+    if (errors.available_from) {
       setErrors((prev) => ({
         ...prev,
-        availableDate: '',
+        available_from: '',
       }));
     }
   };
@@ -113,28 +98,28 @@ const OfferDetails = () => {
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
 
-    if (!formData.availableDate) {
-      newErrors.availableDate = 'Dieses Feld ist erforderlich.';
+    if (!formData.available_from) {
+      newErrors.available_from = 'Dieses Feld ist erforderlich.';
     }
-    if (!formData.select1) {
-      newErrors.select1 = 'Dieses Feld ist erforderlich.';
+    if (!formData.criteria1) {
+      newErrors.criteria1 = 'Dieses Feld ist erforderlich.';
     }
-    if (!formData.select2) {
-      newErrors.select2 = 'Dieses Feld ist erforderlich.';
+    if (!formData.criteria2) {
+      newErrors.criteria2 = 'Dieses Feld ist erforderlich.';
     }
-    if (!formData.select3) {
-      newErrors.select3 = 'Dieses Feld ist erforderlich.';
+    if (!formData.criteria3) {
+      newErrors.criteria3 = 'Dieses Feld ist erforderlich.';
     }
-    if (!formData.isOwnerOrAuthorized) {
-      newErrors.isOwnerOrAuthorized =
+    if (!formData.is_owner_or_authorized) {
+      newErrors.is_owner_or_authorized =
         'Bitte bestätigen Sie, dass Sie berechtigt sind.';
     }
-    if (!formData.acceptPrivacyPolicy) {
-      newErrors.acceptPrivacyPolicy =
+    if (!formData.accept_privacy_policy) {
+      newErrors.accept_privacy_policy =
         'Bitte akzeptieren Sie die Datenschutzbedingungen.';
     }
-    if (!formData.acceptTermsAndConditions) {
-      newErrors.acceptTermsAndConditions = 'Bitte akzeptieren Sie die AGBs.';
+    if (!formData.accept_terms) {
+      newErrors.accept_terms = 'Bitte akzeptieren Sie die AGBs.';
     }
     if (!formData.other) {
       newErrors.other = 'Bitte bestätigen Sie dieses Feld.';
@@ -184,7 +169,7 @@ const OfferDetails = () => {
           <DatePicker
             label='Grundstück verfügbarab'
             required
-            value={formData.availableDate}
+            value={formData.available_from}
             onChange={handleDateChange}
             placeholder='DD/MM/YY'
             onEdit={() => toggleEditMode('datePicker')}
@@ -192,58 +177,60 @@ const OfferDetails = () => {
             isEditable={editMode.datePicker}
             divClassName='mt-auto'
           />
-          {errors.availableDate && (
-            <span className='text-red-500 text-sm'>{errors.availableDate}</span>
+          {errors.available_from && (
+            <span className='text-red-500 text-sm'>
+              {errors.available_from}
+            </span>
           )}
           <Select
-            name='select1'
+            name='criteria1'
             label='Sind Sie offen für Verpachtung oder für Verkauf'
             required
-            onEdit={() => toggleEditMode('select1')}
-            onSave={() => handleSave('select1')}
-            isEditable={editMode.select1}
+            onEdit={() => toggleEditMode('criteria1')}
+            onSave={() => handleSave('criteria1')}
+            isEditable={editMode.criteria1}
             onChange={handleSelectChange}
             options={defaultOptions}
-            value={formData.select1}
+            value={formData.criteria1}
             divClassName='mt-auto'
             labelClassName='mb-7'
             divWidthClass='w-[420px]'
           />
-          {errors.select1 && (
-            <span className='text-red-500 text-sm'>{errors.select1}</span>
+          {errors.criteria1 && (
+            <span className='text-red-500 text-sm'>{errors.criteria1}</span>
           )}
           <Select
-            name='select2'
+            name='criteria2'
             label='Regionalität des Projektentwicklers'
             required
-            onEdit={() => toggleEditMode('select2')}
-            onSave={() => handleSave('select2')}
-            isEditable={editMode.select2}
+            onEdit={() => toggleEditMode('criteria2')}
+            onSave={() => handleSave('criteria2')}
+            isEditable={editMode.criteria2}
             onChange={handleSelectChange}
             options={defaultOptions}
-            value={formData.select2}
+            value={formData.criteria2}
             divClassName='mt-auto'
             divWidthClass='w-[420px]'
           />
-          {errors.select2 && (
-            <span className='text-red-500 text-sm'>{errors.select2}</span>
+          {errors.criteria2 && (
+            <span className='text-red-500 text-sm'>{errors.criteria2}</span>
           )}
           <Select
-            name='select3'
+            name='criteria3'
             label='Sind Sie offen für Verpachtung oder für Verkauf'
             required
-            onEdit={() => toggleEditMode('select3')}
-            onSave={() => handleSave('select3')}
-            isEditable={editMode.select3}
+            onEdit={() => toggleEditMode('criteria3')}
+            onSave={() => handleSave('criteria3')}
+            isEditable={editMode.criteria3}
             onChange={handleSelectChange}
             options={defaultOptions}
-            value={formData.select3}
+            value={formData.criteria3}
             divClassName='mt-auto'
             labelClassName='mb-7'
             divWidthClass='w-[420px]'
           />
-          {errors.select3 && (
-            <span className='text-red-500 text-sm'>{errors.select2}</span>
+          {errors.criteria3 && (
+            <span className='text-red-500 text-sm'>{errors.criteria2}</span>
           )}
         </div>
 
@@ -256,37 +243,37 @@ const OfferDetails = () => {
             <Checkbox
               label='Keine Auschluss von Nutzungsmöglichkeiten'
               variant='primary'
-              name='noUsageRestriction'
+              name='no_usage_restriction'
               onChange={handleChange}
-              checked={formData.noUsageRestriction}
+              checked={formData.no_usage_restriction}
             />
             <Checkbox
               label='Keine Nutzung von Windenergie'
               variant='primary'
-              name='windEnergyRestriction'
+              name='wind_energy_restriction'
               onChange={handleChange}
-              checked={formData.windEnergyRestriction}
+              checked={formData.wind_energy_restriction}
             />
             <Checkbox
               label='Keine Nutzung von Solarenergie'
               variant='primary'
-              name='solarEnergyRestriction'
+              name='solar_energy_restriction'
               onChange={handleChange}
-              checked={formData.solarEnergyRestriction}
+              checked={formData.solar_energy_restriction}
             />
             <Checkbox
               label='Keine Nutzung von Energiespeicher'
               variant='primary'
-              name='energyStorageRestriction'
+              name='energy_storage_restriction'
               onChange={handleChange}
-              checked={formData.energyStorageRestriction}
+              checked={formData.energy_storage_restriction}
             />
             <Checkbox
               label='Keine Nutzung für ökologische Aufwertungen'
               variant='primary'
-              name='ecoEnhancementsRestriction'
+              name='eco_enhancements_restriction'
               onChange={handleChange}
-              checked={formData.ecoEnhancementsRestriction}
+              checked={formData.eco_enhancements_restriction}
             />
           </div>
         </div>
@@ -311,22 +298,22 @@ const OfferDetails = () => {
             label='Ja, ich bestätige Eigentümer des Grundstückes oder von den Eigentümern beauftragt oder mandatiert zu sein .'
             variant='primary'
             labelClassName='w-full'
-            name='isOwnerOrAuthorized'
-            checked={formData.isOwnerOrAuthorized}
+            name='is_owner_or_authorized'
+            checked={formData.is_owner_or_authorized}
             onChange={handleChange}
           />
           <Checkbox
             label='Ja, ich akzeptiere die Datenschutzbedingungen'
             variant='primary'
-            name='acceptPrivacyPolicy'
-            checked={formData.acceptPrivacyPolicy}
+            name='accept_privacy_policy'
+            checked={formData.accept_privacy_policy}
             onChange={handleChange}
           />
           <Checkbox
             label='Ja, ich akzeptiere die AGBs'
             variant='primary'
-            name='acceptTermsAndConditions'
-            checked={formData.acceptTermsAndConditions}
+            name='accept_terms'
+            checked={formData.accept_terms}
             onChange={handleChange}
           />
           <Checkbox

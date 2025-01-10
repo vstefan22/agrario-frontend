@@ -12,9 +12,12 @@ import { showDetailsData } from '../../ShowDetailsMockData';
 
 type ShowDetailsType = {
   paid: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any;
 };
 
-const ShowDetails = ({ paid }: ShowDetailsType) => {
+const ShowDetails = ({ paid, data }: ShowDetailsType) => {
+  console.log('analyse details data: ', data);
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col'>
       <div className='flex flex-col justify-center bg-white rounded-[16px] shadow-[6px_6px_54px_0px_#0000000D] p-8'>

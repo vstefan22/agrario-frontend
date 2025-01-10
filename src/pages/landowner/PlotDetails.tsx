@@ -1,11 +1,27 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/common/Button';
-import usePlotStore from '../../store/plot-store';
 import ShowDetails from '../ShowDetails';
+import usePlotStore from '../../store/plot-store';
+import usePlots from '../../hooks/plot-hook';
 
 function PlotDetails() {
   const navigate = useNavigate();
-  const { plot } = usePlotStore();
+  const { getPlotAnalyseDetails, addPlotToBasket } = usePlots();
+  const { plot, setBasketPlots, setPlotAnalyseDetails, plotAnalyseDetails } =
+    usePlotStore();
+
+  useEffect(() => {
+    const fetchAnalyseDetails = async () => {
+      try {
+        const analyseDetailsPlot = await getPlotAnalyseDetails(plot!.id);
+        setPlotAnalyseDetails(analyseDetailsPlot);
+      } catch (err) {
+        console.error('Failed to fetch analyse details:', err);
+      }
+    };
+    fetchAnalyseDetails();
+  }, [getPlotAnalyseDetails, setPlotAnalyseDetails, plot]);
 
   const handleRequestOffer = () => {
     navigate('/landowner/my-plots/offer-preparation');
@@ -15,8 +31,14 @@ function PlotDetails() {
     console.log('Download report clicked.');
   };
 
-  const handleAnalysePlus = () => {
-    navigate('/landowner/my-plots/analyse-plus');
+  const handleAnalysePlus = async () => {
+    try {
+      await addPlotToBasket(plot!.id, plot);
+      setBasketPlots(plot!);
+      navigate('/landowner/my-plots/analyse-plus');
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   // TODO: use actual user property for this
@@ -34,7 +56,7 @@ function PlotDetails() {
         </div>
       </div>
       <div className='h-[440px] overflow-y-auto rounded-2xl'>
-        <ShowDetails paid={isAnalizePlus} />
+        <ShowDetails paid={isAnalizePlus} data={plotAnalyseDetails} />
       </div>
 
       <div className='flex justify-end items-center py-5 gap-3'>

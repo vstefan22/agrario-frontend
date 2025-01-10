@@ -1,24 +1,53 @@
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Button from '../../components/common/Button';
 import GenericList from '../../components/common/GenericList';
 import AnalysePlusCartItem from '../../components/landowner/my-plots/AnalysePlusCartItem';
-import { analysePlusCartData, analysePlusValues } from '../../../mockData';
+import usePlotStore from '../../store/plot-store';
+import usePlots from '../../hooks/plot-hook';
+import usePayments from '../../hooks/payment-hook';
+
+import { analysePlusValues } from '../../../mockData';
 
 const AnalysePlusCart = () => {
   const navigate = useNavigate();
+  const { basketPlots, removePlotAnalyseFromList, plot } = usePlotStore();
+  const { applyDiscount, deletePlotFromBasket } = usePlots();
+  const { createPayment } = usePayments();
 
   const handleAddPlot = () => {
-    navigate('/landowner/my-plots/offer-preparation');
+    navigate('/landowner/my-plots');
   };
 
-  const handleStripeCheckout = () => {
-    // TODO: add stripe checkout request
-    console.log('stripe checkout clicked.');
+  const handleStripeCheckout = async () => {
+    // TODO: use actual data for payment checkout
+    const paymentBody = {
+      parcel_id: plot!.id,
+      amount: 100,
+      currency: 'euro',
+    };
+
+    await createPayment(paymentBody);
   };
 
-  const handleReedemCode = () => {
-    // TODO: add reedem code request
+  const handleReedemCode = async () => {
+    // TODO: use actual reedem code here
+    const discount_code = 'discount-code';
+    await applyDiscount({ discount_code });
     console.log('reedem code clicked.');
+  };
+
+  const handleOnDelete = async (id: string) => {
+    try {
+      await deletePlotFromBasket(id);
+      removePlotAnalyseFromList(id);
+      toast.success('Das Flurstück wurde erfolgreich aus der Liste entfernt.');
+    } catch (err) {
+      console.error(err);
+      toast.error(
+        'Es ist ein Fehler aufgetreten, das Flurstück wurde nicht gelöscht.'
+      );
+    }
   };
 
   return (
@@ -45,12 +74,12 @@ const AnalysePlusCart = () => {
       </div>
 
       <GenericList
-        data={analysePlusCartData}
+        data={basketPlots}
         renderItem={(warenkorb) => (
           <AnalysePlusCartItem
             key={warenkorb.id}
             data={warenkorb}
-            isEnable={true}
+            onDelete={handleOnDelete}
           />
         )}
       />

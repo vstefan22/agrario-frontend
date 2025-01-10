@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useCallback } from 'react';
+import { useEffect, useState, ChangeEvent, useCallback } from 'react';
 import Search from '../../components/common/Search';
 import Select from '../../components/common/Select';
 import GenericList from '../../components/common/GenericList';
@@ -9,14 +9,31 @@ import {
   sortData,
   filterDataRange,
 } from '../../utils/helper-functions';
+import usePlots from '../../hooks/plot-hook';
+import usePlotStore from '../../store/plot-store';
+// TODO:  remove mock and use actual data
 import { plotsListData } from '../../../mockData';
 
 export default function MyPlots() {
+  const { getMyPlots } = usePlots();
+  const { setPlots, plots } = usePlotStore();
   const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState<Record<string, string | null>>({
     sortOption: null,
   });
   const [range, setRange] = useState<[number, number]>([20, 20000]);
+
+  useEffect(() => {
+    const fetchMyPlots = async () => {
+      try {
+        const myPlots = await getMyPlots();
+        setPlots(myPlots);
+      } catch (err) {
+        console.error('Failed to fetch my plots:', err);
+      }
+    };
+    fetchMyPlots();
+  }, [getMyPlots, setPlots]);
 
   const handleSelectChange = (name: string, option: string) => {
     setFilters((prevFilters) => ({
@@ -33,14 +50,17 @@ export default function MyPlots() {
     setRange(newRange);
   }, []);
 
-  const searchFilteredData = filterData(plotsListData, searchTerm);
+  const searchFilteredData = filterData(plots, searchTerm);
   const rangeFilteredData = filterDataRange(searchFilteredData, range);
   const sortedData = sortData(rangeFilteredData, filters.sortOption);
+  // TODO: mock data is currently used for testing purposes
+  // remove this console log and use sortedData instead of mock data
+  console.log(sortedData);
 
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
       <h1 className='text-[32px] font-bold text-black-muted'>
-        Meine Flurstück
+        Meine Flurstücke
       </h1>
 
       <div className='flex mt-6 flex-col gap-6'>
@@ -65,10 +85,17 @@ export default function MyPlots() {
             initialValues={[range[0] / 100, range[1] / 100]}
           />
         </div>
-        <GenericList
-          data={sortedData}
-          renderItem={(plot) => <PlotItem key={plot.id} data={plot} />}
-        />
+
+        {plotsListData.length > 0 ? (
+          <GenericList
+            data={plotsListData}
+            renderItem={(plot) => <PlotItem key={plot.id} data={plot} />}
+          />
+        ) : (
+          <div className='flex text-[18px] font-500 gray-light-200 justify-center'>
+            Derzeit gibt es keine Daten in der Liste.
+          </div>
+        )}
       </div>
     </div>
   );

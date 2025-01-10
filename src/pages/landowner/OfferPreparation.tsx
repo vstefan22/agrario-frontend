@@ -7,30 +7,33 @@ import Select from '../../components/common/Select';
 import Checkbox from '../../components/common/Checkbox';
 import TextArea from '../../components/common/TextArea';
 import UploadFile from '../../components/common/UploadFile';
+import useOffers from '../../hooks/offer-hook';
 import { defaultOptions } from '../../types/select-options';
+import { OfferType } from '../../types/offer-types';
 import { offerItemData } from '../../../mockData';
 
 const initialFormData = {
-  availableDate: null as Date | null,
-  select1: null as string | null,
-  select2: null as string | null,
-  select3: null as string | null,
-  noUsageRestriction: false,
-  windEnergyRestriction: false,
-  solarEnergyRestriction: false,
-  energyStorageRestriction: false,
-  ecoEnhancementsRestriction: false,
+  available_from: null as Date | null,
+  criteria1: null as string | null,
+  criteria2: null as string | null,
+  criteria3: null as string | null,
+  no_usage_restriction: false,
+  wind_energy_restriction: false,
+  solar_energy_restriction: false,
+  energy_storage_restriction: false,
+  eco_enhancements_restriction: false,
   message: '',
   files: [] as File[],
-  isOwnerOrAuthorized: false,
-  acceptPrivacyPolicy: false,
-  acceptTermsAndConditions: false,
+  is_owner_or_authorized: false,
+  accept_privacy_policy: false,
+  accept_terms: false,
   other: false,
 };
 
 export default function MyOffer() {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState(initialFormData);
+  const { addOffer } = useOffers();
+  const [formData, setFormData] = useState<OfferType>(initialFormData);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleChange = (
@@ -56,17 +59,17 @@ export default function MyOffer() {
   const handleDateChange = (date: Date | null) => {
     setFormData((prev) => ({
       ...prev,
-      availableDate: date,
+      available_from: date,
     }));
-    if (errors.availableDate) {
+    if (errors.available_from) {
       setErrors((prev) => ({
         ...prev,
-        availableDate: '',
+        available_from: '',
       }));
     }
   };
 
-  const handleSelectChange = (name: string, option: string) => {
+  const handleCriteriaChange = (name: string, option: string) => {
     setFormData((prev) => ({
       ...prev,
       [name]: option,
@@ -89,28 +92,28 @@ export default function MyOffer() {
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
 
-    if (!formData.availableDate) {
-      newErrors.availableDate = 'Dieses Feld ist erforderlich.';
+    if (!formData.available_from) {
+      newErrors.available_from = 'Dieses Feld ist erforderlich.';
     }
-    if (!formData.select1) {
-      newErrors.select1 = 'Dieses Feld ist erforderlich.';
+    if (!formData.criteria1) {
+      newErrors.criteria1 = 'Dieses Feld ist erforderlich.';
     }
-    if (!formData.select2) {
-      newErrors.select2 = 'Dieses Feld ist erforderlich.';
+    if (!formData.criteria2) {
+      newErrors.criteria2 = 'Dieses Feld ist erforderlich.';
     }
-    if (!formData.select3) {
-      newErrors.select3 = 'Dieses Feld ist erforderlich.';
+    if (!formData.criteria3) {
+      newErrors.criteria3 = 'Dieses Feld ist erforderlich.';
     }
-    if (!formData.isOwnerOrAuthorized) {
-      newErrors.isOwnerOrAuthorized =
+    if (!formData.is_owner_or_authorized) {
+      newErrors.is_owner_or_authorized =
         'Bitte bestätigen Sie, dass Sie berechtigt sind.';
     }
-    if (!formData.acceptPrivacyPolicy) {
-      newErrors.acceptPrivacyPolicy =
+    if (!formData.accept_privacy_policy) {
+      newErrors.accept_privacy_policy =
         'Bitte akzeptieren Sie die Datenschutzbedingungen.';
     }
-    if (!formData.acceptTermsAndConditions) {
-      newErrors.acceptTermsAndConditions = 'Bitte akzeptieren Sie die AGBs.';
+    if (!formData.accept_terms) {
+      newErrors.accept_terms = 'Bitte akzeptieren Sie die AGBs.';
     }
     if (!formData.other) {
       newErrors.other = 'Bitte bestätigen Sie dieses Feld.';
@@ -125,9 +128,21 @@ export default function MyOffer() {
 
     try {
       if (validateForm()) {
+        const formDataSend = new FormData();
+        Object.entries(formData).forEach(([key, value]) => {
+          if (typeof value === 'string' || typeof value === 'boolean') {
+            formDataSend.append(key, value.toString());
+          }
+        });
+
+        if (formData.files.length > 0) {
+          formData.files.forEach((file) => {
+            formDataSend.append('files', file);
+          });
+        }
         console.log('Form submitted with:', formData);
+        await addOffer(formDataSend);
       }
-      // TODO: send marketing request
       navigate('/landowner/my-plots/thank-you-marketing-request');
     } catch (err) {
       console.log('Error: ', err);
@@ -158,29 +173,29 @@ export default function MyOffer() {
             <div className='flex flex-col'>
               <DatePicker
                 label='Grundstück verfügbar ab'
-                value={formData.availableDate}
+                value={formData.available_from}
                 onChange={handleDateChange}
                 placeholder='DD/MM/YY'
                 required
               />
-              {errors.availableDate && (
+              {errors.available_from && (
                 <span className='text-red-500 text-sm'>
-                  {errors.availableDate}
+                  {errors.available_from}
                 </span>
               )}
             </div>
 
             <div className='flex flex-col'>
               <Select
-                name='select1'
+                name='criteria1'
                 label='Sind Sie offen für Verpachtung oder für Verkauf'
                 options={defaultOptions}
-                value={formData.select1}
-                onChange={handleSelectChange}
+                value={formData.criteria1}
+                onChange={handleCriteriaChange}
                 required
               />
-              {errors.select1 && (
-                <span className='text-red-500 text-sm'>{errors.select1}</span>
+              {errors.criteria1 && (
+                <span className='text-red-500 text-sm'>{errors.criteria1}</span>
               )}
             </div>
           </div>
@@ -188,29 +203,29 @@ export default function MyOffer() {
           <div className='flex gap-8'>
             <div className='flex flex-col'>
               <Select
-                name='select2'
+                name='criteria2'
                 label='Regionalität des Projektentwicklers'
                 options={defaultOptions}
-                value={formData.select2}
-                onChange={handleSelectChange}
+                value={formData.criteria2}
+                onChange={handleCriteriaChange}
                 required
               />
-              {errors.select2 && (
-                <span className='text-red-500 text-sm'>{errors.select2}</span>
+              {errors.criteria2 && (
+                <span className='text-red-500 text-sm'>{errors.criteria2}</span>
               )}
             </div>
 
             <div className='flex flex-col'>
               <Select
-                name='select3'
+                name='criteria3'
                 label='Welche zusätzlichen Formen der Beteiligung sind Ihnen wichtig'
                 options={defaultOptions}
-                value={formData.select3}
-                onChange={handleSelectChange}
+                value={formData.criteria3}
+                onChange={handleCriteriaChange}
                 required
               />
-              {errors.select3 && (
-                <span className='text-red-500 text-sm'>{errors.select3}</span>
+              {errors.criteria3 && (
+                <span className='text-red-500 text-sm'>{errors.criteria3}</span>
               )}
             </div>
           </div>
@@ -223,41 +238,41 @@ export default function MyOffer() {
           <div className='flex gap-8 w-[800px] justify-between'>
             <Checkbox
               label='Keine Auschluss von Nutzungsmöglichkeiten'
-              name='noUsageRestriction'
+              name='no_usage_restriction'
               variant='primary'
-              checked={formData.noUsageRestriction}
+              checked={formData.no_usage_restriction}
               onChange={handleChange}
             />
             <Checkbox
               label='Keine Nutzung von Windenergie'
-              name='windEnergyRestriction'
+              name='wind_energy_restriction'
               variant='primary'
-              checked={formData.windEnergyRestriction}
+              checked={formData.wind_energy_restriction}
               onChange={handleChange}
             />
           </div>
           <div className='flex gap-8 w-[800px] justify-between'>
             <Checkbox
               label='Keine Nutzung von Solarenergie'
-              name='solarEnergyRestriction'
+              name='solar_energy_restriction'
               variant='primary'
-              checked={formData.solarEnergyRestriction}
+              checked={formData.solar_energy_restriction}
               onChange={handleChange}
             />
             <Checkbox
               label='Keine Nutzung von Energiespeicher'
-              name='energyStorageRestriction'
+              name='energy_storage_restriction'
               variant='primary'
-              checked={formData.energyStorageRestriction}
+              checked={formData.energy_storage_restriction}
               onChange={handleChange}
             />
           </div>
           <div className='flex gap-8'>
             <Checkbox
               label='Keine Nutzung für ökologische Aufwertungen'
-              name='ecoEnhancementsRestriction'
+              name='eco_enhancements_restriction'
               variant='primary'
-              checked={formData.ecoEnhancementsRestriction}
+              checked={formData.eco_enhancements_restriction}
               onChange={handleChange}
             />
           </div>
@@ -277,42 +292,42 @@ export default function MyOffer() {
             <div className='flex flex-col'>
               <Checkbox
                 label='Ja, ich bestätige Eigentümer des Grundstückes oder von den Eigentümern beauftragt oder mandatiert zu sein .'
-                name='isOwnerOrAuthorized'
+                name='is_owner_or_authorized'
                 variant='primary'
-                checked={formData.isOwnerOrAuthorized}
+                checked={formData.is_owner_or_authorized}
                 onChange={handleChange}
               />
-              {errors.isOwnerOrAuthorized && (
+              {errors.is_owner_or_authorized && (
                 <span className='text-red-500 text-sm'>
-                  {errors.isOwnerOrAuthorized}
+                  {errors.is_owner_or_authorized}
                 </span>
               )}
             </div>
             <div className='flex flex-col'>
               <Checkbox
                 label='Ja, ich akzeptiere die Datenschutzbedingungen'
-                name='acceptPrivacyPolicy'
+                name='accept_privacy_policy'
                 variant='primary'
-                checked={formData.acceptPrivacyPolicy}
+                checked={formData.accept_privacy_policy}
                 onChange={handleChange}
               />
-              {errors.acceptPrivacyPolicy && (
+              {errors.accept_privacy_policy && (
                 <span className='text-red-500 text-sm'>
-                  {errors.acceptPrivacyPolicy}
+                  {errors.accept_privacy_policy}
                 </span>
               )}
             </div>
             <div className='flex flex-col'>
               <Checkbox
                 label='Ja, ich akzeptiere die AGBs'
-                name='acceptTermsAndConditions'
+                name='accept_terms'
                 variant='primary'
-                checked={formData.acceptTermsAndConditions}
+                checked={formData.accept_terms}
                 onChange={handleChange}
               />
-              {errors.acceptTermsAndConditions && (
+              {errors.accept_terms && (
                 <span className='text-red-500 text-sm'>
-                  {errors.acceptTermsAndConditions}
+                  {errors.accept_terms}
                 </span>
               )}
             </div>
