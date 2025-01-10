@@ -29,14 +29,14 @@ export default function Register() {
     privacy_accepted: false,
     terms_accepted: false,
     iAccept: false,
-    windEnergy: false,
-    solarEnergy: false,
-    batteryStorage: false,
-    heatStorage: false,
+    wind: false,
+    ground_mounted_solar: false,
+    battery: false,
+    heat: false,
     hydrogen: false,
-    chargingInfrastructure: false,
-    ecological: false,
-    additionalText: '',
+    electromobility: false,
+    ecological_upgrading: false,
+    other: '',
   });
 
   const [error, setError] = useState('');
@@ -91,14 +91,14 @@ export default function Register() {
     }
 
     if (
-      !formData.batteryStorage &&
-      !formData.chargingInfrastructure &&
-      !formData.solarEnergy &&
+      !formData.battery &&
+      !formData.electromobility &&
+      !formData.ground_mounted_solar &&
       !formData.hydrogen &&
-      !formData.windEnergy &&
-      !formData.heatStorage &&
-      !formData.ecological &&
-      formData.additionalText.trim() === ''
+      !formData.wind &&
+      !formData.heat &&
+      !formData.ecological_upgrading &&
+      formData.other.trim() === ''
     ) {
       setError(
         'Bitte wählen Sie mindestens eine Option oder geben Sie einen Text in das Feld "Sonstige" ein.'
@@ -111,7 +111,12 @@ export default function Register() {
 
     try {
       await sendRequest('/accounts/users/', 'POST', {}, formData);
-      navigate('/');
+      navigate('/', {
+        state: {
+          message:
+            'Bestätigungslink wurde an Ihre E-Mail-Adresse gesendet. Bitte überprüfen Sie Ihr Konto.',
+        },
+      });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       if (
@@ -233,26 +238,26 @@ export default function Register() {
             <div className='grid grid-cols-2 gap-y-6 mb-8'>
               <Checkbox
                 label='Windenergie (On-Shore)'
-                name='windEnergy'
-                checked={formData.windEnergy}
+                name='wind'
+                checked={formData.wind}
                 onChange={handleChange}
               />
               <Checkbox
                 label='Freiflächen-Solarenergie'
-                name='solarEnergy'
-                checked={formData.solarEnergy}
+                name='ground_mounted_solar'
+                checked={formData.ground_mounted_solar}
                 onChange={handleChange}
               />
               <Checkbox
                 label='Batteriespeicher'
-                name='batteryStorage'
-                checked={formData.batteryStorage}
+                name='battery'
+                checked={formData.battery}
                 onChange={handleChange}
               />
               <Checkbox
                 label='Wärmespeicher'
-                name='heatStorage'
-                checked={formData.heatStorage}
+                name='heat'
+                checked={formData.heat}
                 onChange={handleChange}
               />
               <Checkbox
@@ -263,25 +268,24 @@ export default function Register() {
               />
               <Checkbox
                 label='Elektromobilität-Ladeinfrastruktur'
-                name='chargingInfrastructure'
-                checked={formData.chargingInfrastructure}
+                name='electromobility'
+                checked={formData.electromobility}
                 onChange={handleChange}
               />
               <div className='col-span-2 space-y-10'>
                 <Checkbox
                   label='Ökologische Aufwertungsmaßnahmen (z.B. Ökopunkte)'
-                  name='ecological'
-                  checked={formData.ecological}
+                  name='ecological_upgrading'
+                  checked={formData.ecological_upgrading}
                   onChange={handleChange}
                 />
                 <div className='w-[433px]'>
-                  {/* TODO: add functionality */}
                   <Input
                     label='Sonstige'
                     placeholder='Beispiel'
-                    name='additionalText'
+                    name='other'
                     type='profile'
-                    value={formData.additionalText}
+                    value={formData.other}
                     onChange={handleChange}
                   />
                 </div>
