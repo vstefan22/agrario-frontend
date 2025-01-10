@@ -1,7 +1,7 @@
 export type PlotType = {
   id: string;
   state_name: string;
-  plz: number;
+  zipcode: number;
   municipality_name: string;
   district_name: string;
   cadastral_area: string;
@@ -16,7 +16,7 @@ export type PlotType = {
 export type PlotDetailsType = {
   id: string;
   state_name: string;
-  plz: number;
+  zipcode: number;
   municipality_name: string;
   district_name: string;
   cadastral_area: string;
@@ -32,7 +32,7 @@ export type PlotDetailsType = {
 export type PlotOfferType = {
   id: string;
   state_name: string;
-  plz: number;
+  zipcode: number;
   municipality_name: string;
   district_name: string;
   cadastral_area: string;
@@ -56,7 +56,7 @@ export type PlotSearchType = {
 export type PlotAnalysePlusType = {
   id: string;
   state_name: string;
-  plz: number;
+  zipcode: number;
   municipality_name: string;
   district_name: string;
   cadastral_area: string;
@@ -68,7 +68,7 @@ export type PlotAnalysePlusType = {
 export type ActiveAuctionsType = {
   id: string;
   state_name: string;
-  plz: number;
+  zipcode: number;
   municipality_name: string;
   district_name: string;
   cadastral_area: string;
@@ -79,4 +79,13 @@ export type ActiveAuctionsType = {
   analyzePlus: string;
   infrastructure: string;
   evaluation: string;
+};
+
+export type PlotSearchData = {
+  state_name: string;
+  zipcode: string;
+  municipality_name: string;
+  district_name: string;
+  cadastral_area: string;
+  cadastral_sector: string;
 };

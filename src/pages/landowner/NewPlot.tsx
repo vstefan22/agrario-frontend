@@ -1,38 +1,48 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import Search from '../../components/common/Search';
 import Button from '../../components/common/Button';
-import GoogleMap, {
-  PolygonData,
-  PolygonCoord,
-} from '../../components/common/GoogleMap';
-// import useHttpRequest from '../hooks/http-request-hook';
-// import useAuthStore from '../store/auth-store';
+import GoogleMap from '../../components/common/GoogleMap';
 import SearchByAttributesUpdated from '../../components/search-with-backup/SearchByAttributesUpdated';
+import DynamicTable from '../../components/common/DynamicTable';
+// import useAuthStore from '../../store/auth-store';
+// import useHttpRequest from '../../hooks/http-request-hook';
+import { GoogleMapDataType } from '../../types/google-maps-types';
+import { PlotSearchData } from '../../types/plot-types';
+import { PLOT_GOOGLE_MAPS_COLUMNS } from '../../types/table-data-types';
 
-type SearchData = {
-  federalState: string;
-  zipCode: string;
-  municipal: string;
-  gemarkung: string;
-  flur: string;
-  flurstuck: string;
-};
+// type PlotSearchResult = {
+//   id: string;
+//   state_name: string;
+//   zipcode: string;
+//   municipality_name: string;
+//   district_name: string;
+//   cadastral_area: string;
+//   cadastral_sector: string;
+//   polygonCoords: PolygonData;
+// };
 
 export default function NewPlot() {
   // const { token } = useAuthStore();
   // const { sendRequest } = useHttpRequest();
-  const [formData, setFormData] = useState<SearchData>({
-    federalState: '',
-    zipCode: '',
-    municipal: '',
-    gemarkung: '',
-    flur: '',
-    flurstuck: '',
+  const [formData, setFormData] = useState<PlotSearchData>({
+    state_name: '',
+    zipcode: '',
+    municipality_name: '',
+    district_name: '',
+    cadastral_area: '',
+    cadastral_sector: '',
   });
+
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [polygonData, setPolygonData] = useState<PolygonData>([]);
+  const [googleMapData, setGoogleMapData] = useState<GoogleMapDataType>();
+  const [googleMapDataList, setGoogleMapDataList] = useState<
+    GoogleMapDataType[]
+  >([]);
+  // const [searchResults, setSearchResults] = useState<PlotSearchResult[] | null>(
+  //   null
+  // );
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -44,16 +54,15 @@ export default function NewPlot() {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSetPolygonData = async (e: FormEvent) => {
     e.preventDefault();
-
     if (
-      !formData.federalState ||
-      !formData.zipCode ||
-      !formData.municipal ||
-      !formData.gemarkung ||
-      !formData.flur ||
-      !formData.flurstuck
+      !formData.state_name ||
+      !formData.zipcode ||
+      !formData.municipality_name ||
+      !formData.district_name ||
+      !formData.cadastral_area ||
+      !formData.cadastral_sector
     ) {
       setError('Bitte füllen Sie alle erforderlichen Felder aus.');
       setSuccess('');
@@ -62,20 +71,20 @@ export default function NewPlot() {
 
     setError('');
     setSuccess('');
+    // setSearchResults(null);
 
     try {
-      // TODO: create actual request for getting polygon data for new plot creation
-      // const data = await sendRequest('/', 'POST', { ... }, formData);
-
-      const dummyCoords: PolygonData = [
-        { lat: 52.52, lng: 13.4 },
-        { lat: 52.52, lng: 13.41 },
-        { lat: 52.53, lng: 13.41 },
-        { lat: 52.53, lng: 13.4 },
-      ];
-
-      setPolygonData(dummyCoords);
-      setSuccess('Parcela je erfolgreich gefunden!');
+      // TODO: make an actual request to get polygon data
+      // const data = await sendRequest(
+      //   '/use-actual-endpoint/',
+      //   'POST',
+      //   {
+      //     headers: { Authorization: `Bearer ${token}` },
+      //   },
+      //   formData
+      // );
+      //
+      // setGoogleMapData(data);
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message || 'Ein Fehler ist aufgetreten.');
@@ -86,26 +95,16 @@ export default function NewPlot() {
   };
 
   const handleAddPlot = () => {
-    const finalPayload = {
-      state_name: formData.federalState,
-      district_name: formData.zipCode,
-      municipality_name: formData.municipal,
-      cadastral_area: formData.gemarkung,
-      cadastral_sector: formData.flur,
-      plot_number_main: formData.flurstuck,
-      plot_number_secondary: '5678',
-      land_use: 'Residential',
-      polygon: {
-        type: 'Polygon',
-        coordinates: [polygonData.map((coord) => [coord.lng, coord.lat])],
-      },
-      status: 'available',
-    };
+    console.log('Final payload:', googleMapDataList);
 
-    console.log('Final payload:', finalPayload);
-
-    // TODO: create actual request for new plot creation
-    // sendRequest('/offers/parcels/', 'POST', { headers: {..} }, finalPayload);
+    // sendRequest(
+    //   '/offers/plots/',
+    //   'POST',
+    //   {
+    //     headers: { Authorization: `Bearer ${token}` },
+    //   },
+    //   googleMapDataList
+    // );
 
     setSuccess('Flurstück hinzugefügt!');
   };
@@ -116,18 +115,23 @@ export default function NewPlot() {
 
   const resetFields = () => {
     setFormData({
-      federalState: '',
-      zipCode: '',
-      municipal: '',
-      gemarkung: '',
-      flur: '',
-      flurstuck: '',
+      state_name: '',
+      zipcode: '',
+      municipality_name: '',
+      district_name: '',
+      cadastral_area: '',
+      cadastral_sector: '',
     });
+    // setSearchResults(null);
+    setGoogleMapDataList([]);
   };
 
-  const handleMapClick = (coordinates: PolygonCoord) => {
-    setPolygonData([coordinates]);
+  const handleMapClick = (googleMapData: GoogleMapDataType) => {
+    setGoogleMapData(googleMapData);
+    setGoogleMapDataList((prev) => [...prev, googleMapData]);
   };
+
+  console.log('googleMapData: ', googleMapData);
 
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
@@ -145,7 +149,7 @@ export default function NewPlot() {
           </p>
         </div>
         <Search
-          placeholder='Search'
+          placeholder='Search address...'
           value={searchTerm}
           onChange={handleSearchChange}
         />
@@ -155,16 +159,27 @@ export default function NewPlot() {
         <SearchByAttributesUpdated
           formData={formData}
           handleChange={handleChange}
-          handleSubmit={handleSubmit}
+          handleSubmit={handleSetPolygonData}
           resetFields={resetFields}
         />
 
-        <div className='flex-1 flex flex-col mt-6'>
+        {googleMapDataList.length > 0 &&
+          googleMapDataList.map((data) => (
+            <div className='w-full bg-white rounded-[18px] p-1 mt-4'>
+              <DynamicTable data={data} columns={PLOT_GOOGLE_MAPS_COLUMNS} />
+            </div>
+          ))}
+
+        <div className='flex-1 flex flex-col mt-4'>
           <div
             className='w-full bg-white rounded-[18px] p-8'
             style={{ boxShadow: '6px 6px 54px 0px #0000000D' }}
           >
-            <GoogleMap polygonData={polygonData} onMapClick={handleMapClick} />
+            <GoogleMap
+              polygonData={googleMapData?.polygon.coordinates}
+              onMapClick={handleMapClick}
+              mapSearchTerm={searchTerm}
+            />
           </div>
         </div>
 
