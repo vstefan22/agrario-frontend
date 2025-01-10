@@ -11,7 +11,7 @@ import {
 } from '../../utils/helper-functions';
 import usePlots from '../../hooks/plot-hook';
 import usePlotStore from '../../store/plot-store';
-
+// TODO:  remove mock and use actual data
 import { plotsListData } from '../../../mockData';
 
 export default function MyPlots() {
@@ -53,6 +53,8 @@ export default function MyPlots() {
   const searchFilteredData = filterData(plots, searchTerm);
   const rangeFilteredData = filterDataRange(searchFilteredData, range);
   const sortedData = sortData(rangeFilteredData, filters.sortOption);
+  // TODO: mock data is currently used for testing purposes
+  // remove this console log and use sortedData instead of mock data
   console.log(sortedData);
 
   return (
