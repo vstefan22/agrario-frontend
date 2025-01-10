@@ -1,3 +1,5 @@
+import { PlotType } from './plot-types';
+
 export type OfferType = {
   available_from: Date | null;
   criteria1: string | null;
@@ -15,3 +17,5 @@ export type OfferType = {
   accept_terms: boolean;
   other: boolean;
 };
+
+export type StoreOfferType = PlotType & Partial<OfferType>;

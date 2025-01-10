@@ -4,19 +4,29 @@ import DynamicTable from '../../common/DynamicTable';
 import Button from '../../common/Button';
 import ItemImage from '../../common/ItemImage';
 import { PLOT_DETAILS_COLUMNS } from '../../../types/table-data-types';
-import { PlotType } from '../../../types/plot-types';
+import { StoreOfferType } from '../../../types/offer-types';
 import active from '../../../assets/images/vermarktung-aktiv.png';
 import inactive from '../../../assets/images/vermarktung-in-vorbereitung.png';
+import useOffers from '../../../hooks/offer-hook';
+import useOfferStore from '../../../store/offer-store';
 
 type OfferItemProps = {
-  data: PlotType;
+  data: StoreOfferType;
 };
 
 const OfferItem: FC<OfferItemProps> = ({ data }) => {
   const navigate = useNavigate();
+  const { getOfferDetails } = useOffers();
+  const { offer, setOffer } = useOfferStore();
 
-  const handleViewDetails = () => {
-    navigate('/landowner/my-offers/details');
+  const handleViewDetails = async () => {
+    try {
+      const offerDetails = await getOfferDetails(offer!.id);
+      setOffer(offerDetails);
+      navigate('/landowner/my-offers/details');
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (

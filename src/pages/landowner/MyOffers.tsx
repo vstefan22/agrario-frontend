@@ -1,18 +1,34 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 import Search from '../../components/common/Search';
 import Select from '../../components/common/Select';
 import GenericList from '../../components/common/GenericList';
 import OfferItem from '../../components/landowner/my-plots/OfferItem';
 import { sortOptions } from '../../types/select-options';
 import { filterData, sortData } from '../../utils/helper-functions';
+import useOffers from '../../hooks/offer-hook';
+import useOfferstore from '../../store/offer-store';
+// TODO: remove mock and use actual data
 import { myOfferData } from '../../../mockData';
 
 function MyOffers() {
+  const { getOffers } = useOffers();
+  const { setOffers, offers } = useOfferstore();
   const [searchTerm, setSearchTerm] = useState('');
-
   const [filters, setFilters] = useState<Record<string, string | null>>({
     sortOption: null,
   });
+
+  useEffect(() => {
+    const fetchMyOffers = async () => {
+      try {
+        const myOffers = await getOffers();
+        setOffers(myOffers);
+      } catch (err) {
+        console.error('Failed to fetch my offers:', err);
+      }
+    };
+    fetchMyOffers();
+  }, [getOffers, setOffers]);
 
   const handleSelectChange = (name: string, option: string) => {
     setFilters((prevFilters) => ({
@@ -25,8 +41,11 @@ function MyOffers() {
     setSearchTerm(e.target.value);
   };
 
-  const filteredData = filterData(myOfferData, searchTerm);
+  const filteredData = filterData(offers, searchTerm);
   const sortedData = sortData(filteredData, filters.sortOption);
+  // TODO: mock data is currently used for testing purposes
+  // remove this console log and use sortedData instead of mock data
+  console.log(sortedData);
 
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
@@ -52,10 +71,17 @@ function MyOffers() {
             placeholder='Sortieren nach'
           />
         </div>
-        <GenericList
-          data={sortedData}
-          renderItem={(plot) => <OfferItem key={plot.id} data={plot} />}
-        />
+
+        {myOfferData.length > 0 ? (
+          <GenericList
+            data={myOfferData}
+            renderItem={(plot) => <OfferItem key={plot.id} data={plot} />}
+          />
+        ) : (
+          <div className='flex text-[18px] font-500 gray-light-200 justify-center'>
+            Derzeit gibt es keine Daten in der Liste.
+          </div>
+        )}
       </div>
     </div>
   );
