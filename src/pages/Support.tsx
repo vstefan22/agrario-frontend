@@ -5,7 +5,7 @@ import UploadFile from '../components/common/UploadFile';
 import Button from '../components/common/Button';
 import MessageHistoryCard from '../components/landowner/messages/MessageHistoryCard';
 import useMessages from '../hooks/message-hook';
-import { supportOptions } from '../types/select-options';
+import { supportOptions } from '../constants/select-options';
 import useAuthStore from '../store/auth-store';
 import useMessageStore from '../store/message-store';
 

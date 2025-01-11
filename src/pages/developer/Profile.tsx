@@ -8,12 +8,12 @@ import Select from '../../components/common/Select';
 import Checkbox from '../../components/common/Checkbox';
 import SlideCheckbox from '../../components/common/SlideCheckbox';
 import PackageCard from '../../components/profile/PackageCard';
-import { profileOptions } from '../../types/select-options';
-import { PACKAGE_FEATURES } from '../../types/package-types';
 import useHttpRequest from '../../hooks/http-request-hook';
 import useAuthStore from '../../store/auth-store';
-import profilePlaceholder from '../../assets/images/profile-placeholder.png';
+import { profileOptions } from '../../constants/select-options';
+import { PACKAGE_FEATURES } from '../../constants/package';
 import { StoreUser } from '../../types/user-types';
+import profilePlaceholder from '../../assets/images/profile-placeholder.png';
 
 type ProfileType = Omit<StoreUser, 'id'>;
 
@@ -47,7 +47,7 @@ export default function Profile() {
     role: '',
     // current_plan: user?.current_plan || 'Free',
   });
-
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);

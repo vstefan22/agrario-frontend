@@ -1,14 +1,13 @@
 import DynamicTable from '../components/common/DynamicTable';
-import { PLOT_DETAILS_COLUMNS } from '../types/table-data-types';
-import { myOfferData } from '../../mockData';
 import ShowDetailsImage from '../components/show-details/ShowDetailsImage';
 import ShowDetailsCard from '../components/show-details/ShowDetailsCard';
+import DynamicTableSection from '../components/show-details/DynamicTableSection';
+import { PLOT_DETAILS_COLUMNS } from '../constants/table-data';
 import germanyImg from '../assets/images/germany-country.png';
 import woodsImg from '../assets/images/woods.png';
 import mountainsImg from '../assets/images/mountains.png';
-
-import DynamicTableSection from '../components/show-details/DynamicTableSection';
 import { showDetailsData } from '../../ShowDetailsMockData';
+import { myOfferData } from '../../mockData';
 
 type ShowDetailsType = {
   paid: boolean;

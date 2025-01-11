@@ -11,7 +11,7 @@ import {
   sortPlotsSearchData,
 } from '../../utils/helper-functions';
 import { filterPlotSearchDataRange } from '../../utils/helper-functions';
-import { sortOptions } from '../../types/select-options';
+import { sortOptions } from '../../constants/select-options';
 import filtersImg from '../../assets/images/filters.png';
 import { plotSearchData } from '../../../mockData';
 

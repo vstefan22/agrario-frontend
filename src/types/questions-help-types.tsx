@@ -1,4 +1,4 @@
-export type QuestionsHelpItem = {
+export type QuestionsHelpType = {
   title: string;
   content: string;
 };

@@ -10,15 +10,15 @@ import TextArea from '../../components/common/TextArea';
 import UploadFile from '../../components/common/UploadFile';
 import Button from '../../components/common/Button';
 import useOfferStore from '../../store/offer-store';
+import useOffers from '../../hooks/offer-hook';
 import {
   preferredRegionality,
   shareholderModel,
   utilization,
   optionsMap,
-} from '../../types/select-options';
+} from '../../constants/select-options';
 import { OfferType } from '../../types/offer-types';
 import { detailsData } from '../../../mockData';
-import useOffers from '../../hooks/offer-hook';
 
 const OfferDetails = () => {
   const navigate = useNavigate();

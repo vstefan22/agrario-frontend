@@ -8,7 +8,7 @@ import DynamicTable from '../../components/common/DynamicTable';
 // import useHttpRequest from '../../hooks/http-request-hook';
 import { GoogleMapDataType } from '../../types/google-maps-types';
 import { PlotSearchData } from '../../types/plot-types';
-import { PLOT_GOOGLE_MAPS_COLUMNS } from '../../types/table-data-types';
+import { PLOT_GOOGLE_MAPS_COLUMNS } from '../../constants/table-data';
 
 // type PlotSearchResult = {
 //   id: string;
