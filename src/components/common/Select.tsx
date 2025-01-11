@@ -7,6 +7,7 @@ interface BaseSelectProps {
   name: string;
   options: string[] | number[];
   placeholder?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value: any;
   onChange: (name: string, option: string) => void;
   variant?: 'sort' | 'default';

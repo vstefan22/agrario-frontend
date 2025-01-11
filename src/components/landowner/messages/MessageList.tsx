@@ -37,24 +37,12 @@ const MessageList = ({ name, message, time, category }: MessageListTypes) => {
           id='checkMsg'
           checked={isChecked}
           onChange={checkMessage}
-          className='
-  appearance-none
-  w-[16px] h-[16px]
-  border-2 border-gray-light-200
-  rounded
-  cursor-pointer
-  checked:bg-black
-  checked:border-black
-  checked:text-white
-  flex items-center justify-center
-'
+          className='appearance-none w-[16px] h-[16px] border-2 border-gray-light-200 rounded cursor-pointer
+          checked:bg-black checked:border-black checked:text-white flex items-center justify-center'
         />
         <span
-          className='absolute
-      top-1/2 left-1/2
-      transform -translate-x-1/2 -translate-y-1/2
-      text-white text-[12px] font-bold leading-none
-      pointer-events-none'
+          className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
+            text-white text-[12px] font-bold leading-none pointer-events-none'
         >
           {isChecked && '✓'}
         </span>

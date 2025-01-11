@@ -9,3 +9,9 @@ export const profileOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 export const bidOptions = ['Ja', 'Nein', 'Keine Angabe'];
 
 export const defaultOptions = ['Option 1', 'Option 2', 'Option 3', 'Option 4'];
+
+export const supportOptions = [
+  'Flurstücksanalyse PLUS',
+  'Angebot erstellen',
+  'Sonstiges',
+];
