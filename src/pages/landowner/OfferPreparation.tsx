@@ -19,9 +19,9 @@ import { offerItemData } from '../../../mockData';
 
 const initialFormData = {
   available_from: null as Date | null,
-  utilization: null as string | null,
-  preferred_regionality: null as string | null,
-  shareholder_model: null as string | null,
+  utilization: undefined as string | undefined,
+  preferred_regionality: undefined as string | undefined,
+  shareholder_model: undefined as string | undefined,
   no_usage_restriction: false,
   wind_energy_restriction: false,
   solar_energy_restriction: false,
@@ -29,7 +29,7 @@ const initialFormData = {
   eco_enhancements_restriction: false,
   important_remarks: '',
   hide_from_search: false,
-  files: [] as File[],
+  documents: [] as File[],
   is_owner_or_authorized: false,
   accept_privacy_policy: false,
   accept_terms: false,
@@ -88,10 +88,10 @@ export default function MyOffer() {
     }
   };
 
-  const handleFilesChange = (files: File[]) => {
+  const handleFilesChange = (documents: File[]) => {
     setFormData((prev) => ({
       ...prev,
-      files,
+      documents,
     }));
   };
 
@@ -166,13 +166,14 @@ export default function MyOffer() {
           eco_enhancements_restriction: formData.eco_enhancements_restriction,
         };
         formDataSend.append('criteria', JSON.stringify(criteria));
-        formDataSend.append(
-          'hide_from_search',
-          formData.hide_from_search.toString()
-        );
-        if (formData.files.length > 0) {
-          formData.files.forEach((file) => {
-            formDataSend.append('files', file);
+        if (formData.hide_from_search)
+          formDataSend.append(
+            'hide_from_search',
+            formData.hide_from_search.toString()
+          );
+        if (formData.documents.length > 0) {
+          formData.documents.forEach((file) => {
+            formDataSend.append('documents', file);
           });
         }
         formDataSend.append(

@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import DynamicTable from '../../common/DynamicTable';
 import Button from '../../common/Button';
 import ItemImage from '../../common/ItemImage';
@@ -7,8 +8,9 @@ import { PLOT_DETAILS_COLUMNS } from '../../../types/table-data-types';
 import { StoreOfferType } from '../../../types/offer-types';
 import active from '../../../assets/images/vermarktung-aktiv.png';
 import inactive from '../../../assets/images/vermarktung-in-vorbereitung.png';
-import useOffers from '../../../hooks/offer-hook';
-import useOfferStore from '../../../store/offer-store';
+// import useOffers from '../../../hooks/offer-hook';
+// import useOfferStore from '../../../store/offer-store';
+// import useAuthStore from '../../../store/auth-store';
 
 type OfferItemProps = {
   data: StoreOfferType;
@@ -16,15 +18,19 @@ type OfferItemProps = {
 
 const OfferItem: FC<OfferItemProps> = ({ data }) => {
   const navigate = useNavigate();
-  const { getOfferDetails } = useOffers();
-  const { offer, setOffer } = useOfferStore();
+  // const { user } = useAuthStore();
+  // const { getOfferDetails } = useOffers();
+  // const { setOffer, setOfferId } = useOfferStore();
 
   const handleViewDetails = async () => {
     try {
-      const offerDetails = await getOfferDetails(offer!.id);
-      setOffer(offerDetails);
+      // TODO: uncoment and use when actual data is present
+      // const offerDetails = await getOfferDetails(user!.id);
+      // setOffer(offerDetails);
+      // setOfferId(offerDetails.id)
       navigate('/landowner/my-offers/details');
     } catch (err) {
+      toast.error('Fehler beim Abrufen der Daten für die Angebotsdetails');
       console.error(err);
     }
   };

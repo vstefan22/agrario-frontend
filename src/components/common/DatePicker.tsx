@@ -6,7 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 type DatePickerProps = {
   label?: string;
-  value: Date | null;
+  value: Date | null | undefined;
   onChange: (date: Date | null) => void;
   placeholder?: string;
   required?: boolean;

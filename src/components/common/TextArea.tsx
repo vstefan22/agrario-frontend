@@ -5,7 +5,7 @@ import SaveButton from './SaveButton';
 interface TextAreaProps {
   id: string;
   name: string;
-  value: string;
+  value: string | undefined;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   label?: string;
   placeholder?: string;
