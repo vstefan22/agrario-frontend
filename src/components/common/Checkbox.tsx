@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { CheckedIcon } from '../../assets/svgs/svg-icons';
+import { FaCheck } from 'react-icons/fa';
 
 type Variant = 'primary' | 'secondary';
 
@@ -29,6 +30,7 @@ const Checkbox: FC<CheckboxProps> = ({
       : `
         w-[14px] h-[14px]
         border border-white
+        cursor-pointer
         rounded-sm
         appearance-none
         checked:bg-white
@@ -47,9 +49,13 @@ const Checkbox: FC<CheckboxProps> = ({
             focus:outline-none
           `}
         />
-        {variant === 'primary' && props.checked && (
+        {props.checked && (
           <div className='absolute inset-0 flex justify-center items-center pointer-events-none'>
-            <CheckedIcon />
+            {variant === 'primary' ? (
+              <CheckedIcon />
+            ) : (
+              <FaCheck className='text-gray-dark-100 mb-1 w-[18px] h-[11px]' />
+            )}
           </div>
         )}
       </div>
