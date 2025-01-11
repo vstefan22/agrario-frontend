@@ -119,8 +119,8 @@ export default function Register() {
       });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
-      console.error('Error Response:', err.response);
       if (
+        err.response?.data?.email?.[0] &&
         err.response.data.email[0] === 'user with this email already exists.'
       ) {
         setError('Ein Konto mit dieser E-Mail-Adresse existiert bereits.');
