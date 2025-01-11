@@ -49,7 +49,7 @@ const ActionCard = ({
         <img
           src={imageSrc}
           alt='Card Image 1'
-          className='rounded-t-2xl w-[360px] h-[276px]'
+          className='rounded-t-2xl w-[360px] min-h-[276px]'
         />
       ) : (
         <div className='relative'>
@@ -79,7 +79,7 @@ const ActionCard = ({
       </div>
       {isModalOpen && (
         <div
-          className='fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50'
+          className='fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50'
           onClick={closeModal}
         >
           <div className='rounded-lg' onClick={(e) => e.stopPropagation()}>
