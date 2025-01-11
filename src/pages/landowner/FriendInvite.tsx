@@ -1,9 +1,16 @@
 import Button from '../../components/common/Button';
+import useInvites from '../../hooks/invite-hook';
 import einenImg from '../../assets/images/questions-help.png';
 
 const FriendInvite = () => {
+  const { createInvite } = useInvites();
+
   function handleSendInvitationLinkRequest() {
-    console.log('invitation link request clicked.');
+    try {
+      createInvite({ email: 'email@example.com' });
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return (

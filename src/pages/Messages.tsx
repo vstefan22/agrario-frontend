@@ -1,10 +1,29 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../components/common/Button';
 import MessageStorage from '../components/landowner/messages/MessageStorage';
+import useMessages from '../hooks/message-hook';
+import useAuthStore from '../store/auth-store';
 import plusImg from '../assets/images/plus.png';
+import useMessageStore from '../store/message-store';
 
 const Messages = () => {
+  const navigate = useNavigate();
+  const { user } = useAuthStore();
+  const { getMyChats } = useMessages();
+  const { setInbox } = useMessageStore();
+
+  useEffect(() => {
+    const fetchMyChats = async () => {
+      const inbox = await getMyChats(user!.id);
+      setInbox(inbox);
+    };
+
+    fetchMyChats();
+  }, [user, getMyChats, setInbox]);
+
   const handleCreateMessage = () => {
-    console.log('Create new message');
+    navigate('/landowner/support');
   };
 
   return (

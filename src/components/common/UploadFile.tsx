@@ -14,20 +14,24 @@ function formatFileSize(sizeInBytes: number): string {
 
 interface UploadFileProps {
   onFilesChange?: (files: File[]) => void;
+  maxFiles?: number;
 }
 
 const MAX_FILES = 3;
 const MAX_SIZE_MB = 25;
 const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
 
-const UploadFile: FC<UploadFileProps> = ({ onFilesChange }) => {
+const UploadFile: FC<UploadFileProps> = ({
+  onFilesChange,
+  maxFiles = MAX_FILES,
+}) => {
   const [files, setFiles] = useState<File[]>([]);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const newFiles = Array.from(e.target.files);
     const filtered = newFiles.filter((file) => file.size <= MAX_SIZE_BYTES);
-    const updatedFiles = [...files, ...filtered].slice(0, MAX_FILES);
+    const updatedFiles = [...files, ...filtered].slice(0, maxFiles);
 
     setFiles(updatedFiles);
     onFilesChange?.(updatedFiles);
