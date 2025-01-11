@@ -8,22 +8,27 @@ import Checkbox from '../../components/common/Checkbox';
 import TextArea from '../../components/common/TextArea';
 import UploadFile from '../../components/common/UploadFile';
 import Button from '../../components/common/Button';
-import { defaultOptions } from '../../types/select-options';
+import {
+  preferredRegionality,
+  shareholderModel,
+  utilization,
+} from '../../types/select-options';
 import { detailsData } from '../../../mockData';
 import { OfferType } from '../../types/offer-types';
 
 const OfferDetails = () => {
   const [formData, setFormData] = useState<OfferType>({
-    available_from: new Date('2024-08-11'),
-    criteria1: 'Option 1',
-    criteria2: 'Option 2',
-    criteria3: 'Option 3',
+    available_from: new Date(),
+    utilization: utilization[0],
+    preferred_regionality: preferredRegionality[0],
+    shareholder_model: shareholderModel[0],
     no_usage_restriction: false,
     wind_energy_restriction: true,
     solar_energy_restriction: true,
     energy_storage_restriction: false,
     eco_enhancements_restriction: true,
-    message: 'This is message from user...',
+    important_remarks: 'Message',
+    hide_from_search: false,
     files: [] as File[],
     is_owner_or_authorized: true,
     accept_privacy_policy: true,
@@ -33,9 +38,9 @@ const OfferDetails = () => {
 
   const [editMode, setEditMode] = useState<Record<string, boolean>>({
     datePicker: false,
-    criteria1: false,
-    criteria2: false,
-    criteria3: false,
+    utilization: false,
+    preferred_regionality: false,
+    shareholder_model: false,
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -101,14 +106,14 @@ const OfferDetails = () => {
     if (!formData.available_from) {
       newErrors.available_from = 'Dieses Feld ist erforderlich.';
     }
-    if (!formData.criteria1) {
-      newErrors.criteria1 = 'Dieses Feld ist erforderlich.';
+    if (!formData.utilization) {
+      newErrors.utilization = 'Dieses Feld ist erforderlich.';
     }
-    if (!formData.criteria2) {
-      newErrors.criteria2 = 'Dieses Feld ist erforderlich.';
+    if (!formData.preferred_regionality) {
+      newErrors.preferred_regionality = 'Dieses Feld ist erforderlich.';
     }
-    if (!formData.criteria3) {
-      newErrors.criteria3 = 'Dieses Feld ist erforderlich.';
+    if (!formData.shareholder_model) {
+      newErrors.shareholder_model = 'Dieses Feld ist erforderlich.';
     }
     if (!formData.is_owner_or_authorized) {
       newErrors.is_owner_or_authorized =
@@ -183,54 +188,58 @@ const OfferDetails = () => {
             </span>
           )}
           <Select
-            name='criteria1'
+            name='utilization'
             label='Sind Sie offen für Verpachtung oder für Verkauf'
             required
-            onEdit={() => toggleEditMode('criteria1')}
-            onSave={() => handleSave('criteria1')}
-            isEditable={editMode.criteria1}
+            onEdit={() => toggleEditMode('utilization')}
+            onSave={() => handleSave('utilization')}
+            isEditable={editMode.utilization}
             onChange={handleSelectChange}
-            options={defaultOptions}
-            value={formData.criteria1}
+            options={utilization}
+            value={formData.utilization}
             divClassName='mt-auto'
             labelClassName='mb-7'
             divWidthClass='w-[420px]'
           />
-          {errors.criteria1 && (
-            <span className='text-red-500 text-sm'>{errors.criteria1}</span>
+          {errors.utilization && (
+            <span className='text-red-500 text-sm'>{errors.utilization}</span>
           )}
           <Select
-            name='criteria2'
+            name='preferred_regionality'
             label='Regionalität des Projektentwicklers'
             required
-            onEdit={() => toggleEditMode('criteria2')}
-            onSave={() => handleSave('criteria2')}
-            isEditable={editMode.criteria2}
+            onEdit={() => toggleEditMode('preferred_regionality')}
+            onSave={() => handleSave('preferred_regionality')}
+            isEditable={editMode.preferred_regionality}
             onChange={handleSelectChange}
-            options={defaultOptions}
-            value={formData.criteria2}
+            options={preferredRegionality}
+            value={formData.preferred_regionality}
             divClassName='mt-auto'
             divWidthClass='w-[420px]'
           />
-          {errors.criteria2 && (
-            <span className='text-red-500 text-sm'>{errors.criteria2}</span>
+          {errors.preferred_regionality && (
+            <span className='text-red-500 text-sm'>
+              {errors.preferred_regionality}
+            </span>
           )}
           <Select
-            name='criteria3'
+            name='shareholder_model'
             label='Sind Sie offen für Verpachtung oder für Verkauf'
             required
-            onEdit={() => toggleEditMode('criteria3')}
-            onSave={() => handleSave('criteria3')}
-            isEditable={editMode.criteria3}
+            onEdit={() => toggleEditMode('shareholder_model')}
+            onSave={() => handleSave('shareholder_model')}
+            isEditable={editMode.shareholder_model}
             onChange={handleSelectChange}
-            options={defaultOptions}
-            value={formData.criteria3}
+            options={shareholderModel}
+            value={formData.shareholder_model}
             divClassName='mt-auto'
             labelClassName='mb-7'
             divWidthClass='w-[420px]'
           />
-          {errors.criteria3 && (
-            <span className='text-red-500 text-sm'>{errors.criteria2}</span>
+          {errors.shareholder_model && (
+            <span className='text-red-500 text-sm'>
+              {errors.preferred_regionality}
+            </span>
           )}
         </div>
 
@@ -287,9 +296,9 @@ const OfferDetails = () => {
             placeholder='Ihre Nachricht an uns'
             onChange={handleChange}
             label=''
-            id='message'
-            name='message'
-            value={formData.message}
+            id='important_remarks'
+            name='important_remarks'
+            value={formData.important_remarks}
           />
 
           <UploadFile onFilesChange={handleFilesChange} />
