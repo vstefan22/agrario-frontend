@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import DynamicTable from '../../common/DynamicTable';
 import ItemImage from '../../common/ItemImage';
-import { PLOT_DETAILS_COLUMNS } from '../../../types/table-data-types';
+import { PLOT_DETAILS_COLUMNS } from '../../../constants/table-data';
 import { PlotAnalysePlusType } from '../../../types/plot-types';
 import delIcon from '../../../assets/images/del.png';
 

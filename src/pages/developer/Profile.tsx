@@ -4,86 +4,53 @@ import { TbCameraPlus } from 'react-icons/tb';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import IconCircleButton from '../../components/common/IconCircleButton';
-// import { EyeOpenIcon, EyeClosedIcon } from '../../assets/svgs/svg-icons';
 import Select from '../../components/common/Select';
 import Checkbox from '../../components/common/Checkbox';
 import SlideCheckbox from '../../components/common/SlideCheckbox';
 import PackageCard from '../../components/profile/PackageCard';
-import { profileOptions } from '../../types/select-options';
-import { PACKAGE_FEATURES } from '../../types/package-types';
-// import CompanyLogo from '../../assets/images/company-logo.png';
 import useHttpRequest from '../../hooks/http-request-hook';
 import useAuthStore from '../../store/auth-store';
+import { profileOptions } from '../../constants/select-options';
+import { PACKAGE_FEATURES } from '../../constants/package';
+import { StoreUser } from '../../types/user-types';
 import profilePlaceholder from '../../assets/images/profile-placeholder.png';
 
-interface UserData {
-  company_name: string;
-  company_website: string;
-  address: string;
-  zipcode: string;
-  city: string;
-  companyFoundingYear: number;
-  installedMWCapacity: number;
-  employeesNumber: string;
-  firstname: string;
-  lastname: string;
-  // unternehmen: string;
-  position: string;
-  email: string;
-  phone_number: string;
-  // password: string;
-  // confirm_password: string;
-  wind: boolean;
-  ground_mounted_solar: boolean;
-  battery: boolean;
-  heat: boolean;
-  hydrogen: boolean;
-  electromobility: boolean;
-  ecological_upgrading: boolean;
-  other: string;
-  role: string;
-  current_plan: string;
-}
+type ProfileType = Omit<StoreUser, 'id'>;
 
 export default function Profile() {
   const navigate = useNavigate();
   const { sendRequest } = useHttpRequest();
   const { token, user, updateUser } = useAuthStore();
 
-  // TODO: use actual user data here
-  const [formData, setFormData] = useState<UserData>({
-    company_name: user?.company_name || '',
-    company_website: user?.company_website || '',
-    address: user?.address || '',
-    companyFoundingYear: 2012,
-    installedMWCapacity: 2020,
-    employeesNumber: '1',
-    firstname: user?.firstname || '',
-    lastname: user?.lastname || '',
-    // unternehmen: 'Musterfirma GmbH',
-    position: user?.position || '',
-    zipcode: user?.zipcode || '',
-    city: user?.city || '',
-    email: user?.email || '',
-    phone_number: user?.phone_number || '',
-    // password: 'Password123!',
-    // confirm_password: 'Password123!',
-    wind: user?.wind || false,
-    ground_mounted_solar: user?.ground_mounted_solar || false,
-    battery: user?.battery || false,
-    heat: user?.heat || false,
-    hydrogen: user?.hydrogen || false,
-    electromobility: user?.electromobility || false,
-    ecological_upgrading: user?.ecological_upgrading || false,
-    other: user?.other || '',
-    role: user?.role || '',
-    current_plan: user?.current_plan || 'Free',
+  const [formData, setFormData] = useState<ProfileType>({
+    company_name: '',
+    company_website: '',
+    address: '',
+    founding_year: 0,
+    mw_capacity: 0,
+    employees: 0,
+    firstname: '',
+    lastname: '',
+    position: '',
+    zipcode: '',
+    city: '',
+    email: '',
+    phone_number: '',
+    wind: false,
+    ground_mounted_solar: false,
+    battery: false,
+    heat: false,
+    hydrogen: false,
+    electromobility: false,
+    ecological_upgrading: false,
+    other: '',
+    role: '',
+    // current_plan: user?.current_plan || 'Free',
   });
-
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
-  // const [userName, setUserName] = useState('');
   const [profilePic, setProfilePic] = useState<any>(null);
   const [profilePreview, setProfilePreview] = useState<any>(
     user?.profile_picture || profilePlaceholder
@@ -97,23 +64,17 @@ export default function Profile() {
   //   profileOptions: null,
   // });
 
-  // useEffect(() => {
-  //   setUserName('Max Mustermann');
-  //   // TODO: check if this is still needed
-  // }, [navigate]);
-
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
   const [editMode, setEditMode] = useState<Record<string, boolean>>({
     company_name: false,
     company_website: false,
     address: false,
-    companyFoundingYear: false,
-    installedMWCapacity: false,
-    employeesNumber: false,
+    founding_year: false,
+    mw_capacity: false,
+    employees: false,
     firstname: false,
     lastname: false,
-    // unternehmen: false,
     position: false,
     zipcode: false,
     city: false,
@@ -133,6 +94,35 @@ export default function Profile() {
 
     fetchUserProfile();
   }, [sendRequest, updateUser, token]);
+
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        company_name: user?.company_name || '',
+        company_website: user?.company_website || '',
+        address: user?.address || '',
+        founding_year: user?.founding_year || 2000,
+        mw_capacity: user?.mw_capacity || 0,
+        employees: user?.employees || 1,
+        firstname: user?.firstname || '',
+        lastname: user?.lastname || '',
+        position: user?.position || '',
+        zipcode: user?.zipcode || '',
+        city: user?.city || '',
+        email: user?.email || '',
+        phone_number: user?.phone_number || '',
+        wind: user?.wind || false,
+        ground_mounted_solar: user?.ground_mounted_solar || false,
+        battery: user?.battery || false,
+        heat: user?.heat || false,
+        hydrogen: user?.hydrogen || false,
+        electromobility: user?.electromobility || false,
+        ecological_upgrading: user?.ecological_upgrading || false,
+        other: user?.other || '',
+        role: user?.role || '',
+      });
+    }
+  }, [user]);
 
   const handleToggleChange = (checked: boolean) => {
     setIsChecked(checked);
@@ -183,11 +173,8 @@ export default function Profile() {
       !formData.address ||
       !formData.zipcode ||
       !formData.city ||
-      !formData.companyFoundingYear ||
-      !formData.installedMWCapacity ||
       !formData.firstname ||
       !formData.lastname ||
-      // !formData.unternehmen ||
       !formData.email
     ) {
       setError('Bitte füllen Sie alle erforderlichen Felder aus.');
@@ -209,7 +196,7 @@ export default function Profile() {
 
     const formDataSend = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
-      formDataSend.append(key, value);
+      formDataSend.append(key, value.toString());
     });
 
     if (profilePic) {
@@ -221,7 +208,6 @@ export default function Profile() {
     }
 
     try {
-      // TODO: create update request for user
       const userUpdated = await sendRequest(
         '/accounts/profile/',
         'PATCH',
@@ -241,16 +227,18 @@ export default function Profile() {
 
       if (userUpdated.company_logo) {
         setCompanyPreview(userUpdated.company_logo);
-      } else {
-        console.log('Update company logo Failed');
       }
 
-      console.log(userUpdated.profile_picture);
-      console.log(userUpdated.company_logo);
-      console.log('Server Response:', userUpdated);
-
       setSuccess('Profil erfolgreich aktualisiert.');
-    } catch (err: unknown) {
+    } catch (err: any) {
+      if (
+        err.response?.data?.founding_year[0] &&
+        err.response.data.founding_year[0] ===
+          'Ensure this value is less than or equal to 2025.'
+      ) {
+        setError('Bitte geben Sie ein gültiges Jahr ein.');
+        return;
+      }
       if (err instanceof Error) {
         setError(err.message || 'Ein Fehler ist aufgetreten.');
       } else {
@@ -327,8 +315,7 @@ export default function Profile() {
                   <img
                     src={companyPreview || profilePlaceholder}
                     alt='Profilbild'
-                    // className='w-full h-full object-cover rounded-full'
-                    className='w-full h-full object-cover rounded-full' // ovaj deo ne pokazuje full sliku, koristiti kod iznad
+                    className='w-full h-full object-cover rounded-full'
                   />
                 </div>
 
@@ -439,13 +426,13 @@ export default function Profile() {
                     variant='profile'
                     label='Gründungsjahr Ihres Unternehmens'
                     required
-                    id='companyFoundingYear'
-                    name='companyFoundingYear'
-                    value={formData.companyFoundingYear}
+                    id='founding_year'
+                    name='founding_year'
+                    value={formData.founding_year}
                     onChange={handleChange}
-                    onEdit={() => toggleEditMode('companyFoundingYear')}
-                    onSave={() => handleSave('companyFoundingYear')}
-                    isEditable={editMode.companyFoundingYear}
+                    onEdit={() => toggleEditMode('founding_year')}
+                    onSave={() => handleSave('founding_year')}
+                    isEditable={editMode.founding_year}
                   />
                 </div>
                 <div className='md:col-span-2'>
@@ -453,13 +440,13 @@ export default function Profile() {
                     variant='profile'
                     label='Installierte Kapazität in MW seit Gründung'
                     required
-                    id='installedMWCapacity'
-                    name='installedMWCapacity'
-                    value={formData.installedMWCapacity}
+                    id='mw_capacity'
+                    name='mw_capacity'
+                    value={formData.mw_capacity}
                     onChange={handleChange}
-                    onEdit={() => toggleEditMode('installedMWCapacity')}
-                    onSave={() => handleSave('installedMWCapacity')}
-                    isEditable={editMode.installedMWCapacity}
+                    onEdit={() => toggleEditMode('mw_capacity')}
+                    onSave={() => handleSave('mw_capacity')}
+                    isEditable={editMode.mw_capacity}
                   />
                 </div>
                 <div className='md:col-span-2'>
@@ -467,13 +454,13 @@ export default function Profile() {
                     variant='default'
                     label='Anzahl Mitarbeiter im Unternehmen'
                     required
-                    name='employeesNumber'
-                    value={formData.employeesNumber}
+                    name='employees'
+                    value={formData.employees}
                     onChange={handleSelectChange}
                     options={profileOptions}
-                    onEdit={() => toggleEditMode('employeesNumber')}
-                    onSave={() => handleSave('employeesNumber')}
-                    isEditable={editMode.employeesNumber}
+                    onEdit={() => toggleEditMode('employees')}
+                    onSave={() => handleSave('employees')}
+                    isEditable={editMode.employees}
                   />
                 </div>
               </form>

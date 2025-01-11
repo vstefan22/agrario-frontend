@@ -14,3 +14,27 @@ export type PaymentType = {
   amount: number;
   currency: string;
 };
+
+export type InviteBodyType = {
+  email: string;
+};
+
+export type InviteRegisterType = {
+  invite_code: string;
+  user_data: {
+    email: string;
+    password: string;
+    confirm_password: string;
+    role: string;
+    phone_number: string;
+    address: string;
+    zipcode: string | number;
+    city: string;
+    street_housenumber: string | number;
+    company_website: string;
+  };
+};
+
+export type PromoCodeType = {
+  code: string;
+};

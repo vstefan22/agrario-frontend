@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import GenericList from '../../components/common/GenericList';
 import DetailsItem from '../../components/landowner/my-plots/DetailsItem';
 import DatePicker from '../../components/common/DatePicker';
@@ -8,39 +9,53 @@ import Checkbox from '../../components/common/Checkbox';
 import TextArea from '../../components/common/TextArea';
 import UploadFile from '../../components/common/UploadFile';
 import Button from '../../components/common/Button';
-import { defaultOptions } from '../../types/select-options';
-import { detailsData } from '../../../mockData';
+import useOfferStore from '../../store/offer-store';
+import useOffers from '../../hooks/offer-hook';
+import {
+  preferredRegionality,
+  shareholderModel,
+  utilization,
+  optionsMap,
+} from '../../constants/select-options';
 import { OfferType } from '../../types/offer-types';
+import { detailsData } from '../../../mockData';
 
 const OfferDetails = () => {
+  const navigate = useNavigate();
+  const { patchOffer, deactivateOffer } = useOffers();
+  const {
+    offer,
+    offerId,
+    updateOffer,
+    updateOfferToList,
+    removeOffer,
+    removeOfferFromList,
+  } = useOfferStore();
   const [formData, setFormData] = useState<OfferType>({
-    available_from: new Date('2024-08-11'),
-    criteria1: 'Option 1',
-    criteria2: 'Option 2',
-    criteria3: 'Option 3',
-    no_usage_restriction: false,
-    wind_energy_restriction: true,
-    solar_energy_restriction: true,
-    energy_storage_restriction: false,
-    eco_enhancements_restriction: true,
-    message: 'This is message from user...',
-    files: [] as File[],
+    available_from: offer?.available_from,
+    utilization: offer?.utilization,
+    preferred_regionality: offer?.preferred_regionality,
+    shareholder_model: offer?.shareholder_model,
+    no_usage_restriction: offer?.no_usage_restriction,
+    wind_energy_restriction: offer?.wind_energy_restriction,
+    solar_energy_restriction: offer?.solar_energy_restriction,
+    energy_storage_restriction: offer?.energy_storage_restriction,
+    eco_enhancements_restriction: offer?.eco_enhancements_restriction,
+    important_remarks: offer?.important_remarks,
+    hide_from_search: false,
+    documents: [] as File[],
     is_owner_or_authorized: true,
     accept_privacy_policy: true,
     accept_terms: true,
     other: true,
   });
-
   const [editMode, setEditMode] = useState<Record<string, boolean>>({
     datePicker: false,
-    criteria1: false,
-    criteria2: false,
-    criteria3: false,
+    utilization: false,
+    preferred_regionality: false,
+    shareholder_model: false,
   });
-
   const [errors, setErrors] = useState<Record<string, string>>({});
-
-  const navigate = useNavigate();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -88,10 +103,10 @@ const OfferDetails = () => {
     }
   };
 
-  const handleFilesChange = (files: File[]) => {
+  const handleFilesChange = (documents: File[]) => {
     setFormData((prev) => ({
       ...prev,
-      files,
+      documents,
     }));
   };
 
@@ -101,14 +116,14 @@ const OfferDetails = () => {
     if (!formData.available_from) {
       newErrors.available_from = 'Dieses Feld ist erforderlich.';
     }
-    if (!formData.criteria1) {
-      newErrors.criteria1 = 'Dieses Feld ist erforderlich.';
+    if (!formData.utilization) {
+      newErrors.utilization = 'Dieses Feld ist erforderlich.';
     }
-    if (!formData.criteria2) {
-      newErrors.criteria2 = 'Dieses Feld ist erforderlich.';
+    if (!formData.preferred_regionality) {
+      newErrors.preferred_regionality = 'Dieses Feld ist erforderlich.';
     }
-    if (!formData.criteria3) {
-      newErrors.criteria3 = 'Dieses Feld ist erforderlich.';
+    if (!formData.shareholder_model) {
+      newErrors.shareholder_model = 'Dieses Feld ist erforderlich.';
     }
     if (!formData.is_owner_or_authorized) {
       newErrors.is_owner_or_authorized =
@@ -131,8 +146,64 @@ const OfferDetails = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
     if (validateForm()) {
-      console.log('Form submitted with:', formData);
+      const formDataSend = new FormData();
+      formDataSend.append(
+        'available_from',
+        formData.available_from ? formData.available_from.toISOString() : ''
+      );
+      if (formData.utilization)
+        formDataSend.append(
+          'utilization',
+          optionsMap[formData.utilization] || ''
+        );
+      if (formData.preferred_regionality)
+        formDataSend.append(
+          'preferred_regionality',
+          optionsMap[formData.preferred_regionality] || ''
+        );
+      if (formData.shareholder_model)
+        formDataSend.append(
+          'shareholder_model',
+          optionsMap[formData.shareholder_model] || ''
+        );
+      formDataSend.append(
+        'important_remarks',
+        formData.important_remarks || ''
+      );
+      const criteria = {
+        no_usage_restriction: formData.no_usage_restriction,
+        wind_energy_restriction: formData.wind_energy_restriction,
+        solar_energy_restriction: formData.solar_energy_restriction,
+        energy_storage_restriction: formData.energy_storage_restriction,
+        eco_enhancements_restriction: formData.eco_enhancements_restriction,
+      };
+      formDataSend.append('criteria', JSON.stringify(criteria));
+      if (formData.hide_from_search)
+        formDataSend.append(
+          'hide_from_search',
+          formData.hide_from_search.toString()
+        );
+      if (formData.documents.length > 0) {
+        formData.documents.forEach((file) => {
+          formDataSend.append('documents', file);
+        });
+      }
+      formDataSend.append(
+        'is_owner_or_authorized',
+        formData.is_owner_or_authorized.toString()
+      );
+      formDataSend.append(
+        'accept_privacy_policy',
+        formData.accept_privacy_policy.toString()
+      );
+      formDataSend.append('accept_terms', formData.accept_terms.toString());
+      formDataSend.append('other', formData.other.toString());
+
+      patchOffer(offerId!, formDataSend);
+      updateOffer(offerId!, formData);
+      updateOfferToList(offerId!, formData);
     }
   };
 
@@ -145,6 +216,20 @@ const OfferDetails = () => {
 
   const handleSave = (field: string) => {
     toggleEditMode(field);
+  };
+
+  const handleDeactivateOffer = async () => {
+    try {
+      await deactivateOffer(offerId!);
+      removeOffer(offerId!);
+      removeOfferFromList(offerId!);
+      toast.success('Das Angebot wurde erfolgreich deaktiviert.');
+    } catch (err) {
+      toast.error(
+        'Es ist ein Fehler bei der Deaktivierung des Angebots aufgetreten.'
+      );
+      console.error(err);
+    }
   };
 
   return (
@@ -183,54 +268,58 @@ const OfferDetails = () => {
             </span>
           )}
           <Select
-            name='criteria1'
+            name='utilization'
             label='Sind Sie offen für Verpachtung oder für Verkauf'
             required
-            onEdit={() => toggleEditMode('criteria1')}
-            onSave={() => handleSave('criteria1')}
-            isEditable={editMode.criteria1}
+            onEdit={() => toggleEditMode('utilization')}
+            onSave={() => handleSave('utilization')}
+            isEditable={editMode.utilization}
             onChange={handleSelectChange}
-            options={defaultOptions}
-            value={formData.criteria1}
+            options={utilization}
+            value={formData.utilization}
             divClassName='mt-auto'
             labelClassName='mb-7'
             divWidthClass='w-[420px]'
           />
-          {errors.criteria1 && (
-            <span className='text-red-500 text-sm'>{errors.criteria1}</span>
+          {errors.utilization && (
+            <span className='text-red-500 text-sm'>{errors.utilization}</span>
           )}
           <Select
-            name='criteria2'
+            name='preferred_regionality'
             label='Regionalität des Projektentwicklers'
             required
-            onEdit={() => toggleEditMode('criteria2')}
-            onSave={() => handleSave('criteria2')}
-            isEditable={editMode.criteria2}
+            onEdit={() => toggleEditMode('preferred_regionality')}
+            onSave={() => handleSave('preferred_regionality')}
+            isEditable={editMode.preferred_regionality}
             onChange={handleSelectChange}
-            options={defaultOptions}
-            value={formData.criteria2}
+            options={preferredRegionality}
+            value={formData.preferred_regionality}
             divClassName='mt-auto'
             divWidthClass='w-[420px]'
           />
-          {errors.criteria2 && (
-            <span className='text-red-500 text-sm'>{errors.criteria2}</span>
+          {errors.preferred_regionality && (
+            <span className='text-red-500 text-sm'>
+              {errors.preferred_regionality}
+            </span>
           )}
           <Select
-            name='criteria3'
+            name='shareholder_model'
             label='Sind Sie offen für Verpachtung oder für Verkauf'
             required
-            onEdit={() => toggleEditMode('criteria3')}
-            onSave={() => handleSave('criteria3')}
-            isEditable={editMode.criteria3}
+            onEdit={() => toggleEditMode('shareholder_model')}
+            onSave={() => handleSave('shareholder_model')}
+            isEditable={editMode.shareholder_model}
             onChange={handleSelectChange}
-            options={defaultOptions}
-            value={formData.criteria3}
+            options={shareholderModel}
+            value={formData.shareholder_model}
             divClassName='mt-auto'
             labelClassName='mb-7'
             divWidthClass='w-[420px]'
           />
-          {errors.criteria3 && (
-            <span className='text-red-500 text-sm'>{errors.criteria2}</span>
+          {errors.shareholder_model && (
+            <span className='text-red-500 text-sm'>
+              {errors.preferred_regionality}
+            </span>
           )}
         </div>
 
@@ -287,9 +376,9 @@ const OfferDetails = () => {
             placeholder='Ihre Nachricht an uns'
             onChange={handleChange}
             label=''
-            id='message'
-            name='message'
-            value={formData.message}
+            id='important_remarks'
+            name='important_remarks'
+            value={formData.important_remarks}
           />
 
           <UploadFile onFilesChange={handleFilesChange} />
@@ -333,7 +422,12 @@ const OfferDetails = () => {
           >
             Abbrechen
           </Button>
-          <Button variant='blueSecondary' type='button' className='w-[306px]'>
+          <Button
+            variant='blueSecondary'
+            type='button'
+            className='w-[306px]'
+            onClick={handleDeactivateOffer}
+          >
             Vermarktungsanfrage zurückziehen
           </Button>
           <Button variant='bluePrimary' type='submit' className='w-[306px]'>

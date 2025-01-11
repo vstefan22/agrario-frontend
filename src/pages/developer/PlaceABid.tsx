@@ -9,7 +9,7 @@ import TenderCriteria from '../../components/developer/TenderCriteria';
 import GenericList from '../../components/common/GenericList';
 import ActiveAuctionsItem from '../../components/developer/my-plots/ActiveAuctionsItem';
 import { activeAuctionsData } from '../../../mockData';
-import { defaultOptions, bidOptions } from '../../types/select-options';
+import { defaultOptions, bidOptions } from '../../constants/select-options';
 
 const initialFormData = {
   select1: null as string | null,

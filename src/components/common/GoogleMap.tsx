@@ -1,30 +1,31 @@
 /// <reference types="@types/google.maps" />
 
-import { useEffect, useRef, useState } from "react";
-import { GoogleMapDataType } from "../../types/google-maps-types";
-import { ParcelPolygon } from "../../pages/landowner/NewPlot";
+import { useEffect, useRef, useState } from 'react';
+import { ParcelPolygon } from '../../types/google-maps-types';
 
 const MAP_DISPLAY_OPTIONS: google.maps.PolygonOptions = {
-  fillColor: "#206f6a",
+  fillColor: '#206f6a',
   fillOpacity: 0.65,
-  strokeColor: "#104f50",
+  strokeColor: '#104f50',
   strokeOpacity: 0.9,
   strokeWeight: 4,
 };
 type GoogleMapProps = {
-  // Our array of polygons with metadata
   polygonsData: ParcelPolygon[];
-
-  // If the user clicks an existing parcel polygon
   onParcelClick?: (parcel: ParcelPolygon) => void;
-
   mapSearchTerm?: string;
 };
 
-const GoogleMap = ({ polygonsData = [], onParcelClick, mapSearchTerm }: GoogleMapProps) => {
+const GoogleMap = ({
+  polygonsData = [],
+  onParcelClick,
+  mapSearchTerm,
+}: GoogleMapProps) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
-  const [infoWindow, setInfoWindow] = useState<google.maps.InfoWindow | null>(null);
+  const [infoWindow, setInfoWindow] = useState<google.maps.InfoWindow | null>(
+    null
+  );
 
   useEffect(() => {
     if (!mapRef.current) return;
@@ -32,7 +33,7 @@ const GoogleMap = ({ polygonsData = [], onParcelClick, mapSearchTerm }: GoogleMa
     const createdMap = new google.maps.Map(mapRef.current, {
       center: { lat: 52.52, lng: 13.4 },
       zoom: 13,
-      mapTypeId: "hybrid",
+      mapTypeId: 'hybrid',
       streetViewControl: false,
       mapTypeControl: false,
       panControl: false,
@@ -51,7 +52,7 @@ const GoogleMap = ({ polygonsData = [], onParcelClick, mapSearchTerm }: GoogleMa
 
     const request: google.maps.places.TextSearchRequest = {
       query: mapSearchTerm,
-      region: "de",
+      region: 'de',
     };
 
     service.textSearch(request, (results, status) => {
@@ -123,22 +124,20 @@ const GoogleMap = ({ polygonsData = [], onParcelClick, mapSearchTerm }: GoogleMa
       const { coordinates } = parcel;
 
       const polygon = new google.maps.Polygon({
-        paths: coordinates, // array of { lat, lng }
+        paths: coordinates,
         ...MAP_DISPLAY_OPTIONS,
       });
       polygon.setMap(map);
 
-      // Mouse events for polygon
-      polygon.addListener("mouseover", () => {
+      polygon.addListener('mouseover', () => {
         polygon.setOptions({ strokeWeight: 6 });
       });
-      polygon.addListener("mouseout", () => {
+      polygon.addListener('mouseout', () => {
         polygon.setOptions({ strokeWeight: 4 });
       });
-      polygon.addListener("click", (event: google.maps.MapMouseEvent) => {
+      polygon.addListener('click', (event: google.maps.MapMouseEvent) => {
         if (!infoWindow || !event.latLng) return;
 
-        // Show a simple InfoWindow
         infoWindow.setPosition(event.latLng);
         infoWindow.setContent(`
           <div style="color:black">
@@ -149,12 +148,13 @@ const GoogleMap = ({ polygonsData = [], onParcelClick, mapSearchTerm }: GoogleMa
             Municipality: ${parcel.municipality_name}<br/>
             Cadastral Area: ${parcel.cadastral_area}<br/>
             Cadastral Parcel: ${parcel.cadastral_parcel}<br/>
-            Lat/Lng: ${event.latLng.lat().toFixed(5)}, ${event.latLng.lng().toFixed(5)}
+            Lat/Lng: ${event.latLng.lat().toFixed(5)}, ${event.latLng
+          .lng()
+          .toFixed(5)}
           </div>
         `);
         infoWindow.open(map);
 
-        // ALSO call the callback if provided
         if (onParcelClick) {
           onParcelClick(parcel);
         }
@@ -171,9 +171,9 @@ const GoogleMap = ({ polygonsData = [], onParcelClick, mapSearchTerm }: GoogleMa
     <div
       ref={mapRef}
       style={{
-        width: "100%",
-        height: "600px",
-        borderRadius: "8px",
+        width: '100%',
+        height: '600px',
+        borderRadius: '8px',
       }}
     />
   );

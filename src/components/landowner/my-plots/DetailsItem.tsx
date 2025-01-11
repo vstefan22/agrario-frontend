@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import DynamicTable from '../../common/DynamicTable';
 import ItemImage from '../../common/ItemImage';
-import { PLOT_DETAILS_COLUMNS } from '../../../types/table-data-types';
+import { PLOT_DETAILS_COLUMNS } from '../../../constants/table-data';
 import { PlotDetailsType } from '../../../types/plot-types';
 import active from '../../../assets/images/vermarktung-aktiv.png';
 import inactive from '../../../assets/images/vermarktung-in-vorbereitung.png';

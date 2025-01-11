@@ -8,22 +8,28 @@ import Checkbox from '../../components/common/Checkbox';
 import TextArea from '../../components/common/TextArea';
 import UploadFile from '../../components/common/UploadFile';
 import useOffers from '../../hooks/offer-hook';
-import { defaultOptions } from '../../types/select-options';
+import {
+  utilization,
+  preferredRegionality,
+  shareholderModel,
+  optionsMap,
+} from '../../constants/select-options';
 import { OfferType } from '../../types/offer-types';
 import { offerItemData } from '../../../mockData';
 
 const initialFormData = {
   available_from: null as Date | null,
-  criteria1: null as string | null,
-  criteria2: null as string | null,
-  criteria3: null as string | null,
+  utilization: undefined as string | undefined,
+  preferred_regionality: undefined as string | undefined,
+  shareholder_model: undefined as string | undefined,
   no_usage_restriction: false,
   wind_energy_restriction: false,
   solar_energy_restriction: false,
   energy_storage_restriction: false,
   eco_enhancements_restriction: false,
-  message: '',
-  files: [] as File[],
+  important_remarks: '',
+  hide_from_search: false,
+  documents: [] as File[],
   is_owner_or_authorized: false,
   accept_privacy_policy: false,
   accept_terms: false,
@@ -82,10 +88,10 @@ export default function MyOffer() {
     }
   };
 
-  const handleFilesChange = (files: File[]) => {
+  const handleFilesChange = (documents: File[]) => {
     setFormData((prev) => ({
       ...prev,
-      files,
+      documents,
     }));
   };
 
@@ -95,14 +101,14 @@ export default function MyOffer() {
     if (!formData.available_from) {
       newErrors.available_from = 'Dieses Feld ist erforderlich.';
     }
-    if (!formData.criteria1) {
-      newErrors.criteria1 = 'Dieses Feld ist erforderlich.';
+    if (!formData.utilization) {
+      newErrors.utilization = 'Dieses Feld ist erforderlich.';
     }
-    if (!formData.criteria2) {
-      newErrors.criteria2 = 'Dieses Feld ist erforderlich.';
+    if (!formData.preferred_regionality) {
+      newErrors.preferred_regionality = 'Dieses Feld ist erforderlich.';
     }
-    if (!formData.criteria3) {
-      newErrors.criteria3 = 'Dieses Feld ist erforderlich.';
+    if (!formData.shareholder_model) {
+      newErrors.shareholder_model = 'Dieses Feld ist erforderlich.';
     }
     if (!formData.is_owner_or_authorized) {
       newErrors.is_owner_or_authorized =
@@ -129,23 +135,63 @@ export default function MyOffer() {
     try {
       if (validateForm()) {
         const formDataSend = new FormData();
-        Object.entries(formData).forEach(([key, value]) => {
-          if (typeof value === 'string' || typeof value === 'boolean') {
-            formDataSend.append(key, value.toString());
-          }
-        });
-
-        if (formData.files.length > 0) {
-          formData.files.forEach((file) => {
-            formDataSend.append('files', file);
+        formDataSend.append(
+          'available_from',
+          formData.available_from ? formData.available_from.toISOString() : ''
+        );
+        if (formData.utilization)
+          formDataSend.append(
+            'utilization',
+            optionsMap[formData.utilization] || ''
+          );
+        if (formData.preferred_regionality)
+          formDataSend.append(
+            'preferred_regionality',
+            optionsMap[formData.preferred_regionality] || ''
+          );
+        if (formData.shareholder_model)
+          formDataSend.append(
+            'shareholder_model',
+            optionsMap[formData.shareholder_model] || ''
+          );
+        formDataSend.append(
+          'important_remarks',
+          formData.important_remarks || ''
+        );
+        const criteria = {
+          no_usage_restriction: formData.no_usage_restriction,
+          wind_energy_restriction: formData.wind_energy_restriction,
+          solar_energy_restriction: formData.solar_energy_restriction,
+          energy_storage_restriction: formData.energy_storage_restriction,
+          eco_enhancements_restriction: formData.eco_enhancements_restriction,
+        };
+        formDataSend.append('criteria', JSON.stringify(criteria));
+        if (formData.hide_from_search)
+          formDataSend.append(
+            'hide_from_search',
+            formData.hide_from_search.toString()
+          );
+        if (formData.documents.length > 0) {
+          formData.documents.forEach((file) => {
+            formDataSend.append('documents', file);
           });
         }
-        console.log('Form submitted with:', formData);
+        formDataSend.append(
+          'is_owner_or_authorized',
+          formData.is_owner_or_authorized.toString()
+        );
+        formDataSend.append(
+          'accept_privacy_policy',
+          formData.accept_privacy_policy.toString()
+        );
+        formDataSend.append('accept_terms', formData.accept_terms.toString());
+        formDataSend.append('other', formData.other.toString());
+
         await addOffer(formDataSend);
+        navigate('/landowner/my-plots/thank-you-marketing-request');
       }
-      navigate('/landowner/my-plots/thank-you-marketing-request');
     } catch (err) {
-      console.log('Error: ', err);
+      console.error('Error: ', err);
     }
   };
 
@@ -187,15 +233,17 @@ export default function MyOffer() {
 
             <div className='flex flex-col'>
               <Select
-                name='criteria1'
+                name='utilization'
                 label='Sind Sie offen für Verpachtung oder für Verkauf'
-                options={defaultOptions}
-                value={formData.criteria1}
+                options={utilization}
+                value={formData.utilization}
                 onChange={handleCriteriaChange}
                 required
               />
-              {errors.criteria1 && (
-                <span className='text-red-500 text-sm'>{errors.criteria1}</span>
+              {errors.utilization && (
+                <span className='text-red-500 text-sm'>
+                  {errors.utilization}
+                </span>
               )}
             </div>
           </div>
@@ -203,29 +251,33 @@ export default function MyOffer() {
           <div className='flex gap-8'>
             <div className='flex flex-col'>
               <Select
-                name='criteria2'
+                name='preferred_regionality'
                 label='Regionalität des Projektentwicklers'
-                options={defaultOptions}
-                value={formData.criteria2}
+                options={preferredRegionality}
+                value={formData.preferred_regionality}
                 onChange={handleCriteriaChange}
                 required
               />
-              {errors.criteria2 && (
-                <span className='text-red-500 text-sm'>{errors.criteria2}</span>
+              {errors.preferred_regionality && (
+                <span className='text-red-500 text-sm'>
+                  {errors.preferred_regionality}
+                </span>
               )}
             </div>
 
             <div className='flex flex-col'>
               <Select
-                name='criteria3'
+                name='shareholder_model'
                 label='Welche zusätzlichen Formen der Beteiligung sind Ihnen wichtig'
-                options={defaultOptions}
-                value={formData.criteria3}
+                options={shareholderModel}
+                value={formData.shareholder_model}
                 onChange={handleCriteriaChange}
                 required
               />
-              {errors.criteria3 && (
-                <span className='text-red-500 text-sm'>{errors.criteria3}</span>
+              {errors.shareholder_model && (
+                <span className='text-red-500 text-sm'>
+                  {errors.shareholder_model}
+                </span>
               )}
             </div>
           </div>
@@ -278,9 +330,9 @@ export default function MyOffer() {
           </div>
 
           <TextArea
-            id='message'
-            name='message'
-            value={formData.message}
+            id='important_remarks'
+            name='important_remarks'
+            value={formData.important_remarks}
             onChange={handleChange}
             label=''
             placeholder='Ihre Nachricht an uns'

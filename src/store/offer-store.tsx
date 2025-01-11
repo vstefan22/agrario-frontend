@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { StoreOfferType } from '../types/offer-types';
+import { StoreOfferType, OfferType } from '../types/offer-types';
 
 type OfferState = {
   offer: StoreOfferType | null;
@@ -11,10 +11,10 @@ type OfferState = {
   setOffers: (offers: StoreOfferType[]) => void;
   setOfferId: (offerId: string) => void;
   addOfferToList: (offer: StoreOfferType) => void;
-  updateOfferToList: (offer: StoreOfferType) => void;
-  updateOffer: (offer: StoreOfferType) => void;
-  removeOfferFromList: (offerId: string) => void;
+  updateOfferToList: (id: string, offer: OfferType) => void;
+  updateOffer: (id: string, offer: OfferType) => void;
   removeOffer: (offerId: string) => void;
+  removeOfferFromList: (offerId: string) => void;
 };
 
 const useOfferStore = create<OfferState>()(
@@ -51,10 +51,10 @@ const useOfferStore = create<OfferState>()(
         }));
       },
 
-      updateOfferToList: (updateoffer) => {
+      updateOfferToList: (id, updateoffer) => {
         set((state) => ({
           offers: state.offers.map((offer) =>
-            String(offer.id) === String(updateoffer.id)
+            String(offer.id) === String(id)
               ? { ...offer, ...updateoffer }
               : offer
           ),
@@ -69,10 +69,10 @@ const useOfferStore = create<OfferState>()(
         }));
       },
 
-      updateOffer: (updateoffer) => {
+      updateOffer: (id, updateoffer) => {
         set((state) => ({
           offer:
-            state.offer && String(state.offer.id) === String(updateoffer.id)
+            state.offer && String(state.offer.id) === String(id)
               ? { ...state.offer, ...updateoffer }
               : state.offer,
         }));

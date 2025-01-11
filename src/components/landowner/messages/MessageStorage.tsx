@@ -1,12 +1,13 @@
 import { useState, ChangeEvent } from 'react';
 import Search from '../../common/Search';
 import MessageList from './MessageList';
+import useMessageStore from '../../../store/message-store';
 import archiveIcon from '../../../assets/images/archive-msg.png';
 import infoIcon from '../../../assets/images/info-msg.png';
 import delIcon from '../../../assets/images/del-msg.png';
-import { receivedMessages } from '../../../../mockData';
 
 const MessageStorage = () => {
+  const { inbox } = useMessageStore();
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +45,7 @@ const MessageStorage = () => {
             className='bg-gray-muted-light w-[40px] h-[40px] border-t-[0.4px] border-b-[0.4px] border-gray-medium/70 flex justify-center items-center'
             onClick={handleMsgInfo}
           >
-            <img src={infoIcon} alt='archive icon' />
+            <img src={infoIcon} alt='info icon' />
           </button>
           <button
             className='bg-gray-muted-light w-[40px] h-[40px] border-[0.4px] rounded-r-[3px] border-gray-medium/70 flex justify-center items-center'
@@ -55,15 +56,21 @@ const MessageStorage = () => {
         </div>
       </div>
 
-      {receivedMessages.map((msg, index) => (
-        <MessageList
-          key={index}
-          name={msg.name}
-          message={msg.message}
-          time={msg.time}
-          category={msg.category}
-        />
-      ))}
+      {inbox.length > 0 ? (
+        inbox.map((msg) => (
+          <MessageList
+            key={msg.id}
+            name={msg.name}
+            message={msg.message}
+            time={msg.time}
+            category={msg.category}
+          />
+        ))
+      ) : (
+        <div className='flex text-[18px] font-500 gray-light-200 justify-center'>
+          Derzeit gibt es keine Nachrichten im Posteingang.
+        </div>
+      )}
     </div>
   );
 };

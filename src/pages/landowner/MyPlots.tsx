@@ -3,7 +3,7 @@ import Search from '../../components/common/Search';
 import Select from '../../components/common/Select';
 import GenericList from '../../components/common/GenericList';
 import PlotItem from '../../components/landowner/my-plots/PlotItem';
-import { sortOptions } from '../../types/select-options';
+import { sortOptions } from '../../constants/select-options';
 import {
   filterData,
   sortData,

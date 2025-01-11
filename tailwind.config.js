@@ -22,6 +22,7 @@ export default {
         'gray-light-200': '#b3b3b3',
         'gray-light-300': '#52525B',
         'gray-dark-100': '#565656',
+        'gray-dark-150': '#404040',
         'gray-dark-200': '#363636',
         'gray-dark-300': '#333333',
         'primary-blue': '#2179A1',

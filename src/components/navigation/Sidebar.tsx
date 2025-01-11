@@ -188,6 +188,18 @@ export default function Sidebar() {
               <FaGavel className='mr-3 scale-x-[-1]' />
               Meine Auktionen
             </Button>
+
+            <Button
+              variant={
+                isRouteActive('/developer/questions-help')
+                  ? 'sidebarPrimary'
+                  : 'sidebarSecondary'
+              }
+              onClick={() => handleNavigate('/developer/questions-help')}
+            >
+              <FaQuestionCircle className='mr-3' />
+              Fragen/Hilfe
+            </Button>
           </Fragment>
         )}
       </div>

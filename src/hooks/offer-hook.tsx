@@ -57,8 +57,8 @@ const useOffers = () => {
     [sendRequest, token]
   );
 
-  const updateOffer = useCallback(
-    async (offerId: string, body: OfferType) => {
+  const patchOffer = useCallback(
+    async (offerId: string, body: OfferType | FormData) => {
       return await sendRequest(
         `/offers/area_offers/${offerId}/`,
         'PATCH',
@@ -93,7 +93,7 @@ const useOffers = () => {
     getFilteredOffers,
     addOffer,
     getOfferDetails,
-    updateOffer,
+    patchOffer,
     deactivateOffer,
   };
 };

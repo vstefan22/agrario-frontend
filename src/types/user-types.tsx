@@ -27,7 +27,10 @@ export type UserDeveloperProfile = {
   ecological_upgrading: boolean;
   other: string;
   company_logo: string;
-  current_plan: string;
+  founding_year: number;
+  mw_capacity: number;
+  employees: number;
+  // current_plan: string;
 };
 
 export type StoreUser = UserType &

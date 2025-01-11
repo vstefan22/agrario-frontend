@@ -3,7 +3,7 @@ import Search from '../../components/common/Search';
 import Select from '../../components/common/Select';
 import GenericList from '../../components/common/GenericList';
 import ActiveAuctionsItem from '../../components/developer/my-plots/ActiveAuctionsItem';
-import { sortOptions } from '../../types/select-options';
+import { sortOptions } from '../../constants/select-options';
 import {
   filterActiveAuctionsData,
   sortActiveAuctionsData,
