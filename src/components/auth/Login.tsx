@@ -87,6 +87,12 @@ export default function Login() {
         );
         return;
       }
+
+      if (err.response.data.error === 'Invalid email or password.') {
+        setError('Ungültige E-Mail-Adresse oder Passwort.');
+        return;
+      }
+
       if (err instanceof Error) {
         setError(err.message || 'Ein Fehler ist aufgetreten.');
       } else {
