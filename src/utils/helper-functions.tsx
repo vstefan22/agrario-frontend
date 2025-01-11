@@ -120,3 +120,34 @@ export const sortActiveAuctionsData = (
       return items;
   }
 };
+
+export function geoJsonToLatLngArrays(geometry: {
+  type: 'Polygon' | 'MultiPolygon';
+  coordinates: number[][][] | number[][][][];
+}) {
+  if (!geometry) return [];
+  const { type, coordinates } = geometry;
+
+  if (type === 'Polygon') {
+    const coords = coordinates as number[][][];
+    return coords.map((ring) =>
+      ring.map((coordPair) => ({
+        lat: coordPair[1],
+        lng: coordPair[0],
+      }))
+    );
+  } else if (type === 'MultiPolygon') {
+    const coords = coordinates as number[][][][];
+    const allPolygons = coords.map((polygon) => {
+      return polygon.map((ring) =>
+        ring.map((coordPair) => ({
+          lat: coordPair[1],
+          lng: coordPair[0],
+        }))
+      );
+    });
+    return allPolygons.flat();
+  }
+
+  return [];
+}

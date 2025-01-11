@@ -1,29 +1,21 @@
-import { useState, ChangeEvent, FormEvent } from 'react';
+import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import Search from '../../components/common/Search';
 import Button from '../../components/common/Button';
 import GoogleMap from '../../components/common/GoogleMap';
 import SearchByAttributesUpdated from '../../components/search-with-backup/SearchByAttributesUpdated';
 import DynamicTable from '../../components/common/DynamicTable';
-// import useAuthStore from '../../store/auth-store';
-// import useHttpRequest from '../../hooks/http-request-hook';
-import { GoogleMapDataType } from '../../types/google-maps-types';
-import { PlotSearchData } from '../../types/plot-types';
+import { geoJsonToLatLngArrays } from '../../utils/helper-functions';
 import { PLOT_GOOGLE_MAPS_COLUMNS } from '../../constants/table-data';
-
-// type PlotSearchResult = {
-//   id: string;
-//   state_name: string;
-//   zipcode: string;
-//   municipality_name: string;
-//   district_name: string;
-//   cadastral_area: string;
-//   cadastral_sector: string;
-//   polygonCoords: PolygonData;
-// };
+import {
+  ParcelPolygon,
+  ParcelPolygonArray,
+  PolygonType,
+} from '../../types/google-maps-types';
+import { PlotSearchData } from '../../types/plot-types';
+import usePlots from '../../hooks/plot-hook';
 
 export default function NewPlot() {
-  // const { token } = useAuthStore();
-  // const { sendRequest } = useHttpRequest();
+  const { getPlotGeoData, addPlot } = usePlots();
   const [formData, setFormData] = useState<PlotSearchData>({
     state_name: '',
     zipcode: '',
@@ -32,15 +24,12 @@ export default function NewPlot() {
     cadastral_area: '',
     cadastral_sector: '',
   });
-
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [googleMapData, setGoogleMapData] = useState<GoogleMapDataType>();
-  const [googleMapDataList, setGoogleMapDataList] = useState<
-    GoogleMapDataType[]
-  >([]);
-  // const [searchResults, setSearchResults] = useState<PlotSearchResult[] | null>(
+  const [parcelList, setParcelList] = useState<ParcelPolygon[]>([]);
+  const [mapPolygons, setMapPolygons] = useState<ParcelPolygonArray>([]);
+  // const [selectedParcel, setSelectedParcel] = useState<ParcelPolygon | null>(
   //   null
   // );
 
@@ -52,6 +41,55 @@ export default function NewPlot() {
       ...prev,
       [name]: value,
     }));
+  };
+
+  useEffect(() => {
+    const fetchParcels = async () => {
+      try {
+        const response = await getPlotGeoData();
+        const polygons: ParcelPolygonArray = [];
+        console.log(response);
+        if (response && response.features && Array.isArray(response.features)) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          response.features.forEach((feature: any) => {
+            const geometry = feature.geometry;
+            const rings = geoJsonToLatLngArrays(geometry);
+
+            const {
+              alkis_feature_id,
+              state_name,
+              municipality_name,
+              district_name,
+              cadastral_area,
+              cadastral_parcel,
+            } = feature.properties;
+
+            rings.forEach((ringCoords: PolygonType[]) => {
+              polygons.push({
+                coordinates: ringCoords,
+                parcel_id: alkis_feature_id,
+                state_name,
+                municipality_name,
+                district_name,
+                cadastral_area,
+                cadastral_parcel,
+              });
+            });
+          });
+        }
+
+        setMapPolygons(polygons);
+      } catch (error) {
+        console.error('Error fetching parcels:', error);
+      }
+    };
+
+    fetchParcels();
+  }, [getPlotGeoData]);
+
+  const handleParcelClick = (parcel: ParcelPolygon) => {
+    // setSelectedParcel(parcel);
+    setParcelList((prev) => [...prev, parcel]);
   };
 
   const handleSetPolygonData = async (e: FormEvent) => {
@@ -68,13 +106,15 @@ export default function NewPlot() {
       setSuccess('');
       return;
     }
-
     setError('');
     setSuccess('');
-    // setSearchResults(null);
 
     try {
-      // TODO: make an actual request to get polygon data
+      /**
+       *  TODO:
+       *  make an actual request to get polygon data after search
+       *  create method in plot-hook when endpoint is provided
+       */
       // const data = await sendRequest(
       //   '/use-actual-endpoint/',
       //   'POST',
@@ -84,7 +124,7 @@ export default function NewPlot() {
       //   formData
       // );
       //
-      // setGoogleMapData(data);
+      // setParcelList((prev) => [...prev, data]);
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message || 'Ein Fehler ist aufgetreten.');
@@ -94,19 +134,14 @@ export default function NewPlot() {
     }
   };
 
-  const handleAddPlot = () => {
-    console.log('Final payload:', googleMapDataList);
-
-    // sendRequest(
-    //   '/offers/plots/',
-    //   'POST',
-    //   {
-    //     headers: { Authorization: `Bearer ${token}` },
-    //   },
-    //   googleMapDataList
-    // );
-
-    setSuccess('Flurstück hinzugefügt!');
+  const handleAddPlot = async () => {
+    console.log('Final payload:', parcelList);
+    try {
+      await addPlot(parcelList);
+      setSuccess('Flurstück hinzugefügt!');
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -122,16 +157,10 @@ export default function NewPlot() {
       cadastral_area: '',
       cadastral_sector: '',
     });
-    // setSearchResults(null);
-    setGoogleMapDataList([]);
+    setParcelList([]);
   };
 
-  const handleMapClick = (googleMapData: GoogleMapDataType) => {
-    setGoogleMapData(googleMapData);
-    setGoogleMapDataList((prev) => [...prev, googleMapData]);
-  };
-
-  console.log('googleMapData: ', googleMapData);
+  console.log('mapPolygons: ', mapPolygons);
 
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
@@ -163,8 +192,8 @@ export default function NewPlot() {
           resetFields={resetFields}
         />
 
-        {googleMapDataList.length > 0 &&
-          googleMapDataList.map((data) => (
+        {parcelList.length > 0 &&
+          parcelList.map((data) => (
             <div className='w-full bg-white rounded-[18px] p-1 mt-4'>
               <DynamicTable data={data} columns={PLOT_GOOGLE_MAPS_COLUMNS} />
             </div>
@@ -176,9 +205,9 @@ export default function NewPlot() {
             style={{ boxShadow: '6px 6px 54px 0px #0000000D' }}
           >
             <GoogleMap
-              polygonData={googleMapData?.polygon.coordinates}
-              onMapClick={handleMapClick}
+              polygonsData={mapPolygons}
               mapSearchTerm={searchTerm}
+              onParcelClick={handleParcelClick}
             />
           </div>
         </div>
