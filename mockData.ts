@@ -1,5 +1,4 @@
 import flImage from './src/assets/images/fl-image.png';
-import { QuestionsHelpItem } from './src/types/questions-help-types';
 import fieldsImg from './src/assets/images/fieldsImage.png';
 
 export const plotsListData = [
@@ -44,30 +43,6 @@ export const plotsListData = [
     plot_number_secondary: '456-789-123',
     image: flImage,
     analyzePlus: 'active',
-  },
-];
-
-export const questionsHelpData: QuestionsHelpItem[] = [
-  {
-    title: 'Morbi fringilla metus ac lacus dapibus.',
-    content:
-      'Sed nec pharetra felis, in ultrices neque. Phasellus varius semper tellus, ac imperdiet erat commodo id.',
-  },
-  {
-    title: 'What we like to do & what we don’t like to do',
-    content:
-      'Sed nec pharetra felis, in ultrices neque. Phasellus varius semper tellus, ac imperdiet erat commodo id.',
-  },
-  {
-    title:
-      'Fusce fermentum tempus sapien a sagittis tellus mattis id. Cras et enim ex.',
-    content:
-      'Sed nec pharetra felis, in ultrices neque. Phasellus varius semper tellus, ac imperdiet erat commodo id.',
-  },
-  {
-    title: 'Nunc aliquam tempus iaculis. Ut eu imperdiet velit.',
-    content:
-      'Sed nec pharetra felis, in ultrices neque. Phasellus varius semper tellus, ac imperdiet erat commodo id.',
   },
 ];
 

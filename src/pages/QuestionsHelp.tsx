@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import Accordion from '../components/common/Accordion';
 import questionsHelpImg from '../assets/images/questions-help.png';
-import { questionsHelpData } from '../../mockData';
+import { QUESTION_HELP_DATA } from '../constants/questions-help';
 
 function QuestionsHelp() {
   const [opened, setOpened] = useState<boolean[]>(
-    questionsHelpData.map(() => false)
+    QUESTION_HELP_DATA.map(() => false)
   );
 
   const toggleQuestionsHelp = (index: number) => {
@@ -30,7 +30,7 @@ function QuestionsHelp() {
       </div>
 
       <div className='gap-[24px]'>
-        {questionsHelpData.map((item, index) => (
+        {QUESTION_HELP_DATA.map((item, index) => (
           <Accordion
             key={index}
             item={item}

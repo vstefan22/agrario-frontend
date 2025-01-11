@@ -3,10 +3,10 @@ import Search from '../../components/common/Search';
 import Select from '../../components/common/Select';
 import GenericList from '../../components/common/GenericList';
 import OfferItem from '../../components/landowner/my-plots/OfferItem';
-import { sortOptions } from '../../types/select-options';
-import { filterData, sortData } from '../../utils/helper-functions';
 import useOffers from '../../hooks/offer-hook';
 import useOfferstore from '../../store/offer-store';
+import { sortOptions } from '../../constants/select-options';
+import { filterData, sortData } from '../../utils/helper-functions';
 // TODO: remove mock and use actual data
 import { myOfferData } from '../../../mockData';
 

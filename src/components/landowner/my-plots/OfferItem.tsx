@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import DynamicTable from '../../common/DynamicTable';
 import Button from '../../common/Button';
 import ItemImage from '../../common/ItemImage';
-import { PLOT_DETAILS_COLUMNS } from '../../../types/table-data-types';
+import { PLOT_DETAILS_COLUMNS } from '../../../constants/table-data';
 import { StoreOfferType } from '../../../types/offer-types';
 import active from '../../../assets/images/vermarktung-aktiv.png';
 import inactive from '../../../assets/images/vermarktung-in-vorbereitung.png';

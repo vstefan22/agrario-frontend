@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../common/Button';
 import DynamicTable from '../../common/DynamicTable';
 import ItemImage from '../../common/ItemImage';
-import { PLOT_SEARCH_COLUMNS } from '../../../types/table-data-types';
+import { PLOT_SEARCH_COLUMNS } from '../../../constants/table-data';
 import { PlotSearchType } from '../../../types/plot-types';
 
 type PlotSearchItemProps = {

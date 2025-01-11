@@ -1,9 +1,9 @@
-import { QuestionsHelpItem } from '../../types/questions-help-types';
+import { QuestionsHelpType } from '../../types/questions-help-types';
 import plusIcon from '../../assets/images/plus.png';
 import minusIcon from '../../assets/images/minus.png';
 
 type AccordionProps = {
-  item: QuestionsHelpItem;
+  item: QuestionsHelpType;
   opened: boolean[];
   index: number;
   toggleButton: (index: number) => void;

@@ -2,7 +2,7 @@ import { useState, ChangeEvent } from 'react';
 import Search from '../../components/common/Search';
 import Select from '../../components/common/Select';
 import GenericList from '../../components/common/GenericList';
-import { sortOptions } from '../../types/select-options';
+import { sortOptions } from '../../constants/select-options';
 import {
   sortPlotsSearchData,
   filterPlotsSearchData,

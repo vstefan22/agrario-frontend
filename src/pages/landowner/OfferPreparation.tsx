@@ -13,7 +13,7 @@ import {
   preferredRegionality,
   shareholderModel,
   optionsMap,
-} from '../../types/select-options';
+} from '../../constants/select-options';
 import { OfferType } from '../../types/offer-types';
 import { offerItemData } from '../../../mockData';
 
