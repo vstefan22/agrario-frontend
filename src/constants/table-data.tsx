@@ -6,7 +6,7 @@ export const MY_PLOTS_COLUMNS = [
   { key: "cadastral_area", label: "Flur" },
   { key: "cadastral_parcel", label: "Flurstuck" },
   { key: "land_use", label: "Nutzung laut Liegenschaftskataster" },
-  { key: "plot_number_main", label: "Größe" },
+  { key: "area_square_meters", label: "Größe" },
   { key: "plot_number_secondary", label: "Parcel number" },
 ];
 
@@ -18,7 +18,7 @@ export const PLOT_DETAILS_COLUMNS = [
   { key: "cadastral_area", label: "Flur" },
   { key: "cadastral_parcel", label: "Flurstuck" },
   { key: "land_use", label: "Nutzung laut Liegenschaftskataster" },
-  { key: "plot_number_main", label: "Größe" },
+  { key: "area_square_meters", label: "Größe" },
 ];
 
 export const PLOT_SEARCH_COLUMNS = [

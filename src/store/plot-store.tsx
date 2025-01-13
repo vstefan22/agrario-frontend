@@ -1,6 +1,6 @@
-import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
-import { PlotType } from '../types/plot-types';
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
+import { PlotType } from "../types/plot-types";
 
 type PlotState = {
   plot: PlotType | null;
@@ -47,9 +47,7 @@ const usePlotStore = create<PlotState>()(
       setBasketPlots: (updatePlot) => {
         set((state) => ({
           basketPlots: state.basketPlots.map((plot) =>
-            String(plot.id) === String(updatePlot.id)
-              ? { ...plot, ...updatePlot }
-              : plot
+            String(plot.id) === String(updatePlot.id) ? { ...plot, ...updatePlot } : plot
           ),
         }));
       },
@@ -67,37 +65,27 @@ const usePlotStore = create<PlotState>()(
 
       addPlotToList: (plot) => {
         set((state) => ({
-          plots: [
-            ...new Map(
-              [plot, ...state.plots].map((plot) => [plot.id, plot])
-            ).values(),
-          ],
+          plots: [...new Map([plot, ...state.plots].map((plot) => [plot.id, plot])).values()],
         }));
       },
 
       updatePlotToList: (updatePlot) => {
         set((state) => ({
           plots: state.plots.map((plot) =>
-            String(plot.id) === String(updatePlot.id)
-              ? { ...plot, ...updatePlot }
-              : plot
+            String(plot.id) === String(updatePlot.id) ? { ...plot, ...updatePlot } : plot
           ),
         }));
       },
 
       removePlotFromList: (plotId) => {
         set((state) => ({
-          plots: state.plots.filter(
-            (plot) => String(plot.id) !== String(plotId)
-          ),
+          plots: state.plots.filter((plot) => String(plot.id) !== String(plotId)),
         }));
       },
 
       removePlotAnalyseFromList: (plotId) => {
         set((state) => ({
-          basketPlots: state.basketPlots.filter(
-            (plot) => String(plot.id) !== String(plotId)
-          ),
+          basketPlots: state.basketPlots.filter((plot) => String(plot.id) !== String(plotId)),
         }));
       },
 
@@ -113,7 +101,7 @@ const usePlotStore = create<PlotState>()(
       removePlot: () => set(() => ({ plot: null })),
     }),
     {
-      name: 'plot-storage',
+      name: "plot-storage",
       storage: createJSONStorage(() => localStorage),
     }
   )
