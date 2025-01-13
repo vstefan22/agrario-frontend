@@ -42,7 +42,7 @@ function PlotDetails() {
   };
 
   // TODO: use actual user property for this
-  const isAnalizePlus = false;
+  const AnalizePlusStatus = false;
 
   return (
     <div className='bg-gray-lightest min-h-screen flex flex-col px-7 pt-4'>
@@ -56,7 +56,10 @@ function PlotDetails() {
         </div>
       </div>
       <div className='h-[440px] overflow-y-auto rounded-2xl'>
-        <ShowDetails paid={isAnalizePlus} data={plotAnalyseDetails} />
+        <ShowDetails
+          isAnalizePlus={AnalizePlusStatus}
+          data={plotAnalyseDetails}
+        />
       </div>
 
       <div className='flex justify-end items-center py-5 gap-3'>

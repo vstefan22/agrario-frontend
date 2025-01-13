@@ -10,6 +10,8 @@ type SectionTableProps = {
   data: Record<string, unknown>;
   image: string;
   customClassName?: string;
+  verticalRightClassName?: string;
+  blurKeys?: string[];
 };
 
 const DynamicTableSection = ({
@@ -19,6 +21,7 @@ const DynamicTableSection = ({
   data,
   image,
   customClassName,
+  blurKeys = [],
 }: SectionTableProps) => {
   const [isShow, setIsShow] = useState(false);
 
@@ -56,6 +59,7 @@ const DynamicTableSection = ({
             data={data}
             customClassName='border-l-0 border-r-0 border-b-0'
             isVertical
+            blurKeys={blurKeys}
           />
         </div>
       )}

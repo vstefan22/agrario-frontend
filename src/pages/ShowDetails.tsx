@@ -10,12 +10,12 @@ import { showDetailsData } from '../../ShowDetailsMockData';
 import { myOfferData } from '../../mockData';
 
 type ShowDetailsType = {
-  paid: boolean;
+  isAnalizePlus?: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any;
 };
 
-const ShowDetails = ({ paid, data }: ShowDetailsType) => {
+const ShowDetails = ({ isAnalizePlus = false, data }: ShowDetailsType) => {
   console.log('analyse details data: ', data);
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col'>
@@ -115,7 +115,7 @@ const ShowDetails = ({ paid, data }: ShowDetailsType) => {
       </div>
 
       <div className='flex flex-col justify-center bg-white rounded-[16px] shadow-[6px_6px_54px_0px_#0000000D] p-8 mt-8'>
-        {paid
+        {isAnalizePlus
           ? showDetailsData.map((data, index) => (
               <DynamicTableSection
                 key={index}
@@ -134,11 +134,18 @@ const ShowDetails = ({ paid, data }: ShowDetailsType) => {
                 columns={data.columns}
                 data={data.data}
                 image={data.image}
-                customClassName={
-                  !paid && index !== 0
-                    ? 'filter blur-[7px] pointer-events-none'
+                customClassName={`${
+                  !isAnalizePlus &&
+                  [
+                    'Stromnetz und Infrastruktur',
+                    'Solarpark',
+                    'Windenergie',
+                    'Energiespeicher',
+                    'Biodiversität & ökologische Aufwertungsmaßnahmen',
+                  ].includes(data.title)
+                    ? 'blur-[7px] pointer-events-none'
                     : ''
-                }
+                }`}
               />
             ))}
       </div>
