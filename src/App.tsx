@@ -16,7 +16,8 @@ import MyOffers from './pages/landowner/MyOffers';
 import OfferDetails from './pages/landowner/OfferDetails';
 import OfferPreparation from './pages/landowner/OfferPreparation';
 import FriendInvite from './pages/landowner/FriendInvite';
-import QuestionsHelp from './pages/QuestionsHelp';
+import QuestionsHelpLandowner from './pages/landowner/QuestionsHelpLandowner';
+import QuestionsHelpDeveloper from './pages/developer/QuestionsHelpDeveloper';
 import AnalysePlusCart from './pages/landowner/AnalysePlusCart';
 import ThankYouOrderRequest from './pages/landowner/ThankYouOrderRequest';
 import ThankYouMarketingRequest from './pages/landowner/ThankYouMarketingRequest';
@@ -107,7 +108,10 @@ const App = () => {
                   <Route path='/my-offers' element={<MyOffers />} />
                   <Route path='/my-offers/details' element={<OfferDetails />} />
                   <Route path='/friend-invite' element={<FriendInvite />} />
-                  <Route path='/questions-help' element={<QuestionsHelp />} />
+                  <Route
+                    path='/questions-help'
+                    element={<QuestionsHelpLandowner />}
+                  />
                   <Route path='/support' element={<Support />} />
                   <Route path='*' element={<NotFound />} />
                 </Routes>
@@ -154,7 +158,10 @@ const App = () => {
                     path='my-auctions/details'
                     element={<MyAuctionDetails />}
                   />
-                  <Route path='/questions-help' element={<QuestionsHelp />} />
+                  <Route
+                    path='/questions-help'
+                    element={<QuestionsHelpDeveloper />}
+                  />
                   <Route path='/support' element={<Support />} />
                   <Route path='*' element={<NotFound />} />
                 </Routes>

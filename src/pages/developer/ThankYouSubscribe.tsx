@@ -26,6 +26,9 @@ const ThankYouSubscribe = () => {
         type='button'
         variant='bluePrimary'
         className='w-[342px] ml-auto mt-12'
+        onClick={() => {
+          console.log('ADD NAVIGATE');
+        }}
       >
         Weitere aktive Auktionen ansehen
       </Button>

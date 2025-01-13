@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import useHttpRequest from './http-request-hook';
 import useAuthStore from '../store/auth-store';
-import { GoogleMapDataType } from '../types/google-maps-types';
+import { ParcelPolygon } from '../types/google-maps-types';
 import { ReportType, DiscountType } from '../types/global-types';
 
 const usePlots = () => {
@@ -40,7 +40,7 @@ const usePlots = () => {
   );
 
   const addPlot = useCallback(
-    async (body: GoogleMapDataType) => {
+    async (body: ParcelPolygon[]) => {
       return await sendRequest(
         `/offers/parcels/`,
         'POST',
@@ -54,6 +54,10 @@ const usePlots = () => {
     },
     [sendRequest, token]
   );
+
+  const getPlotGeoData = useCallback(async () => {
+    return await sendRequest(`/offers/parcel_geo_data/`, 'GET', {});
+  }, [sendRequest]);
 
   const addPlotToBasket = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -166,6 +170,7 @@ const usePlots = () => {
     getMyPlots,
     getFilteredPlots,
     addPlot,
+    getPlotGeoData,
     addPlotToBasket,
     getPlotDetails,
     getPlotAnalyseDetails,

@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import Accordion from '../components/common/Accordion';
-import questionsHelpImg from '../assets/images/questions-help.png';
-import { QUESTION_HELP_DATA } from '../constants/questions-help';
+import Accordion from '../../components/common/Accordion';
+import questionsHelpImg from '../../assets/images/questions-help.png';
+import { QUESTION_HELP_LANDOWNER_DATA } from '../../constants/questions-help';
 
-function QuestionsHelp() {
+function QuestionsHelpLandowner() {
   const [opened, setOpened] = useState<boolean[]>(
-    QUESTION_HELP_DATA.map(() => false)
+    QUESTION_HELP_LANDOWNER_DATA.map(() => false)
   );
 
   const toggleQuestionsHelp = (index: number) => {
@@ -30,7 +30,7 @@ function QuestionsHelp() {
       </div>
 
       <div className='gap-[24px]'>
-        {QUESTION_HELP_DATA.map((item, index) => (
+        {QUESTION_HELP_LANDOWNER_DATA.map((item, index) => (
           <Accordion
             key={index}
             item={item}
@@ -44,4 +44,4 @@ function QuestionsHelp() {
   );
 }
 
-export default QuestionsHelp;
+export default QuestionsHelpLandowner;

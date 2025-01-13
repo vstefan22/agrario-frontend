@@ -1,7 +1,7 @@
 /// <reference types="@types/google.maps" />
 
 import { useEffect, useRef, useState } from 'react';
-import { PolygonData, GoogleMapDataType } from '../../types/google-maps-types';
+import { ParcelPolygon } from '../../types/google-maps-types';
 
 const MAP_DISPLAY_OPTIONS: google.maps.PolygonOptions = {
   fillColor: '#206f6a',
@@ -10,16 +10,15 @@ const MAP_DISPLAY_OPTIONS: google.maps.PolygonOptions = {
   strokeOpacity: 0.9,
   strokeWeight: 4,
 };
-
 type GoogleMapProps = {
-  polygonData?: PolygonData;
-  onMapClick?: (googleMapData: GoogleMapDataType) => void;
+  polygonsData: ParcelPolygon[];
+  onParcelClick?: (parcel: ParcelPolygon) => void;
   mapSearchTerm?: string;
 };
 
 const GoogleMap = ({
-  polygonData = [],
-  onMapClick,
+  polygonsData = [],
+  onParcelClick,
   mapSearchTerm,
 }: GoogleMapProps) => {
   const mapRef = useRef<HTMLDivElement>(null);
@@ -67,113 +66,106 @@ const GoogleMap = ({
     });
   }, [map, mapSearchTerm]);
 
-  useEffect(() => {
-    if (!map || !onMapClick) return;
+  // useEffect(() => {
+  //   if (!map) return;
 
-    const listener = map.addListener(
-      'click',
-      (e: google.maps.MapMouseEvent) => {
-        if (e.latLng) {
-          const lat = e.latLng.lat();
-          const lng = e.latLng.lng();
+  //   const listener = map.addListener("click", (e: google.maps.MapMouseEvent) => {
+  //     if (e.latLng) {
+  //       const lat = e.latLng.lat();
+  //       const lng = e.latLng.lng();
 
-          const geocoder = new google.maps.Geocoder();
-          geocoder.geocode({ location: { lat, lng } }, (results, status) => {
-            if (status === 'OK' && results && results.length) {
-              const place = results[0];
-              const addressComponents = place.address_components;
+  //       const geocoder = new google.maps.Geocoder();
+  //       geocoder.geocode({ location: { lat, lng } }, (results, status) => {
+  //         if (status === "OK" && results && results.length) {
+  //           const place = results[0];
+  //           const addressComponents = place.address_components;
 
-              const state = addressComponents.find((comp) =>
-                comp.types.includes('administrative_area_level_1')
-              );
-              const district = addressComponents.find((comp) =>
-                comp.types.includes('administrative_area_level_3')
-              );
-              const municipality = addressComponents.find((comp) =>
-                comp.types.includes('locality')
-              );
-              const address = addressComponents.find((comp) =>
-                comp.types.includes('route')
-              );
-              const addressNumber = addressComponents.find((comp) =>
-                comp.types.includes('street_number')
-              );
-              const zipCode = addressComponents.find((comp) =>
-                comp.types.includes('postal_code')
-              );
+  //           const state = addressComponents.find((comp) =>
+  //             comp.types.includes("administrative_area_level_1")
+  //           );
+  //           const district = addressComponents.find((comp) =>
+  //             comp.types.includes("administrative_area_level_3")
+  //           );
+  //           const municipality = addressComponents.find((comp) => comp.types.includes("locality"));
+  //           const address = addressComponents.find((comp) => comp.types.includes("route"));
+  //           const addressNumber = addressComponents.find((comp) =>
+  //             comp.types.includes("street_number")
+  //           );
+  //           const zipCode = addressComponents.find((comp) => comp.types.includes("postal_code"));
 
-              const googleMapData: GoogleMapDataType = {
-                state_name: state?.long_name || '',
-                district_name: district?.long_name || '',
-                municipality_name: municipality?.long_name || '',
-                cadastral_area: address?.long_name || '',
-                cadastral_sector: addressNumber?.long_name || '',
-                zipcode: zipCode?.long_name || '',
-                polygon: {
-                  type: 'Polygon',
-                  coordinates: [{ lat, lng }],
-                },
-              };
+  //           const googleMapData: GoogleMapDataType = {
+  //             state_name: state?.long_name || "",
+  //             district_name: district?.long_name || "",
+  //             municipality_name: municipality?.long_name || "",
+  //             cadastral_area: address?.long_name || "",
+  //             cadastral_sector: addressNumber?.long_name || "",
+  //             zipcode: zipCode?.long_name || "",
+  //             polygon: {
+  //               type: "Polygon",
+  //               coordinates: [{ lat, lng }],
+  //             },
+  //           };
+  //         } else {
+  //           console.error("Reverse Geocoding failed:", status);
+  //         }
+  //       });
+  //     }
+  //   });
 
-              onMapClick(googleMapData);
-            } else {
-              console.error('Reverse Geocoding failed:', status);
-            }
-          });
-        }
-      }
-    );
-
-    return () => {
-      google.maps.event.removeListener(listener);
-    };
-  }, [map, onMapClick]);
+  //   return () => {
+  //     google.maps.event.removeListener(listener);
+  //   };
+  // }, [map]);
 
   useEffect(() => {
-    if (!map) return;
-    if (polygonData.length === 0) return;
+    if (!map || polygonsData.length === 0) return;
 
-    const polygon = new google.maps.Polygon({
-      paths: polygonData,
-      ...MAP_DISPLAY_OPTIONS,
-    });
+    polygonsData.forEach((parcel) => {
+      const { coordinates } = parcel;
 
-    polygon.setMap(map);
+      const polygon = new google.maps.Polygon({
+        paths: coordinates,
+        ...MAP_DISPLAY_OPTIONS,
+      });
+      polygon.setMap(map);
 
-    polygon.addListener('mouseover', () => {
-      polygon.setOptions({ strokeWeight: 6 });
-    });
+      polygon.addListener('mouseover', () => {
+        polygon.setOptions({ strokeWeight: 6 });
+      });
+      polygon.addListener('mouseout', () => {
+        polygon.setOptions({ strokeWeight: 4 });
+      });
+      polygon.addListener('click', (event: google.maps.MapMouseEvent) => {
+        if (!infoWindow || !event.latLng) return;
 
-    polygon.addListener('mouseout', () => {
-      polygon.setOptions({ strokeWeight: 4 });
-    });
-
-    polygon.addListener('click', (event: google.maps.MapMouseEvent) => {
-      if (infoWindow && event.latLng) {
         infoWindow.setPosition(event.latLng);
-        // this is an example
         infoWindow.setContent(`
           <div style="color:black">
             <strong>Parcel Info:</strong><br/>
-            Lokacija: ${event.latLng.lat().toFixed(5)}, ${event.latLng
+            ID: ${parcel.parcel_id}<br/>
+            State: ${parcel.state_name}<br/>
+            District: ${parcel.district_name}<br/>
+            Municipality: ${parcel.municipality_name}<br/>
+            Cadastral Area: ${parcel.cadastral_area}<br/>
+            Cadastral Parcel: ${parcel.cadastral_parcel}<br/>
+            Lat/Lng: ${event.latLng.lat().toFixed(5)}, ${event.latLng
           .lng()
           .toFixed(5)}
           </div>
         `);
         infoWindow.open(map);
-      }
-    });
 
-    const bounds = new google.maps.LatLngBounds();
-    polygonData.forEach((coord) => {
-      bounds.extend(coord);
-    });
-    map.fitBounds(bounds);
+        if (onParcelClick) {
+          onParcelClick(parcel);
+        }
+      });
 
-    return () => {
-      polygon.setMap(null);
-    };
-  }, [map, polygonData, infoWindow]);
+      // Optional: auto-fit the map so all polygons are in view
+      // const bounds = new google.maps.LatLngBounds();
+      // coordinates.forEach((coord) => bounds.extend(coord));
+      // map.fitBounds(bounds);
+    });
+  }, [map, polygonsData, infoWindow, onParcelClick]);
 
   return (
     <div

@@ -1,6 +1,6 @@
 import { QuestionsHelpType } from '../types/questions-help-types';
 
-export const QUESTION_HELP_DATA: QuestionsHelpType[] = [
+export const QUESTION_HELP_LANDOWNER_DATA: QuestionsHelpType[] = [
   {
     title:
       'Was ist der Unterschied zwischen einem Flurstück und einem Grundstück?',
@@ -56,5 +56,36 @@ export const QUESTION_HELP_DATA: QuestionsHelpType[] = [
       Das ausgewählte Unternehmen wird Ihnen einen Vertragsentwurf vorlegen.
       Wir empfehlen, den Vertrag von einem Fachanwalt juristisch prüfen zu lassen.
       Agrario Energy übernimmt keine juristische Beratung und fungiert ausschließlich als Vermittler.`,
+  },
+];
+
+export const QUESTION_HELP_DEVELOPER_DATA: QuestionsHelpType[] = [
+  {
+    title: `Was ist der Unterschied zwischen einem Flurstück und einem Grundstück?`,
+    content: `Ein Flurstück ist eine genau abgegrenzte Parzelle im Kataster, die durch eine eindeutige Flurstücksnummer identifiziert wird. Ein Grundstück hingegen bezeichnet eine zusammenhängende Landfläche, die im rechtlichen Besitz einer Person oder Institution steht und aus einem oder mehreren Flurstücken bestehen kann.`,
+  },
+  {
+    title: `Warum sehe ich nicht alle Details der Flurstücke?`,
+    content: `Mit der Funktion „Flurstücke suchen“ finden Sie alle Flurstücke, bei denen die Vermarktungsanzeige noch nicht vom Eigentümer aktiviert wurde. Wenn Sie an bestimmten Flurstücken interessiert sind, fügen Sie diese Ihrer Watchlist hinzu.  Sobald das Flurstück als Anzeige aktiviert wird, erscheint das Flurstück in “Aktive Anzeigen” und Sie erhalten Zugriff auf alle Details und Daten des Flurstücks.`,
+  },
+  {
+    title: `Wie erfahre ich, wenn ein Flurstück auf meiner Watchlist als Anzeige aktiviert wurde?`,
+    content: `Wird ein Flurstück, das sich auf Ihrer Watchlist befindet, im Rahmen einer Anzeige gelistet, erhalten Sie eine Benachrichtigung in Ihrem Postfach.`,
+  },
+  {
+    title: `Warum kann ich keine Details der in “Aktiven Anzeigen” angebotenen Flurstücke sehen`,
+    content: `Überprüfen Sie den Status Ihres Abonnements. Ab dem „Paket Premium“ haben Sie die Möglichkeit, Details zu Flurstücken einzusehen, Geodaten herunterzuladen und Interesse an Bieterverfahren anzumelden. Um Ihnen einen Eindruck von der Wertigkeit der Datengrundlage und Vorabanalyse zu vermitteln, können Sie auch als Free-User jederzeit das Mustergrundstück prüfen.`,
+  },
+  {
+    title: `Kann ich während einer der Phase “Vorqualifikation Bieterverfahren” einer aktiven Anzeige mein Angebot anpassen?`,
+    content: `Vor Ablauf der Phase “Vorqualifikation Bieterverfahren”, können Sie Ihr Initialgebot jederzeit anpassen. Nach Ende der Phase “Vorqualifikation Bieterverfahren” ist eine Änderung des Initialgebotes nicht mehr möglich. Wenn Sie zum Bieterverfahren zugelassen werden, können Sie jedoch ihr finales Angebot nochmals anpassen.`,
+  },
+  {
+    title: `Was passiert, nachdem ich mein Interesse einem Bieterverfahren angemeldet habe?`,
+    content: `Nachdem Sie Interesse an einem Bieterverfahren angemeldet haben, prüft Agrario Energy, ob Sie gemäß den Kriterien des Eigentümers für die Bieterrunde zugelassen werden. Im Rahmen der Interessensbekundung können Sie bereits ein Initialgebot abgeben. Bei Zulassung erhalten Sie Zugang zu einem digitalen Datenraum, in dem Sie weitere Informationen einsehen und Ihr finales Angebot abgeben können. Der Eigentümer entscheidet anschließend, welche Unternehmen er für weitere Gespräche kontaktieren möchte. Agrario Energy agiert im Rahmen des Bieterverfahrens dabei ausschließlich als Vermittler zwischen Eigentümern und Unternehmen, die an den Flurstücken interessiert sind.`,
+  },
+  {
+    title: `Nach erfolgreichem Abschluss und Unterzeichnung des Vertrages mit dem Eigentümer. Wie geht es weiter?`,
+    content: `Gemäß den Konditionen des Bieterverfahrens sind Sie im Falle eines Vertragsabschlusses dazu verpflichtet, eine Vermittlungsprovision an Agrario Energy zu zahlen. Zusätzlich besteht eine Informationspflicht gegenüber Agrario Energy, sobald bestimmte Meilensteine im Projektfortschritt erreicht werden. Weitere Details entnehmen Sie bitte den Konditionen des Bieterverfahrens und den im digitalen Datenraum bereitgestellten Unterlagen.`,
   },
 ];

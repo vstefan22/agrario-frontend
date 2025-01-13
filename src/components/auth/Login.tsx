@@ -105,7 +105,7 @@ export default function Login() {
 
   useEffect(() => {
     if (state?.message) {
-      toast.success(state.message);
+      toast.success(state.message, { toastId: 'unique-toast-id' });
 
       navigate(pathname, { replace: true });
     }

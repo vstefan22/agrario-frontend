@@ -14,6 +14,7 @@ import { profileOptions } from '../../constants/select-options';
 import { PACKAGE_FEATURES } from '../../constants/package';
 import { StoreUser } from '../../types/user-types';
 import profilePlaceholder from '../../assets/images/profile-placeholder.png';
+import usePayments from '../../hooks/payment-hook';
 
 type ProfileType = Omit<StoreUser, 'id'>;
 
@@ -21,6 +22,7 @@ export default function Profile() {
   const navigate = useNavigate();
   const { sendRequest } = useHttpRequest();
   const { token, user, updateUser } = useAuthStore();
+  const { createPackagePayment } = usePayments();
 
   const [formData, setFormData] = useState<ProfileType>({
     company_name: '',
@@ -269,6 +271,49 @@ export default function Profile() {
 
   const handleOnPasswordChange = () => {
     navigate('/developer/password-change');
+  };
+
+  const handleMonthlyPremiumPackage = async () => {
+    // TODO: Use actual data here
+    const body = {
+      plan_id: '2',
+      payment_method: 'card',
+      currency: 'usd',
+    };
+
+    try {
+      await createPackagePayment(body);
+      // TODO: Add Stripe Checkout and after purchase navigate to ThankYouSubscribe page
+    } catch (err) {
+      console.error('Error during plan purchase: ', err);
+    }
+  };
+
+  const handleYearlyPremiumPackage = async () => {
+    // TODO: Use actual data here
+    const body = {
+      plan_id: '3',
+      payment_method: 'card',
+      currency: 'usd',
+    };
+
+    try {
+      await createPackagePayment(body);
+      // TODO: Add Stripe Checkout and after purchase navigate to ThankYouSubscribe page
+    } catch (err) {
+      console.error('Error during plan purchase: ', err);
+    }
+  };
+
+  const handlePriceOnRequest = () => {
+    // use actual agrario email here and custom message
+    const email = 'agrarioenergy@gmail.com';
+    const subject = encodeURIComponent('Price on Request');
+    const body = encodeURIComponent(
+      'Hello,\n\nI am interested in the Enterprise Package. Could you please provide more details?\n\nThank you!'
+    );
+
+    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -695,6 +740,7 @@ export default function Profile() {
                     onClick={() => {
                       navigate('/developer/profile/subscribe');
                     }}
+                    activePlan
                   />
                   <PackageCard
                     title='Paket Premium'
@@ -704,18 +750,14 @@ export default function Profile() {
                     features={PACKAGE_FEATURES.premium}
                     buttonText='Paket buchen'
                     isActive
-                    onClick={() => {
-                      navigate('/developer/profile/subscribe');
-                    }}
+                    onClick={handleMonthlyPremiumPackage}
                   />
                   <PackageCard
                     title='Paket Enterprise'
                     price='Preis auf Anfrage'
                     features={PACKAGE_FEATURES.onRequest}
                     buttonText='Sales kontaktierten'
-                    onClick={() => {
-                      navigate('/developer/profile/subscribe');
-                    }}
+                    onClick={handlePriceOnRequest}
                   />
                 </>
               ) : (
@@ -727,9 +769,8 @@ export default function Profile() {
                     description='All the basic features to boost your freelance career'
                     features={PACKAGE_FEATURES.free}
                     buttonText='Status aktiv'
-                    onClick={() => {
-                      navigate('/developer/profile/subscribe');
-                    }}
+                    onClick={() => {}}
+                    activePlan
                   />
                   <PackageCard
                     title='Paket Premium'
@@ -739,18 +780,14 @@ export default function Profile() {
                     features={PACKAGE_FEATURES.premium}
                     buttonText='Paket buchen'
                     isActive
-                    onClick={() => {
-                      navigate('/developer/profile/subscribe');
-                    }}
+                    onClick={handleYearlyPremiumPackage}
                   />
                   <PackageCard
                     title='Paket Enterprise'
                     price='Preis auf Anfrage'
                     features={PACKAGE_FEATURES.onRequest}
                     buttonText='Sales kontaktierten'
-                    onClick={() => {
-                      navigate('/developer/profile/subscribe');
-                    }}
+                    onClick={handlePriceOnRequest}
                   />
                 </>
               )}

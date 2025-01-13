@@ -3,18 +3,16 @@ export type PolygonType = {
   lng: number;
 };
 
-export type PolygonData = PolygonType[];
-
-export type GoogleMapDataType = {
-  id?: string;
+export type ParcelPolygon = {
+  coordinates: PolygonType[];
+  parcel_id: number;
   state_name: string;
-  zipcode: string;
   municipality_name: string;
   district_name: string;
   cadastral_area: string;
-  cadastral_sector: string;
-  polygon: {
-    type: string;
-    coordinates: [{ lat: number; lng: number }];
-  };
+  cadastral_parcel: string;
 };
+
+export type PolygonData = ParcelPolygon[];
+
+export type ParcelPolygonArray = ParcelPolygon[];
