@@ -1,21 +1,24 @@
-import DynamicTable from '../components/common/DynamicTable';
-import ShowDetailsImage from '../components/show-details/ShowDetailsImage';
-import ShowDetailsCard from '../components/show-details/ShowDetailsCard';
-import DynamicTableSection from '../components/show-details/DynamicTableSection';
-import { PLOT_DETAILS_COLUMNS } from '../constants/table-data';
-import germanyImg from '../assets/images/germany-country.png';
-import woodsImg from '../assets/images/woods.png';
-import mountainsImg from '../assets/images/mountains.png';
-import { showDetailsData } from '../../ShowDetailsMockData';
-import { myOfferData } from '../../mockData';
+import DynamicTable from '../../components/common/DynamicTable';
+import ShowDetailsImage from '../../components/show-details/ShowDetailsImage';
+import ShowDetailsCard from '../../components/show-details/ShowDetailsCard';
+import DynamicTableSection from '../../components/show-details/DynamicTableSection';
+import { PLOT_DETAILS_COLUMNS } from '../../constants/table-data';
+import germanyImg from '../../assets/images/germany-country.png';
+import woodsImg from '../../assets/images/woods.png';
+import mountainsImg from '../../assets/images/mountains.png';
+import { showDetailsData } from '../../../ShowDetailsMockData';
+import { myOfferData } from '../../../mockData';
 
-type ShowDetailsType = {
-  paid: boolean;
+type ShowDetailsDeveloperType = {
+  isAuction?: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any;
 };
 
-const ShowDetails = ({ paid, data }: ShowDetailsType) => {
+const ShowDetailsDeveloper = ({
+  isAuction = false,
+  data,
+}: ShowDetailsDeveloperType) => {
   console.log('analyse details data: ', data);
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col'>
@@ -115,7 +118,7 @@ const ShowDetails = ({ paid, data }: ShowDetailsType) => {
       </div>
 
       <div className='flex flex-col justify-center bg-white rounded-[16px] shadow-[6px_6px_54px_0px_#0000000D] p-8 mt-8'>
-        {paid
+        {isAuction
           ? showDetailsData.map((data, index) => (
               <DynamicTableSection
                 key={index}
@@ -134,11 +137,7 @@ const ShowDetails = ({ paid, data }: ShowDetailsType) => {
                 columns={data.columns}
                 data={data.data}
                 image={data.image}
-                customClassName={
-                  !paid && index !== 0
-                    ? 'filter blur-[7px] pointer-events-none'
-                    : ''
-                }
+                blurKeys={['Gemeinde', 'Gemarkung', 'Flur', 'Flurstuck']}
               />
             ))}
       </div>
@@ -146,4 +145,4 @@ const ShowDetails = ({ paid, data }: ShowDetailsType) => {
   );
 };
 
-export default ShowDetails;
+export default ShowDetailsDeveloper;
