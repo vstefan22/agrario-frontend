@@ -1,51 +1,40 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DynamicTable from '../../common/DynamicTable';
 import Button from '../../common/Button';
+import DynamicTable from '../../common/DynamicTable';
 import ItemImage from '../../common/ItemImage';
 import { PLOT_SEARCH_COLUMNS } from '../../../constants/table-data';
 import { RegisteredPlotDetailsType } from '../../../types/plot-types';
-import delIcon from '../../../assets/images/del.png';
 import imagePlaceholder from '../../../assets/images/image-placeholder.png';
-import useRegisteredPlots from '../../../hooks/registered-plot-hook';
 import useRegisteredPlotStore from '../../../store/registered-plot-store';
-import { toast } from 'react-toastify';
+import useRegisteredPlots from '../../../hooks/registered-plot-hook';
 
-type MyWatchlistItemProps = {
+type RegisteredPlotItemProps = {
   data: RegisteredPlotDetailsType;
 };
 
-const MyWatchlistItem: FC<MyWatchlistItemProps> = ({ data }) => {
+const RegisteredPlotItem: FC<RegisteredPlotItemProps> = ({ data }) => {
   const navigate = useNavigate();
-  const { deletePlotFromWatchlist, getRegisteredPlotDetails } =
-    useRegisteredPlots();
-  const {
-    removeMyRegisteredPlot,
-    removeRegisteredPlotFromMyList,
-    setMyRegisteredPlot,
-  } = useRegisteredPlotStore();
+  const { getRegisteredPlotDetails, addPlotToWatchlist } = useRegisteredPlots();
+  const { registeredPlot, addPlotToMyList, updateRegisteredPlot } =
+    useRegisteredPlotStore();
 
-  const handleDeletePlot = async () => {
-    const plotId = data.parcel.id.toString();
+  const AddToWatchList = async () => {
     try {
-      await deletePlotFromWatchlist(plotId);
-      removeMyRegisteredPlot(plotId);
-      removeRegisteredPlotFromMyList(plotId);
-      toast.success(
-        'Das Flurstück wurde erfolgreich aus der Beobachtungsliste entfernt'
-      );
+      await addPlotToWatchlist(registeredPlot!);
+      addPlotToMyList(registeredPlot!);
+      navigate('/developer/my-watchlist');
     } catch (err) {
       console.error(err);
-      toast.error('Das Flurstück wurde nicht erfolgreich gelöscht');
     }
   };
 
   const handleViewDetails = async () => {
     try {
-      const plotDetails = await getRegisteredPlotDetails(
+      const plotRegistered = await getRegisteredPlotDetails(
         data.parcel.id.toString()
       );
-      setMyRegisteredPlot(plotDetails);
+      updateRegisteredPlot(plotRegistered);
       navigate('/developer/registered-plots/parcel-details');
     } catch (err) {
       console.error(err);
@@ -63,20 +52,11 @@ const MyWatchlistItem: FC<MyWatchlistItemProps> = ({ data }) => {
       <div className='flex justify-between py-2 space-x-4'>
         <ItemImage id={data.parcel.id.toString()} image={imagePlaceholder} />
         <div className='flex flex-col'>
-          <div className='flex gap-6'>
-            <DynamicTable
-              data={data}
-              columns={PLOT_SEARCH_COLUMNS}
-              customClassName='px-10'
-            />
-
-            <button onClick={handleDeletePlot}>
-              <div className='border-[1.12px] border-gray-blue-light rounded-[50%] p-[11px] flex'>
-                <img src={delIcon} alt='Delete Icon' className='min-w-[14px]' />
-              </div>
-            </button>
-          </div>
-
+          <DynamicTable
+            data={data}
+            columns={PLOT_SEARCH_COLUMNS}
+            customClassName='px-10'
+          />
           <div className='flex justify-between items-center pt-5 gap-3 mt-auto'>
             <div>
               {(() => {
@@ -115,7 +95,17 @@ const MyWatchlistItem: FC<MyWatchlistItemProps> = ({ data }) => {
                 return null;
               })()}
             </div>
-            <div className='flex gap-6 mr-[60px]'>
+
+            <div className='flex gap-6'>
+              <Button
+                type='button'
+                variant='blueSecondary'
+                className='w-[200px]'
+                onClick={AddToWatchList}
+              >
+                Zu Watchlist hinzufügen
+              </Button>
+
               <Button
                 type='button'
                 variant='bluePrimary'
@@ -132,4 +122,4 @@ const MyWatchlistItem: FC<MyWatchlistItemProps> = ({ data }) => {
   );
 };
 
-export default MyWatchlistItem;
+export default RegisteredPlotItem;

@@ -1,21 +1,31 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 import Search from '../../components/common/Search';
 import Select from '../../components/common/Select';
 import GenericList from '../../components/common/GenericList';
 import ActiveAuctionsItem from '../../components/developer/my-plots/ActiveAuctionsItem';
+import useAuctionOffers from '../../hooks/auctions-offer-hook';
+import useAuctionOfferstore from '../../store/auctions-store';
 import { sortOptions } from '../../constants/select-options';
 import {
   filterActiveAuctionsData,
   sortActiveAuctionsData,
 } from '../../utils/helper-functions';
-import { myAuctionsData } from '../../../mockData';
 
 const MyAuctions = () => {
+  const { getMyAuctionOffers } = useAuctionOffers();
+  const { setMyAuctionOffers, myAuctionOffers } = useAuctionOfferstore();
   const [searchTerm, setSearchTerm] = useState('');
-
   const [filters, setFilters] = useState<Record<string, string | null>>({
     sortOption: null,
   });
+
+  useEffect(() => {
+    const fetchMyWatchlist = async () => {
+      const data = await getMyAuctionOffers();
+      setMyAuctionOffers(data);
+    };
+    fetchMyWatchlist();
+  }, [getMyAuctionOffers, setMyAuctionOffers]);
 
   const handleSelectChange = (name: string, option: string) => {
     setFilters((prevFilters) => ({
@@ -28,7 +38,7 @@ const MyAuctions = () => {
     setSearchTerm(e.target.value);
   };
 
-  const filteredData = filterActiveAuctionsData(myAuctionsData, searchTerm);
+  const filteredData = filterActiveAuctionsData(myAuctionOffers, searchTerm);
   const sortedData = sortActiveAuctionsData(filteredData, filters.sortOption);
 
   return (
@@ -57,12 +67,19 @@ const MyAuctions = () => {
             placeholder='Sortieren nach'
           />
         </div>
-        <GenericList
-          data={sortedData}
-          renderItem={(plot) => (
-            <ActiveAuctionsItem key={plot.id} data={plot} />
-          )}
-        />
+
+        {sortedData.length > 0 ? (
+          <GenericList
+            data={sortedData}
+            renderItem={(plot) => (
+              <ActiveAuctionsItem key={plot.identifier} data={plot} />
+            )}
+          />
+        ) : (
+          <div className='flex text-[18px] font-500 gray-light-200 justify-center'>
+            Derzeit gibt es keine Daten in der Liste.
+          </div>
+        )}
       </div>
     </div>
   );

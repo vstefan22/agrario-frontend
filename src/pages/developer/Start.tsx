@@ -23,7 +23,7 @@ const StartDeveloper = () => {
           buttonText='Neues Flurstuckanlegen'
           imageSrc={cardImg1}
           onClick={() => {
-            navigate('/developer/plots-search');
+            navigate('/developer/registered-plots');
           }}
         />
         <ActionCard

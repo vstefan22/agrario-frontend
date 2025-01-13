@@ -143,11 +143,11 @@ export default function Sidebar() {
 
             <Button
               variant={
-                isRouteActive('/developer/plots-search')
+                isRouteActive('/developer/registered-plots')
                   ? 'sidebarPrimary'
                   : 'sidebarSecondary'
               }
-              onClick={() => handleNavigate('/developer/plots-search')}
+              onClick={() => handleNavigate('/developer/registered-plots')}
             >
               <FaMapLocationDot className='mr-3' />
               Flurstücke suchen

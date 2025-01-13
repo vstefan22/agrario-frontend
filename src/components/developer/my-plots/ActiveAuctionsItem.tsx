@@ -4,12 +4,15 @@ import DynamicTable from '../../common/DynamicTable';
 import Button from '../../common/Button';
 import ItemImage from '../../common/ItemImage';
 import { PLOT_DETAILS_COLUMNS } from '../../../constants/table-data';
-import { ActiveAuctionsType } from '../../../types/plot-types';
-import active from '../../../assets/images/vermarktung-aktiv.png';
-import inactive from '../../../assets/images/vermarktung-in-vorbereitung.png';
+// import active from '../../../assets/images/vermarktung-aktiv.png';
+// import inactive from '../../../assets/images/vermarktung-in-vorbereitung.png';
+import imagePlaceholder from '../../../assets/images/image-placeholder.png';
+import useAuctionOffers from '../../../hooks/auctions-offer-hook';
+import useAuctionOfferstore from '../../../store/auctions-store';
 
 type ActiveAuctionsItemProps = {
-  data: ActiveAuctionsType;
+  // eslint-disable-next-line
+  data: any;
   isDetails?: boolean;
 };
 
@@ -18,9 +21,17 @@ const ActiveAuctionsItem: FC<ActiveAuctionsItemProps> = ({
   isDetails,
 }) => {
   const navigate = useNavigate();
+  const { getAuctionOfferDetails } = useAuctionOffers();
+  const { setAuctionOffer } = useAuctionOfferstore();
 
-  const handleViewDetails = () => {
-    navigate('details');
+  const handleViewDetails = async () => {
+    try {
+      const auctionDetails = await getAuctionOfferDetails(data.identifier);
+      setAuctionOffer(auctionDetails);
+      navigate('/developer/active-auctions/details');
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -32,24 +43,53 @@ const ActiveAuctionsItem: FC<ActiveAuctionsItemProps> = ({
       }}
     >
       <div className='flex justify-between py-2 space-x-4'>
-        <ItemImage id={data.id} image={data.image} />
+        <ItemImage id={data.identifier} image={imagePlaceholder} />
         <div className='flex flex-col'>
           <DynamicTable data={data} columns={PLOT_DETAILS_COLUMNS} />
           <div className='flex justify-between items-center pt-5 gap-3'>
             <div>
-              <h1 className='text-black-muted text-[14px]'>
-                {data.infrastructure}
-              </h1>
-              <p className='text-gray-dark-100 text-[10px] opacity-[70%]'>
-                {data.evaluation}
-              </p>
+              {(() => {
+                const { criteria } = data;
+                const restrictions = [];
+                if (!criteria?.no_usage_restriction) {
+                  if (!criteria?.wind_energy_restriction) {
+                    restrictions.push('Wind');
+                  }
+                  if (!criteria?.solar_energy_restriction) {
+                    restrictions.push('Freiflächensolar');
+                  }
+                  if (!criteria?.energy_storage_restriction) {
+                    restrictions.push('Energie');
+                  }
+                  if (!criteria?.eco_enhancements_restriction) {
+                    restrictions.push('Biodiversität');
+                  }
+                } else {
+                  restrictions.push(
+                    'Wind, Freiflächensolar, Energie, Biodiversität'
+                  );
+                }
+                if (restrictions.length > 0) {
+                  return (
+                    <>
+                      <h1 className='text-black-muted text-[14px]'>
+                        {restrictions.join(', ')}
+                      </h1>
+                      <p className='text-gray-dark-100 text-[10px] opacity-[70%]'>
+                        Potentiell geeignet
+                      </p>
+                    </>
+                  );
+                }
+                return null;
+              })()}
             </div>
             <div className='flex items-center'>
-              <img
+              {/* <img
                 src={data.analyzePlus === 'active' ? active : inactive}
                 alt={`aktiv/inaktiv image`}
                 className='mr-4 h-[22px] object-cover'
-              />
+              /> */}
 
               {isDetails ? (
                 ''
