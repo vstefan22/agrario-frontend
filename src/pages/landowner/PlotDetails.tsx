@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/common/Button';
-import ShowDetails from '../ShowDetails';
+import ShowDetailsLandowner from './ShowDetailsLandowner';
 import usePlotStore from '../../store/plot-store';
 import usePlots from '../../hooks/plot-hook';
 
@@ -56,7 +56,7 @@ function PlotDetails() {
         </div>
       </div>
       <div className='h-[440px] overflow-y-auto rounded-2xl'>
-        <ShowDetails
+        <ShowDetailsLandowner
           isAnalizePlus={AnalizePlusStatus}
           data={plotAnalyseDetails}
         />

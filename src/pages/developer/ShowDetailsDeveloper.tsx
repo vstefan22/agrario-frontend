@@ -1,13 +1,16 @@
 import DynamicTableSection from '../../components/show-details/DynamicTableSection';
 import { showDetailsData } from '../../../ShowDetailsMockData';
 
-type ShowDetailsType = {
+type ShowDetailsDeveloperType = {
   isAuction?: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any;
 };
 
-const ShowDetailsDeveloper = ({ isAuction = false, data }: ShowDetailsType) => {
+const ShowDetailsDeveloper = ({
+  isAuction = false,
+  data,
+}: ShowDetailsDeveloperType) => {
   console.log('analyse details data: ', data);
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col'>

@@ -1,21 +1,24 @@
-import DynamicTable from '../components/common/DynamicTable';
-import ShowDetailsImage from '../components/show-details/ShowDetailsImage';
-import ShowDetailsCard from '../components/show-details/ShowDetailsCard';
-import DynamicTableSection from '../components/show-details/DynamicTableSection';
-import { PLOT_DETAILS_COLUMNS } from '../constants/table-data';
-import germanyImg from '../assets/images/germany-country.png';
-import woodsImg from '../assets/images/woods.png';
-import mountainsImg from '../assets/images/mountains.png';
-import { showDetailsData } from '../../ShowDetailsMockData';
-import { myOfferData } from '../../mockData';
+import DynamicTable from '../../components/common/DynamicTable';
+import ShowDetailsImage from '../../components/show-details/ShowDetailsImage';
+import ShowDetailsCard from '../../components/show-details/ShowDetailsCard';
+import DynamicTableSection from '../../components/show-details/DynamicTableSection';
+import { PLOT_DETAILS_COLUMNS } from '../../constants/table-data';
+import germanyImg from '../../assets/images/germany-country.png';
+import woodsImg from '../../assets/images/woods.png';
+import mountainsImg from '../../assets/images/mountains.png';
+import { showDetailsData } from '../../../ShowDetailsMockData';
+import { myOfferData } from '../../../mockData';
 
-type ShowDetailsType = {
+type ShowDetailsLandownerType = {
   isAnalizePlus?: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any;
 };
 
-const ShowDetails = ({ isAnalizePlus = false, data }: ShowDetailsType) => {
+const ShowDetailsLandowner = ({
+  isAnalizePlus = false,
+  data,
+}: ShowDetailsLandownerType) => {
   console.log('analyse details data: ', data);
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col'>
@@ -153,4 +156,4 @@ const ShowDetails = ({ isAnalizePlus = false, data }: ShowDetailsType) => {
   );
 };
 
-export default ShowDetails;
+export default ShowDetailsLandowner;
