@@ -20,7 +20,7 @@ import QuestionsHelp from './pages/QuestionsHelp';
 import AnalysePlusCart from './pages/landowner/AnalysePlusCart';
 import ThankYouOrderRequest from './pages/landowner/ThankYouOrderRequest';
 import ThankYouMarketingRequest from './pages/landowner/ThankYouMarketingRequest';
-import PlotsSearch from './pages/developer/PlotsSearch';
+import RegisteredPlots from './pages/developer/RegisteredPlots';
 import MyWatchlist from './pages/developer/MyWatchlist';
 import ActiveAuctions from './pages/developer/ActiveAuctions';
 import ThankYouSubscribe from './pages/developer/ThankYouSubscribe';
@@ -127,9 +127,12 @@ const App = () => {
                     element={<ThankYouSubscribe />}
                   />
                   <Route path='' element={<StartDeveloper />} />
-                  <Route path='/plots-search' element={<PlotsSearch />} />
                   <Route
-                    path='/plots-search/parcel-details'
+                    path='/registered-plots'
+                    element={<RegisteredPlots />}
+                  />
+                  <Route
+                    path='/registered-plots/parcel-details'
                     element={<ParcelDetails />}
                   />
                   <Route path='/my-watchlist' element={<MyWatchlist />} />

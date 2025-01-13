@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 import Search from '../../components/common/Search';
 import Select from '../../components/common/Select';
 import GenericList from '../../components/common/GenericList';
@@ -7,14 +7,25 @@ import {
   sortPlotsSearchData,
   filterPlotsSearchData,
 } from '../../utils/helper-functions';
-import { myWatchlistData } from '../../../mockData';
 import MyWatchlistItem from '../../components/developer/my-plots/MyWatchlistItem';
+import useRegisteredPlotStore from '../../store/registered-plot-store';
+import useRegisteredPlots from '../../hooks/registered-plot-hook';
 
 const MyWatchlist = () => {
+  const { getMyWatchlist } = useRegisteredPlots();
+  const { setMyRegisteredPlots, myRegisteredPlots } = useRegisteredPlotStore();
   const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState<Record<string, string | null>>({
     sortOption: null,
   });
+
+  useEffect(() => {
+    const fetchMyWatchlist = async () => {
+      const data = await getMyWatchlist();
+      setMyRegisteredPlots(data);
+    };
+    fetchMyWatchlist();
+  }, [getMyWatchlist, setMyRegisteredPlots]);
 
   const handleSelectChange = (name: string, option: string) => {
     setFilters((prevFilters) => ({
@@ -27,7 +38,7 @@ const MyWatchlist = () => {
     setSearchTerm(e.target.value);
   };
 
-  const filteredData = filterPlotsSearchData(myWatchlistData, searchTerm);
+  const filteredData = filterPlotsSearchData(myRegisteredPlots, searchTerm);
   const sortedData = sortPlotsSearchData(filteredData, filters.sortOption);
 
   return (
@@ -56,10 +67,18 @@ const MyWatchlist = () => {
           placeholder='Sortieren nach'
         />
       </div>
-      <GenericList
-        data={sortedData}
-        renderItem={(plot) => <MyWatchlistItem key={plot.id} data={plot} />}
-      />
+      {sortedData.length > 0 ? (
+        <GenericList
+          data={sortedData}
+          renderItem={(plot) => (
+            <MyWatchlistItem key={plot.parcel.id} data={plot} />
+          )}
+        />
+      ) : (
+        <div className='flex text-[18px] font-500 gray-light-200 justify-center'>
+          Derzeit gibt es keine Daten in der Liste.
+        </div>
+      )}
     </div>
   );
 };

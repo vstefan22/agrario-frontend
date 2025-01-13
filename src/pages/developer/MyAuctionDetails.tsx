@@ -6,15 +6,16 @@ import TextArea from '../../components/common/TextArea';
 import Checkbox from '../../components/common/Checkbox';
 import Button from '../../components/common/Button';
 import TenderCriteria from '../../components/developer/TenderCriteria';
-import GenericList from '../../components/common/GenericList';
 import ActiveAuctionsItem from '../../components/developer/my-plots/ActiveAuctionsItem';
-import { activeAuctionsData } from '../../../mockData';
 import { defaultOptions, bidOptions } from '../../constants/select-options';
 import { placeABidData } from '../../../mockData';
+// import useAuctionOffers from '../../hooks/auctions-offer-hook';
+import useAuctionOfferstore from '../../store/auctions-store';
 
 const userFormData = placeABidData;
 
 const MyAuctionDetails = () => {
+  const { auctionOffer } = useAuctionOfferstore();
   const [formData, setFormData] = useState(userFormData);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const navigate = useNavigate();
@@ -77,26 +78,20 @@ const MyAuctionDetails = () => {
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
       <h1 className='text-[32px] font-bold text-black-muted'>
-        Gebot abgeben AN-561345
-        {/* Replace AN-561345 with original ID */}
+        Gebot abgeben {auctionOffer?.identifier}
       </h1>
       <p className='text-gray-dark-100 w-[50%] mt-2 mb-6'>
         There are many variations of passages of Lorem Ipsum available, but the
         majority have suffered alteration in some form.
       </p>
 
-      <GenericList
-        data={activeAuctionsData.slice(0, 1)}
-        renderItem={(plot) => (
-          <ActiveAuctionsItem key={plot.id} data={plot} isDetails />
-        )}
-      />
+      <ActiveAuctionsItem data={auctionOffer} isDetails />
 
       <div className='flex gap-8 my-8'>
         <div className='w-1/2'>
           <div className='bg-white border-[1px] border-[#D9D9D9] p-6 rounded-2xl'>
             <h1 className='text-[32px] font-bold text-black-muted mb-6'>
-              Gebot abgeben AN-561345
+              Ihr angebot
             </h1>
             <Select
               variant='default'
@@ -122,7 +117,7 @@ const MyAuctionDetails = () => {
               value={formData.input1 || ''}
               onChange={handleInputChange}
             />
-            <Input
+            {/* <Input
               label='Was ist Ihr Kaufpreisangebot'
               placeholder='Text hinzufügen'
               variant='profile'
@@ -130,7 +125,7 @@ const MyAuctionDetails = () => {
               name='input2'
               value={formData.input2 || ''}
               onChange={handleInputChange}
-            />
+            /> */}
 
             <h1 className='text-[24px] font-bold text-black-muted my-6'>
               Im Falle von Pachtangeboten

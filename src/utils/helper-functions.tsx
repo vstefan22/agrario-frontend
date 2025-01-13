@@ -1,6 +1,5 @@
-import { PlotType } from '../types/plot-types';
-import { PlotSearchType } from '../types/plot-types';
-import { ActiveAuctionsType } from '../types/plot-types';
+import { PlotType, RegisteredPlotDetailsType } from '../types/plot-types';
+import { AuctionOfferDetailsType } from '../types/auctions-offer-types';
 
 export const filterData = (
   items: PlotType[],
@@ -47,75 +46,87 @@ export const filterDataRange = (
 };
 
 export const filterPlotsSearchData = (
-  items: PlotSearchType[],
+  items: RegisteredPlotDetailsType[],
   searchValue: string
-): PlotSearchType[] => {
+): RegisteredPlotDetailsType[] => {
   if (!searchValue) return items;
 
   return items.filter((item) =>
-    item.state_name.toLowerCase().includes(searchValue.toLowerCase())
+    item.parcel.state_name.toLowerCase().includes(searchValue.toLowerCase())
   );
 };
 
 export const sortPlotsSearchData = (
-  items: PlotSearchType[],
+  items: RegisteredPlotDetailsType[],
   sortOption: string | null
-): PlotSearchType[] => {
+): RegisteredPlotDetailsType[] => {
   if (!sortOption) return items;
 
   switch (sortOption) {
     case 'Sortieren nach Eignung':
-      return [...items].sort((a, b) => a.land_use.localeCompare(b.land_use));
+      return [...items].sort((a, b) =>
+        a.parcel.land_use.localeCompare(b.parcel.land_use)
+      );
     case 'Sortieren nach Bundesland':
       return [...items].sort((a, b) =>
-        a.state_name.localeCompare(b.state_name)
+        a.parcel.state_name.localeCompare(b.parcel.state_name)
       );
     case 'Sortieren nach Größe':
-      return [...items].sort((a, b) => a.plot_number_main - b.plot_number_main);
+      return [...items].sort(
+        (a, b) => a.parcel.area_square_meters - b.parcel.area_square_meters
+      );
     default:
       return items;
   }
 };
 
 export const filterPlotSearchDataRange = (
-  items: PlotSearchType[],
+  items: RegisteredPlotDetailsType[],
   range: [number, number]
-): PlotSearchType[] => {
+): RegisteredPlotDetailsType[] => {
   const filteredItems = items.filter((item) => {
     return (
-      item.plot_number_main >= range[0] && item.plot_number_main <= range[1]
+      item.parcel.area_square_meters >= range[0] &&
+      item.parcel.area_square_meters <= range[1]
     );
   });
 
-  return filteredItems.sort((a, b) => a.plot_number_main - b.plot_number_main);
+  return filteredItems.sort(
+    (a, b) => a.parcel.area_square_meters - b.parcel.area_square_meters
+  );
 };
 
 export const filterActiveAuctionsData = (
-  items: ActiveAuctionsType[],
+  items: AuctionOfferDetailsType[],
   searchValue: string
-): ActiveAuctionsType[] => {
+): AuctionOfferDetailsType[] => {
   if (!searchValue) return items;
 
   return items.filter((item) =>
-    item.state_name.toLowerCase().includes(searchValue.toLowerCase())
+    item.parcels[0].state_name.toLowerCase().includes(searchValue.toLowerCase())
   );
 };
 
 export const sortActiveAuctionsData = (
-  items: ActiveAuctionsType[],
+  items: AuctionOfferDetailsType[],
   sortOption: string | null
-): ActiveAuctionsType[] => {
+): AuctionOfferDetailsType[] => {
   if (!sortOption) return items;
 
   switch (sortOption) {
     case 'Sortieren nach Eignung':
-      return [...items].sort((a, b) => a.land_use.localeCompare(b.land_use));
+      return [...items].sort((a, b) =>
+        a.parcels[0].land_use.localeCompare(b.parcels[0].land_use)
+      );
     case 'Sortieren nach Bundesland':
       return [...items].sort((a, b) =>
-        a.state_name.localeCompare(b.state_name)
+        a.parcels[0].state_name.localeCompare(b.parcels[0].state_name)
       );
     case 'Sortieren nach Größe':
-      return [...items].sort((a, b) => a.plot_number_main - b.plot_number_main);
+      return [...items].sort(
+        (a, b) =>
+          a.parcels[0].area_square_meters - b.parcels[0].area_square_meters
+      );
     default:
       return items;
   }

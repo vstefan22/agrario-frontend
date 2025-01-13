@@ -50,7 +50,7 @@ const useMessageStore = create<MessageState>()(
       },
     }),
     {
-      name: 'offer-storage',
+      name: 'message-storage',
       storage: createJSONStorage(() => localStorage),
     }
   )
