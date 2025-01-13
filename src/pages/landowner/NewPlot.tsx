@@ -139,10 +139,6 @@ export default function NewPlot() {
       ...parcel,
       polygon_coords: parcel.polygon, // rename
     };
-    // Remove the old `polygon` key
-    delete payload.polygon;
-
-    console.log("Final payload for POST:", payload);
 
     try {
       // Now call `addPlot(payload)` instead of `addPlot(parcelList[0])`
