@@ -1,11 +1,11 @@
-import { useState, ChangeEvent, useCallback } from 'react';
+import { useState, ChangeEvent, useCallback, useEffect } from 'react';
 import Search from '../../components/common/Search';
 import Select from '../../components/common/Select';
 import RangeSlider from '../../components/common/RangeSlider';
 import Button from '../../components/common/Button';
 import Checkbox from '../../components/common/Checkbox';
 import GenericList from '../../components/common/GenericList';
-import PlotSearchItem from '../../components/developer/my-plots/PlotSearchItem';
+import RegisteredPlotItem from '../../components/developer/my-plots/RegisteredPlotItem';
 import {
   filterPlotsSearchData,
   sortPlotsSearchData,
@@ -13,15 +13,26 @@ import {
 import { filterPlotSearchDataRange } from '../../utils/helper-functions';
 import { sortOptions } from '../../constants/select-options';
 import filtersImg from '../../assets/images/filters.png';
-import { plotSearchData } from '../../../mockData';
+import useRegisteredPlots from '../../hooks/registered-plot-hook';
+import useRegisteredPlotStore from '../../store/registered-plot-store';
 
-const PlotsSearch = () => {
+const RegisteredPlots = () => {
+  const { getAllRegisteredPlots } = useRegisteredPlots();
+  const { setRegisteredPlots, registeredPlots } = useRegisteredPlotStore();
   const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState<Record<string, string | null>>({
     sortOption: null,
   });
   const [range, setRange] = useState<[number, number]>([20, 20000]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchRegisteredPlots = async () => {
+      const data = await getAllRegisteredPlots();
+      setRegisteredPlots(data);
+    };
+    fetchRegisteredPlots();
+  }, [getAllRegisteredPlots, setRegisteredPlots]);
 
   const toggleFilterOptions = () => {
     setIsOpen((prev) => !prev);
@@ -42,7 +53,7 @@ const PlotsSearch = () => {
     setRange(newRange);
   }, []);
 
-  const searchFilteredData = filterPlotsSearchData(plotSearchData, searchTerm);
+  const searchFilteredData = filterPlotsSearchData(registeredPlots, searchTerm);
   const rangeFilteredData = filterPlotSearchDataRange(
     searchFilteredData,
     range
@@ -178,12 +189,20 @@ const PlotsSearch = () => {
           placeholder='Sortieren nach'
         />
       </div>
-      <GenericList
-        data={sortedData}
-        renderItem={(plot) => <PlotSearchItem key={plot.id} data={plot} />}
-      />
+      {sortedData.length > 0 ? (
+        <GenericList
+          data={sortedData}
+          renderItem={(plot) => (
+            <RegisteredPlotItem key={plot.parcel.id} data={plot} />
+          )}
+        />
+      ) : (
+        <div className='flex text-[18px] font-500 gray-light-200 justify-center'>
+          Derzeit gibt es keine Daten in der Liste.
+        </div>
+      )}
     </div>
   );
 };
 
-export default PlotsSearch;
+export default RegisteredPlots;
