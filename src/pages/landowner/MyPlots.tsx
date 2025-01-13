@@ -17,7 +17,7 @@ export default function MyPlots() {
   const [filters, setFilters] = useState<Record<string, string | null>>({
     sortOption: null,
   });
-  const [range, setRange] = useState<[number, number]>([20, 20000]);
+  const [range, setRange] = useState<[number, number]>([20, 2000000]);
 
   useEffect(() => {
     const fetchMyPlots = async () => {
@@ -48,7 +48,9 @@ export default function MyPlots() {
   }, []);
 
   const searchFilteredData = filterData(plots, searchTerm);
+  console.log(searchFilteredData);
   const rangeFilteredData = filterDataRange(searchFilteredData, range);
+  console.log(rangeFilteredData);
   const sortedData = sortData(rangeFilteredData, filters.sortOption);
   // TODO: mock data is currently used for testing purposes
   // remove this console log and use sortedData instead of mock data
@@ -73,12 +75,15 @@ export default function MyPlots() {
             details="Größe der Fläche"
             onFilter={handleRangeFilter}
             unit="ha"
-            initialValues={[range[0] / 100, range[1] / 100]}
+            initialValues={[range[0] / 10000, range[1] / 10000]}
           />
         </div>
 
         {plotsListData.length > 0 ? (
-          <GenericList data={plots} renderItem={(plot) => <PlotItem key={plot.id} data={plot} />} />
+          <GenericList
+            data={sortedData}
+            renderItem={(plot) => <PlotItem key={plot.id} data={plot} />}
+          />
         ) : (
           <div className="flex text-[18px] font-500 gray-light-200 justify-center">
             Derzeit gibt es keine Daten in der Liste.

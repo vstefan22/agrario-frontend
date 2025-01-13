@@ -9,6 +9,7 @@ import { PLOT_GOOGLE_MAPS_COLUMNS } from "../../constants/table-data";
 import { ParcelPolygon, ParcelPolygonArray, PolygonType } from "../../types/google-maps-types";
 import { PlotSearchData } from "../../types/plot-types";
 import usePlots from "../../hooks/plot-hook";
+import SearchByAttributes from "../../components/search-with-backup/SearchByAttributes";
 
 export default function NewPlot() {
   const { getPlotGeoData, addPlot } = usePlots();
@@ -185,7 +186,7 @@ export default function NewPlot() {
       </div>
 
       <div className="flex-1 flex flex-col">
-        <SearchByAttributesUpdated
+        <SearchByAttributes
           formData={formData}
           handleChange={handleChange}
           handleSubmit={handleSetPolygonData}

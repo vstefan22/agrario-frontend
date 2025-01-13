@@ -7,7 +7,7 @@ export type PlotType = {
   cadastral_area: string;
   cadastral_parcel: string;
   land_use: string;
-  plot_number_main: number;
+  area_square_meters: number;
   plot_number_secondary: string;
   image: string;
   analyzePlus: string;
@@ -22,7 +22,7 @@ export type PlotDetailsType = {
   cadastral_area: string;
   cadastral_parcel: string;
   land_use: string;
-  plot_number_main: number;
+  area_square_meters: number;
   image: string;
   analyzePlus: string;
   infrastructure: string;
@@ -38,7 +38,7 @@ export type PlotOfferType = {
   cadastral_area: string;
   cadastral_parcel: string;
   land_use: string;
-  plot_number_main: number;
+  area_square_meters: number;
   image: string;
 };
 
@@ -47,7 +47,7 @@ export type PlotSearchType = {
   state_name: string;
   district_name: string;
   land_use: string;
-  plot_number_main: number;
+  area_square_meters: number;
   image: string;
   infrastructure: string;
   evaluation: string;
@@ -62,7 +62,7 @@ export type PlotAnalysePlusType = {
   cadastral_area: string;
   cadastral_parcel: string;
   land_use: string;
-  plot_number_main: number;
+  area_square_meters: number;
 };
 
 export type ActiveAuctionsType = {
@@ -74,7 +74,7 @@ export type ActiveAuctionsType = {
   cadastral_area: string;
   cadastral_parcel: string;
   land_use: string;
-  plot_number_main: number;
+  area_square_meters: number;
   image: string;
   analyzePlus: string;
   infrastructure: string;

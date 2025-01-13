@@ -134,7 +134,7 @@ export default function MyOffer() {
         const formDataSend = new FormData();
         formDataSend.append(
           "available_from",
-          formData.available_from ? formData.available_from.toISOString() : ""
+          formData.available_from ? formData.available_from.toISOString().split("T")[0] : ""
         );
         if (formData.utilization)
           formDataSend.append("utilization", optionsMap[formData.utilization] || "");
