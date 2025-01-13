@@ -13,6 +13,8 @@ const Messages = () => {
   const { getMyChats } = useMessages();
   const { setInbox } = useMessageStore();
 
+  const userRole = user?.role;
+
   useEffect(() => {
     const fetchMyChats = async () => {
       const inbox = await getMyChats(user!.id);
@@ -23,7 +25,7 @@ const Messages = () => {
   }, [user, getMyChats, setInbox]);
 
   const handleCreateMessage = () => {
-    navigate('/landowner/support');
+    navigate(`/${userRole}/support`);
   };
 
   return (

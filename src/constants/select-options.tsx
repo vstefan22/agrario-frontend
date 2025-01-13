@@ -35,8 +35,14 @@ export const optionsMap: Record<string, string> = {
   Beides: 'BO',
 };
 
-export const supportOptions = [
+export const landownerSupportOptions = [
   'Flurstücksanalyse PLUS',
   'Angebot erstellen',
+  'Sonstiges',
+];
+
+export const developerSupportOptions = [
+  'Mein Subscription Plan',
+  'Fragen zu einer Auktion',
   'Sonstiges',
 ];
