@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import ShowDetailsDeveloper from './ShowDetailsDeveloper';
 import Button from '../../components/common/Button';
-import usePlotStore from '../../store/plot-store';
+import useAuctionOfferstore from '../../store/auctions-store';
 
 const AuctionDetails = () => {
-  const { plot } = usePlotStore();
+  const { auctionOffer } = useAuctionOfferstore();
   const navigate = useNavigate();
 
   const handleDownloadGeodata = () => {
@@ -22,12 +22,14 @@ const AuctionDetails = () => {
           Detailansicht Flurstück Analyse Basic
         </h1>
         <div className='flex items-center gap-4 mb-4'>
-          <p className='text-black-muted font-semibold'>{plot?.id}</p>
+          <p className='text-black-muted font-semibold'>
+            {auctionOffer?.parcels[0].id}
+          </p>
           <p className='text-gray-dark-100/70 text-[12px]'>ID-Nummer</p>
         </div>
       </div>
       <div className='h-[440px] overflow-y-auto rounded-2xl'>
-        <ShowDetailsDeveloper data={[]} isAuction />
+        <ShowDetailsDeveloper data={auctionOffer?.parcels} isAuction />
       </div>
       <div className='ml-auto mt-8 flex gap-6'>
         <Button

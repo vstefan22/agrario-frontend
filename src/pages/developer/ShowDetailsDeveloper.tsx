@@ -2,12 +2,11 @@ import DynamicTable from '../../components/common/DynamicTable';
 import ShowDetailsImage from '../../components/show-details/ShowDetailsImage';
 import ShowDetailsCard from '../../components/show-details/ShowDetailsCard';
 import DynamicTableSection from '../../components/show-details/DynamicTableSection';
-import { PLOT_DETAILS_COLUMNS } from '../../constants/table-data';
+import { PLOT_DETAILS_V8_COLUMNS } from '../../constants/table-data';
 import germanyImg from '../../assets/images/germany-country.png';
 import woodsImg from '../../assets/images/woods.png';
 import mountainsImg from '../../assets/images/mountains.png';
 import { showDetailsData } from '../../../ShowDetailsMockData';
-import { myOfferData } from '../../../mockData';
 
 type ShowDetailsDeveloperType = {
   isAuction?: boolean;
@@ -19,7 +18,6 @@ const ShowDetailsDeveloper = ({
   isAuction = false,
   data,
 }: ShowDetailsDeveloperType) => {
-  console.log('analyse details data: ', data);
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col'>
       <div className='flex flex-col justify-center bg-white rounded-[16px] shadow-[6px_6px_54px_0px_#0000000D] p-8'>
@@ -44,7 +42,7 @@ const ShowDetailsDeveloper = ({
           sometimes on purpose (injected humour and the like).
         </p>
         <div className='flex justify-center my-12'>
-          <DynamicTable data={myOfferData[0]} columns={PLOT_DETAILS_COLUMNS} />
+          <DynamicTable data={data[0]} columns={PLOT_DETAILS_V8_COLUMNS} />
         </div>
 
         <div className='flex flex-col'>

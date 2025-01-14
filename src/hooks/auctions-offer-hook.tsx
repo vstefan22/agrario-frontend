@@ -65,8 +65,8 @@ const useAuctionOffers = () => {
     [sendRequest, token]
   );
 
-  const changeAuctionOffer = useCallback(
-    async (offerId: string) => {
+  const patchAuctionOffer = useCallback(
+    async (offerId: string, body: AuctionOfferDetailsType | FormData) => {
       return await sendRequest(
         `/offers/area_offers/submitted-offers/${offerId}/`,
         'PATCH',
@@ -74,7 +74,8 @@ const useAuctionOffers = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
+        body
       );
     },
     [sendRequest, token]
@@ -86,7 +87,7 @@ const useAuctionOffers = () => {
     addAuctionOffer,
     getMyAuctionOffers,
     getActiveAuctionOfferDetails,
-    changeAuctionOffer,
+    patchAuctionOffer,
   };
 };
 

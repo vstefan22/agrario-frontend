@@ -72,7 +72,11 @@ const MyAuctions = () => {
           <GenericList
             data={sortedData}
             renderItem={(plot) => (
-              <ActiveAuctionsItem key={plot.identifier} data={plot} />
+              <ActiveAuctionsItem
+                key={plot.identifier}
+                data={plot}
+                detailsType='myAuction'
+              />
             )}
           />
         ) : (

@@ -162,3 +162,90 @@ export function geoJsonToLatLngArrays(geometry: {
 
   return [];
 }
+
+// eslint-disable-next-line
+export const validateAuctionDetailForm = (formData: any) => {
+  const newErrors: Record<string, string> = {};
+
+  if (!formData.utilization) {
+    newErrors.utilitization = 'Dieses Feld ist erforderlich.';
+  }
+  if (!formData.staggered_lease) {
+    newErrors.staggered_lease = 'Dieses Feld ist erforderlich.';
+  }
+  if (!formData.share_of_income) {
+    newErrors.share_of_income = 'Dieses Feld ist erforderlich.';
+  }
+  if (!formData.shares_project_company) {
+    newErrors.shares_project_company = 'Dieses Feld ist erforderlich.';
+  }
+  if (!formData.sale_amount) {
+    newErrors.sale_amount = 'Dieses Feld ist erforderlich.';
+  }
+  if (!formData.contracted_term_month) {
+    newErrors.contracted_term_month = 'Dieses Feld ist erforderlich.';
+  }
+  if (!formData.lease_amount_yearly_lease_year_one) {
+    newErrors.lease_amount_yearly_lease_year_one =
+      'Dieses Feld ist erforderlich.';
+  }
+  if (!formData.message_to_landowner) {
+    newErrors.message_to_landowner = 'Dieses Feld ist erforderlich.';
+  }
+  if (!formData.message_to_platform) {
+    newErrors.message_to_platform = 'Dieses Feld ist erforderlich.';
+  }
+
+  if (!formData.accept_privacy_policy) {
+    newErrors.accept_privacy_policy =
+      'Bitte akzeptieren Sie die Datenschutzbedingungen.';
+  }
+  if (!formData.accept_terms) {
+    newErrors.accept_terms = 'Bitte akzeptieren Sie die AGBs.';
+  }
+  if (!formData.other) {
+    newErrors.other = 'Bitte bestätigen Sie dieses Feld.';
+  }
+
+  return {
+    isFormValidate: Object.keys(newErrors).length === 0,
+    errors: newErrors,
+  };
+};
+
+// eslint-disable-next-line
+export const validateOfferDetailForm = (formData: any) => {
+  const newErrors: Record<string, string> = {};
+
+  if (!formData.available_from) {
+    newErrors.available_from = 'Dieses Feld ist erforderlich.';
+  }
+  if (!formData.utilization) {
+    newErrors.utilization = 'Dieses Feld ist erforderlich.';
+  }
+  if (!formData.preferred_regionality) {
+    newErrors.preferred_regionality = 'Dieses Feld ist erforderlich.';
+  }
+  if (!formData.shareholder_model) {
+    newErrors.shareholder_model = 'Dieses Feld ist erforderlich.';
+  }
+  if (!formData.is_owner_or_authorized) {
+    newErrors.is_owner_or_authorized =
+      'Bitte bestätigen Sie, dass Sie berechtigt sind.';
+  }
+  if (!formData.accept_privacy_policy) {
+    newErrors.accept_privacy_policy =
+      'Bitte akzeptieren Sie die Datenschutzbedingungen.';
+  }
+  if (!formData.accept_terms) {
+    newErrors.accept_terms = 'Bitte akzeptieren Sie die AGBs.';
+  }
+  if (!formData.other) {
+    newErrors.other = 'Bitte bestätigen Sie dieses Feld.';
+  }
+
+  return {
+    isFormValidate: Object.keys(newErrors).length === 0,
+    errors: newErrors,
+  };
+};

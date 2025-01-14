@@ -11,15 +11,14 @@ import { landOptions, bidOptions } from '../../constants/select-options';
 import useAuctionOffers from '../../hooks/auctions-offer-hook';
 import useAuctionOfferstore from '../../store/auctions-store';
 import { auctionOptionsMap } from '../../constants/select-options';
+import { validateAuctionDetailForm } from '../../utils/helper-functions';
 
 const initialFormData = {
   utilitization: '',
   staggered_lease: '',
-  // select3: null as string | null,
   share_of_income: '',
   shares_project_company: '',
   sale_amount: null,
-  // input2: null as string | null,
   contracted_term_month: null,
   lease_amount_yearly_lease_year_one: null,
   message_to_landowner: '',
@@ -34,7 +33,7 @@ const PlaceABid = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const navigate = useNavigate();
   const { addAuctionOffer } = useAuctionOffers();
-  const { auctionOffer } = useAuctionOfferstore();
+  const { auctionOffer, updateAuctionOffer } = useAuctionOfferstore();
 
   const handleSelectChange = (name: string, option: string) => {
     setFormData((prev) => ({
@@ -83,57 +82,13 @@ const PlaceABid = () => {
     }
   };
 
-  const validateForm = (): boolean => {
-    const newErrors: Record<string, string> = {};
-    if (!formData.utilitization) {
-      newErrors.utilitization = 'Dieses Feld ist erforderlich.';
-    }
-    if (!formData.staggered_lease) {
-      newErrors.staggered_lease = 'Dieses Feld ist erforderlich.';
-    }
-    if (!formData.share_of_income) {
-      newErrors.share_of_income = 'Dieses Feld ist erforderlich.';
-    }
-    if (!formData.shares_project_company) {
-      newErrors.shares_project_company = 'Dieses Feld ist erforderlich.';
-    }
-    if (!formData.sale_amount) {
-      newErrors.sale_amount = 'Dieses Feld ist erforderlich.';
-    }
-    if (!formData.contracted_term_month) {
-      newErrors.contracted_term_month = 'Dieses Feld ist erforderlich.';
-    }
-    if (!formData.lease_amount_yearly_lease_year_one) {
-      newErrors.lease_amount_yearly_lease_year_one =
-        'Dieses Feld ist erforderlich.';
-    }
-    if (!formData.message_to_landowner) {
-      newErrors.message_to_landowner = 'Dieses Feld ist erforderlich.';
-    }
-    if (!formData.message_to_platform) {
-      newErrors.message_to_platform = 'Dieses Feld ist erforderlich.';
-    }
-
-    if (!formData.accept_privacy_policy) {
-      newErrors.accept_privacy_policy =
-        'Bitte akzeptieren Sie die Datenschutzbedingungen.';
-    }
-    if (!formData.accept_terms) {
-      newErrors.accept_terms = 'Bitte akzeptieren Sie die AGBs.';
-    }
-    if (!formData.other) {
-      newErrors.other = 'Bitte bestätigen Sie dieses Feld.';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      if (validateForm()) {
+      const { errors, isFormValidate } = validateAuctionDetailForm(formData);
+
+      if (isFormValidate) {
         const formDataSend = new FormData();
         if (formData.utilitization) {
           formDataSend.append(
@@ -184,8 +139,15 @@ const PlaceABid = () => {
         formDataSend.append('accept_terms', formData.accept_terms.toString());
         formDataSend.append('other', formData.other.toString());
 
-        await addAuctionOffer(auctionOffer?.identifier!, formDataSend);
+        const offerUpdated = await addAuctionOffer(
+          auctionOffer!.identifier,
+          formDataSend
+        );
+        updateAuctionOffer(auctionOffer!.identifier, offerUpdated);
+
         navigate('/developer/my-auctions/');
+      } else {
+        setErrors(errors);
       }
     } catch (err) {
       console.error('Error: ', err);
@@ -377,6 +339,7 @@ const PlaceABid = () => {
             <h1 className='text-[24px] font-bold text-black-muted my-6'>
               Sonstige Informationen für Agrario Energy bzgl. ihres Angebotes
             </h1>
+
             <TextArea
               placeholder='500 Zeichen'
               onChange={handleChange}

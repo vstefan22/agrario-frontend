@@ -14,11 +14,13 @@ type ActiveAuctionsItemProps = {
   // eslint-disable-next-line
   data: any;
   isDetails?: boolean;
+  detailsType?: 'auction' | 'myAuction';
 };
 
 const ActiveAuctionsItem: FC<ActiveAuctionsItemProps> = ({
   data,
   isDetails,
+  detailsType,
 }) => {
   const navigate = useNavigate();
   const { getAuctionOfferDetails } = useAuctionOffers();
@@ -28,7 +30,10 @@ const ActiveAuctionsItem: FC<ActiveAuctionsItemProps> = ({
     try {
       const auctionDetails = await getAuctionOfferDetails(data.identifier);
       setAuctionOffer(auctionDetails);
-      navigate('/developer/active-auctions/details');
+      if (detailsType === 'auction')
+        navigate('/developer/active-auctions/details');
+      if (detailsType === 'myAuction')
+        navigate('/developer/my-auctions/details');
     } catch (err) {
       console.error(err);
     }
