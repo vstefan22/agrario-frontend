@@ -218,7 +218,7 @@ const MyAuctionDetails = () => {
               label='Was ist Ihr Kaufpreisangebot'
               placeholder='Text hinzufügen'
               variant='profile'
-              className='mt-2 mb-4'
+              className={`mt-2 ${errors.sale_amount ? 'mb-0' : 'mb-4'}`}
               name='sale_amount'
               value={formData.sale_amount}
               onChange={handleInputChange}
@@ -244,14 +244,16 @@ const MyAuctionDetails = () => {
               label='Angebotene Vertragslaufzeit'
               placeholder='Text hinzufügen'
               variant='profile'
-              className='mt-2 mb-4'
+              className={`mt-2 ${
+                errors.contracted_term_month ? 'mb-0' : 'mb-4'
+              }`}
               required
               name='contracted_term_month'
               value={formData.contracted_term_month}
               onChange={handleInputChange}
             />
             {errors.contracted_term_month && (
-              <span className='text-red-500 text-sm'>
+              <span className='text-red-500 text-sm flex mb-4'>
                 {errors.contracted_term_month}
               </span>
             )}
@@ -384,11 +386,6 @@ const MyAuctionDetails = () => {
               onChange={handleChange}
               checked={formData.accept_privacy_policy}
             />
-            {errors.accept_privacy_policy && (
-              <span className='text-red-500 text-sm'>
-                {errors.accept_privacy_policy}
-              </span>
-            )}
             <Checkbox
               label='Hiermit bestätige ich.......'
               variant='primary'
@@ -396,11 +393,6 @@ const MyAuctionDetails = () => {
               onChange={handleChange}
               checked={formData.accept_terms}
             />
-            {errors.accept_terms && (
-              <span className='text-red-500 text-sm'>
-                {errors.accept_terms}
-              </span>
-            )}
             <Checkbox
               label='Hiermit bestätige ich.......'
               variant='primary'
@@ -408,10 +400,27 @@ const MyAuctionDetails = () => {
               onChange={handleChange}
               checked={formData.other}
             />
-            {errors.other && (
-              <span className='text-red-500 text-sm'>{errors.other}</span>
-            )}
           </div>
+
+          {(errors.accept_privacy_policy ||
+            errors.accept_terms ||
+            errors.other) && (
+            <div className='flex flex-col gap-2 mb-4'>
+              {errors.accept_privacy_policy && (
+                <span className='text-red-500 text-sm'>
+                  {errors.accept_privacy_policy}
+                </span>
+              )}
+              {errors.accept_terms && (
+                <span className='text-red-500 text-sm'>
+                  {errors.accept_terms}
+                </span>
+              )}
+              {errors.other && (
+                <span className='text-red-500 text-sm'>{errors.other}</span>
+              )}
+            </div>
+          )}
 
           <p className='text-gray-dark-100 mb-6'>
             There are many variations of passages of Lorem Ipsum available, but

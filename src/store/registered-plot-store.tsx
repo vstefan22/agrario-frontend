@@ -36,7 +36,10 @@ const useRegisteredPlotStore = create<PlotState>()(
 
       setRegisteredPlots: (registeredPlots) =>
         set(() => ({
-          registeredPlots,
+          // registeredPlots,
+          registeredPlots: Array.isArray(registeredPlots)
+            ? registeredPlots
+            : [],
         })),
 
       setRegisteredPlot: (registeredPlot) => {
