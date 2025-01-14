@@ -6,6 +6,7 @@ type DynamicTableProps = {
   data: Record<string, unknown>;
   customClassName?: string;
   isVertical?: boolean;
+  blurKeys?: string[];
 };
 
 const DynamicTable: FC<DynamicTableProps> = ({
@@ -13,6 +14,7 @@ const DynamicTable: FC<DynamicTableProps> = ({
   data,
   customClassName = '',
   isVertical,
+  blurKeys = [],
 }) => {
   return (
     <table className={isVertical ? 'w-full' : ''}>
@@ -46,7 +48,11 @@ const DynamicTable: FC<DynamicTableProps> = ({
               className={
                 !isVertical
                   ? `border border-gray-medium p-3 text-gray-dark-200 font-400 border-l-0 border-r-0 border-b-0 ${customClassName}`
-                  : 'border-l-[1px] border-gray-medium/60 w-[20%] px-12'
+                  : `border-l-[1px] border-gray-medium/60 w-[20%] px-12 ${
+                      blurKeys.includes(column.key)
+                        ? 'blur-[7px] pointer-events-none'
+                        : ''
+                    }`
               }
             >
               {String(data[column.key] ?? '-')}

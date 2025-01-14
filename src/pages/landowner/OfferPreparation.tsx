@@ -17,6 +17,7 @@ import {
 import { OfferType } from "../../types/offer-types";
 // import { offerItemData } from "../../../mockData";
 import usePlotStore from "../../store/plot-store";
+import { validateOfferDetailForm } from "../../utils/helper-functions";
 
 const initialFormData = {
   available_from: null as Date | null,
@@ -129,8 +130,10 @@ export default function MyOffer() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const { errors, isFormValidate } = validateOfferDetailForm(formData);
+
     try {
-      if (validateForm()) {
+      if (isFormValidate) {
         const formDataSend = new FormData();
         formDataSend.append(
           "available_from",

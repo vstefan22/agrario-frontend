@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button";
-import ShowDetails from "../ShowDetails";
+import ShowDetailsLandowner from "./ShowDetailsLandowner";
 import usePlotStore from "../../store/plot-store";
 import usePlots from "../../hooks/plot-hook";
 
 function PlotDetails() {
   const navigate = useNavigate();
-  const { getPlotAnalyseDetails, addPlotToBasket } = usePlots();
+  const { getPlotAnalyseDetails, addPlotToBasket, getBasketItems, getAnalysePlus } = usePlots();
   const { plot, setBasketPlots, setPlotAnalyseDetails } = usePlotStore();
 
   console.log(plot);
@@ -34,8 +34,11 @@ function PlotDetails() {
   const handleAnalysePlus = async () => {
     try {
       await addPlotToBasket(plot!.id, plot);
-      console.log(plot);
-      setBasketPlots(plot!);
+      const basketItems = await getBasketItems();
+      console.log(basketItems);
+      setBasketPlots(basketItems.basket_items);
+      const data = await getAnalysePlus();
+      console.log(data);
       navigate("/landowner/my-plots/analyse-plus");
     } catch (err) {
       console.error(err);
@@ -43,7 +46,7 @@ function PlotDetails() {
   };
 
   // TODO: use actual user property for this
-  const isAnalizePlus = false;
+  const AnalizePlusStatus = false;
 
   return (
     <div className="bg-gray-lightest min-h-screen flex flex-col px-7 pt-4">
@@ -57,7 +60,7 @@ function PlotDetails() {
         </div>
       </div>
       <div className="h-[440px] overflow-y-auto rounded-2xl">
-        <ShowDetails paid={isAnalizePlus} data={plot} />
+        <ShowDetailsLandowner isAnalizePlus={AnalizePlusStatus} data={plot} />
       </div>
 
       <div className="flex justify-end items-center py-5 gap-3">

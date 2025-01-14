@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { FaUserAlt } from 'react-icons/fa';
 import NavLink from '../common/NavLink';
 import Navbar from '../common/Navbar';
@@ -6,10 +6,30 @@ import useAuthStore from '../../store/auth-store';
 import headerLogo from '../../assets/images/header_logo.png';
 import messageIcon from '../../assets/images/msg-icon.png';
 import moreIcon from '../../assets/images/more.png';
+import useMessages from '../../hooks/message-hook';
 
 const NavBar: FC = () => {
   const { isAuthenticated, user } = useAuthStore();
   const userRole = user?.role;
+  const { getUnreadMessages } = useMessages();
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  // TODO: Add backend functionality for unread messages
+  useEffect(() => {
+    const unreadMessages = async () => {
+      try {
+        if (user?.id) {
+          const response = await getUnreadMessages(user.id);
+          setUnreadCount(response.unreadCount || 0);
+        }
+      } catch (err) {
+        console.error('Failed to fetch unread messages: ', err);
+      }
+    };
+
+    unreadMessages();
+  }, [user?.id, getUnreadMessages]);
+
   return (
     <Navbar className='w-full h-[80px] flex justify-between items-center px-6'>
       <div className='flex-shrink-0'>
@@ -27,7 +47,18 @@ const NavBar: FC = () => {
       <div className='flex items-center'>
         <NavLink href={`/${userRole}/messages`} ariaLabel='Go to Messages'>
           {isAuthenticated && (
-            <img src={messageIcon} alt='msg icon' className='mr-6' />
+            <div className='relative'>
+              <img src={messageIcon} alt='msg icon' className='mr-6' />
+
+              {unreadCount > 0 && (
+                <span
+                  className='absolute top-[2px] right-[24px] bg-red-500 text-white text-[12px] rounded-full w-[18px] h-[18px] flex items-center justify-center'
+                  style={{ transform: 'translate(50%, -50%)' }}
+                >
+                  {unreadCount}
+                </span>
+              )}
+            </div>
           )}
         </NavLink>
 

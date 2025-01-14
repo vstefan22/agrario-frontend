@@ -6,10 +6,12 @@ interface AuthState {
   user: StoreUser | null;
   isAuthenticated: boolean;
   token: string | null;
+  refreshToken: string | null;
 
   setUser: (user: StoreUser | null) => void;
   updateUser: (userData: Partial<StoreUser>) => void;
   setToken: (token: string) => void;
+  setRefreshToken: (refreshToken: string) => void;
   clearAuth: () => void;
 }
 
@@ -19,6 +21,7 @@ const useAuthStore = create<AuthState>()(
       user: null,
       isAuthenticated: false,
       token: null,
+      refreshToken: null,
 
       setUser: (user) => set({ user, isAuthenticated: !!user }),
       updateUser: (userData) =>
@@ -31,7 +34,14 @@ const useAuthStore = create<AuthState>()(
           };
         }),
       setToken: (token) => set({ token }),
-      clearAuth: () => set({ user: null, isAuthenticated: false, token: null }),
+      setRefreshToken: (refreshToken) => set({ refreshToken }),
+      clearAuth: () =>
+        set({
+          user: null,
+          isAuthenticated: false,
+          token: null,
+          refreshToken: null,
+        }),
     }),
     {
       name: 'auth-storage',

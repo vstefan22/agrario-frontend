@@ -1,39 +1,41 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DynamicTable from '../../common/DynamicTable';
 import Button from '../../common/Button';
+import DynamicTable from '../../common/DynamicTable';
 import ItemImage from '../../common/ItemImage';
-import { PLOT_DETAILS_COLUMNS } from '../../../constants/table-data';
-// import active from '../../../assets/images/vermarktung-aktiv.png';
-// import inactive from '../../../assets/images/vermarktung-in-vorbereitung.png';
+import { PLOT_SEARCH_COLUMNS } from '../../../constants/table-data';
+import { RegisteredPlotDetailsType } from '../../../types/plot-types';
 import imagePlaceholder from '../../../assets/images/image-placeholder.png';
-import useAuctionOffers from '../../../hooks/auctions-offer-hook';
-import useAuctionOfferstore from '../../../store/auctions-store';
+import useRegisteredPlotStore from '../../../store/registered-plot-store';
+import useRegisteredPlots from '../../../hooks/registered-plot-hook';
 
-type ActiveAuctionsItemProps = {
-  // eslint-disable-next-line
-  data: any;
-  isDetails?: boolean;
-  detailsType?: 'auction' | 'myAuction';
+type RegisteredPlotItemProps = {
+  data: RegisteredPlotDetailsType;
 };
 
-const ActiveAuctionsItem: FC<ActiveAuctionsItemProps> = ({
-  data,
-  isDetails,
-  detailsType,
-}) => {
+const RegisteredPlotItem: FC<RegisteredPlotItemProps> = ({ data }) => {
   const navigate = useNavigate();
-  const { getAuctionOfferDetails } = useAuctionOffers();
-  const { setAuctionOffer } = useAuctionOfferstore();
+  const { getRegisteredPlotDetails, addPlotToWatchlist } = useRegisteredPlots();
+  const { registeredPlot, addPlotToMyList, updateRegisteredPlot } =
+    useRegisteredPlotStore();
+
+  const AddToWatchList = async () => {
+    try {
+      await addPlotToWatchlist(registeredPlot!);
+      addPlotToMyList(registeredPlot!);
+      navigate('/developer/my-watchlist');
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const handleViewDetails = async () => {
     try {
-      const auctionDetails = await getAuctionOfferDetails(data.identifier);
-      setAuctionOffer(auctionDetails);
-      if (detailsType === 'auction')
-        navigate('/developer/active-auctions/details');
-      if (detailsType === 'myAuction')
-        navigate('/developer/my-auctions/details');
+      const plotRegistered = await getRegisteredPlotDetails(
+        data.parcel.id.toString()
+      );
+      updateRegisteredPlot(plotRegistered);
+      navigate('/developer/registered-plots/parcel-details');
     } catch (err) {
       console.error(err);
     }
@@ -41,24 +43,21 @@ const ActiveAuctionsItem: FC<ActiveAuctionsItemProps> = ({
 
   return (
     <div
-      className='w-full bg-white rounded-[18px] p-4'
+      className='w-full bg-white rounded-[18px] p-4 mb-6'
       style={{
         boxShadow: '6px 6px 54px 0px #0000000D',
         minHeight: '250px',
       }}
     >
       <div className='flex justify-between py-2 space-x-4'>
-        {data.parcels.length > 0 && (
-          <ItemImage id={data.parcels[0].id} image={imagePlaceholder} />
-        )}
+        <ItemImage id={data.parcel.id.toString()} image={imagePlaceholder} />
         <div className='flex flex-col'>
-          {data.parcels.length > 0 && (
-            <DynamicTable
-              data={data.parcels[0]}
-              columns={PLOT_DETAILS_COLUMNS}
-            />
-          )}
-          <div className='flex justify-between items-center pt-5 gap-3'>
+          <DynamicTable
+            data={data}
+            columns={PLOT_SEARCH_COLUMNS}
+            customClassName='px-10'
+          />
+          <div className='flex justify-between items-center pt-5 gap-3 mt-auto'>
             <div>
               {(() => {
                 const { criteria } = data;
@@ -96,24 +95,25 @@ const ActiveAuctionsItem: FC<ActiveAuctionsItemProps> = ({
                 return null;
               })()}
             </div>
-            <div className='flex items-center'>
-              {/* <img
-                src={data.analyzePlus === 'active' ? active : inactive}
-                alt={`aktiv/inaktiv image`}
-                className='mr-4 h-[22px] object-cover'
-              /> */}
 
-              {isDetails ? (
-                ''
-              ) : (
-                <Button
-                  variant='bluePrimary'
-                  type='button'
-                  onClick={handleViewDetails}
-                >
-                  Detail ansehen
-                </Button>
-              )}
+            <div className='flex gap-6'>
+              <Button
+                type='button'
+                variant='blueSecondary'
+                className='w-[200px]'
+                onClick={AddToWatchList}
+              >
+                Zu Watchlist hinzufügen
+              </Button>
+
+              <Button
+                type='button'
+                variant='bluePrimary'
+                className='w-[200px]'
+                onClick={handleViewDetails}
+              >
+                Detail ansehen
+              </Button>
             </div>
           </div>
         </div>
@@ -122,4 +122,4 @@ const ActiveAuctionsItem: FC<ActiveAuctionsItemProps> = ({
   );
 };
 
-export default ActiveAuctionsItem;
+export default RegisteredPlotItem;

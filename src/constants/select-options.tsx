@@ -12,6 +12,26 @@ export const defaultOptions = ['Option 1', 'Option 2', 'Option 3'];
 
 export const utilization = ['Keine Einschränkung', 'Verkauf', 'Verpachtung'];
 
+export const landOptions = ['Pacht', 'Kauf', 'Beides'];
+
+export const auctionOptionsMap: Record<string, string> = {
+  Pacht: 'LE',
+  Kauf: 'SA',
+  Beides: 'BO',
+  Ja: 'YES',
+  Nein: 'NO',
+  'Keine Angabe': 'NOT',
+};
+
+export const auctionOptionsReverseMap: Record<string, string> = {
+  LE: 'Pacht',
+  SA: 'Kauf',
+  BO: 'Beides',
+  YES: 'Ja',
+  NO: 'Nein',
+  NOT: 'Keine Angabe',
+};
+
 export const preferredRegionality = [
   'Keine Einschränkung',
   'Firmensitz in Deutschland',
@@ -35,8 +55,25 @@ export const optionsMap: Record<string, string> = {
   Beides: 'BO',
 };
 
-export const supportOptions = [
+export const optionsMapReverse: Record<string, string> = {
+  NO: 'Keine Einschränkung',
+  SA: 'Verkauf',
+  LE: 'Verpachtung',
+  DE: 'Firmensitz in Deutschland',
+  BL: 'Firmensitz im Bundesland des Grundstücks',
+  IN: 'Beteiligungen am Erlös',
+  CO: 'Beteiligungen an der Projektgesellschaf',
+  BO: 'Beides',
+};
+
+export const landownerSupportOptions = [
   'Flurstücksanalyse PLUS',
   'Angebot erstellen',
+  'Sonstiges',
+];
+
+export const developerSupportOptions = [
+  'Mein Subscription Plan',
+  'Fragen zu einer Auktion',
   'Sonstiges',
 ];

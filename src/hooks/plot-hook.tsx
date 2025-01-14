@@ -72,6 +72,14 @@ const usePlots = () => {
     [sendRequest, token]
   );
 
+  const getBasketItems = useCallback(async () => {
+    return await sendRequest(`/offers/parcels/basket-items/`, "GET", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }, [sendRequest, token]);
+
   const getPlotDetails = useCallback(
     async (plotId: string) => {
       return await sendRequest(`/offers/parcels/${plotId}/`, "GET", {
@@ -167,6 +175,7 @@ const usePlots = () => {
     generateReport,
     applyDiscount,
     getPurchasedItems,
+    getBasketItems,
   };
 };
 

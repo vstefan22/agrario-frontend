@@ -16,11 +16,13 @@ import { HiOutlineClipboardList } from 'react-icons/hi';
 import Button from '../common/Button';
 
 import useAuthStore from '../../store/auth-store';
+import useClearStorage from '../../store/clear-storage';
 
 export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { clearAuth, user } = useAuthStore();
+  const { user } = useAuthStore();
+  const { clearStorage } = useClearStorage();
 
   const userRole = user?.role;
 
@@ -41,7 +43,7 @@ export default function Sidebar() {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      clearAuth();
+      clearStorage();
       navigate('/');
     } catch (error) {
       console.error('Error signing out:', error);
@@ -143,11 +145,11 @@ export default function Sidebar() {
 
             <Button
               variant={
-                isRouteActive('/developer/plots-search')
+                isRouteActive('/developer/registered-plots')
                   ? 'sidebarPrimary'
                   : 'sidebarSecondary'
               }
-              onClick={() => handleNavigate('/developer/plots-search')}
+              onClick={() => handleNavigate('/developer/registered-plots')}
             >
               <FaMapLocationDot className='mr-3' />
               Flurstücke suchen

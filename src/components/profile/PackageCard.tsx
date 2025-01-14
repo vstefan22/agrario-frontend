@@ -16,6 +16,7 @@ type PackageCardProps = {
   buttonText: string;
   isActive?: boolean;
   onClick: () => void;
+  activePlan?: boolean;
 };
 
 const PackageCard: React.FC<PackageCardProps> = ({
@@ -27,6 +28,7 @@ const PackageCard: React.FC<PackageCardProps> = ({
   buttonText,
   isActive = false,
   onClick,
+  activePlan = false,
 }) => {
   const addClass = typeof price === 'string' ? 'mb-3' : '';
 
@@ -78,6 +80,7 @@ const PackageCard: React.FC<PackageCardProps> = ({
           variant='bluePrimary'
           className='mt-8'
           onClick={onClick}
+          disabled={activePlan}
         >
           {buttonText}
         </Button>
@@ -87,6 +90,7 @@ const PackageCard: React.FC<PackageCardProps> = ({
           variant='blueSecondary'
           className='mt-8 !text-blue-muted'
           onClick={onClick}
+          disabled={activePlan}
         >
           {buttonText}
         </Button>

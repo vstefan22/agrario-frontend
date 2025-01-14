@@ -12,7 +12,7 @@ type PlotState = {
   setPlot: (plot: PlotType) => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setPlotAnalyseDetails: (plot: any) => void;
-  setBasketPlots: (plot: PlotType) => void;
+  setBasketPlots: (plot: PlotType[]) => void;
   setPlots: (plots: PlotType[]) => void;
   setPlotId: (plotId: string) => void;
   addPlotToList: (plot: PlotType) => void;
@@ -21,6 +21,7 @@ type PlotState = {
   removePlotFromList: (plotId: string) => void;
   removePlotAnalyseFromList: (plotId: string) => void;
   removePlot: (plotId: string) => void;
+  clearPlotStorage: () => void;
 };
 
 const usePlotStore = create<PlotState>()(
@@ -44,11 +45,13 @@ const usePlotStore = create<PlotState>()(
         }));
       },
 
-      setBasketPlots: (updatePlot) => {
-        set((state) => ({
-          basketPlots: state.basketPlots.map((plot) =>
-            String(plot.id) === String(updatePlot.id) ? plot : { ...plot, ...updatePlot }
-          ),
+      setBasketPlots: (basketItems) => {
+        const items = basketItems.map((item) => {
+          const { parcel, ...rest } = item; // Destructure parcel and the rest of the object
+          return { ...rest, ...parcel }; // Spread parcel into the parent object
+        });
+        set(() => ({
+          basketPlots: items,
         }));
       },
 
@@ -99,6 +102,14 @@ const usePlotStore = create<PlotState>()(
       },
 
       removePlot: () => set(() => ({ plot: null })),
+      clearPlotStorage: () =>
+        set({
+          plot: null,
+          plotAnalyseDetails: null,
+          basketPlots: [],
+          plots: [],
+          plotId: null,
+        }),
     }),
     {
       name: "plot-storage",

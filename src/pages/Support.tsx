@@ -1,26 +1,50 @@
-import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect, useMemo } from 'react';
 import Select from '../components/common/Select';
 import TextArea from '../components/common/TextArea';
 import UploadFile from '../components/common/UploadFile';
 import Button from '../components/common/Button';
 import MessageHistoryCard from '../components/landowner/messages/MessageHistoryCard';
 import useMessages from '../hooks/message-hook';
-import { supportOptions } from '../constants/select-options';
+import {
+  landownerSupportOptions,
+  developerSupportOptions,
+} from '../constants/select-options';
 import useAuthStore from '../store/auth-store';
 import useMessageStore from '../store/message-store';
 
-const initialFormData = {
-  subject: supportOptions[0],
-  recipient: '',
-  message: '',
-  file: null as File | null,
-};
+// const initialFormData = {
+//   subject: landownerSupportOptions[0],
+//   recipient: '',
+//   message: '',
+//   file: null as File | null,
+// };
 
 const Support = () => {
   const { user } = useAuthStore();
   const { sendMessage, getChatDetails } = useMessages();
   const { setMessages, messages } = useMessageStore();
+  const navigate = useNavigate();
+
+  const userRole = user?.role;
+
+  const initialFormData = useMemo(() => {
+    return {
+      subject:
+        user?.role === 'landowner'
+          ? landownerSupportOptions[0]
+          : developerSupportOptions[0],
+      recipient: '',
+      message: '',
+      file: null as File | null,
+    };
+  }, [user]);
+
   const [formData, setFormData] = useState(initialFormData);
+
+  useEffect(() => {
+    setFormData(initialFormData);
+  }, [initialFormData]);
 
   useEffect(() => {
     const fetchChatDetails = async () => {
@@ -84,7 +108,11 @@ const Support = () => {
         </h1>
         <Select
           name='subject'
-          options={supportOptions}
+          options={
+            userRole === 'landowner'
+              ? landownerSupportOptions
+              : developerSupportOptions
+          }
           value={formData.subject}
           onChange={handleSelectChange}
           required
@@ -103,7 +131,13 @@ const Support = () => {
           <UploadFile onFilesChange={handleFilesChange} maxFiles={1} />
 
           <div className='flex gap-x-6'>
-            <Button variant='blueSecondary' type='button'>
+            <Button
+              variant='blueSecondary'
+              type='button'
+              onClick={() => {
+                navigate('../messages/');
+              }}
+            >
               Abbrechen
             </Button>
             <Button

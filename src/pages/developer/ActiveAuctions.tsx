@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 import Search from '../../components/common/Search';
 import Select from '../../components/common/Select';
 import GenericList from '../../components/common/GenericList';
@@ -8,14 +8,24 @@ import {
   filterActiveAuctionsData,
   sortActiveAuctionsData,
 } from '../../utils/helper-functions';
-import { activeAuctionsData } from '../../../mockData';
+import useAuctionOffers from '../../hooks/auctions-offer-hook';
+import useAuctionOfferstore from '../../store/auctions-store';
 
 const ActiveAuctions = () => {
+  const { getAuctionOffers } = useAuctionOffers();
+  const { setAuctionOffers, auctionOffers } = useAuctionOfferstore();
   const [searchTerm, setSearchTerm] = useState('');
-
   const [filters, setFilters] = useState<Record<string, string | null>>({
     sortOption: null,
   });
+
+  useEffect(() => {
+    const fetchMyActiveAuctions = async () => {
+      const data = await getAuctionOffers();
+      setAuctionOffers(data);
+    };
+    fetchMyActiveAuctions();
+  }, [getAuctionOffers, setAuctionOffers]);
 
   const handleSelectChange = (name: string, option: string) => {
     setFilters((prevFilters) => ({
@@ -28,7 +38,7 @@ const ActiveAuctions = () => {
     setSearchTerm(e.target.value);
   };
 
-  const filteredData = filterActiveAuctionsData(activeAuctionsData, searchTerm);
+  const filteredData = filterActiveAuctionsData(auctionOffers, searchTerm);
   const sortedData = sortActiveAuctionsData(filteredData, filters.sortOption);
 
   return (
@@ -57,12 +67,22 @@ const ActiveAuctions = () => {
             placeholder='Sortieren nach'
           />
         </div>
-        <GenericList
-          data={sortedData}
-          renderItem={(plot) => (
-            <ActiveAuctionsItem key={plot.id} data={plot} />
-          )}
-        />
+        {sortedData.length > 0 ? (
+          <GenericList
+            data={sortedData}
+            renderItem={(auctionOffer) => (
+              <ActiveAuctionsItem
+                key={auctionOffer.identifier}
+                data={auctionOffer}
+                detailsType='auction'
+              />
+            )}
+          />
+        ) : (
+          <div className='flex text-[18px] font-500 gray-light-200 justify-center'>
+            Derzeit gibt es keine Daten in der Liste.
+          </div>
+        )}
       </div>
     </div>
   );

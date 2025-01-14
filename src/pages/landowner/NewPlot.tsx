@@ -2,7 +2,7 @@ import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import Search from "../../components/common/Search";
 import Button from "../../components/common/Button";
 import GoogleMap from "../../components/common/GoogleMap";
-import SearchByAttributesUpdated from "../../components/search-with-backup/SearchByAttributesUpdated";
+
 import DynamicTable from "../../components/common/DynamicTable";
 import { geoJsonToLatLngArrays } from "../../utils/helper-functions";
 import { PLOT_GOOGLE_MAPS_COLUMNS } from "../../constants/table-data";

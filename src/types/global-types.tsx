@@ -15,6 +15,12 @@ export type PaymentType = {
   currency: string;
 };
 
+export type PackagePaymentType = {
+  plan_id: number | string;
+  payment_method: string;
+  currency: string;
+};
+
 export type InviteBodyType = {
   email: string;
 };
@@ -37,4 +43,8 @@ export type InviteRegisterType = {
 
 export type PromoCodeType = {
   code: string;
+};
+
+export type AuthType = {
+  refresh_token: string;
 };
