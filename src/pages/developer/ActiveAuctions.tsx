@@ -20,11 +20,12 @@ const ActiveAuctions = () => {
   });
 
   useEffect(() => {
-    const fetchMyWatchlist = async () => {
+    const fetchMyActiveAuctions = async () => {
       const data = await getAuctionOffers();
+      console.log('data in watchlist', data);
       setAuctionOffers(data);
     };
-    fetchMyWatchlist();
+    fetchMyActiveAuctions();
   }, [getAuctionOffers, setAuctionOffers]);
 
   const handleSelectChange = (name: string, option: string) => {

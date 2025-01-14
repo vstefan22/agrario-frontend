@@ -29,6 +29,7 @@ const RegisteredPlots = () => {
   useEffect(() => {
     const fetchRegisteredPlots = async () => {
       const data = await getAllRegisteredPlots();
+      console.log('registered data: ', data);
       setRegisteredPlots(data);
     };
     fetchRegisteredPlots();
