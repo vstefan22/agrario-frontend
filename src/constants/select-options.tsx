@@ -12,6 +12,17 @@ export const defaultOptions = ['Option 1', 'Option 2', 'Option 3'];
 
 export const utilization = ['Keine Einschränkung', 'Verkauf', 'Verpachtung'];
 
+export const landOptions = ['Pacht', 'Kauf', 'Beides'];
+
+export const auctionOptionsMap: Record<string, string> = {
+  Pacht: 'LE',
+  Kauf: 'SA',
+  Beides: 'BO',
+  Ja: 'YES',
+  Nein: 'NO',
+  'Keine Angabe': 'NOT',
+};
+
 export const preferredRegionality = [
   'Keine Einschränkung',
   'Firmensitz in Deutschland',

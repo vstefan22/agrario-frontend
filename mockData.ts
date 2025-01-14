@@ -415,3 +415,122 @@ export const placeABidData = {
   checkbox2: true,
   checkbox3: true,
 };
+
+export const mockAuctionOffers = [
+  {
+    identifier: 'AUCTION-001',
+    offer_number: 1,
+    status: 'active',
+    status_display: 'Active',
+    hide_from_search: false,
+    available_from: '2025-01-01',
+    utilization: 'solar',
+    utilization_display: 'Solar Energy',
+    preferred_regionality: 'north',
+    preferred_regionality_display: 'Northern Region',
+    shareholder_model: 'shared',
+    shareholder_model_display: 'Shared Ownership',
+    criteria: {
+      no_usage_restriction: true,
+      wind_energy_restriction: false,
+      solar_energy_restriction: false,
+      energy_storage_restriction: false,
+      eco_enhancements_restriction: true,
+    },
+    important_remarks: 'Important details about this auction.',
+    documented_offers: [
+      {
+        id: 1,
+        offer: 'Offer Document 1',
+        uploaded_at: '2025-01-15T10:00:00Z',
+        document_url: 'https://example.com/document1.pdf',
+      },
+    ],
+    parcels: [
+      {
+        id: 'P12345',
+        state_name: 'Bavaria',
+        district_name: 'Munich',
+        municipality_name: 'Munich',
+        cadastral_area: 'Central',
+        cadastral_parcel: 'A123',
+        plot_number_main: '12',
+        plot_number_secondary: '3',
+        land_use: 'agriculture',
+        area_square_meters: 15000,
+        created_by: 'admin',
+        polygon: {
+          type: 'MultiPolygon',
+          coordinates: [
+            [
+              [
+                [11.57255, 48.13512],
+                [11.57265, 48.13522],
+                [11.57275, 48.13512],
+                [11.57255, 48.13512],
+              ],
+            ],
+          ],
+        },
+      },
+    ],
+  },
+  {
+    identifier: 'AUCTION-002',
+    offer_number: 2,
+    status: 'inactive',
+    status_display: 'Inactive',
+    hide_from_search: true,
+    available_from: '2025-02-01',
+    utilization: 'wind',
+    utilization_display: 'Wind Energy',
+    preferred_regionality: 'south',
+    preferred_regionality_display: 'Southern Region',
+    shareholder_model: 'exclusive',
+    shareholder_model_display: 'Exclusive Ownership',
+    criteria: {
+      no_usage_restriction: false,
+      wind_energy_restriction: true,
+      solar_energy_restriction: true,
+      energy_storage_restriction: true,
+      eco_enhancements_restriction: false,
+    },
+    important_remarks: 'This auction requires special permissions.',
+    documented_offers: [
+      {
+        id: 2,
+        offer: 'Offer Document 2',
+        uploaded_at: '2025-02-20T12:00:00Z',
+        document_url: 'https://example.com/document2.pdf',
+      },
+    ],
+    parcels: [
+      {
+        id: 'P67890',
+        state_name: 'Baden-Württemberg',
+        district_name: 'Stuttgart',
+        municipality_name: 'Stuttgart',
+        cadastral_area: 'West',
+        cadastral_parcel: 'B456',
+        plot_number_main: '45',
+        plot_number_secondary: '7',
+        land_use: 'residential',
+        area_square_meters: 10000,
+        created_by: 'user1',
+        polygon: {
+          type: 'MultiPolygon',
+          coordinates: [
+            [
+              [
+                [9.18293, 48.77584],
+                [9.18303, 48.77594],
+                [9.18313, 48.77584],
+                [9.18293, 48.77584],
+              ],
+            ],
+          ],
+        },
+      },
+    ],
+  },
+];

@@ -8,15 +8,29 @@ import Button from '../../components/common/Button';
 import TenderCriteria from '../../components/developer/TenderCriteria';
 import ActiveAuctionsItem from '../../components/developer/my-plots/ActiveAuctionsItem';
 import { defaultOptions, bidOptions } from '../../constants/select-options';
-import { placeABidData } from '../../../mockData';
+// import { placeABidData } from '../../../mockData';
 // import useAuctionOffers from '../../hooks/auctions-offer-hook';
 import useAuctionOfferstore from '../../store/auctions-store';
 
-const userFormData = placeABidData;
-
 const MyAuctionDetails = () => {
   const { auctionOffer } = useAuctionOfferstore();
-  const [formData, setFormData] = useState(userFormData);
+
+  const [formData, setFormData] = useState({
+    utilitization: auctionOffer?.offer_confirmation?.utilitization,
+    staggered_lease: '',
+    // select3: null as string | null,
+    share_of_income: '',
+    shares_project_company: '',
+    sale_amount: null,
+    // input2: null as string | null,
+    contracted_term_month: null,
+    lease_amount_yearly_lease_year_one: null,
+    message_to_landowner: '',
+    message_to_platform: '',
+    accept_privacy_policy: false,
+    accept_terms: false,
+    other: false,
+  });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const navigate = useNavigate();
 
@@ -98,8 +112,8 @@ const MyAuctionDetails = () => {
               label='Welche Optionen der Grundstücksnutzung kommen für Sie in Betracht'
               labelClassName='text-gray-medium max-2xl:mb-8'
               required
-              name='select1'
-              value={formData.select1}
+              name='utilitization'
+              value={formData.utilitization}
               onChange={handleSelectChange}
               options={defaultOptions}
             />
@@ -113,8 +127,8 @@ const MyAuctionDetails = () => {
               placeholder='Text hinzufügen'
               variant='profile'
               className='mt-2 mb-4'
-              name='input1'
-              value={formData.input1 || ''}
+              name='sale_amount'
+              value={formData.sale_amount || ''}
               onChange={handleInputChange}
             />
             {/* <Input
@@ -137,8 +151,8 @@ const MyAuctionDetails = () => {
               variant='profile'
               className='mt-2 mb-4'
               required
-              name='input3'
-              value={formData.input3 || ''}
+              name='contracted_term_month'
+              value={formData.contracted_term_month || ''}
               onChange={handleInputChange}
             />
             <Input
@@ -147,12 +161,12 @@ const MyAuctionDetails = () => {
               variant='profile'
               className='mt-2'
               required
-              name='input4'
-              value={formData.input4 || ''}
+              name='lease_amount_yearly_lease_year_one'
+              value={formData.lease_amount_yearly_lease_year_one || ''}
               onChange={handleInputChange}
             />
 
-            <Select
+            {/* <Select
               variant='default'
               label='Staffelung der Pacht möglich'
               labelClassName='text-gray-medium'
@@ -163,14 +177,14 @@ const MyAuctionDetails = () => {
               options={bidOptions}
               placeholder='Ja/Nein/Keine Angabe'
               divClassName='my-8'
-            />
+            /> */}
             <Select
               variant='default'
               label='Staffelung der Pacht möglich'
               labelClassName='text-gray-medium'
               required
-              name='select3'
-              value={formData.select3}
+              name='staggered_lease'
+              value={formData.staggered_lease}
               onChange={handleSelectChange}
               options={bidOptions}
               placeholder='Ja/Nein/Keine Angabe'
@@ -181,8 +195,8 @@ const MyAuctionDetails = () => {
               label='Beteiliung an laufenden Erlösen möglich?'
               labelClassName='text-gray-medium'
               required
-              name='select4'
-              value={formData.select4}
+              name='share_of_income'
+              value={formData.share_of_income}
               onChange={handleSelectChange}
               options={bidOptions}
               placeholder='Ja/Nein/Keine Angabe'
@@ -197,8 +211,8 @@ const MyAuctionDetails = () => {
               label='Beteiligung an Projektgesellschaft möglich?'
               labelClassName='text-gray-medium'
               required
-              name='select5'
-              value={formData.select5}
+              name='shares_project_company'
+              value={formData.shares_project_company}
               onChange={handleSelectChange}
               options={bidOptions}
               placeholder='Ja/Nein/Keine Angabe'
@@ -212,9 +226,9 @@ const MyAuctionDetails = () => {
               placeholder='500 Zeichen'
               onChange={handleChange}
               label=''
-              id='textArea1'
-              name='textArea1'
-              value={formData.textArea1}
+              id='message_to_landowner'
+              name='message_to_landowner'
+              value={formData.message_to_landowner}
               editBtn
             />
 
@@ -225,9 +239,9 @@ const MyAuctionDetails = () => {
               placeholder='500 Zeichen'
               onChange={handleChange}
               label=''
-              id='textArea2'
-              name='textArea2'
-              value={formData.textArea2}
+              id='message_to_platform'
+              name='message_to_platform'
+              value={formData.message_to_platform}
               editBtn
             />
           </div>
@@ -235,23 +249,23 @@ const MyAuctionDetails = () => {
             <Checkbox
               label='Hiermit bestätige ich.......'
               variant='primary'
-              name='checkbox1'
+              name='accept_privacy_policy'
               onChange={handleChange}
-              checked={formData.checkbox1}
+              checked={formData.accept_privacy_policy}
             />
             <Checkbox
               label='Hiermit bestätige ich.......'
               variant='primary'
-              name='checkbox2'
+              name='accept_terms'
               onChange={handleChange}
-              checked={formData.checkbox2}
+              checked={formData.accept_terms}
             />
             <Checkbox
               label='Hiermit bestätige ich.......'
               variant='primary'
-              name='checkbox3'
+              name='other'
               onChange={handleChange}
-              checked={formData.checkbox3}
+              checked={formData.other}
             />
           </div>
 
