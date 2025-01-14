@@ -27,7 +27,7 @@ const usePayments = () => {
     async (body: PackagePaymentType) => {
       return await sendRequest(
         // TODO: replace with the actual endpoint
-        `/dummy-endpoint/`,
+        `/payments/create-payment/`,
         'POST',
         {
           headers: {

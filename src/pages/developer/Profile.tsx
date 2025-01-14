@@ -31,8 +31,8 @@ export default function Profile() {
     founding_year: 0,
     mw_capacity: 0,
     employees: 0,
-    firstname: '',
-    lastname: '',
+    first_name: '',
+    last_name: '',
     position: '',
     zipcode: '',
     city: '',
@@ -75,8 +75,8 @@ export default function Profile() {
     founding_year: false,
     mw_capacity: false,
     employees: false,
-    firstname: false,
-    lastname: false,
+    first_name: false,
+    last_name: false,
     position: false,
     zipcode: false,
     city: false,
@@ -106,8 +106,8 @@ export default function Profile() {
         founding_year: user?.founding_year || 2000,
         mw_capacity: user?.mw_capacity || 0,
         employees: user?.employees || 1,
-        firstname: user?.firstname || '',
-        lastname: user?.lastname || '',
+        first_name: user?.first_name || '',
+        last_name: user?.last_name || '',
         position: user?.position || '',
         zipcode: user?.zipcode || '',
         city: user?.city || '',
@@ -175,8 +175,8 @@ export default function Profile() {
       !formData.address ||
       !formData.zipcode ||
       !formData.city ||
-      !formData.firstname ||
-      !formData.lastname ||
+      !formData.first_name ||
+      !formData.last_name ||
       !formData.email
     ) {
       setError('Bitte füllen Sie alle erforderlichen Felder aus.');
@@ -530,13 +530,13 @@ export default function Profile() {
                     variant='profile'
                     label='Vorname'
                     required
-                    id='firstname'
-                    name='firstname'
-                    value={formData.firstname}
+                    id='first_name'
+                    name='first_name'
+                    value={formData.first_name}
                     onChange={handleChange}
-                    onEdit={() => toggleEditMode('firstname')}
-                    onSave={() => handleSave('firstname')}
-                    isEditable={editMode.firstname}
+                    onEdit={() => toggleEditMode('first_name')}
+                    onSave={() => handleSave('first_name')}
+                    isEditable={editMode.first_name}
                   />
                 </div>
                 <div className='md:col-span-2'>
@@ -544,13 +544,13 @@ export default function Profile() {
                     variant='profile'
                     label='Nachname'
                     required
-                    id='lastname'
-                    name='lastname'
-                    value={formData.lastname}
+                    id='last_name'
+                    name='last_name'
+                    value={formData.last_name}
                     onChange={handleChange}
-                    onEdit={() => toggleEditMode('lastname')}
-                    onSave={() => handleSave('lastname')}
-                    isEditable={editMode.lastname}
+                    onEdit={() => toggleEditMode('last_name')}
+                    onSave={() => handleSave('last_name')}
+                    isEditable={editMode.last_name}
                   />
                 </div>
                 <div className='md:col-span-2'>

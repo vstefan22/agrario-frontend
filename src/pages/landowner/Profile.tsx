@@ -18,8 +18,8 @@ export default function Profile() {
   const { token, user, updateUser } = useAuthStore();
 
   const [formData, setFormData] = useState<ProfileType>({
-    firstname: '',
-    lastname: '',
+    first_name: '',
+    last_name: '',
     email: '',
     company_name: '',
     position: '',
@@ -41,8 +41,8 @@ export default function Profile() {
   );
   // const [showPassword, setShowPassword] = useState(false);
   const [editMode, setEditMode] = useState<Record<string, boolean>>({
-    firstname: false,
-    lastname: false,
+    first_name: false,
+    last_name: false,
     company_name: false,
     position: false,
     address: false,
@@ -69,8 +69,8 @@ export default function Profile() {
   useEffect(() => {
     if (user) {
       setFormData({
-        firstname: user?.firstname || '',
-        lastname: user?.lastname || '',
+        first_name: user?.first_name || '',
+        last_name: user?.last_name || '',
         email: user?.email || '',
         company_name: user?.company_name || '',
         position: user?.position || '',
@@ -115,8 +115,8 @@ export default function Profile() {
     e.preventDefault();
 
     if (
-      !formData.firstname ||
-      !formData.lastname ||
+      !formData.first_name ||
+      !formData.last_name ||
       !formData.company_name ||
       !formData.email
     ) {
@@ -220,7 +220,7 @@ export default function Profile() {
           <div>
             <h2 className='text-sm font-semibold text-gray-dim'>Ihr Profil,</h2>
             <p className='text-lg text-gray-dim'>
-              {user?.firstname} {user?.lastname}
+              {user?.first_name} {user?.last_name}
             </p>
           </div>
         </div>
@@ -236,13 +236,13 @@ export default function Profile() {
               variant='profile'
               label='Vorname'
               required
-              id='firstname'
-              name='firstname'
-              value={formData.firstname}
+              id='first_name'
+              name='first_name'
+              value={formData.first_name}
               onChange={handleChange}
-              onEdit={() => toggleEditMode('firstname')}
-              onSave={() => handleSave('firstname')}
-              isEditable={editMode.firstname}
+              onEdit={() => toggleEditMode('first_name')}
+              onSave={() => handleSave('first_name')}
+              isEditable={editMode.first_name}
             />
           </div>
           <div className='md:col-span-2'>
@@ -250,13 +250,13 @@ export default function Profile() {
               variant='profile'
               label='Nachname'
               required
-              id='lastname'
-              name='lastname'
-              value={formData.lastname}
+              id='last_name'
+              name='last_name'
+              value={formData.last_name}
               onChange={handleChange}
-              onEdit={() => toggleEditMode('lastname')}
-              onSave={() => handleSave('lastname')}
-              isEditable={editMode.lastname}
+              onEdit={() => toggleEditMode('last_name')}
+              onSave={() => handleSave('last_name')}
+              isEditable={editMode.last_name}
             />
           </div>
           <div className='md:col-span-2'>
