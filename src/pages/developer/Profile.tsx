@@ -189,7 +189,6 @@ export default function Profile() {
     //   }
     // }
 
-    toast.error("");
     setLoading(true);
 
     const formDataSend = new FormData();

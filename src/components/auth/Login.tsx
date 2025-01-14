@@ -54,7 +54,6 @@ export default function Login() {
       return;
     }
 
-    toast.error("");
     setLoading(true);
 
     try {

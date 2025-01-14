@@ -38,6 +38,7 @@ function PlotDetails() {
       console.log(basketItems);
       setBasketPlots(basketItems.basket_items);
       const data = await getAnalysePlus();
+      setPlotAnalyseDetails(data);
       console.log(data);
       navigate("/landowner/my-plots/analyse-plus");
     } catch (err) {

@@ -75,7 +75,6 @@ export default function Register() {
       return;
     }
 
-    toast.error("");
     setLoading(true);
 
     try {
