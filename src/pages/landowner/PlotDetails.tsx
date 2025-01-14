@@ -34,6 +34,7 @@ function PlotDetails() {
   const handleAnalysePlus = async () => {
     try {
       await addPlotToBasket(plot!.id, plot);
+      console.log(plot);
       setBasketPlots(plot!);
       navigate("/landowner/my-plots/analyse-plus");
     } catch (err) {

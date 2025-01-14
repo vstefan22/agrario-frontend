@@ -19,7 +19,7 @@ const AnalysePlusCart = () => {
     navigate("/landowner/my-plots");
   };
 
-  console.log("BASKET PLOTS", basketPlots, plot);
+  console.log("BASKET PLOTS", basketPlots);
   const handleStripeCheckout = async () => {
     // TODO: use actual data for payment checkout
     const paymentBody = {

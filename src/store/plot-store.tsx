@@ -47,7 +47,7 @@ const usePlotStore = create<PlotState>()(
       setBasketPlots: (updatePlot) => {
         set((state) => ({
           basketPlots: state.basketPlots.map((plot) =>
-            String(plot.id) === String(updatePlot.id) ? { ...plot, ...updatePlot } : plot
+            String(plot.id) === String(updatePlot.id) ? plot : { ...plot, ...updatePlot }
           ),
         }));
       },
