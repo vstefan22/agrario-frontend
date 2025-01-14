@@ -107,8 +107,8 @@ export default function PasswordChange() {
                 Ihr Profil,
               </h2>
               <p className='text-lg text-gray-dim'>
-                {user && user.firstname && user.lastname
-                  ? `${user.firstname} ${user.lastname}`
+                {user && user.first_name && user.last_name
+                  ? `${user.first_name} ${user.last_name}`
                   : ''}
               </p>
             </div>

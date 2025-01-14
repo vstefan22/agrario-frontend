@@ -27,6 +27,8 @@ const ActiveAuctions = () => {
     fetchMyActiveAuctions();
   }, [getAuctionOffers, setAuctionOffers]);
 
+  console.log(auctionOffers);
+
   const handleSelectChange = (name: string, option: string) => {
     setFilters((prevFilters) => ({
       ...prevFilters,

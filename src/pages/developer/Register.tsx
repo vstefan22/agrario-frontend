@@ -13,8 +13,8 @@ export default function Register() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [formData, setFormData] = useState({
-    firstname: '',
-    lastname: '',
+    first_name: '',
+    last_name: '',
     company_name: '',
     position: '',
     address: '',
@@ -62,8 +62,8 @@ export default function Register() {
     e.preventDefault();
 
     if (
-      !formData.firstname ||
-      !formData.lastname ||
+      !formData.first_name ||
+      !formData.last_name ||
       !formData.company_name ||
       !formData.position ||
       !formData.address ||
@@ -168,16 +168,16 @@ export default function Register() {
           <Input
             label='Vorname'
             placeholder='Text hinzufügen'
-            name='firstname'
-            value={formData.firstname}
+            name='first_name'
+            value={formData.first_name}
             onChange={handleChange}
             required
           />
           <Input
             label='Nachname'
             placeholder='Text hinzufügen'
-            name='lastname'
-            value={formData.lastname}
+            name='last_name'
+            value={formData.last_name}
             onChange={handleChange}
             required
           />

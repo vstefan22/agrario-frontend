@@ -177,6 +177,7 @@ const PlaceABid = () => {
               variant='default'
               label='Welche Optionen der Grundstücksnutzung kommen für Sie in Betracht'
               labelClassName='text-gray-medium max-2xl:mb-8'
+              divClassName={`${errors.utilitization ? 'mb-4' : ''}`}
               required
               name='utilitization'
               value={formData.utilitization}
@@ -197,7 +198,7 @@ const PlaceABid = () => {
               label='Was ist Ihr Kaufpreisangebot'
               placeholder='Text hinzufügen'
               variant='profile'
-              className='mt-2 mb-4'
+              className={`mt-2 ${errors.sale_amount ? 'mb-0' : 'mb-4'}`}
               name='sale_amount'
               value={formData.sale_amount || ''}
               onChange={handleInputChange}
@@ -223,14 +224,14 @@ const PlaceABid = () => {
               label='Angebotene Vertragslaufzeit'
               placeholder='Text hinzufügen'
               variant='profile'
-              className='mt-2 mb-4'
+              className={`mt-2 ${errors.contracted_term_month ? '' : 'mb-4'}`}
               required
               name='contracted_term_month'
               value={formData.contracted_term_month || ''}
               onChange={handleInputChange}
             />
             {errors.contracted_term_month && (
-              <span className='text-red-500 text-sm'>
+              <span className='text-red-500 text-sm mb-4 inline-block'>
                 {errors.contracted_term_month}
               </span>
             )}
@@ -260,7 +261,7 @@ const PlaceABid = () => {
               onChange={handleSelectChange}
               options={bidOptions}
               placeholder='Ja/Nein/Keine Angabe'
-              divClassName='my-8'
+              divClassName={`${errors.staggered_lease ? 'mt-8 mb-4' : 'my-8'}`}
             />
             {errors.staggered_lease && (
               <span className='text-red-500 text-sm'>
@@ -289,7 +290,7 @@ const PlaceABid = () => {
               onChange={handleSelectChange}
               options={bidOptions}
               placeholder='Ja/Nein/Keine Angabe'
-              divClassName='my-8'
+              divClassName={`${errors.share_of_income ? 'mt-8 mb-4' : 'my-8'}`}
             />
             {errors.share_of_income && (
               <span className='text-red-500 text-sm'>
@@ -310,7 +311,9 @@ const PlaceABid = () => {
               onChange={handleSelectChange}
               options={bidOptions}
               placeholder='Ja/Nein/Keine Angabe'
-              divClassName='my-8'
+              divClassName={`${
+                errors.shares_project_company ? 'mt-8 mb-4' : 'my-8'
+              }`}
             />
             {errors.shares_project_company && (
               <span className='text-red-500 text-sm'>
@@ -363,11 +366,6 @@ const PlaceABid = () => {
               onChange={handleChange}
               checked={formData.accept_privacy_policy}
             />
-            {errors.accept_privacy_policy && (
-              <span className='text-red-500 text-sm'>
-                {errors.accept_privacy_policy}
-              </span>
-            )}
             <Checkbox
               label='Hiermit bestätige ich.......'
               variant='primary'
@@ -375,11 +373,6 @@ const PlaceABid = () => {
               onChange={handleChange}
               checked={formData.accept_terms}
             />
-            {errors.accept_terms && (
-              <span className='text-red-500 text-sm'>
-                {errors.accept_terms}
-              </span>
-            )}
             <Checkbox
               label='Hiermit bestätige ich.......'
               variant='primary'
@@ -387,10 +380,26 @@ const PlaceABid = () => {
               onChange={handleChange}
               checked={formData.other}
             />
-            {errors.other && (
-              <span className='text-red-500 text-sm'>{errors.other}</span>
-            )}
           </div>
+          {(errors.accept_privacy_policy ||
+            errors.accept_terms ||
+            errors.other) && (
+            <div className='flex flex-col mb-4 gap-2'>
+              {errors.accept_privacy_policy && (
+                <span className='text-red-500 text-sm nowrap'>
+                  {errors.accept_privacy_policy}
+                </span>
+              )}
+              {errors.accept_terms && (
+                <span className='text-red-500 text-sm'>
+                  {errors.accept_terms}
+                </span>
+              )}
+              {errors.other && (
+                <span className='text-red-500 text-sm'>{errors.other}</span>
+              )}
+            </div>
+          )}
 
           <p className='text-gray-dark-100 mb-6'>
             There are many variations of passages of Lorem Ipsum available, but

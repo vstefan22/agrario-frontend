@@ -81,11 +81,11 @@ const NavBar: FC = () => {
                 <FaUserAlt size={30} />
               )}
             </NavLink>
-            {isAuthenticated && user?.firstname && user?.lastname ? (
+            {isAuthenticated && user?.first_name && user?.last_name ? (
               <div className='ml-3 leading-[1.3] cursor-default flex'>
                 <div className='mr-4'>
                   <p className='text-[14px] text-gray-dark-150'>
-                    {user?.firstname} {user?.lastname}
+                    {user?.first_name} {user?.last_name}
                   </p>
                   <p className='text-[10px] text-gray-dark-100'>Admin</p>
                 </div>
