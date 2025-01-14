@@ -44,3 +44,7 @@ export type InviteRegisterType = {
 export type PromoCodeType = {
   code: string;
 };
+
+export type AuthType = {
+  refresh_token: string;
+};

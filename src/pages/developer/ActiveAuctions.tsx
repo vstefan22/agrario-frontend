@@ -22,7 +22,6 @@ const ActiveAuctions = () => {
   useEffect(() => {
     const fetchMyActiveAuctions = async () => {
       const data = await getAuctionOffers();
-      console.log('data in watchlist', data);
       setAuctionOffers(data);
     };
     fetchMyActiveAuctions();
