@@ -20,6 +20,7 @@ type AuctionOfferstate = {
   updateAuctionOffer: (id: string, offer: AuctionOfferDetailsType) => void;
   removeAuctionOffer: (auctionOfferId: string) => void;
   removeAuctionOfferFromList: (auctionOfferId: string) => void;
+  clearAuctionsStorage: () => void;
 };
 
 const useAuctionOfferstore = create<AuctionOfferstate>()(
@@ -94,6 +95,13 @@ const useAuctionOfferstore = create<AuctionOfferstate>()(
       },
 
       removeAuctionOffer: () => set(() => ({ auctionOffer: null })),
+      clearAuctionsStorage: () =>
+        set({
+          auctionOffer: null,
+          auctionOffers: [],
+          myAuctionOffers: [],
+          auctionOfferId: null,
+        }),
     }),
     {
       name: 'auctions-storage',
