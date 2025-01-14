@@ -47,14 +47,14 @@ export type AuctionOfferType = {
 export type AuctionOfferDetailsType = AuctionOfferType &
   Partial<{
     offer_confirmation: {
-      identifier: string;
-      utilitization: 'LE' | 'SA';
+      // identifier: string;
+      utilitization: 'LE' | 'SA' | 'BO';
       sale_amount?: number | null;
       contracted_term_month?: number;
       lease_amount_yearly_lease_year_one?: number;
-      staggered_lease?: 'YES' | 'NO';
-      share_of_income?: 'YES' | 'NO';
-      shares_project_company?: 'YES' | 'NO';
+      staggered_lease?: 'YES' | 'NO' | 'NOT';
+      share_of_income?: 'YES' | 'NO' | 'NOT';
+      shares_project_company?: 'YES' | 'NO' | 'NOT';
       message_to_landowner: string;
       message_to_platform: string;
       currency?: string;

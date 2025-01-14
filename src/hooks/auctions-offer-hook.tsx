@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import useHttpRequest from './http-request-hook';
 import useAuthStore from '../store/auth-store';
-import { AuctionOfferType } from '../types/auctions-offer-types';
+import { AuctionOfferDetailsType } from '../types/auctions-offer-types';
 
 const useAuctionOffers = () => {
   const { sendRequest } = useHttpRequest();
@@ -17,7 +17,7 @@ const useAuctionOffers = () => {
 
   const getAuctionOfferDetails = useCallback(
     async (offerId: string) => {
-      return await sendRequest(`/offers/arrea_offer/${offerId}/`, 'GET', {
+      return await sendRequest(`/offers/area_offers/${offerId}/`, 'GET', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -27,9 +27,9 @@ const useAuctionOffers = () => {
   );
 
   const addAuctionOffer = useCallback(
-    async (body: AuctionOfferType) => {
+    async (offerId: string, body: AuctionOfferDetailsType | FormData) => {
       return await sendRequest(
-        `/offers/area_offers/${body.identifier}/submit_offer/`,
+        `/offers/area_offers/${offerId}/submit_offer/`,
         'POST',
         {
           headers: {
@@ -69,7 +69,7 @@ const useAuctionOffers = () => {
     async (offerId: string) => {
       return await sendRequest(
         `/offers/area_offers/submitted-offers/${offerId}/`,
-        'POST',
+        'PATCH',
         {
           headers: {
             Authorization: `Bearer ${token}`,
