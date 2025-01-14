@@ -48,9 +48,16 @@ const ActiveAuctionsItem: FC<ActiveAuctionsItemProps> = ({
       }}
     >
       <div className='flex justify-between py-2 space-x-4'>
-        <ItemImage id={data.parcels[0].id} image={imagePlaceholder} />
+        {data.parcels.length > 0 && (
+          <ItemImage id={data.parcels[0].id} image={imagePlaceholder} />
+        )}
         <div className='flex flex-col'>
-          <DynamicTable data={data.parcels[0]} columns={PLOT_DETAILS_COLUMNS} />
+          {data.parcels.length > 0 && (
+            <DynamicTable
+              data={data.parcels[0]}
+              columns={PLOT_DETAILS_COLUMNS}
+            />
+          )}
           <div className='flex justify-between items-center pt-5 gap-3'>
             <div>
               {(() => {
