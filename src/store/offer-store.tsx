@@ -15,6 +15,7 @@ type OfferState = {
   updateOffer: (id: string, offer: OfferType) => void;
   removeOffer: (offerId: string) => void;
   removeOfferFromList: (offerId: string) => void;
+  clearOfferStorage: () => void;
 };
 
 const useOfferStore = create<OfferState>()(
@@ -79,6 +80,12 @@ const useOfferStore = create<OfferState>()(
       },
 
       removeOffer: () => set(() => ({ offer: null })),
+      clearOfferStorage: () =>
+        set({
+          offer: null,
+          offers: [],
+          offerId: null,
+        }),
     }),
     {
       name: 'offer-storage',

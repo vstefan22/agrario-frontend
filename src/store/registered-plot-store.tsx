@@ -21,6 +21,7 @@ type PlotState = {
   updatePlotToMyList: (plot: RegisteredPlotDetailsType) => void;
   removeRegisteredPlotFromMyList: (plotId: string) => void;
   removeMyRegisteredPlot: (plotId: string) => void;
+  clearRegisteredPlotStorage: () => void;
 };
 
 const useRegisteredPlotStore = create<PlotState>()(
@@ -110,6 +111,15 @@ const useRegisteredPlotStore = create<PlotState>()(
       },
 
       removeMyRegisteredPlot: () => set(() => ({ myRegisteredPlot: null })),
+      clearRegisteredPlotStorage: () =>
+        set({
+          registeredPlot: null,
+          registeredPlots: [],
+          myRegisteredPlots: [],
+          myRegisteredPlot: null,
+          registeredPlotId: null,
+          myRegisteredPlotId: null,
+        }),
     }),
     {
       name: 'registered-plot-storage',
