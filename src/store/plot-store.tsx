@@ -21,6 +21,7 @@ type PlotState = {
   removePlotFromList: (plotId: string) => void;
   removePlotAnalyseFromList: (plotId: string) => void;
   removePlot: (plotId: string) => void;
+  clearPlotStorage: () => void;
 };
 
 const usePlotStore = create<PlotState>()(
@@ -111,6 +112,14 @@ const usePlotStore = create<PlotState>()(
       },
 
       removePlot: () => set(() => ({ plot: null })),
+      clearPlotStorage: () =>
+        set({
+          plot: null,
+          plotAnalyseDetails: null,
+          basketPlots: [],
+          plots: [],
+          plotId: null,
+        }),
     }),
     {
       name: 'plot-storage',

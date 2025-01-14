@@ -10,6 +10,7 @@ type MessageState = {
   setInbox: (inbox: MessageTypes[]) => void;
   addMessageToMessages: (message: MessageType) => void;
   addMessageToInbox: (message: MessageTypes) => void;
+  clearMessageStorage: () => void;
 };
 
 const useMessageStore = create<MessageState>()(
@@ -48,6 +49,7 @@ const useMessageStore = create<MessageState>()(
           ],
         }));
       },
+      clearMessageStorage: () => set({ inbox: [], messages: [] }),
     }),
     {
       name: 'message-storage',
