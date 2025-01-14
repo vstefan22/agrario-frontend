@@ -12,6 +12,7 @@ import userCircleImg from '../../assets/images/user-circle.png';
 
 type LoginResponse = {
   firebase_token: string;
+  refresh_token: string;
   message: string;
   user: UserType;
 };
@@ -20,7 +21,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { state, pathname } = useLocation();
-  const { setToken, setUser } = useAuthStore();
+  const { setToken, setUser, setRefreshToken } = useAuthStore();
   const { sendRequest } = useHttpRequest();
 
   const [formData, setFormData] = useState({
@@ -60,14 +61,16 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const { firebase_token, user } = await sendRequest<LoginResponse>(
-        '/accounts/login/',
-        'POST',
-        {},
-        formData
-      );
+      const { firebase_token, refresh_token, user } =
+        await sendRequest<LoginResponse>(
+          '/accounts/login/',
+          'POST',
+          {},
+          formData
+        );
       setUser(user);
       setToken(firebase_token);
+      setRefreshToken(refresh_token);
 
       if (user.role === 'landowner') {
         navigate('/landowner');
