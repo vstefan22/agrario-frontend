@@ -95,42 +95,10 @@ export default function MyOffer() {
     }));
   };
 
-  const validateForm = (): boolean => {
-    const newErrors: Record<string, string> = {};
-
-    if (!formData.available_from) {
-      newErrors.available_from = "Dieses Feld ist erforderlich.";
-    }
-    if (!formData.utilization) {
-      newErrors.utilization = "Dieses Feld ist erforderlich.";
-    }
-    if (!formData.preferred_regionality) {
-      newErrors.preferred_regionality = "Dieses Feld ist erforderlich.";
-    }
-    if (!formData.shareholder_model) {
-      newErrors.shareholder_model = "Dieses Feld ist erforderlich.";
-    }
-    if (!formData.is_owner_or_authorized) {
-      newErrors.is_owner_or_authorized = "Bitte bestätigen Sie, dass Sie berechtigt sind.";
-    }
-    if (!formData.accept_privacy_policy) {
-      newErrors.accept_privacy_policy = "Bitte akzeptieren Sie die Datenschutzbedingungen.";
-    }
-    if (!formData.accept_terms) {
-      newErrors.accept_terms = "Bitte akzeptieren Sie die AGBs.";
-    }
-    if (!formData.other) {
-      newErrors.other = "Bitte bestätigen Sie dieses Feld.";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const { errors, isFormValidate } = validateOfferDetailForm(formData);
+    const { isFormValidate } = validateOfferDetailForm(formData);
 
     try {
       if (isFormValidate) {

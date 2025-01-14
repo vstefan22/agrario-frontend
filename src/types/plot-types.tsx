@@ -13,6 +13,14 @@ export type PlotType = {
   analyzePlus: string;
 };
 
+export type PlotAnalyseDetails = {
+  number_of_items: number;
+  cost_per_item: string;
+  sum_of_items: string;
+  tax_in_percent: string;
+  tax_amount: string;
+  subtotal: string;
+};
 export type PlotDetailsType = {
   id: string;
   state_name: string;
@@ -51,6 +59,7 @@ export type PlotSearchType = {
   image: string;
   infrastructure: string;
   evaluation: string;
+  parcel: PlotDetailsType;
 };
 
 export type PlotAnalysePlusType = {

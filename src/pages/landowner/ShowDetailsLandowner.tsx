@@ -7,7 +7,6 @@ import germanyImg from "../../assets/images/germany-country.png";
 import woodsImg from "../../assets/images/woods.png";
 import mountainsImg from "../../assets/images/mountains.png";
 import { showDetailsData } from "../../../ShowDetailsMockData";
-import { myOfferData } from "../../../mockData";
 
 type ShowDetailsLandownerType = {
   isAnalizePlus?: boolean;

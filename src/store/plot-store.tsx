@@ -1,10 +1,10 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { PlotType } from "../types/plot-types";
+import { PlotType, PlotAnalyseDetails } from "../types/plot-types";
 
 type PlotState = {
   plot: PlotType | null;
-  plotAnalyseDetails: null | null;
+  plotAnalyseDetails: PlotAnalyseDetails | null;
   basketPlots: PlotType[];
   plots: PlotType[];
   plotId: string | null;

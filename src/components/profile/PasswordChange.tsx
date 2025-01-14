@@ -76,7 +76,6 @@ export default function PasswordChange() {
   return (
     <div className="bg-gray-lightest min-h-screen flex flex-col items-center justify-start px-4 py-8">
       <div className="w-full max-w-[960px] bg-white border border-gray-medium rounded-[44px] p-8">
-        {success && <div className="text-green-600 mb-6">{success}</div>}
         <div className="flex justify-between items-center mb-6">
           <div
             className="flex items-center justify-center rounded-full bg-primary w-[40px] h-[40px] cursor-pointer"
