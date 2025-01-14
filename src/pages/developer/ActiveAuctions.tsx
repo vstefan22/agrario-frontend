@@ -74,6 +74,7 @@ const ActiveAuctions = () => {
               <ActiveAuctionsItem
                 key={auctionOffer.identifier}
                 data={auctionOffer}
+                detailsType='auction'
               />
             )}
           />

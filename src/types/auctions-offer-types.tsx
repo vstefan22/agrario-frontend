@@ -48,7 +48,7 @@ export type AuctionOfferDetailsType = AuctionOfferType &
   Partial<{
     offer_confirmation: {
       // identifier: string;
-      utilitization: 'LE' | 'SA' | 'BO';
+      utilization: 'LE' | 'SA' | 'BO';
       sale_amount?: number | null;
       contracted_term_month?: number;
       lease_amount_yearly_lease_year_one?: number;

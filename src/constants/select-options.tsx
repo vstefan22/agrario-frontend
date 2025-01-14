@@ -23,6 +23,15 @@ export const auctionOptionsMap: Record<string, string> = {
   'Keine Angabe': 'NOT',
 };
 
+export const auctionOptionsReverseMap: Record<string, string> = {
+  LE: 'Pacht',
+  SA: 'Kauf',
+  BO: 'Beides',
+  YES: 'Ja',
+  NO: 'Nein',
+  NOT: 'Keine Angabe',
+};
+
 export const preferredRegionality = [
   'Keine Einschränkung',
   'Firmensitz in Deutschland',
@@ -44,6 +53,17 @@ export const optionsMap: Record<string, string> = {
   'Beteiligungen am Erlös': 'IN',
   'Beteiligungen an der Projektgesellschaf': 'CO',
   Beides: 'BO',
+};
+
+export const optionsMapReverse: Record<string, string> = {
+  NO: 'Keine Einschränkung',
+  SA: 'Verkauf',
+  LE: 'Verpachtung',
+  DE: 'Firmensitz in Deutschland',
+  BL: 'Firmensitz im Bundesland des Grundstücks',
+  IN: 'Beteiligungen am Erlös',
+  CO: 'Beteiligungen an der Projektgesellschaf',
+  BO: 'Beides',
 };
 
 export const landownerSupportOptions = [

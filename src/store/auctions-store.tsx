@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { AuctionOfferDetailsType } from '../types/auctions-offer-types';
 
-type AuctionOfferstate = {
+type AuctionOfferState = {
   auctionOffer: AuctionOfferDetailsType | null;
   auctionOffers: AuctionOfferDetailsType[];
   myAuctionOffers: AuctionOfferDetailsType[];
@@ -23,7 +23,7 @@ type AuctionOfferstate = {
   clearAuctionsStorage: () => void;
 };
 
-const useAuctionOfferstore = create<AuctionOfferstate>()(
+const useAuctionOfferstore = create<AuctionOfferState>()(
   persist(
     (set) => ({
       auctionOffer: null,
@@ -55,9 +55,9 @@ const useAuctionOfferstore = create<AuctionOfferstate>()(
 
       addAuctionOfferToList: (offer) => {
         set((state) => ({
-          auctionOffers: [
+          myAuctionOffers: [
             ...new Map(
-              [offer, ...state.auctionOffers].map((offer) => [
+              [offer, ...state.myAuctionOffers].map((offer) => [
                 offer.identifier,
                 offer,
               ])
@@ -68,7 +68,7 @@ const useAuctionOfferstore = create<AuctionOfferstate>()(
 
       updateAuctionOfferToList: (id, updateoffer) => {
         set((state) => ({
-          auctionOffers: state.auctionOffers.map((offer) =>
+          myAuctionOffers: state.myAuctionOffers.map((offer) =>
             String(offer.identifier) === String(id)
               ? { ...offer, ...updateoffer }
               : offer
@@ -78,7 +78,7 @@ const useAuctionOfferstore = create<AuctionOfferstate>()(
 
       removeAuctionOfferFromList: (auctionOfferId) => {
         set((state) => ({
-          auctionOffers: state.auctionOffers.filter(
+          myAuctionOffers: state.myAuctionOffers.filter(
             (offer) => String(offer.identifier) !== String(auctionOfferId)
           ),
         }));

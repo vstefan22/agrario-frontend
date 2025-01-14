@@ -474,6 +474,18 @@ export const mockAuctionOffers = [
         },
       },
     ],
+    offer_confirmation: {
+      utilization: 'LE',
+      contracted_term_month: 24,
+      lease_amount_yearly_lease_year_one: 1200.0,
+      staggered_lease: 'YES',
+      share_of_income: 'NO',
+      shares_project_company: 'YES',
+      message_to_landowner:
+        'We are very interested in leasing your land for a solar energy project.',
+      message_to_platform: 'Please prioritize our request for this region.',
+      currency: 'EUR',
+    },
   },
   {
     identifier: 'AUCTION-002',
@@ -532,5 +544,12 @@ export const mockAuctionOffers = [
         },
       },
     ],
+    offer_confirmation: {
+      utilization: 'SA',
+      sale_amount: 500000.0,
+      message_to_landowner: 'We are very interested in purchasing your land.',
+      message_to_platform: 'Please prioritize this offer for review.',
+      currency: 'EUR',
+    },
   },
 ];
