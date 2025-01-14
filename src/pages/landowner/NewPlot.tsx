@@ -10,9 +10,10 @@ import { ParcelPolygon, ParcelPolygonArray, PolygonType } from "../../types/goog
 import { PlotSearchData } from "../../types/plot-types";
 import usePlots from "../../hooks/plot-hook";
 import SearchByAttributes from "../../components/search-with-backup/SearchByAttributes";
+import { toast } from "react-toastify";
 
 export default function NewPlot() {
-  const { getPlotGeoData, addPlot } = usePlots();
+  const { getPlotGeoData, addPlot, getAllPlots } = usePlots();
   const [formData, setFormData] = useState<PlotSearchData>({
     state_name: "",
     zipcode: "",
@@ -21,8 +22,7 @@ export default function NewPlot() {
     cadastral_area: "",
     cadastral_parcel: "",
   });
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+
   const [searchTerm, setSearchTerm] = useState("");
   const [parcelList, setParcelList] = useState<ParcelPolygon[]>([]);
   const [mapPolygons, setMapPolygons] = useState<ParcelPolygonArray>([]);
@@ -89,43 +89,44 @@ export default function NewPlot() {
 
   const handleSetPolygonData = async (e: FormEvent) => {
     e.preventDefault();
-    if (
-      !formData.state_name ||
-      !formData.zipcode ||
-      !formData.municipality_name ||
-      !formData.district_name ||
-      !formData.cadastral_area ||
-      !formData.cadastral_parcel
-    ) {
-      setError("Bitte füllen Sie alle erforderlichen Felder aus.");
-      setSuccess("");
-      return;
-    }
-    setError("");
-    setSuccess("");
 
     try {
-      /**
-       *  TODO:
-       *  make an actual request to get polygon data after search
-       *  create method in plot-hook when endpoint is provided
-       */
-      // const data = await sendRequest(
-      //   '/use-actual-endpoint/',
-      //   'POST',
-      //   {
-      //     headers: { Authorization: `Bearer ${token}` },
-      //   },
-      //   formData
-      // );
-      //
-      // setParcelList((prev) => [...prev, data]);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message || "Ein Fehler ist aufgetreten.");
-      } else {
-        setError("Ein unbekannter Fehler ist aufgetreten.");
+      const response = await getAllPlots(formData);
+      const polygons: ParcelPolygonArray = [];
+
+      if (response && response.features && Array.isArray(response.features)) {
+        response.features.forEach((feature: any) => {
+          const geometry = feature.geometry;
+          const rings = geoJsonToLatLngArrays(geometry);
+
+          const {
+            alkis_feature_id,
+            state_name,
+            municipality_name,
+            district_name,
+            cadastral_area,
+            cadastral_parcel,
+          } = feature.properties;
+
+          rings.forEach((ringCoords) => {
+            polygons.push({
+              polygon: ringCoords,
+              parcel_id: alkis_feature_id,
+              state_name,
+              municipality_name,
+              district_name,
+              cadastral_area,
+              cadastral_parcel,
+            });
+          });
+        });
       }
+
+      setMapPolygons(polygons);
+      toast.success("Flurstücke erfolgreich geladen.");
+    } catch (err) {
+      console.error(err);
+      toast.error("Fehler beim Abrufen der Flurstücke.");
     }
   };
 
@@ -142,12 +143,11 @@ export default function NewPlot() {
     };
 
     try {
-      // Now call `addPlot(payload)` instead of `addPlot(parcelList[0])`
       await addPlot(payload);
-      setSuccess("Flurstück hinzugefügt!");
+      toast.success("Flurstück hinzugefügt!");
     } catch (err) {
       console.error(err);
-      setError("Fehler beim Hinzufügen des Flurstücks.");
+      toast.error("Fehler beim Hinzufügen des Flurstücks.");
     }
   };
 
@@ -171,9 +171,6 @@ export default function NewPlot() {
 
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col px-7 pt-4">
-      {error && <div className="text-red-600 mb-6">{error}</div>}
-      {success && <div className="text-green-600 mb-6">{success}</div>}
-
       <div className="flex items-center justify-between mb-6">
         <div className="w-[526px]">
           <h1 className="text-[32px] font-bold text-black-muted">Neues Flurstück</h1>

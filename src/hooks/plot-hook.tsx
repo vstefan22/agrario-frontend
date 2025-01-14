@@ -8,13 +8,20 @@ const usePlots = () => {
   const { sendRequest } = useHttpRequest();
   const { token } = useAuthStore();
 
-  const getAllPlots = useCallback(async () => {
-    return await sendRequest(`/offers/parcels/`, "GET", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-  }, [sendRequest, token]);
+  const getAllPlots = useCallback(
+    async (filters = {}) => {
+      // Build query string from filters
+      const queryString = new URLSearchParams(filters).toString();
+      const url = queryString ? `/offers/parcels/?${queryString}` : `/offers/parcels/`;
+
+      return await sendRequest(url, "GET", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    },
+    [sendRequest, token]
+  );
 
   const getMyPlots = useCallback(async () => {
     return await sendRequest(`/offers/parcels/my_parcels/`, "GET", {

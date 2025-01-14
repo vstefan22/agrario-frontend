@@ -9,6 +9,7 @@ import useHttpRequest from "../../hooks/http-request-hook";
 import useAuthStore from "../../store/auth-store";
 import { StoreUser } from "../../types/user-types";
 import profilePlaceholder from "../../assets/images/profile-placeholder.png";
+import { toast } from "react-toastify";
 
 type ProfileType = Omit<StoreUser, "id">;
 
@@ -32,8 +33,6 @@ export default function Profile() {
     // password: user?.password || '',
   });
 
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
   const [profilePic, setProfilePic] = useState<any>(null);
   const [profilePreview, setProfilePreview] = useState<any>(
@@ -114,13 +113,11 @@ export default function Profile() {
     e.preventDefault();
 
     if (!formData.first_name || !formData.last_name || !formData.company_name || !formData.email) {
-      setError("Bitte füllen Sie alle erforderlichen Felder aus.");
-      setSuccess("");
+      toast.error("Bitte füllen Sie alle erforderlichen Felder aus.");
+
       return;
     }
 
-    setError("");
-    setSuccess("");
     setLoading(true);
 
     const formDataSend = new FormData();
@@ -153,20 +150,34 @@ export default function Profile() {
         setProfilePreview(userUpdated.profile_picture);
       }
 
-      setSuccess("Profil erfolgreich aktualisiert.");
+      toast.success("Profil erfolgreich aktualisiert.");
     } catch (err: unknown) {
       if (err instanceof Error) {
-        setError(err.message || "Ein Fehler ist aufgetreten.");
+        toast.error(err.message || "Ein Fehler ist aufgetreten.");
       } else {
-        setError("Ein unbekannter Fehler ist aufgetreten.");
+        toast.error("Ein unbekannter Fehler ist aufgetreten.");
       }
     } finally {
       setLoading(false);
     }
   };
 
-  const handleOnPasswordChange = () => {
-    navigate("/landowner/password-change");
+  const handleOnPasswordChange = async () => {
+    try {
+      await sendRequest(
+        "/accounts/password-reset/",
+        "POST",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+        { email: user?.email }
+      );
+      toast.success("Reset password email sent successfully!");
+    } catch {
+      toast.error("Error happened while sending reset password email.");
+    }
   };
 
   const toggleEditMode = (field: string) => {
@@ -183,9 +194,6 @@ export default function Profile() {
   return (
     <div className="bg-gray-lightest min-h-screen flex flex-col items-center justify-start px-4 py-8 auto-fill-profile">
       <div className="w-full max-w-[960px] bg-white border border-gray-medium rounded-[44px] p-8">
-        {error && <div className="text-red-600 mb-6">{error}</div>}
-        {success && <div className="text-green-600 mb-6">{success}</div>}
-
         <div className="flex items-center mb-6">
           <div className="relative w-24 h-24 mr-4">
             <div className="relative w-24 h-24 rounded-full border-4 border-primary overflow-hidden">

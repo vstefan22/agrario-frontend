@@ -7,8 +7,6 @@ import { sortOptions } from "../../constants/select-options";
 import { filterData, sortData, filterDataRange } from "../../utils/helper-functions";
 import usePlots from "../../hooks/plot-hook";
 import usePlotStore from "../../store/plot-store";
-// TODO:  remove mock and use actual data
-import { plotsListData } from "../../../mockData";
 
 export default function MyPlots() {
   const { getMyPlots } = usePlots();
@@ -17,7 +15,7 @@ export default function MyPlots() {
   const [filters, setFilters] = useState<Record<string, string | null>>({
     sortOption: null,
   });
-  const [range, setRange] = useState<[number, number]>([20, 2000000]);
+  const [range, setRange] = useState<[number, number]>([2000, 2000000]);
 
   useEffect(() => {
     const fetchMyPlots = async () => {
@@ -79,7 +77,7 @@ export default function MyPlots() {
           />
         </div>
 
-        {plotsListData.length > 0 ? (
+        {plots.length > 0 ? (
           <GenericList
             data={sortedData}
             renderItem={(plot) => <PlotItem key={plot.id} data={plot} />}

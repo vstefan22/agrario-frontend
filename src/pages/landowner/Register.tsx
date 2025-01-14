@@ -5,6 +5,7 @@ import Button from "../../components/common/Button";
 import Checkbox from "../../components/common/Checkbox";
 import useHttpRequest from "../../hooks/http-request-hook";
 import { TbEye, TbEyeOff } from "react-icons/tb";
+import { toast } from "react-toastify";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -30,7 +31,6 @@ export default function Register() {
     terms_accepted: false,
   });
 
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -63,19 +63,19 @@ export default function Register() {
       !formData.password ||
       !formData.confirm_password
     ) {
-      setError("Bitte füllen Sie alle erforderlichen Felder aus.");
+      toast.error("Bitte füllen Sie alle erforderlichen Felder aus.");
       return;
     }
     if (formData.password !== formData.confirm_password) {
-      setError("Die Passwörter stimmen nicht überein.");
+      toast.error("Die Passwörter stimmen nicht überein.");
       return;
     }
     if (!formData.privacy_accepted || !formData.terms_accepted) {
-      setError("Bitte akzeptieren Sie die Datenschutzbedingungen und AGB.");
+      toast.error("Bitte akzeptieren Sie die Datenschutzbedingungen und AGB.");
       return;
     }
 
-    setError("");
+    toast.error("");
     setLoading(true);
 
     try {
@@ -92,7 +92,7 @@ export default function Register() {
         err.response?.data?.email?.[0] &&
         err.response.data.email[0] === "user with this email already exists."
       ) {
-        setError("Ein Konto mit dieser E-Mail-Adresse existiert bereits.");
+        toast.error("Ein Konto mit dieser E-Mail-Adresse existiert bereits.");
         return;
       }
 
@@ -100,7 +100,7 @@ export default function Register() {
         err.response?.data?.phone_number &&
         err.response.data.phone_number === "The phone number entered is not valid."
       ) {
-        setError("Die eingegebene Telefonnummer ist ungültig.");
+        toast.error("Die eingegebene Telefonnummer ist ungültig.");
         return;
       }
 
@@ -108,14 +108,14 @@ export default function Register() {
         err.response?.data?.company_website?.[0] &&
         err.response.data.company_website[0] === "Enter a valid URL."
       ) {
-        setError("Geben Sie eine gültige URL ein.");
+        toast.error("Geben Sie eine gültige URL ein.");
         return;
       }
 
       if (err instanceof Error) {
-        setError(err.message || "Ein Fehler ist aufgetreten.");
+        toast.error(err.message || "Ein Fehler ist aufgetreten.");
       } else {
-        setError("Ein unbekannter Fehler ist aufgetreten.");
+        toast.error("Ein unbekannter Fehler ist aufgetreten.");
       }
     } finally {
       setLoading(false);
@@ -126,7 +126,6 @@ export default function Register() {
     <div className="bg-primary flex flex-col items-center justify-center px-4 min-h-screen p-12">
       <h1 className="text-[46px] font-bold mb-6 text-white">Registrierung</h1>
       <div className="w-full max-w-[960px] bg-white/10 border-[3px] border-[rgba(255,255,255,0.06)] rounded-[44px] p-8">
-        {error && <div className="text-red-600 mb-6">{error}</div>}
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
           <Input
             label="Vorname"
