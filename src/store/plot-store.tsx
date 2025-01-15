@@ -1,18 +1,18 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { PlotType } from '../types/plot-types';
+import { PlotType, PlotAnalyseDetails } from '../types/plot-types';
 
 type PlotState = {
   plot: PlotType | null;
-  plotAnalyseDetails: null | null;
+  plotAnalyseDetails: PlotAnalyseDetails | null;
   basketPlots: PlotType[];
   plots: PlotType[];
   plotId: string | null;
 
   setPlot: (plot: PlotType) => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   setPlotAnalyseDetails: (plot: any) => void;
-  setBasketPlots: (plot: PlotType) => void;
+  setBasketPlots: (plot: any[]) => void;
   setPlots: (plots: PlotType[]) => void;
   setPlotId: (plotId: string) => void;
   addPlotToList: (plot: PlotType) => void;
@@ -45,13 +45,13 @@ const usePlotStore = create<PlotState>()(
         }));
       },
 
-      setBasketPlots: (updatePlot) => {
-        set((state) => ({
-          basketPlots: state.basketPlots.map((plot) =>
-            String(plot.id) === String(updatePlot.id)
-              ? { ...plot, ...updatePlot }
-              : plot
-          ),
+      setBasketPlots: (basketItems) => {
+        const items = basketItems.map((item) => {
+          const { parcel, ...rest } = item;
+          return { ...rest, ...parcel };
+        });
+        set(() => ({
+          basketPlots: items,
         }));
       },
 

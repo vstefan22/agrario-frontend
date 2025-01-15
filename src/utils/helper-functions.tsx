@@ -20,13 +20,16 @@ export const sortData = (
 
   switch (sortOption) {
     case 'Sortieren nach Eignung':
-      return [...items].sort((a, b) => a.land_use.localeCompare(b.land_use));
+      return items;
+    // return [...items].sort((a, b) => a.land_use.localeCompare(b.land_use));
     case 'Sortieren nach Bundesland':
       return [...items].sort((a, b) =>
         a.state_name.localeCompare(b.state_name)
       );
     case 'Sortieren nach Größe':
-      return [...items].sort((a, b) => a.plot_number_main - b.plot_number_main);
+      return [...items].sort(
+        (a, b) => a.area_square_meters - b.area_square_meters
+      );
     default:
       return items;
   }
@@ -38,11 +41,13 @@ export const filterDataRange = (
 ): PlotType[] => {
   const filteredItems = items.filter((item) => {
     return (
-      item.plot_number_main >= range[0] && item.plot_number_main <= range[1]
+      item.area_square_meters >= range[0] && item.area_square_meters <= range[1]
     );
   });
 
-  return filteredItems.sort((a, b) => a.plot_number_main - b.plot_number_main);
+  return filteredItems.sort(
+    (a, b) => a.area_square_meters - b.area_square_meters
+  );
 };
 
 export const filterPlotsSearchData = (
@@ -64,9 +69,10 @@ export const sortPlotsSearchData = (
 
   switch (sortOption) {
     case 'Sortieren nach Eignung':
-      return [...items].sort((a, b) =>
-        a.parcel.land_use.localeCompare(b.parcel.land_use)
-      );
+      // return [...items].sort((a, b) =>
+      //   a.parcel.land_use.localeCompare(b.parcel.land_use)
+      // );
+      return items;
     case 'Sortieren nach Bundesland':
       return [...items].sort((a, b) =>
         a.parcel.state_name.localeCompare(b.parcel.state_name)
@@ -118,9 +124,10 @@ export const sortActiveAuctionsData = (
 
   switch (sortOption) {
     case 'Sortieren nach Eignung':
-      return [...items].sort((a, b) =>
-        a.parcels[0].land_use.localeCompare(b.parcels[0].land_use)
-      );
+      // return [...items].sort((a, b) =>
+      //   a.parcels[0].land_use.localeCompare(b.parcels[0].land_use)
+      // );
+      return items;
     case 'Sortieren nach Bundesland':
       return [...items].sort((a, b) =>
         a.parcels[0].state_name.localeCompare(b.parcels[0].state_name)

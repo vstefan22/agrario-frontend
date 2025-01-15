@@ -5,14 +5,22 @@ export type PlotType = {
   municipality_name: string;
   district_name: string;
   cadastral_area: string;
-  cadastral_sector: string;
+  cadastral_parcel: string;
   land_use: string;
-  plot_number_main: number;
+  area_square_meters: number;
   plot_number_secondary: string;
   image: string;
   analyzePlus: string;
 };
 
+export type PlotAnalyseDetails = {
+  number_of_items: number;
+  cost_per_item: string;
+  sum_of_items: string;
+  tax_in_percent: string;
+  tax_amount: string;
+  subtotal: string;
+};
 export type PlotDetailsType = {
   id: string;
   state_name: string;
@@ -20,9 +28,9 @@ export type PlotDetailsType = {
   municipality_name: string;
   district_name: string;
   cadastral_area: string;
-  cadastral_sector: string;
+  cadastral_parcel: string;
   land_use: string;
-  plot_number_main: number;
+  // area_square_meters: number;
   image: string;
   analyzePlus: string;
   infrastructure: string;
@@ -36,9 +44,9 @@ export type PlotOfferType = {
   municipality_name: string;
   district_name: string;
   cadastral_area: string;
-  cadastral_sector: string;
+  cadastral_parcel: string;
   land_use: string;
-  plot_number_main: number;
+  area_square_meters: number;
   image: string;
 };
 
@@ -47,10 +55,11 @@ export type PlotSearchType = {
   state_name: string;
   district_name: string;
   land_use: string;
-  plot_number_main: number;
+  area_square_meters: number;
   image: string;
   infrastructure: string;
   evaluation: string;
+  parcel: PlotDetailsType;
 };
 
 export type PlotAnalysePlusType = {
@@ -60,9 +69,9 @@ export type PlotAnalysePlusType = {
   municipality_name: string;
   district_name: string;
   cadastral_area: string;
-  cadastral_sector: string;
+  cadastral_parcel: string;
   land_use: string;
-  plot_number_main: number;
+  area_square_meters: number;
 };
 
 export type ActiveAuctionsType = {
@@ -72,9 +81,9 @@ export type ActiveAuctionsType = {
   municipality_name: string;
   district_name: string;
   cadastral_area: string;
-  cadastral_sector: string;
+  cadastral_parcel: string;
   land_use: string;
-  plot_number_main: number;
+  area_square_meters: number;
   image: string;
   analyzePlus: string;
   infrastructure: string;
@@ -87,7 +96,7 @@ export type PlotSearchData = {
   municipality_name: string;
   district_name: string;
   cadastral_area: string;
-  cadastral_sector: string;
+  cadastral_parcel: string;
 };
 
 export type RegisteredPlotType = {

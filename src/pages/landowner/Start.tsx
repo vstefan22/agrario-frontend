@@ -1,36 +1,38 @@
-import { useNavigate } from 'react-router-dom';
-import ActionCard from '../../components/start/ActionCard';
-import cardImg1 from '../../assets/images/card-img1.png';
-import cardImg2 from '../../assets/images/card-img-2.png';
+import { useNavigate } from "react-router-dom";
+import ActionCard from "../../components/start/ActionCard";
+import cardImg1 from "../../assets/images/card-img1.png";
+import cardImg2 from "../../assets/images/card-img-2.png";
+import useAuthStore from "../../store/auth-store";
 
 const StartLandowner = () => {
   const navigate = useNavigate();
+  const { user } = useAuthStore();
 
   return (
-    <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
-      <h1 className='text-[32px] font-bold text-black-muted mb-6'>
-        Willkommen, Alexander
+    <div className="bg-gray-100 min-h-screen flex flex-col px-7 pt-4">
+      <h1 className="text-[32px] font-bold text-black-muted mb-6">
+        Willkommen, {user?.first_name}
       </h1>
 
-      <div className='flex space-x-8'>
+      <div className="flex space-x-8">
         <ActionCard
-          buttonText='Erste Schritte'
-          videoSrc='https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm'
+          buttonText="Erste Schritte"
+          videoSrc="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm"
           isVideo
           onClick={() => {}}
         />
         <ActionCard
-          buttonText='Neues Flurstuckanlegen'
+          buttonText="Neues Flurstuckanlegen"
           imageSrc={cardImg1}
           onClick={() => {
-            navigate('/landowner/new-plot');
+            navigate("/landowner/new-plot");
           }}
         />
         <ActionCard
-          buttonText='Profil vervollständigen'
+          buttonText="Profil vervollständigen"
           imageSrc={cardImg2}
           onClick={() => {
-            navigate('/landowner/profile');
+            navigate("/landowner/profile");
           }}
         />
       </div>

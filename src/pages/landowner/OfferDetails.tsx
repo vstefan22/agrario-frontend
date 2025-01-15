@@ -1,37 +1,31 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import GenericList from '../../components/common/GenericList';
-import DetailsItem from '../../components/landowner/my-plots/DetailsItem';
-import DatePicker from '../../components/common/DatePicker';
-import Select from '../../components/common/Select';
-import Checkbox from '../../components/common/Checkbox';
-import TextArea from '../../components/common/TextArea';
-import UploadFile from '../../components/common/UploadFile';
-import Button from '../../components/common/Button';
-import useOfferStore from '../../store/offer-store';
-import useOffers from '../../hooks/offer-hook';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import GenericList from "../../components/common/GenericList";
+import DetailsItem from "../../components/landowner/my-plots/DetailsItem";
+import DatePicker from "../../components/common/DatePicker";
+import Select from "../../components/common/Select";
+import Checkbox from "../../components/common/Checkbox";
+import TextArea from "../../components/common/TextArea";
+import UploadFile from "../../components/common/UploadFile";
+import Button from "../../components/common/Button";
+import useOfferStore from "../../store/offer-store";
+import useOffers from "../../hooks/offer-hook";
 import {
   preferredRegionality,
   shareholderModel,
   utilization,
   optionsMap,
-} from '../../constants/select-options';
-import { OfferType } from '../../types/offer-types';
-import { detailsData } from '../../../mockData';
-import { validateOfferDetailForm } from '../../utils/helper-functions';
+} from "../../constants/select-options";
+import { OfferType } from "../../types/offer-types";
+import { detailsData } from "../../../mockData";
+import { validateOfferDetailForm } from "../../utils/helper-functions";
 
 const OfferDetails = () => {
   const navigate = useNavigate();
   const { patchOffer, deactivateOffer } = useOffers();
-  const {
-    offer,
-    offerId,
-    updateOffer,
-    updateOfferToList,
-    removeOffer,
-    removeOfferFromList,
-  } = useOfferStore();
+  const { offer, offerId, updateOffer, updateOfferToList, removeOffer, removeOfferFromList } =
+    useOfferStore();
   const [formData, setFormData] = useState<OfferType>({
     available_from: offer?.available_from,
     utilization: offer?.utilization,
@@ -58,22 +52,19 @@ const OfferDetails = () => {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
-    const checked =
-      type === 'checkbox' ? (e.target as HTMLInputElement).checked : undefined;
+    const checked = type === "checkbox" ? (e.target as HTMLInputElement).checked : undefined;
 
     setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: type === "checkbox" ? checked : value,
     }));
 
     if (errors[name]) {
       setErrors((prev) => ({
         ...prev,
-        [name]: '',
+        [name]: "",
       }));
     }
   };
@@ -86,7 +77,7 @@ const OfferDetails = () => {
     if (errors.available_from) {
       setErrors((prev) => ({
         ...prev,
-        available_from: '',
+        available_from: "",
       }));
     }
   };
@@ -99,7 +90,7 @@ const OfferDetails = () => {
     if (errors[name]) {
       setErrors((prev) => ({
         ...prev,
-        [name]: '',
+        [name]: "",
       }));
     }
   };
@@ -119,28 +110,19 @@ const OfferDetails = () => {
     if (isFormValidate) {
       const formDataSend = new FormData();
       formDataSend.append(
-        'available_from',
-        formData.available_from ? formData.available_from.toISOString() : ''
+        "available_from",
+        formData.available_from ? formData.available_from.toISOString() : ""
       );
       if (formData.utilization)
-        formDataSend.append(
-          'utilization',
-          optionsMap[formData.utilization] || ''
-        );
+        formDataSend.append("utilization", optionsMap[formData.utilization] || "");
       if (formData.preferred_regionality)
         formDataSend.append(
-          'preferred_regionality',
-          optionsMap[formData.preferred_regionality] || ''
+          "preferred_regionality",
+          optionsMap[formData.preferred_regionality] || ""
         );
       if (formData.shareholder_model)
-        formDataSend.append(
-          'shareholder_model',
-          optionsMap[formData.shareholder_model] || ''
-        );
-      formDataSend.append(
-        'important_remarks',
-        formData.important_remarks || ''
-      );
+        formDataSend.append("shareholder_model", optionsMap[formData.shareholder_model] || "");
+      formDataSend.append("important_remarks", formData.important_remarks || "");
       const criteria = {
         no_usage_restriction: formData.no_usage_restriction,
         wind_energy_restriction: formData.wind_energy_restriction,
@@ -148,27 +130,18 @@ const OfferDetails = () => {
         energy_storage_restriction: formData.energy_storage_restriction,
         eco_enhancements_restriction: formData.eco_enhancements_restriction,
       };
-      formDataSend.append('criteria', JSON.stringify(criteria));
+      formDataSend.append("criteria", JSON.stringify(criteria));
       if (formData.hide_from_search)
-        formDataSend.append(
-          'hide_from_search',
-          formData.hide_from_search.toString()
-        );
+        formDataSend.append("hide_from_search", formData.hide_from_search.toString());
       if (formData.documents.length > 0) {
         formData.documents.forEach((file) => {
-          formDataSend.append('documents', file);
+          formDataSend.append("documents", file);
         });
       }
-      formDataSend.append(
-        'is_owner_or_authorized',
-        formData.is_owner_or_authorized.toString()
-      );
-      formDataSend.append(
-        'accept_privacy_policy',
-        formData.accept_privacy_policy.toString()
-      );
-      formDataSend.append('accept_terms', formData.accept_terms.toString());
-      formDataSend.append('other', formData.other.toString());
+      formDataSend.append("is_owner_or_authorized", formData.is_owner_or_authorized.toString());
+      formDataSend.append("accept_privacy_policy", formData.accept_privacy_policy.toString());
+      formDataSend.append("accept_terms", formData.accept_terms.toString());
+      formDataSend.append("other", formData.other.toString());
 
       patchOffer(offerId!, formDataSend);
       updateOffer(offerId!, formData);
@@ -194,214 +167,197 @@ const OfferDetails = () => {
       await deactivateOffer(offerId!);
       removeOffer(offerId!);
       removeOfferFromList(offerId!);
-      toast.success('Das Angebot wurde erfolgreich deaktiviert.');
+      toast.success("Das Angebot wurde erfolgreich deaktiviert.");
     } catch (err) {
-      toast.error(
-        'Es ist ein Fehler bei der Deaktivierung des Angebots aufgetreten.'
-      );
+      toast.error("Es ist ein Fehler bei der Deaktivierung des Angebots aufgetreten.");
       console.error(err);
     }
   };
 
   return (
-    <div className='bg-gray-lightest min-h-screen flex flex-col px-7 p-4'>
-      <h1 className='text-[32px] font-bold text-black-muted mb-4'>
-        Detailansicht Angebot
-      </h1>
+    <div className="bg-gray-lightest min-h-screen flex flex-col px-7 p-4">
+      <h1 className="text-[32px] font-bold text-black-muted mb-4">Detailansicht Angebot</h1>
       <GenericList
         data={detailsData}
-        renderItem={(warenkorb) => (
-          <DetailsItem key={warenkorb.id} data={warenkorb} />
-        )}
+        renderItem={(warenkorb) => <DetailsItem key={warenkorb.id} data={warenkorb} />}
       />
 
-      <h1 className='text-black-muted text-[32px] mt-8'>Ihre Kriterien</h1>
-      <p className='text-gray-dark-100 w-[40%]'>
-        There are many variations of passages of Lorem Ipsum available, but the
-        majority have suffered alteration in some form.
+      <h1 className="text-black-muted text-[32px] mt-8">Ihre Kriterien</h1>
+      <p className="text-gray-dark-100 w-[40%]">
+        There are many variations of passages of Lorem Ipsum available, but the majority have
+        suffered alteration in some form.
       </p>
       <form onSubmit={handleSubmit}>
-        <div className='mt-8 grid grid-cols-2 gap-y-12 w-[70%]'>
+        <div className="mt-8 grid grid-cols-2 gap-y-12 w-[70%]">
           <DatePicker
-            label='Grundstück verfügbarab'
+            label="Grundstück verfügbarab"
             required
             value={formData.available_from}
             onChange={handleDateChange}
-            placeholder='DD/MM/YY'
-            onEdit={() => toggleEditMode('datePicker')}
-            onSave={() => handleSave('datePicker')}
+            placeholder="DD/MM/YY"
+            onEdit={() => toggleEditMode("datePicker")}
+            onSave={() => handleSave("datePicker")}
             isEditable={editMode.datePicker}
-            divClassName='mt-auto'
+            divClassName="mt-auto"
           />
           {errors.available_from && (
-            <span className='text-red-500 text-sm'>
-              {errors.available_from}
-            </span>
+            <span className="text-red-500 text-sm">{errors.available_from}</span>
           )}
           <Select
-            name='utilization'
-            label='Sind Sie offen für Verpachtung oder für Verkauf'
+            name="utilization"
+            label="Sind Sie offen für Verpachtung oder für Verkauf"
             required
-            onEdit={() => toggleEditMode('utilization')}
-            onSave={() => handleSave('utilization')}
+            onEdit={() => toggleEditMode("utilization")}
+            onSave={() => handleSave("utilization")}
             isEditable={editMode.utilization}
             onChange={handleSelectChange}
             options={utilization}
             value={formData.utilization}
-            divClassName='mt-auto'
-            labelClassName='mb-7'
-            divWidthClass='w-[420px]'
+            divClassName="mt-auto"
+            labelClassName="mb-7"
+            divWidthClass="w-[420px]"
           />
-          {errors.utilization && (
-            <span className='text-red-500 text-sm'>{errors.utilization}</span>
-          )}
+          {errors.utilization && <span className="text-red-500 text-sm">{errors.utilization}</span>}
           <Select
-            name='preferred_regionality'
-            label='Regionalität des Projektentwicklers'
+            name="preferred_regionality"
+            label="Regionalität des Projektentwicklers"
             required
-            onEdit={() => toggleEditMode('preferred_regionality')}
-            onSave={() => handleSave('preferred_regionality')}
+            onEdit={() => toggleEditMode("preferred_regionality")}
+            onSave={() => handleSave("preferred_regionality")}
             isEditable={editMode.preferred_regionality}
             onChange={handleSelectChange}
             options={preferredRegionality}
             value={formData.preferred_regionality}
-            divClassName='mt-auto'
-            divWidthClass='w-[420px]'
+            divClassName="mt-auto"
+            divWidthClass="w-[420px]"
           />
           {errors.preferred_regionality && (
-            <span className='text-red-500 text-sm'>
-              {errors.preferred_regionality}
-            </span>
+            <span className="text-red-500 text-sm">{errors.preferred_regionality}</span>
           )}
           <Select
-            name='shareholder_model'
-            label='Sind Sie offen für Verpachtung oder für Verkauf'
+            name="shareholder_model"
+            label="Sind Sie offen für Verpachtung oder für Verkauf"
             required
-            onEdit={() => toggleEditMode('shareholder_model')}
-            onSave={() => handleSave('shareholder_model')}
+            onEdit={() => toggleEditMode("shareholder_model")}
+            onSave={() => handleSave("shareholder_model")}
             isEditable={editMode.shareholder_model}
             onChange={handleSelectChange}
             options={shareholderModel}
             value={formData.shareholder_model}
-            divClassName='mt-auto'
-            labelClassName='mb-7'
-            divWidthClass='w-[420px]'
+            divClassName="mt-auto"
+            labelClassName="mb-7"
+            divWidthClass="w-[420px]"
           />
           {errors.shareholder_model && (
-            <span className='text-red-500 text-sm'>
-              {errors.preferred_regionality}
-            </span>
+            <span className="text-red-500 text-sm">{errors.preferred_regionality}</span>
           )}
         </div>
 
-        <div className='mt-8 text-primary text-[16px] space-y-6'>
-          <p>
-            Wollen Sie einzelne Nutzungsmöglichkeiten für Ihr Grundstück
-            ausschließen?
-          </p>
-          <div className='grid grid-cols-2 gap-y-4 w-[60%]'>
+        <div className="mt-8 text-primary text-[16px] space-y-6">
+          <p>Wollen Sie einzelne Nutzungsmöglichkeiten für Ihr Grundstück ausschließen?</p>
+          <div className="grid grid-cols-2 gap-y-4 w-[60%]">
             <Checkbox
-              label='Keine Auschluss von Nutzungsmöglichkeiten'
-              variant='primary'
-              name='no_usage_restriction'
+              label="Keine Auschluss von Nutzungsmöglichkeiten"
+              variant="primary"
+              name="no_usage_restriction"
               onChange={handleChange}
               checked={formData.no_usage_restriction}
             />
             <Checkbox
-              label='Keine Nutzung von Windenergie'
-              variant='primary'
-              name='wind_energy_restriction'
+              label="Keine Nutzung von Windenergie"
+              variant="primary"
+              name="wind_energy_restriction"
               onChange={handleChange}
               checked={formData.wind_energy_restriction}
             />
             <Checkbox
-              label='Keine Nutzung von Solarenergie'
-              variant='primary'
-              name='solar_energy_restriction'
+              label="Keine Nutzung von Solarenergie"
+              variant="primary"
+              name="solar_energy_restriction"
               onChange={handleChange}
               checked={formData.solar_energy_restriction}
             />
             <Checkbox
-              label='Keine Nutzung von Energiespeicher'
-              variant='primary'
-              name='energy_storage_restriction'
+              label="Keine Nutzung von Energiespeicher"
+              variant="primary"
+              name="energy_storage_restriction"
               onChange={handleChange}
               checked={formData.energy_storage_restriction}
             />
             <Checkbox
-              label='Keine Nutzung für ökologische Aufwertungen'
-              variant='primary'
-              name='eco_enhancements_restriction'
+              label="Keine Nutzung für ökologische Aufwertungen"
+              variant="primary"
+              name="eco_enhancements_restriction"
               onChange={handleChange}
               checked={formData.eco_enhancements_restriction}
             />
           </div>
         </div>
 
-        <div className='mt-8 space-y-6'>
-          <p className='text-black-muted text-[16px] w-[524px]'>
-            There are many variations of passages of Lorem Ipsum available, but
-            the majority have suffered alteration in some form.
+        <div className="mt-8 space-y-6">
+          <p className="text-black-muted text-[16px] w-[524px]">
+            There are many variations of passages of Lorem Ipsum available, but the majority have
+            suffered alteration in some form.
           </p>
           <TextArea
-            placeholder='Ihre Nachricht an uns'
+            placeholder="Ihre Nachricht an uns"
             onChange={handleChange}
-            label=''
-            id='important_remarks'
-            name='important_remarks'
+            label=""
+            id="important_remarks"
+            name="important_remarks"
             value={formData.important_remarks}
           />
 
           <UploadFile onFilesChange={handleFilesChange} />
 
           <Checkbox
-            label='Ja, ich bestätige Eigentümer des Grundstückes oder von den Eigentümern beauftragt oder mandatiert zu sein .'
-            variant='primary'
-            labelClassName='w-full'
-            name='is_owner_or_authorized'
+            label="Ja, ich bestätige Eigentümer des Grundstückes oder von den Eigentümern beauftragt oder mandatiert zu sein ."
+            variant="primary"
+            labelClassName="w-full"
+            name="is_owner_or_authorized"
             checked={formData.is_owner_or_authorized}
             onChange={handleChange}
           />
           <Checkbox
-            label='Ja, ich akzeptiere die Datenschutzbedingungen'
-            variant='primary'
-            name='accept_privacy_policy'
+            label="Ja, ich akzeptiere die Datenschutzbedingungen"
+            variant="primary"
+            name="accept_privacy_policy"
             checked={formData.accept_privacy_policy}
             onChange={handleChange}
           />
           <Checkbox
-            label='Ja, ich akzeptiere die AGBs'
-            variant='primary'
-            name='accept_terms'
+            label="Ja, ich akzeptiere die AGBs"
+            variant="primary"
+            name="accept_terms"
             checked={formData.accept_terms}
             onChange={handleChange}
           />
           <Checkbox
-            label='Ja, ich.......'
-            variant='primary'
-            name='other'
+            label="Ja, ich......."
+            variant="primary"
+            name="other"
             checked={formData.other}
             onChange={handleChange}
           />
         </div>
 
-        <div className='flex gap-x-6 mt-8 justify-end'>
+        <div className="flex gap-x-6 mt-8 justify-end">
           <Button
-            variant='blueSecondary'
-            type='button'
-            onClick={() => navigate('..', { relative: 'path' })}
+            variant="blueSecondary"
+            type="button"
+            onClick={() => navigate("..", { relative: "path" })}
           >
             Abbrechen
           </Button>
           <Button
-            variant='blueSecondary'
-            type='button'
-            className='w-[306px]'
+            variant="blueSecondary"
+            type="button"
+            className="w-[306px]"
             onClick={handleDeactivateOffer}
           >
             Vermarktungsanfrage zurückziehen
           </Button>
-          <Button variant='bluePrimary' type='submit' className='w-[306px]'>
+          <Button variant="bluePrimary" type="submit" className="w-[306px]">
             Vermarktungsanfrage absenden
           </Button>
         </div>

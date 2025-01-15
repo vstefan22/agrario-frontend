@@ -1,56 +1,49 @@
-import { useNavigate } from 'react-router-dom';
-import Button from '../../components/common/Button';
-import GenericList from '../../components/common/GenericList';
-import { thankYouMarketingData } from '../../../mockData';
-import ThankYouMarketingItem from '../../components/landowner/my-plots/ThankYouMarketingItem';
+import { useNavigate } from "react-router-dom";
+import Button from "../../components/common/Button";
+import ThankYouMarketingItem from "../../components/landowner/my-plots/ThankYouMarketingItem";
+import usePlotStore from "../../store/plot-store";
 
 const ThankYouMarketingRequest = () => {
   const navigate = useNavigate();
+  const { plot } = usePlotStore();
+  console.log(plot);
 
   function handleGoToMyOffers() {
-    navigate('/landowner/my-offers');
-    console.log('go to MyOffers clicked.');
+    navigate("/landowner/my-offers");
+    console.log("go to MyOffers clicked.");
   }
 
   function handleRequestAdditionalOffer() {
     navigate(-1);
-    console.log('request additional offer clicked.');
+    console.log("request additional offer clicked.");
   }
 
   return (
-    <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
-      <h1 className='text-[32px] font-bold text-black-muted mb-8'>
+    <div className="bg-gray-100 min-h-screen flex flex-col px-7 pt-4">
+      <h1 className="text-[32px] font-bold text-black-muted mb-8">
         Vielen Dank für Vermarktungsanfrage
       </h1>
-
-      <GenericList
-        data={thankYouMarketingData}
-        renderItem={(plot) => (
-          <ThankYouMarketingItem key={plot.id} data={plot} />
-        )}
-      />
-
-      <p className='w-[978px] mt-12 text-gray-dark-100'>
-        There are many variations of passages of Lorem Ipsum available, but the
-        majority have suffered alteration in some form, by injected humour, or
-        randomised words which don't look even slightly believable. If you are
-        going to use a passage of Lorem Ipsum, you need to be sure there isn't
-        anything embarrassing.
+      {plot && <ThankYouMarketingItem key={plot?.id} data={plot} />}
+      <p className="w-[978px] mt-12 text-gray-dark-100">
+        There are many variations of passages of Lorem Ipsum available, but the majority have
+        suffered alteration in some form, by injected humour, or randomised words which don't look
+        even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be
+        sure there isn't anything embarrassing.
       </p>
 
-      <div className='flex gap-4 justify-end mt-8'>
+      <div className="flex gap-4 justify-end mt-8">
         <Button
-          type='button'
-          variant='blueSecondary'
-          className='w-[354px] whitespace-nowrap'
+          type="button"
+          variant="blueSecondary"
+          className="w-[354px] whitespace-nowrap"
           onClick={handleGoToMyOffers}
         >
           Zurück zur Übersicht meiner Angebote
         </Button>
         <Button
-          type='button'
-          variant='bluePrimary'
-          className='w-[274px] whitespace-nowrap'
+          type="button"
+          variant="bluePrimary"
+          className="w-[274px] whitespace-nowrap"
           onClick={handleRequestAdditionalOffer}
         >
           Weitere Angebote einholen

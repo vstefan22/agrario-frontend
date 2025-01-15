@@ -10,9 +10,13 @@ export type DiscountType = {
 };
 
 export type PaymentType = {
-  parcel_id: number | string;
-  amount: number;
+  payment_type: string;
+  amount: string | undefined;
   currency: string;
+  metadata: {
+    report_id: string;
+    user_id: string;
+  };
 };
 
 export type PackagePaymentType = {

@@ -1,12 +1,12 @@
 /// <reference types="@types/google.maps" />
 
-import { useEffect, useRef, useState } from 'react';
-import { ParcelPolygon } from '../../types/google-maps-types';
+import { useEffect, useRef, useState } from "react";
+import { ParcelPolygon } from "../../types/google-maps-types";
 
 const MAP_DISPLAY_OPTIONS: google.maps.PolygonOptions = {
-  fillColor: '#206f6a',
+  fillColor: "#206f6a",
   fillOpacity: 0.65,
-  strokeColor: '#104f50',
+  strokeColor: "#104f50",
   strokeOpacity: 0.9,
   strokeWeight: 4,
 };
@@ -16,32 +16,38 @@ type GoogleMapProps = {
   mapSearchTerm?: string;
 };
 
-const GoogleMap = ({
-  polygonsData = [],
-  onParcelClick,
-  mapSearchTerm,
-}: GoogleMapProps) => {
+const GoogleMap = ({ polygonsData = [], onParcelClick, mapSearchTerm }: GoogleMapProps) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
-  const [infoWindow, setInfoWindow] = useState<google.maps.InfoWindow | null>(
-    null
-  );
-
+  const [infoWindow, setInfoWindow] = useState<google.maps.InfoWindow | null>(null);
+  console.log(polygonsData);
   useEffect(() => {
-    if (!mapRef.current) return;
+    const initializeMap = () => {
+      if (!mapRef.current || !window.google) return;
 
-    const createdMap = new google.maps.Map(mapRef.current, {
-      center: { lat: 52.52, lng: 13.4 },
-      zoom: 13,
-      mapTypeId: 'hybrid',
-      streetViewControl: false,
-      mapTypeControl: false,
-      panControl: false,
-      rotateControl: false,
-    });
+      const createdMap = new google.maps.Map(mapRef.current, {
+        center: { lat: 52.52, lng: 13.4 },
+        zoom: 13,
+        mapTypeId: "hybrid",
+        streetViewControl: false,
+        mapTypeControl: false,
+        panControl: false,
+        rotateControl: false,
+      });
 
-    setMap(createdMap);
-    setInfoWindow(new google.maps.InfoWindow());
+      setMap(createdMap);
+      setInfoWindow(new google.maps.InfoWindow());
+    };
+    if (!window.google) {
+      const script = document.createElement("script");
+      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDLXIrJcM43n4raoIJTR2Jd7EbL5mFIYJs&libraries=places`;
+      script.async = true;
+      script.defer = true;
+      script.onload = initializeMap;
+      document.body.appendChild(script);
+    } else {
+      initializeMap();
+    }
   }, []);
 
   useEffect(() => {
@@ -52,7 +58,7 @@ const GoogleMap = ({
 
     const request: google.maps.places.TextSearchRequest = {
       query: mapSearchTerm,
-      region: 'de',
+      region: "de",
     };
 
     service.textSearch(request, (results, status) => {
@@ -121,21 +127,21 @@ const GoogleMap = ({
     if (!map || polygonsData.length === 0) return;
 
     polygonsData.forEach((parcel) => {
-      const { coordinates } = parcel;
-
-      const polygon = new google.maps.Polygon({
-        paths: coordinates,
+      const { polygon } = parcel;
+      console.log(polygon);
+      const polygonObj = new google.maps.Polygon({
+        paths: polygon,
         ...MAP_DISPLAY_OPTIONS,
       });
-      polygon.setMap(map);
+      polygonObj.setMap(map);
 
-      polygon.addListener('mouseover', () => {
-        polygon.setOptions({ strokeWeight: 6 });
+      polygonObj.addListener("mouseover", () => {
+        polygonObj.setOptions({ strokeWeight: 6 });
       });
-      polygon.addListener('mouseout', () => {
-        polygon.setOptions({ strokeWeight: 4 });
+      polygonObj.addListener("mouseout", () => {
+        polygonObj.setOptions({ strokeWeight: 4 });
       });
-      polygon.addListener('click', (event: google.maps.MapMouseEvent) => {
+      polygonObj.addListener("click", (event: google.maps.MapMouseEvent) => {
         if (!infoWindow || !event.latLng) return;
 
         infoWindow.setPosition(event.latLng);
@@ -148,9 +154,7 @@ const GoogleMap = ({
             Municipality: ${parcel.municipality_name}<br/>
             Cadastral Area: ${parcel.cadastral_area}<br/>
             Cadastral Parcel: ${parcel.cadastral_parcel}<br/>
-            Lat/Lng: ${event.latLng.lat().toFixed(5)}, ${event.latLng
-          .lng()
-          .toFixed(5)}
+            Lat/Lng: ${event.latLng.lat().toFixed(5)}, ${event.latLng.lng().toFixed(5)}
           </div>
         `);
         infoWindow.open(map);
@@ -171,9 +175,9 @@ const GoogleMap = ({
     <div
       ref={mapRef}
       style={{
-        width: '100%',
-        height: '600px',
-        borderRadius: '8px',
+        width: "100%",
+        height: "600px",
+        borderRadius: "8px",
       }}
     />
   );

@@ -7,11 +7,10 @@ import usePlotStore from '../../store/plot-store';
 import usePlots from '../../hooks/plot-hook';
 import usePayments from '../../hooks/payment-hook';
 
-import { analysePlusValues } from '../../../mockData';
-
 const AnalysePlusCart = () => {
   const navigate = useNavigate();
-  const { basketPlots, removePlotAnalyseFromList, plot } = usePlotStore();
+  const { basketPlots, removePlotAnalyseFromList, plotAnalyseDetails } =
+    usePlotStore();
   const { applyDiscount, deletePlotFromBasket } = usePlots();
   const { createPayment } = usePayments();
 
@@ -19,14 +18,20 @@ const AnalysePlusCart = () => {
     navigate('/landowner/my-plots');
   };
 
+  console.log('BASKET PLOTS', basketPlots);
   const handleStripeCheckout = async () => {
     // TODO: use actual data for payment checkout
     const paymentBody = {
-      parcel_id: plot!.id,
-      amount: 100,
-      currency: 'euro',
+      payment_type: 'analyse_plus',
+      amount: plotAnalyseDetails?.subtotal,
+      currency: 'eur',
+      metadata: {
+        report_id: '47fa6b04-8f21-497c-943e-2cef54e93f11',
+        user_id: '41d0c1bc-04ad-4ceb-b8e1-eea0b0233533',
+      },
     };
 
+    // TODO: promeniti paymentBody type nakon finalnog backenda
     await createPayment(paymentBody);
   };
 
@@ -106,35 +111,25 @@ const AnalysePlusCart = () => {
         <div className='bg-white rounded-xl shadow-md px-6 py-4 text-right flex flex-col gap-4 text-gray-dark-200'>
           <div className='flex flex-col space-y-3 mb-3'>
             <p>
-              Number of Items: <strong>{analysePlusValues.items}</strong>
+              Number of Items:{' '}
+              <strong>{plotAnalyseDetails?.number_of_items}</strong>
             </p>
             <p>
               Cost per Item:{' '}
-              <strong>
-                {analysePlusValues.costPerItem.toFixed(2).replace('.', ',')} €
-              </strong>
+              <strong>{plotAnalyseDetails?.cost_per_item}</strong>
             </p>
             <p>
-              Sum of items:{' '}
-              <strong>
-                {analysePlusValues.sumOfItems.toFixed(2).replace('.', ',')} €
-              </strong>
+              Sum of items: <strong>{plotAnalyseDetails?.sum_of_items}</strong>
             </p>
             <p>
               Tax in percent:{' '}
-              <strong>{analysePlusValues.taxPercent}% MWSt </strong>
+              <strong>{plotAnalyseDetails?.tax_in_percent} </strong>
             </p>
             <p>
-              Tax amount:{' '}
-              <strong>
-                {analysePlusValues.taxAmount.toFixed(2).replace('.', ',')} €
-              </strong>
+              Tax amount: <strong>{plotAnalyseDetails?.tax_amount}</strong>
             </p>
             <p className='text-[14px]'>
-              Subtotal:{' '}
-              <strong>
-                {analysePlusValues.subtotal.toFixed(2).replace('.', ',')} €
-              </strong>
+              Subtotal: <strong>{plotAnalyseDetails?.subtotal}</strong>
             </p>
           </div>
 
@@ -159,10 +154,7 @@ const AnalysePlusCart = () => {
 
           <div className='flex flex-col mt-3'>
             <p>
-              Total:{' '}
-              <strong>
-                {analysePlusValues.total.toFixed(2).replace('.', ',')} €
-              </strong>
+              Total: <strong>{plotAnalyseDetails?.subtotal} €</strong>
             </p>
           </div>
         </div>
