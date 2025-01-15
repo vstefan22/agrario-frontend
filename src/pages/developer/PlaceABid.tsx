@@ -154,6 +154,8 @@ const PlaceABid = () => {
     }
   };
 
+  // console.log(auctionOffer);
+
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
       <h1 className='text-[32px] font-bold text-black-muted'>

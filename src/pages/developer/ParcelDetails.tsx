@@ -10,7 +10,10 @@ const ParcelDetails = () => {
 
   const AddToWatchlist = async () => {
     try {
-      await addPlotToWatchlist(registeredPlot!);
+      await addPlotToWatchlist(
+        registeredPlot!.parcel!.id!.toString(),
+        registeredPlot!
+      );
       updatePlotToMyList(registeredPlot!);
     } catch (err) {
       toast.error(
@@ -19,6 +22,8 @@ const ParcelDetails = () => {
       console.error(err);
     }
   };
+
+  console.log(registeredPlot?.parcel.id.toString());
 
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
@@ -34,8 +39,7 @@ const ParcelDetails = () => {
         </div>
       </div>
       <div className='h-[440px] overflow-y-auto rounded-2xl'>
-        {/* TODO: add registered plot data when show details type is fixed */}
-        <ShowDetailsDeveloper data={[]} />
+        <ShowDetailsDeveloper data={registeredPlot?.parcel} />
       </div>
       <div className='ml-auto mt-8'>
         <Button

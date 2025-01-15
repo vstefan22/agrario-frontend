@@ -22,7 +22,8 @@ const MyAuctions = () => {
   useEffect(() => {
     const fetchMyWatchlist = async () => {
       const data = await getMyAuctionOffers();
-      setMyAuctionOffers(data);
+      console.log('DATA FROM MY AUCTIONS: ', data);
+      setMyAuctionOffers(data.offers);
     };
     fetchMyWatchlist();
   }, [getMyAuctionOffers, setMyAuctionOffers]);
@@ -71,10 +72,10 @@ const MyAuctions = () => {
         {sortedData.length > 0 ? (
           <GenericList
             data={sortedData}
-            renderItem={(plot) => (
+            renderItem={(offer) => (
               <ActiveAuctionsItem
-                key={plot.identifier}
-                data={plot}
+                key={offer.identifier}
+                data={offer}
                 detailsType='myAuction'
               />
             )}

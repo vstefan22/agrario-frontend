@@ -290,6 +290,7 @@ export default function Profile() {
       plan_id: '2',
       payment_method: 'card',
       currency: 'usd',
+      payment_type: 'subscription',
     };
 
     try {
@@ -306,6 +307,7 @@ export default function Profile() {
       plan_id: '3',
       payment_method: 'card',
       currency: 'usd',
+      payment_type: 'subscription',
     };
 
     try {
