@@ -116,20 +116,20 @@ const AnalysePlusCart = () => {
             </p>
             <p>
               Cost per Item:{' '}
-              <strong>{plotAnalyseDetails?.cost_per_item}</strong>
+              <strong>{plotAnalyseDetails?.cost_per_item}€</strong>
             </p>
             <p>
-              Sum of items: <strong>{plotAnalyseDetails?.sum_of_items}</strong>
+              Sum of items: <strong>{plotAnalyseDetails?.sum_of_items}€</strong>
             </p>
             <p>
               Tax in percent:{' '}
-              <strong>{plotAnalyseDetails?.tax_in_percent} </strong>
+              <strong>{plotAnalyseDetails?.tax_in_percent}</strong>
             </p>
             <p>
-              Tax amount: <strong>{plotAnalyseDetails?.tax_amount}</strong>
+              Tax amount: <strong>{plotAnalyseDetails?.tax_amount}€</strong>
             </p>
             <p className='text-[14px]'>
-              Subtotal: <strong>{plotAnalyseDetails?.subtotal}</strong>
+              Subtotal: <strong>{plotAnalyseDetails?.subtotal}€</strong>
             </p>
           </div>
 
