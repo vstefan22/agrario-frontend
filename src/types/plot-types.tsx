@@ -31,10 +31,8 @@ export type PlotDetailsType = {
   cadastral_parcel: string;
   land_use: string;
   // area_square_meters: number;
-  image: string;
+  // image: string;
   analyse_plus: boolean;
-  infrastructure: string;
-  evaluation: string;
 };
 
 export type PlotOfferType = {

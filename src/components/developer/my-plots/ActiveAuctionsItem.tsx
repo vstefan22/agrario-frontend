@@ -42,8 +42,6 @@ const ActiveAuctionsItem: FC<ActiveAuctionsItemProps> = ({
     }
   };
 
-  console.log('Data in Active Auctions Item: ', data);
-
   return (
     <div
       className='w-full bg-white rounded-[18px] p-4'
