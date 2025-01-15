@@ -30,7 +30,7 @@ export type PlotDetailsType = {
   cadastral_area: string;
   cadastral_parcel: string;
   land_use: string;
-  area_square_meters: number;
+  // area_square_meters: number;
   image: string;
   analyzePlus: string;
   infrastructure: string;
@@ -113,7 +113,7 @@ export type RegisteredPlotType = {
     area_square_meters: number;
     created_by: string;
     polygon: {
-      type: "MultiPolygon";
+      type: 'MultiPolygon';
       coordinates: number[][][][];
     };
   };

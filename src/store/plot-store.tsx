@@ -1,6 +1,6 @@
-import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
-import { PlotType, PlotAnalyseDetails } from "../types/plot-types";
+import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
+import { PlotType, PlotAnalyseDetails } from '../types/plot-types';
 
 type PlotState = {
   plot: PlotType | null;
@@ -10,9 +10,9 @@ type PlotState = {
   plotId: string | null;
 
   setPlot: (plot: PlotType) => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   setPlotAnalyseDetails: (plot: any) => void;
-  setBasketPlots: (plot: PlotType[]) => void;
+  setBasketPlots: (plot: any[]) => void;
   setPlots: (plots: PlotType[]) => void;
   setPlotId: (plotId: string) => void;
   addPlotToList: (plot: PlotType) => void;
@@ -47,8 +47,8 @@ const usePlotStore = create<PlotState>()(
 
       setBasketPlots: (basketItems) => {
         const items = basketItems.map((item) => {
-          const { parcel, ...rest } = item; // Destructure parcel and the rest of the object
-          return { ...rest, ...parcel }; // Spread parcel into the parent object
+          const { parcel, ...rest } = item;
+          return { ...rest, ...parcel };
         });
         set(() => ({
           basketPlots: items,
@@ -68,27 +68,37 @@ const usePlotStore = create<PlotState>()(
 
       addPlotToList: (plot) => {
         set((state) => ({
-          plots: [...new Map([plot, ...state.plots].map((plot) => [plot.id, plot])).values()],
+          plots: [
+            ...new Map(
+              [plot, ...state.plots].map((plot) => [plot.id, plot])
+            ).values(),
+          ],
         }));
       },
 
       updatePlotToList: (updatePlot) => {
         set((state) => ({
           plots: state.plots.map((plot) =>
-            String(plot.id) === String(updatePlot.id) ? { ...plot, ...updatePlot } : plot
+            String(plot.id) === String(updatePlot.id)
+              ? { ...plot, ...updatePlot }
+              : plot
           ),
         }));
       },
 
       removePlotFromList: (plotId) => {
         set((state) => ({
-          plots: state.plots.filter((plot) => String(plot.id) !== String(plotId)),
+          plots: state.plots.filter(
+            (plot) => String(plot.id) !== String(plotId)
+          ),
         }));
       },
 
       removePlotAnalyseFromList: (plotId) => {
         set((state) => ({
-          basketPlots: state.basketPlots.filter((plot) => String(plot.id) !== String(plotId)),
+          basketPlots: state.basketPlots.filter(
+            (plot) => String(plot.id) !== String(plotId)
+          ),
         }));
       },
 
@@ -112,7 +122,7 @@ const usePlotStore = create<PlotState>()(
         }),
     }),
     {
-      name: "plot-storage",
+      name: 'plot-storage',
       storage: createJSONStorage(() => localStorage),
     }
   )

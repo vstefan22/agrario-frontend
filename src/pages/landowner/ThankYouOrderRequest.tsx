@@ -1,11 +1,19 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/common/Button';
-import GenericList from '../../components/common/GenericList';
-import ThankYouMarketingItem from '../../components/landowner/my-plots/ThankYouMarketingItem';
-import { analysePlusCartData } from '../../../mockData';
+// import GenericList from '../../components/common/GenericList';
+// import ThankYouMarketingItem from '../../components/landowner/my-plots/ThankYouMarketingItem';
 
 const ThankYouOrderRequest = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchOrderRequestData = async () => {
+      // TODO: add actual backend call to fetch order request data
+    };
+
+    fetchOrderRequestData();
+  }, []);
 
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
@@ -17,12 +25,13 @@ const ThankYouOrderRequest = () => {
         in der Ansicht " Meine Grundstücke" zur Verfügung gestellt
       </p>
 
-      <GenericList
-        data={analysePlusCartData}
+      {/* TODO: uncomment this list when actual data is fetched */}
+      {/* <GenericList
+        data={[]}
         renderItem={(plot) => (
           <ThankYouMarketingItem key={plot.id} data={plot} />
         )}
-      />
+      /> */}
 
       <div className='ml-auto mt-6'>
         <Button
