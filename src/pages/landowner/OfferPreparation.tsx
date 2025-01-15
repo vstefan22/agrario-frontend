@@ -15,7 +15,6 @@ import {
   optionsMap,
 } from '../../constants/select-options';
 import { OfferType } from '../../types/offer-types';
-// import { offerItemData } from "../../../mockData";
 import usePlotStore from '../../store/plot-store';
 import { validateOfferDetailForm } from '../../utils/helper-functions';
 
