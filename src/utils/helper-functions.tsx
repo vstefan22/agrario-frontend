@@ -84,6 +84,9 @@ export const filterPlotSearchDataRange = (
   items: RegisteredPlotDetailsType[],
   range: [number, number]
 ): RegisteredPlotDetailsType[] => {
+  if (!Array.isArray(items)) {
+    return [];
+  }
   const filteredItems = items.filter((item) => {
     return (
       item.parcel.area_square_meters >= range[0] &&
