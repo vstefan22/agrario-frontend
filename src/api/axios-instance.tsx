@@ -1,4 +1,4 @@
-import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
+import axios, { InternalAxiosRequestConfig } from 'axios';
 import useAuthStore from '../store/auth-store';
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
@@ -44,10 +44,12 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
   (response) => response,
-  async (error: AxiosError) => {
+  async (error: any) => {
     const originalRequest = error.config;
     if (
-      error.response?.status === 401 &&
+      error.response?.status === 403 &&
+      error.response?.data &&
+      error.response?.data.error === 'Invalid or expired Firebase token.' &&
       originalRequest &&
       !(originalRequest as any)._retry
     ) {

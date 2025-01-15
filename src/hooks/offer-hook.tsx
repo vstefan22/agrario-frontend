@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import useHttpRequest from './http-request-hook';
 import useAuthStore from '../store/auth-store';
-import { OfferPreparationType } from '../types/offer-types';
+import { OfferPreparationType, OfferType } from '../types/offer-types';
 
 const useOffers = () => {
   const { sendRequest } = useHttpRequest();
@@ -58,7 +58,7 @@ const useOffers = () => {
   );
 
   const patchOffer = useCallback(
-    async (offerId: string, body: OfferPreparationType | FormData) => {
+    async (offerId: string, body: OfferType | FormData) => {
       return await sendRequest(
         `/offers/area_offers/${offerId}/`,
         'PATCH',

@@ -6,7 +6,7 @@ import OfferItem from '../../components/landowner/my-plots/OfferItem';
 import useOffers from '../../hooks/offer-hook';
 import useOfferstore from '../../store/offer-store';
 import { sortOptions } from '../../constants/select-options';
-import { filterData, sortData } from '../../utils/helper-functions';
+import { filterOfferData, sortOfferData } from '../../utils/helper-functions';
 // TODO: remove mock and use actual data
 // import { myOfferData } from '../../../mockData';
 
@@ -41,11 +41,8 @@ function MyOffers() {
     setSearchTerm(e.target.value);
   };
 
-  const filteredData = filterData(offers, searchTerm);
-  const sortedData = sortData(filteredData, filters.sortOption);
-  // TODO: mock data is currently used for testing purposes
-  // remove this console log and use sortedData instead of mock data
-  console.log('sorted data: ', sortedData);
+  const filteredData = filterOfferData(offers, searchTerm);
+  const sortedData = sortOfferData(filteredData, filters.sortOption);
 
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
@@ -75,7 +72,9 @@ function MyOffers() {
         {sortedData.length > 0 ? (
           <GenericList
             data={sortedData}
-            renderItem={(plot) => <OfferItem key={plot.id} data={plot} />}
+            renderItem={(offer) => (
+              <OfferItem key={offer.identifier} data={offer} />
+            )}
           />
         ) : (
           <div className='flex text-[18px] font-500 gray-light-200 justify-center'>

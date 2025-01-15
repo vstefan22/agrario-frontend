@@ -60,22 +60,24 @@ export const sortOfferData = (
   switch (sortOption) {
     case 'Sortieren nach Eignung':
       return items;
-    // return [...items].sort((a, b) => a.land_use.localeCompare(b.land_use));
     case 'Sortieren nach Bundesland':
-      return [...items].sort(
-        (a, b) =>
-          a.parcels.length > 0 &&
-          a.parcels[0].state_name.localeCompare(b.state_name)
-      );
+      return [...items].sort((a, b) => {
+        const aState = a.parcels.length > 0 ? a.parcels[0].state_name : '';
+        const bState = b.parcels.length > 0 ? b.parcels[0].state_name : '';
+        return aState.localeCompare(bState);
+      });
     case 'Sortieren nach Größe':
-      return [...items].sort(
-        (a, b) => a.area_square_meters - b.area_square_meters
-      );
+      return [...items].sort((a, b) => {
+        const aArea =
+          a.parcels.length > 0 ? a.parcels[0].area_square_meters : 0;
+        const bArea =
+          b.parcels.length > 0 ? b.parcels[0].area_square_meters : 0;
+        return aArea - bArea;
+      });
     default:
       return items;
   }
 };
-
 export const filterDataRange = (
   items: PlotType[],
   range: [number, number]
