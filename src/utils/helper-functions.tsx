@@ -5,17 +5,27 @@ export const filterData = (
   items: PlotType[],
   searchValue: string
 ): PlotType[] => {
+  if (!Array.isArray(items)) {
+    return [];
+  }
+
   if (!searchValue) return items;
 
-  return items.filter((item) =>
-    item.state_name.toLowerCase().includes(searchValue.toLowerCase())
-  );
+  return items.filter((item) => {
+    if (item.state_name) {
+      item.state_name.toLowerCase().includes(searchValue.toLowerCase());
+    }
+  });
 };
 
 export const sortData = (
   items: PlotType[],
   sortOption: string | null
 ): PlotType[] => {
+  if (!Array.isArray(items)) {
+    return [];
+  }
+
   if (!sortOption) return items;
 
   switch (sortOption) {
@@ -23,13 +33,18 @@ export const sortData = (
       return items;
     // return [...items].sort((a, b) => a.land_use.localeCompare(b.land_use));
     case 'Sortieren nach Bundesland':
-      return [...items].sort((a, b) =>
-        a.state_name.localeCompare(b.state_name)
-      );
+      return [...items].sort((a, b) => {
+        const stateA = a.state_name || '';
+        const stateB = b.state_name || '';
+        return stateA.localeCompare(stateB);
+      });
+
     case 'Sortieren nach Größe':
-      return [...items].sort(
-        (a, b) => a.area_square_meters - b.area_square_meters
-      );
+      return [...items].sort((a, b) => {
+        const areaA = a.area_square_meters ?? 0;
+        const areaB = b.area_square_meters ?? 0;
+        return areaA - areaB;
+      });
     default:
       return items;
   }
@@ -54,6 +69,10 @@ export const filterPlotsSearchData = (
   items: RegisteredPlotDetailsType[],
   searchValue: string
 ): RegisteredPlotDetailsType[] => {
+  if (!Array.isArray(items)) {
+    return [];
+  }
+
   if (!searchValue) return items;
 
   return items.filter((item) =>
@@ -109,6 +128,10 @@ export const filterActiveAuctionsData = (
   items: AuctionOfferDetailsType[],
   searchValue: string
 ): AuctionOfferDetailsType[] => {
+  if (!Array.isArray(items)) {
+    return [];
+  }
+
   if (!searchValue) return items;
 
   return items.filter((item) =>
@@ -178,7 +201,7 @@ export const validateAuctionDetailForm = (formData: any) => {
   const newErrors: Record<string, string> = {};
 
   if (!formData.utilization) {
-    newErrors.utilitization = 'Dieses Feld ist erforderlich.';
+    newErrors.utilization = 'Dieses Feld ist erforderlich.';
   }
   if (!formData.staggered_lease) {
     newErrors.staggered_lease = 'Dieses Feld ist erforderlich.';
