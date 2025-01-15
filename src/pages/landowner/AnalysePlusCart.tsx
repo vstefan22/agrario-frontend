@@ -6,9 +6,11 @@ import AnalysePlusCartItem from '../../components/landowner/my-plots/AnalysePlus
 import usePlotStore from '../../store/plot-store';
 import usePlots from '../../hooks/plot-hook';
 import usePayments from '../../hooks/payment-hook';
+import { useState } from 'react';
 
 const AnalysePlusCart = () => {
   const navigate = useNavigate();
+  const [discountCode, setDiscountCode] = useState('');
   const { basketPlots, removePlotAnalyseFromList, plotAnalyseDetails } =
     usePlotStore();
   const { applyDiscount, deletePlotFromBasket } = usePlots();
@@ -22,22 +24,22 @@ const AnalysePlusCart = () => {
   const handleStripeCheckout = async () => {
     // TODO: use actual data for payment checkout
     const paymentBody = {
-      payment_type: 'analyse_plus',
-      amount: plotAnalyseDetails?.subtotal,
-      currency: 'eur',
-      metadata: {
-        report_id: '47fa6b04-8f21-497c-943e-2cef54e93f11',
-        user_id: '41d0c1bc-04ad-4ceb-b8e1-eea0b0233533',
-      },
+      payment_type: 'report',
     };
 
     // TODO: promeniti paymentBody type nakon finalnog backenda
-    await createPayment(paymentBody);
+    const response = await createPayment(paymentBody);
+    console.log(response);
+    if (response.session_url) {
+      window.location.href = response.session_url;
+    } else {
+      toast.error('Error happened while creating payment sesion');
+    }
   };
 
   const handleReedemCode = async () => {
     // TODO: use actual reedem code here
-    const discount_code = 'discount-code';
+    const discount_code = discountCode;
     await applyDiscount({ discount_code });
     console.log('reedem code clicked.');
   };
@@ -140,6 +142,8 @@ const AnalysePlusCart = () => {
                 type='text'
                 placeholder='Gutschein-Code'
                 className='border-[1px] border-r-0 py-1 px-2 rounded-l-md border-gray-medium/60 w-[180px]'
+                value={discountCode}
+                onChange={(e) => setDiscountCode(e.target.value)}
               />
               <Button
                 type='button'
