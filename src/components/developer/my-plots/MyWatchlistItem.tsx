@@ -65,7 +65,7 @@ const MyWatchlistItem: FC<MyWatchlistItemProps> = ({ data }) => {
         <div className='flex flex-col'>
           <div className='flex gap-6'>
             <DynamicTable
-              data={data}
+              data={data.parcel}
               columns={PLOT_SEARCH_COLUMNS}
               customClassName='px-10'
             />

@@ -8,7 +8,7 @@ const useAuctionOffers = () => {
   const { token } = useAuthStore();
 
   const getAuctionOffers = useCallback(async () => {
-    return await sendRequest(`/offers/area_offers/`, 'GET', {
+    return await sendRequest(`/offers/area_offers/active_offers/`, 'GET', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
