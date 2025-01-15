@@ -1,7 +1,6 @@
 import { useCallback } from "react";
 import useHttpRequest from "./http-request-hook";
 import useAuthStore from "../store/auth-store";
-import { ParcelPolygon } from "../types/google-maps-types";
 import { ReportType, DiscountType } from "../types/global-types";
 
 const usePlots = () => {
@@ -43,17 +42,12 @@ const usePlots = () => {
   );
 
   const addPlot = useCallback(
-    async (body: ParcelPolygon) => {
-      return await sendRequest(
-        `/offers/parcels/`,
-        "POST",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+    async (id: number) => {
+      return await sendRequest(`/offers/parcels/${id}/`, "PATCH", {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-        body
-      );
+      });
     },
     [sendRequest, token]
   );

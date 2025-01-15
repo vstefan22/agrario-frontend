@@ -61,6 +61,7 @@ export default function NewPlot() {
 
             rings.forEach((ringCoords: PolygonType[]) => {
               polygons.push({
+                id: feature.id,
                 polygon: ringCoords,
                 parcel_id: alkis_feature_id,
                 state_name,
@@ -110,6 +111,7 @@ export default function NewPlot() {
 
           rings.forEach((ringCoords) => {
             polygons.push({
+              id: feature.id,
               polygon: ringCoords,
               parcel_id: alkis_feature_id,
               state_name,
@@ -137,13 +139,10 @@ export default function NewPlot() {
     const parcel = parcelList[0];
 
     // Build a new object that renames `polygon` -> `polygon_coords`
-    const payload = {
-      ...parcel,
-      polygon_coords: parcel.polygon, // rename
-    };
+    const id = parcel.id;
 
     try {
-      await addPlot(payload);
+      await addPlot(id);
       toast.success("Flurstück hinzugefügt!");
     } catch (err) {
       console.error(err);
