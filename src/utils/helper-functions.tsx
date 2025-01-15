@@ -1,4 +1,5 @@
 import { PlotType, RegisteredPlotDetailsType } from '../types/plot-types';
+import { OfferType } from '../types/offer-types';
 import { AuctionOfferDetailsType } from '../types/auctions-offer-types';
 
 export const filterData = (
@@ -25,6 +26,46 @@ export const sortData = (
     case 'Sortieren nach Bundesland':
       return [...items].sort((a, b) =>
         a.state_name.localeCompare(b.state_name)
+      );
+    case 'Sortieren nach Größe':
+      return [...items].sort(
+        (a, b) => a.area_square_meters - b.area_square_meters
+      );
+    default:
+      return items;
+  }
+};
+
+export const filterOfferData = (
+  items: OfferType[],
+  searchValue: string
+): OfferType[] => {
+  if (!searchValue) return items;
+
+  return items.filter(
+    (item) =>
+      item.parcels.length > 0 &&
+      item.parcels[0].state_name
+        .toLowerCase()
+        .includes(searchValue.toLowerCase())
+  );
+};
+
+export const sortOfferData = (
+  items: OfferType[],
+  sortOption: string | null
+): OfferType[] => {
+  if (!sortOption) return items;
+
+  switch (sortOption) {
+    case 'Sortieren nach Eignung':
+      return items;
+    // return [...items].sort((a, b) => a.land_use.localeCompare(b.land_use));
+    case 'Sortieren nach Bundesland':
+      return [...items].sort(
+        (a, b) =>
+          a.parcels.length > 0 &&
+          a.parcels[0].state_name.localeCompare(b.state_name)
       );
     case 'Sortieren nach Größe':
       return [...items].sort(
