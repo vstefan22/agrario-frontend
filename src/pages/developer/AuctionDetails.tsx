@@ -29,7 +29,7 @@ const AuctionDetails = () => {
         </div>
       </div>
       <div className='h-[440px] overflow-y-auto rounded-2xl'>
-        <ShowDetailsDeveloper data={auctionOffer?.parcels} isAuction />
+        <ShowDetailsDeveloper data={auctionOffer?.parcels[0]} isAuction />
       </div>
       <div className='ml-auto mt-8 flex gap-6'>
         <Button
