@@ -23,14 +23,16 @@ import { OfferPreparationType } from '../../types/offer-types';
 const OfferDetails = () => {
   const navigate = useNavigate();
   const { patchOffer, deactivateOffer } = useOffers();
+
   const {
     offer,
-    offerId,
     updateOffer,
     updateOfferToList,
     removeOffer,
     removeOfferFromList,
   } = useOfferStore();
+  console.log(offer);
+  const offerId = offer?.identifier;
   const [formData, setFormData] = useState<OfferPreparationType>({
     available_from: offer?.available_from
       ? new Date(offer.available_from)
@@ -125,7 +127,9 @@ const OfferDetails = () => {
       const formDataSend = new FormData();
       formDataSend.append(
         'available_from',
-        formData.available_from ? formData.available_from.toISOString() : ''
+        formData.available_from
+          ? formData.available_from.toISOString().split('T')[0]
+          : ''
       );
       if (formData.utilization)
         formDataSend.append(

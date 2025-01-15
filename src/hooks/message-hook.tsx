@@ -7,16 +7,13 @@ const useMessages = () => {
   const { sendRequest } = useHttpRequest();
   const { token } = useAuthStore();
 
-  const getMyChats = useCallback(
-    async (userId: string) => {
-      return await sendRequest(`/messaging/messages/thread/${userId}`, "GET", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    },
-    [sendRequest, token]
-  );
+  const getMyChats = useCallback(async () => {
+    return await sendRequest(`/messaging/chats/my-chat/`, "GET", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }, [sendRequest, token]);
 
   const sendMessage = useCallback(
     async (body: MessageType | FormData) => {
