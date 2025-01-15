@@ -14,9 +14,8 @@ export type PaymentType = {
 };
 
 export type PackagePaymentType = {
-  plan_id: number | string;
-  payment_method: string;
-  currency: string;
+  payment_type: string;
+  plan_tier: string;
 };
 
 export type InviteBodyType = {

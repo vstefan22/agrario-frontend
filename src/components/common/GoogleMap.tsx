@@ -20,7 +20,7 @@ const GoogleMap = ({ polygonsData = [], onParcelClick, mapSearchTerm }: GoogleMa
   const mapRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [infoWindow, setInfoWindow] = useState<google.maps.InfoWindow | null>(null);
-  console.log(polygonsData);
+
   useEffect(() => {
     const initializeMap = () => {
       if (!mapRef.current || !window.google) return;
@@ -128,7 +128,7 @@ const GoogleMap = ({ polygonsData = [], onParcelClick, mapSearchTerm }: GoogleMa
 
     polygonsData.forEach((parcel) => {
       const { polygon } = parcel;
-      console.log(polygon);
+
       const polygonObj = new google.maps.Polygon({
         paths: polygon,
         ...MAP_DISPLAY_OPTIONS,

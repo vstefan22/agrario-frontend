@@ -58,17 +58,14 @@ const useMessages = () => {
     [sendRequest, token]
   );
 
-  const getUnreadMessages = useCallback(
-    async (userId: string) => {
-      // TODO: use actual endpoint here
-      return await sendRequest(`/dummy-endpoint/${userId}`, "GET", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    },
-    [sendRequest, token]
-  );
+  const getUnreadMessages = useCallback(async () => {
+    // TODO: use actual endpoint here
+    return await sendRequest(`/messaging/messages/unread-count/`, "GET", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }, [sendRequest, token]);
 
   return {
     sendMessage,

@@ -9,7 +9,7 @@ type SearchByAttributesProps = {
   resetFields: () => void;
 };
 
-const SearchByAttributesUpdated = ({
+const SearchByAttributes = ({
   formData,
   handleChange,
   handleSubmit,
@@ -85,4 +85,4 @@ const SearchByAttributesUpdated = ({
   );
 };
 
-export default SearchByAttributesUpdated;
+export default SearchByAttributes;

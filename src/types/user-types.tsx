@@ -15,6 +15,7 @@ export type UserProfile = {
   company_website: string;
   phone_number: string;
   profile_picture: string;
+  tier: string;
 };
 
 export type UserDeveloperProfile = {
@@ -33,6 +34,4 @@ export type UserDeveloperProfile = {
   // current_plan: string;
 };
 
-export type StoreUser = UserType &
-  Partial<UserProfile> &
-  Partial<UserDeveloperProfile>;
+export type StoreUser = UserType & Partial<UserProfile> & Partial<UserDeveloperProfile>;
