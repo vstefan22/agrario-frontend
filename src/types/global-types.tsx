@@ -11,12 +11,6 @@ export type DiscountType = {
 
 export type PaymentType = {
   payment_type: string;
-  amount: string | undefined;
-  currency: string;
-  metadata: {
-    report_id: string;
-    user_id: string;
-  };
 };
 
 export type PackagePaymentType = {
