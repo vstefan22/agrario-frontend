@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Button from '../../components/common/Button';
@@ -7,6 +6,7 @@ import AnalysePlusCartItem from '../../components/landowner/my-plots/AnalysePlus
 import usePlotStore from '../../store/plot-store';
 import usePlots from '../../hooks/plot-hook';
 import usePayments from '../../hooks/payment-hook';
+import { useState } from 'react';
 
 const AnalysePlusCart = () => {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ const AnalysePlusCart = () => {
       payment_type: 'report',
     };
 
-    // TODO: change paymentBody type after final backend change
+    // TODO: promeniti paymentBody type nakon finalnog backenda
     const response = await createPayment(paymentBody);
     console.log(response);
     if (response.session_url) {
