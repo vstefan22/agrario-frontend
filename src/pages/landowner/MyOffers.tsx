@@ -7,8 +7,6 @@ import useOffers from '../../hooks/offer-hook';
 import useOfferstore from '../../store/offer-store';
 import { sortOptions } from '../../constants/select-options';
 import { filterOfferData, sortOfferData } from '../../utils/helper-functions';
-// TODO: remove mock and use actual data
-// import { myOfferData } from '../../../mockData';
 
 function MyOffers() {
   const { getOffers } = useOffers();

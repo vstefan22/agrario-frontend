@@ -14,7 +14,7 @@ import { auctionOptionsMap } from '../../constants/select-options';
 import { validateAuctionDetailForm } from '../../utils/helper-functions';
 
 const initialFormData = {
-  utilitization: '',
+  utilization: '',
   staggered_lease: '',
   share_of_income: '',
   shares_project_company: '',
@@ -90,10 +90,10 @@ const PlaceABid = () => {
 
       if (isFormValidate) {
         const formDataSend = new FormData();
-        if (formData.utilitization) {
+        if (formData.utilization) {
           formDataSend.append(
-            'utilitization',
-            auctionOptionsMap[formData.utilitization] || ''
+            'utilization',
+            auctionOptionsMap[formData.utilization] || ''
           );
         }
         if (formData.staggered_lease) {
@@ -177,17 +177,15 @@ const PlaceABid = () => {
               variant='default'
               label='Welche Optionen der Grundstücksnutzung kommen für Sie in Betracht'
               labelClassName='text-gray-medium max-2xl:mb-8'
-              divClassName={`${errors.utilitization ? 'mb-4' : ''}`}
+              divClassName={`${errors.utilization ? 'mb-4' : ''}`}
               required
-              name='utilitization'
-              value={formData.utilitization}
+              name='utilization'
+              value={formData.utilization}
               onChange={handleSelectChange}
               options={landOptions}
             />
-            {errors.utilitization && (
-              <span className='text-red-500 text-sm'>
-                {errors.utilitization}
-              </span>
+            {errors.utilization && (
+              <span className='text-red-500 text-sm'>{errors.utilization}</span>
             )}
 
             <h1 className='text-[24px] font-bold text-black-muted my-6'>
