@@ -7,7 +7,6 @@ import ItemImage from '../../common/ItemImage';
 import { PLOT_DETAILS_COLUMNS } from '../../../constants/table-data';
 import useOffers from '../../../hooks/offer-hook';
 import useOfferStore from '../../../store/offer-store';
-import useAuthStore from '../../../store/auth-store';
 import { OfferType } from '../../../types/offer-types';
 import imagePlaceholder from '../../../assets/images/image-placeholder.png';
 import active from '../../../assets/images/vermarktung-aktiv.png';
@@ -19,13 +18,12 @@ type OfferItemProps = {
 
 const OfferItem: FC<OfferItemProps> = ({ data }) => {
   const navigate = useNavigate();
-  const { user } = useAuthStore();
   const { getOfferDetails } = useOffers();
   const { setOffer, setOfferId } = useOfferStore();
 
   const handleViewDetails = async () => {
     try {
-      const offerDetails = await getOfferDetails(user!.id);
+      const offerDetails = await getOfferDetails(data.identifier!);
       setOffer(offerDetails);
       setOfferId(offerDetails.id);
       navigate('/landowner/my-offers/details');
@@ -37,7 +35,6 @@ const OfferItem: FC<OfferItemProps> = ({ data }) => {
   const isAnalysePlus =
     data.parcels.length > 0 ? data.parcels[0].analyse_plus : false;
 
-  console.log(data);
   return (
     <div
       className='w-full bg-white rounded-[18px] p-4'
@@ -51,7 +48,12 @@ const OfferItem: FC<OfferItemProps> = ({ data }) => {
           <ItemImage id={data.parcels[0].id} image={imagePlaceholder} />
         )}
         <div className='flex flex-col'>
-          <DynamicTable data={data} columns={PLOT_DETAILS_COLUMNS} />
+          {data.parcels.length > 0 && (
+            <DynamicTable
+              data={data.parcels[0]}
+              columns={PLOT_DETAILS_COLUMNS}
+            />
+          )}
           <div className='flex justify-end items-center pt-5 gap-3'>
             <img
               src={isAnalysePlus ? active : inactive}

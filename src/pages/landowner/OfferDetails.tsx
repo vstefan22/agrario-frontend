@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import GenericList from '../../components/common/GenericList';
 import DetailsItem from '../../components/landowner/my-plots/DetailsItem';
 import DatePicker from '../../components/common/DatePicker';
 import Select from '../../components/common/Select';
@@ -16,10 +15,10 @@ import {
   shareholderModel,
   utilization,
   optionsMap,
+  optionsMapReverse,
 } from '../../constants/select-options';
-import { OfferPreparationType } from '../../types/offer-types';
 import { validateOfferDetailForm } from '../../utils/helper-functions';
-import { detailsData } from '../../../mockData';
+import { OfferPreparationType } from '../../types/offer-types';
 
 const OfferDetails = () => {
   const navigate = useNavigate();
@@ -36,9 +35,10 @@ const OfferDetails = () => {
     available_from: offer?.available_from
       ? new Date(offer.available_from)
       : null,
-    utilization: offer?.utilization,
-    preferred_regionality: offer?.preferred_regionality,
-    shareholder_model: offer?.shareholder_model,
+    utilization: optionsMapReverse[offer?.utilization || ''],
+    preferred_regionality:
+      optionsMapReverse[offer?.preferred_regionality || ''],
+    shareholder_model: optionsMapReverse[offer?.shareholder_model || ''],
     no_usage_restriction: offer?.criteria?.no_usage_restriction || false,
     wind_energy_restriction: offer?.criteria?.wind_energy_restriction || false,
     solar_energy_restriction:
@@ -192,8 +192,12 @@ const OfferDetails = () => {
       patchOffer(offerId!, formDataSend);
       updateOffer(offerId!, updateOfferData);
       updateOfferToList(offerId!, updateOfferData);
+      toast.success('Das Angebot wurde erfolgreich aktualisiert.');
     } else {
       setErrors(errors);
+      toast.error(
+        'Ein Fehler ist aufgetreten, die Aktualisierung des Angebots war nicht erfolgreich.'
+      );
     }
   };
 
@@ -227,12 +231,7 @@ const OfferDetails = () => {
       <h1 className='text-[32px] font-bold text-black-muted mb-4'>
         Detailansicht Angebot
       </h1>
-      <GenericList
-        data={detailsData}
-        renderItem={(warenkorb) => (
-          <DetailsItem key={warenkorb.id} data={warenkorb} />
-        )}
-      />
+      <DetailsItem key={offer?.identifier} data={offer!} />
 
       <h1 className='text-black-muted text-[32px] mt-8'>Ihre Kriterien</h1>
       <p className='text-gray-dark-100 w-[40%]'>
