@@ -1,18 +1,18 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { StoreOfferType, OfferType } from '../types/offer-types';
+import { OfferType, BasicOfferDetailsType } from '../types/offer-types';
 
 type OfferState = {
-  offer: StoreOfferType | null;
-  offers: StoreOfferType[];
+  offer: OfferType | null;
+  offers: OfferType[];
   offerId: string | null;
 
-  setOffer: (offer: StoreOfferType) => void;
-  setOffers: (offers: StoreOfferType[]) => void;
+  setOffer: (offer: OfferType) => void;
+  setOffers: (offers: OfferType[]) => void;
   setOfferId: (offerId: string) => void;
-  addOfferToList: (offer: StoreOfferType) => void;
-  updateOfferToList: (id: string, offer: OfferType) => void;
-  updateOffer: (id: string, offer: OfferType) => void;
+  addOfferToList: (offer: OfferType) => void;
+  updateOfferToList: (id: string, offer: BasicOfferDetailsType) => void;
+  updateOffer: (id: string, offer: BasicOfferDetailsType) => void;
   removeOffer: (offerId: string) => void;
   removeOfferFromList: (offerId: string) => void;
   clearOfferStorage: () => void;
@@ -46,7 +46,7 @@ const useOfferStore = create<OfferState>()(
         set((state) => ({
           offers: [
             ...new Map(
-              [offer, ...state.offers].map((offer) => [offer.id, offer])
+              [offer, ...state.offers].map((offer) => [offer.identifier, offer])
             ).values(),
           ],
         }));
@@ -55,7 +55,7 @@ const useOfferStore = create<OfferState>()(
       updateOfferToList: (id, updateoffer) => {
         set((state) => ({
           offers: state.offers.map((offer) =>
-            String(offer.id) === String(id)
+            String(offer.identifier) === String(id)
               ? { ...offer, ...updateoffer }
               : offer
           ),
@@ -65,7 +65,7 @@ const useOfferStore = create<OfferState>()(
       removeOfferFromList: (offerId) => {
         set((state) => ({
           offers: state.offers.filter(
-            (offer) => String(offer.id) !== String(offerId)
+            (offer) => String(offer.identifier) !== String(offerId)
           ),
         }));
       },
@@ -73,7 +73,7 @@ const useOfferStore = create<OfferState>()(
       updateOffer: (id, updateoffer) => {
         set((state) => ({
           offer:
-            state.offer && String(state.offer.id) === String(id)
+            state.offer && String(state.offer.identifier) === String(id)
               ? { ...state.offer, ...updateoffer }
               : state.offer,
         }));

@@ -33,7 +33,7 @@ const DetailsItem: FC<DetailsItemProps> = ({ data }) => {
               </p>
             </div>
             <img
-              src={data.analyzePlus === 'active' ? active : inactive}
+              src={data.analyse_plus ? active : inactive}
               alt={'image-active/inactive'}
               className='mr-4 h-[22px] object-cover'
             />

@@ -52,8 +52,6 @@ export default function MyPlots() {
   const searchFilteredData = filterData(plots, searchTerm);
   const rangeFilteredData = filterDataRange(searchFilteredData, range);
   const sortedData = sortData(rangeFilteredData, filters.sortOption);
-  // TODO: mock data is currently used for testing purposes
-  // remove this console log and use sortedData instead of mock data
 
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
@@ -84,7 +82,7 @@ export default function MyPlots() {
           />
         </div>
 
-        {plots.length > 0 ? (
+        {sortedData.length > 0 ? (
           <GenericList
             data={sortedData}
             renderItem={(plot) => <PlotItem key={plot.id} data={plot} />}

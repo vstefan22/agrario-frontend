@@ -1,23 +1,23 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { TbCameraPlus } from "react-icons/tb";
-import Input from "../../components/common/Input";
-import Button from "../../components/common/Button";
-import IconCircleButton from "../../components/common/IconCircleButton";
-import Select from "../../components/common/Select";
-import Checkbox from "../../components/common/Checkbox";
-import SlideCheckbox from "../../components/common/SlideCheckbox";
-import PackageCard from "../../components/profile/PackageCard";
-import useHttpRequest from "../../hooks/http-request-hook";
-import useAuthStore from "../../store/auth-store";
-import { profileOptions } from "../../constants/select-options";
-import { PACKAGE_FEATURES } from "../../constants/package";
-import { StoreUser } from "../../types/user-types";
-import profilePlaceholder from "../../assets/images/profile-placeholder.png";
-import usePayments from "../../hooks/payment-hook";
-import { toast } from "react-toastify";
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { TbCameraPlus } from 'react-icons/tb';
+import Input from '../../components/common/Input';
+import Button from '../../components/common/Button';
+import IconCircleButton from '../../components/common/IconCircleButton';
+import Select from '../../components/common/Select';
+import Checkbox from '../../components/common/Checkbox';
+import SlideCheckbox from '../../components/common/SlideCheckbox';
+import PackageCard from '../../components/profile/PackageCard';
+import useHttpRequest from '../../hooks/http-request-hook';
+import useAuthStore from '../../store/auth-store';
+import { profileOptions } from '../../constants/select-options';
+import { PACKAGE_FEATURES } from '../../constants/package';
+import { StoreUser } from '../../types/user-types';
+import profilePlaceholder from '../../assets/images/profile-placeholder.png';
+import usePayments from '../../hooks/payment-hook';
+import { toast } from 'react-toastify';
 
-type ProfileType = Omit<StoreUser, "id">;
+type ProfileType = Omit<StoreUser, 'id'>;
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -26,19 +26,19 @@ export default function Profile() {
   const { createPackagePayment } = usePayments();
 
   const [formData, setFormData] = useState<ProfileType>({
-    company_name: "",
-    company_website: "",
-    address: "",
+    company_name: '',
+    company_website: '',
+    address: '',
     founding_year: 0,
     mw_capacity: 0,
     employees: 0,
-    first_name: "",
-    last_name: "",
-    position: "",
-    zipcode: "",
-    city: "",
-    email: "",
-    phone_number: "",
+    first_name: '',
+    last_name: '',
+    position: '',
+    zipcode: '',
+    city: '',
+    email: '',
+    phone_number: '',
     wind: false,
     ground_mounted_solar: false,
     battery: false,
@@ -46,12 +46,12 @@ export default function Profile() {
     hydrogen: false,
     electromobility: false,
     ecological_upgrading: false,
-    other: "",
-    role: "",
+    other: '',
+    role: '',
     // current_plan: user?.current_plan || 'Free',
   });
-  /* eslint-disable @typescript-eslint/no-explicit-any */
 
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   const [loading, setLoading] = useState(false);
   const [profilePic, setProfilePic] = useState<any>(null);
   const [profilePreview, setProfilePreview] = useState<any>(
@@ -86,7 +86,7 @@ export default function Profile() {
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      const user = await sendRequest("/accounts/profile/", "GET", {
+      const user = await sendRequest('/accounts/profile/', 'GET', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -100,19 +100,19 @@ export default function Profile() {
   useEffect(() => {
     if (user) {
       setFormData({
-        company_name: user?.company_name || "",
-        company_website: user?.company_website || "",
-        address: user?.address || "",
+        company_name: user?.company_name || '',
+        company_website: user?.company_website || '',
+        address: user?.address || '',
         founding_year: user?.founding_year || 2000,
         mw_capacity: user?.mw_capacity || 0,
         employees: user?.employees || 1,
-        first_name: user?.first_name || "",
-        last_name: user?.last_name || "",
-        position: user?.position || "",
-        zipcode: user?.zipcode || "",
-        city: user?.city || "",
-        email: user?.email || "",
-        phone_number: user?.phone_number || "",
+        first_name: user?.first_name || '',
+        last_name: user?.last_name || '',
+        position: user?.position || '',
+        zipcode: user?.zipcode || '',
+        city: user?.city || '',
+        email: user?.email || '',
+        phone_number: user?.phone_number || '',
         wind: user?.wind || false,
         ground_mounted_solar: user?.ground_mounted_solar || false,
         battery: user?.battery || false,
@@ -120,8 +120,8 @@ export default function Profile() {
         hydrogen: user?.hydrogen || false,
         electromobility: user?.electromobility || false,
         ecological_upgrading: user?.ecological_upgrading || false,
-        other: user?.other || "",
-        role: user?.role || "",
+        other: user?.other || '',
+        role: user?.role || '',
       });
     }
   }, [user]);
@@ -131,18 +131,20 @@ export default function Profile() {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
   ) => {
     const { name, value, type } = e.target;
     let checked = false;
 
-    if (type === "checkbox" || type === "radio") {
+    if (type === 'checkbox' || type === 'radio') {
       checked = (e.target as HTMLInputElement).checked;
     }
 
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" || type === "radio" ? checked : value,
+      [name]: type === 'checkbox' || type === 'radio' ? checked : value,
     }));
   };
 
@@ -177,7 +179,7 @@ export default function Profile() {
       !formData.last_name ||
       !formData.email
     ) {
-      toast.error("Bitte füllen Sie alle erforderlichen Felder aus.");
+      toast.error('Bitte füllen Sie alle erforderlichen Felder aus.');
       return;
     }
 
@@ -197,17 +199,17 @@ export default function Profile() {
     });
 
     if (profilePic) {
-      formDataSend.append("profile_picture", profilePic);
+      formDataSend.append('profile_picture', profilePic);
     }
 
     if (companyPic) {
-      formDataSend.append("company_logo", companyPic);
+      formDataSend.append('company_logo', companyPic);
     }
 
     try {
       const userUpdated = await sendRequest(
-        "/accounts/profile/",
-        "PATCH",
+        '/accounts/profile/',
+        'PATCH',
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -226,19 +228,20 @@ export default function Profile() {
         setCompanyPreview(userUpdated.company_logo);
       }
 
-      toast.success("Profil erfolgreich aktualisiert.");
+      toast.success('Profil erfolgreich aktualisiert.');
     } catch (err: any) {
       if (
         err.response?.data?.founding_year[0] &&
-        err.response.data.founding_year[0] === "Ensure this value is less than or equal to 2025."
+        err.response.data.founding_year[0] ===
+          'Ensure this value is less than or equal to 2025.'
       ) {
-        toast.error("Bitte geben Sie ein gültiges Jahr ein.");
+        toast.error('Bitte geben Sie ein gültiges Jahr ein.');
         return;
       }
       if (err instanceof Error) {
-        toast.error(err.message || "Ein Fehler ist aufgetreten.");
+        toast.error(err.message || 'Ein Fehler ist aufgetreten.');
       } else {
-        toast.error("Ein unbekannter Fehler ist aufgetreten.");
+        toast.error('Ein unbekannter Fehler ist aufgetreten.');
       }
     } finally {
       setLoading(false);
@@ -266,8 +269,8 @@ export default function Profile() {
   const handleOnPasswordChange = async () => {
     try {
       await sendRequest(
-        "/accounts/password-reset/",
-        "POST",
+        '/accounts/password-reset/',
+        'POST',
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -275,325 +278,333 @@ export default function Profile() {
         },
         { email: user?.email }
       );
-      toast.success("Reset password email sent successfully!");
+      toast.success('Reset password email sent successfully!');
     } catch {
-      toast.error("Error happened while sending reset password email.");
+      toast.error('Error happened while sending reset password email.');
     }
   };
 
   const handleMonthlyPremiumPackage = async () => {
     // TODO: Use actual data here
     const body = {
-      plan_id: "2",
-      payment_method: "card",
-      currency: "usd",
+      plan_id: '2',
+      payment_method: 'card',
+      currency: 'usd',
     };
 
     try {
       await createPackagePayment(body);
       // TODO: Add Stripe Checkout and after purchase navigate to ThankYouSubscribe page
     } catch (err) {
-      console.error("Error during plan purchase: ", err);
+      console.error('Error during plan purchase: ', err);
     }
   };
 
   const handleYearlyPremiumPackage = async () => {
     // TODO: Use actual data here
     const body = {
-      plan_id: "3",
-      payment_method: "card",
-      currency: "usd",
+      plan_id: '3',
+      payment_method: 'card',
+      currency: 'usd',
     };
 
     try {
       await createPackagePayment(body);
       // TODO: Add Stripe Checkout and after purchase navigate to ThankYouSubscribe page
     } catch (err) {
-      console.error("Error during plan purchase: ", err);
+      console.error('Error during plan purchase: ', err);
     }
   };
 
   const handlePriceOnRequest = () => {
     // use actual agrario email here and custom message
-    const email = "agrarioenergy@gmail.com";
-    const subject = encodeURIComponent("Price on Request");
+    const email = 'agrarioenergy@gmail.com';
+    const subject = encodeURIComponent('Price on Request');
     const body = encodeURIComponent(
-      "Hello,\n\nI am interested in the Enterprise Package. Could you please provide more details?\n\nThank you!"
+      'Hello,\n\nI am interested in the Enterprise Package. Could you please provide more details?\n\nThank you!'
     );
 
     window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
   };
 
   return (
-    <div className="bg-gray-lightest min-h-screen flex flex-col justify-start items-center px-4 py-8 auto-fill-profile">
-      <div className="w-[962px]">
-        <h1 className="text-[32px] font-bold text-black-muted mb-4">Ihr Profil, Firma GmbH</h1>
-        <div className="w-full max-w-[960px] bg-white border border-gray-medium rounded-[44px] p-8 pt-0">
-          <div className="flex flex-col mb-6 h-40">
-            <div className="flex items-center justify-around px-16">
-              <div className="relative w-24 h-24 pt-1">
-                <div className="relative w-24 h-24 rounded-full border-4 border-primary overflow-hidden">
+    <div className='bg-gray-lightest min-h-screen flex flex-col justify-start items-center px-4 py-8 auto-fill-profile'>
+      <div className='w-[962px]'>
+        <h1 className='text-[32px] font-bold text-black-muted mb-4'>
+          Ihr Profil, Firma GmbH
+        </h1>
+        <div className='w-full max-w-[960px] bg-white border border-gray-medium rounded-[44px] p-8 pt-0'>
+          <div className='flex flex-col mb-6 h-40'>
+            <div className='flex items-center justify-around px-16'>
+              <div className='relative w-24 h-24 pt-1'>
+                <div className='relative w-24 h-24 rounded-full border-4 border-primary overflow-hidden'>
                   <img
                     src={profilePreview || profilePlaceholder}
-                    alt="Profilbild"
-                    className="w-full h-full object-cover rounded-full"
+                    alt='Profilbild'
+                    className='w-full h-full object-cover rounded-full'
                   />
                 </div>
 
                 <IconCircleButton
-                  onClick={() => document.getElementById("fileInput")?.click()}
+                  onClick={() => document.getElementById('fileInput')?.click()}
                   icon={<TbCameraPlus />}
-                  ariaLabel="Profilbild ändern"
-                  className="absolute top-0 right-0"
+                  ariaLabel='Profilbild ändern'
+                  className='absolute top-0 right-0'
                 />
 
                 <input
-                  id="fileInput"
-                  type="file"
-                  accept="image/*"
+                  id='fileInput'
+                  type='file'
+                  accept='image/*'
                   onChange={handleImageChange}
-                  className="hidden"
+                  className='hidden'
                 />
               </div>
 
-              <div className="h-40 border-l-[1px] border-gray-light-125 mx-0"></div>
+              <div className='h-40 border-l-[1px] border-gray-light-125 mx-0'></div>
 
-              <div className="relative w-24 h-24 pt-1">
-                <div className="relative w-24 h-24 rounded-full border-4 border-primary overflow-hidden flex justify-center items-center">
+              <div className='relative w-24 h-24 pt-1'>
+                <div className='relative w-24 h-24 rounded-full border-4 border-primary overflow-hidden flex justify-center items-center'>
                   <img
                     src={companyPreview || profilePlaceholder}
-                    alt="Profilbild"
-                    className="w-full h-full object-cover rounded-full"
+                    alt='Profilbild'
+                    className='w-full h-full object-cover rounded-full'
                   />
                 </div>
 
                 <IconCircleButton
-                  onClick={() => document.getElementById("companyFileInput")?.click()}
+                  onClick={() =>
+                    document.getElementById('companyFileInput')?.click()
+                  }
                   icon={<TbCameraPlus />}
-                  ariaLabel="Profilbild ändern"
-                  className="absolute top-0 right-0"
+                  ariaLabel='Profilbild ändern'
+                  className='absolute top-0 right-0'
                 />
 
                 <input
-                  id="companyFileInput"
-                  type="file"
-                  accept="image/*"
+                  id='companyFileInput'
+                  type='file'
+                  accept='image/*'
                   onChange={handleCompanyImageChange}
-                  className="hidden"
+                  className='hidden'
                 />
               </div>
             </div>
-            <div className="relative w-full">
-              <hr className="border-t-[1px] border-gray-light-125 w-full" />
+            <div className='relative w-full'>
+              <hr className='border-t-[1px] border-gray-light-125 w-full' />
             </div>
           </div>
 
           <div>
             <div>
-              <h1 className="text-[32px] font-bold text-black-muted mb-4">Unternehmensdaten</h1>
+              <h1 className='text-[32px] font-bold text-black-muted mb-4'>
+                Unternehmensdaten
+              </h1>
               <form
                 onSubmit={handleSubmit}
-                className="grid grid-cols-1 md:grid-cols-4 gap-x-12 gap-y-6"
+                className='grid grid-cols-1 md:grid-cols-4 gap-x-12 gap-y-6'
               >
-                <div className="md:col-span-2">
+                <div className='md:col-span-2'>
                   <Input
-                    variant="profile"
-                    label="Name des Unternehmens"
+                    variant='profile'
+                    label='Name des Unternehmens'
                     required
-                    id="company_name"
-                    name="company_name"
+                    id='company_name'
+                    name='company_name'
                     value={formData.company_name}
                     onChange={handleChange}
-                    onEdit={() => toggleEditMode("company_name")}
-                    onSave={() => handleSave("company_name")}
+                    onEdit={() => toggleEditMode('company_name')}
+                    onSave={() => handleSave('company_name')}
                     isEditable={editMode.company_name}
                   />
                 </div>
-                <div className="md:col-span-2">
+                <div className='md:col-span-2'>
                   <Input
-                    variant="profile"
-                    label="Website des Unternehmens"
+                    variant='profile'
+                    label='Website des Unternehmens'
                     required
-                    id="company_website"
-                    name="company_website"
+                    id='company_website'
+                    name='company_website'
                     value={formData.company_website}
                     onChange={handleChange}
-                    onEdit={() => toggleEditMode("company_website")}
-                    onSave={() => handleSave("company_website")}
+                    onEdit={() => toggleEditMode('company_website')}
+                    onSave={() => handleSave('company_website')}
                     isEditable={editMode.company_website}
                   />
                 </div>
-                <div className="md:col-span-2">
+                <div className='md:col-span-2'>
                   <Input
-                    variant="profile"
-                    label="Anschrift/Straße"
+                    variant='profile'
+                    label='Anschrift/Straße'
                     required
-                    id="address"
-                    name="address"
+                    id='address'
+                    name='address'
                     value={formData.address}
                     onChange={handleChange}
-                    onEdit={() => toggleEditMode("address")}
-                    onSave={() => handleSave("address")}
+                    onEdit={() => toggleEditMode('address')}
+                    onSave={() => handleSave('address')}
                     isEditable={editMode.address}
                   />
                 </div>
-                <div className="md:col-span-1">
+                <div className='md:col-span-1'>
                   <Input
-                    variant="profile"
-                    label="PLZ"
+                    variant='profile'
+                    label='PLZ'
                     required
-                    id="zipcode"
-                    name="zipcode"
+                    id='zipcode'
+                    name='zipcode'
                     value={formData.zipcode}
                     onChange={handleChange}
-                    onEdit={() => toggleEditMode("zipcode")}
-                    onSave={() => handleSave("zipcode")}
+                    onEdit={() => toggleEditMode('zipcode')}
+                    onSave={() => handleSave('zipcode')}
                     isEditable={editMode.zipcode}
                   />
                 </div>
-                <div className="md:col-span-1">
+                <div className='md:col-span-1'>
                   <Input
-                    variant="profile"
-                    label="Stadt"
+                    variant='profile'
+                    label='Stadt'
                     required
-                    id="city"
-                    name="city"
+                    id='city'
+                    name='city'
                     value={formData.city}
                     onChange={handleChange}
-                    onEdit={() => toggleEditMode("city")}
-                    onSave={() => handleSave("city")}
+                    onEdit={() => toggleEditMode('city')}
+                    onSave={() => handleSave('city')}
                     isEditable={editMode.city}
                   />
                 </div>
-                <div className="md:col-span-2">
+                <div className='md:col-span-2'>
                   <Input
-                    variant="profile"
-                    label="Gründungsjahr Ihres Unternehmens"
+                    variant='profile'
+                    label='Gründungsjahr Ihres Unternehmens'
                     required
-                    id="founding_year"
-                    name="founding_year"
+                    id='founding_year'
+                    name='founding_year'
                     value={formData.founding_year}
                     onChange={handleChange}
-                    onEdit={() => toggleEditMode("founding_year")}
-                    onSave={() => handleSave("founding_year")}
+                    onEdit={() => toggleEditMode('founding_year')}
+                    onSave={() => handleSave('founding_year')}
                     isEditable={editMode.founding_year}
                   />
                 </div>
-                <div className="md:col-span-2">
+                <div className='md:col-span-2'>
                   <Input
-                    variant="profile"
-                    label="Installierte Kapazität in MW seit Gründung"
+                    variant='profile'
+                    label='Installierte Kapazität in MW seit Gründung'
                     required
-                    id="mw_capacity"
-                    name="mw_capacity"
+                    id='mw_capacity'
+                    name='mw_capacity'
                     value={formData.mw_capacity}
                     onChange={handleChange}
-                    onEdit={() => toggleEditMode("mw_capacity")}
-                    onSave={() => handleSave("mw_capacity")}
+                    onEdit={() => toggleEditMode('mw_capacity')}
+                    onSave={() => handleSave('mw_capacity')}
                     isEditable={editMode.mw_capacity}
                   />
                 </div>
-                <div className="md:col-span-2">
+                <div className='md:col-span-2'>
                   <Select
-                    variant="default"
-                    label="Anzahl Mitarbeiter im Unternehmen"
+                    variant='default'
+                    label='Anzahl Mitarbeiter im Unternehmen'
                     required
-                    name="employees"
+                    name='employees'
                     value={formData.employees}
                     onChange={handleSelectChange}
                     options={profileOptions}
-                    onEdit={() => toggleEditMode("employees")}
-                    onSave={() => handleSave("employees")}
+                    onEdit={() => toggleEditMode('employees')}
+                    onSave={() => handleSave('employees')}
                     isEditable={editMode.employees}
                   />
                 </div>
               </form>
             </div>
 
-            <div className="flex mt-4 justify-end">
-              <Button variant="bluePrimary" onClick={handleSubmit}>
-                {loading ? "Zugangsdaten ändern..." : "Zugangsdaten ändern"}
+            <div className='flex mt-4 justify-end'>
+              <Button variant='bluePrimary' onClick={handleSubmit}>
+                {loading ? 'Zugangsdaten ändern...' : 'Zugangsdaten ändern'}
               </Button>
             </div>
 
-            <div className="mt-4">
-              <h1 className="text-[32px] font-bold text-black-muted mb-4">Mein Suchprofil</h1>
+            <div className='mt-4'>
+              <h1 className='text-[32px] font-bold text-black-muted mb-4'>
+                Mein Suchprofil
+              </h1>
               <form
                 onSubmit={handleSubmit}
-                className="grid grid-cols-1 md:grid-cols-4 gap-x-12 gap-y-6"
+                className='grid grid-cols-1 md:grid-cols-4 gap-x-12 gap-y-6'
               >
-                <div className="md:col-span-2">
+                <div className='md:col-span-2'>
                   <Input
-                    variant="profile"
-                    label="Vorname"
+                    variant='profile'
+                    label='Vorname'
                     required
-                    id="first_name"
-                    name="first_name"
+                    id='first_name'
+                    name='first_name'
                     value={formData.first_name}
                     onChange={handleChange}
-                    onEdit={() => toggleEditMode("first_name")}
-                    onSave={() => handleSave("first_name")}
+                    onEdit={() => toggleEditMode('first_name')}
+                    onSave={() => handleSave('first_name')}
                     isEditable={editMode.first_name}
                   />
                 </div>
-                <div className="md:col-span-2">
+                <div className='md:col-span-2'>
                   <Input
-                    variant="profile"
-                    label="Nachname"
+                    variant='profile'
+                    label='Nachname'
                     required
-                    id="last_name"
-                    name="last_name"
+                    id='last_name'
+                    name='last_name'
                     value={formData.last_name}
                     onChange={handleChange}
-                    onEdit={() => toggleEditMode("last_name")}
-                    onSave={() => handleSave("last_name")}
+                    onEdit={() => toggleEditMode('last_name')}
+                    onSave={() => handleSave('last_name')}
                     isEditable={editMode.last_name}
                   />
                 </div>
-                <div className="md:col-span-2">
+                <div className='md:col-span-2'>
                   <Input
-                    variant="profile"
-                    label="Ihre Position im Unternehmen"
+                    variant='profile'
+                    label='Ihre Position im Unternehmen'
                     required
-                    id="position"
-                    name="position"
+                    id='position'
+                    name='position'
                     value={formData.position}
                     onChange={handleChange}
-                    onEdit={() => toggleEditMode("position")}
-                    onSave={() => handleSave("position")}
+                    onEdit={() => toggleEditMode('position')}
+                    onSave={() => handleSave('position')}
                     isEditable={editMode.position}
                   />
                 </div>
-                <div className="md:col-span-2">
+                <div className='md:col-span-2'>
                   <Input
-                    variant="profile"
-                    label="Email Adresse"
+                    variant='profile'
+                    label='Email Adresse'
                     required
-                    id="email"
-                    name="email"
-                    type="email"
+                    id='email'
+                    name='email'
+                    type='email'
                     value={formData.email}
                     onChange={handleChange}
-                    onEdit={() => toggleEditMode("email")}
-                    onSave={() => handleSave("email")}
+                    onEdit={() => toggleEditMode('email')}
+                    onSave={() => handleSave('email')}
                     isEditable={editMode.email}
                   />
                 </div>
-                <div className="md:col-span-2">
+                <div className='md:col-span-2'>
                   <Input
-                    variant="profile"
-                    label="Telefonnummer"
-                    id="phone_number"
-                    name="phone_number"
-                    type="tel"
+                    variant='profile'
+                    label='Telefonnummer'
+                    id='phone_number'
+                    name='phone_number'
+                    type='tel'
                     value={formData.phone_number}
                     onChange={handleChange}
-                    onEdit={() => toggleEditMode("phone_number")}
-                    onSave={() => handleSave("phone_number")}
+                    onEdit={() => toggleEditMode('phone_number')}
+                    onSave={() => handleSave('phone_number')}
                     isEditable={editMode.phone_number}
                   />
                 </div>
-                <div className="md:col-span-2 relative">
+                <div className='md:col-span-2 relative'>
                   {/* <Input
                     variant='profile'
                     label='Passwort'
@@ -614,12 +625,12 @@ export default function Profile() {
                     {showPassword ? <EyeOpenIcon /> : <EyeClosedIcon />}
                   </Button> */}
                   <button
-                    type="button"
-                    className="flex justify-self-end text-gray-medium text-base font-normal leading-6
-                         hover:underline cursor-pointer mt-0 text-[1rem]"
+                    type='button'
+                    className='flex justify-self-end text-gray-medium text-base font-normal leading-6
+                         hover:underline cursor-pointer mt-0 text-[1rem]'
                     style={{
-                      textUnderlinePosition: "from-font",
-                      textDecorationSkipInk: "none",
+                      textUnderlinePosition: 'from-font',
+                      textDecorationSkipInk: 'none',
                     }}
                     onClick={handleOnPasswordChange}
                   >
@@ -628,72 +639,77 @@ export default function Profile() {
                 </div>
               </form>
 
-              <div className="mt-4">
-                <h1 className="text-[32px] font-bold text-black-muted mb-4">Mein Suchprofil</h1>
-                <p className="text-primary text-[16px] w-[606px] mb-4">
-                  Unser Unternehmen interessiert sich für Grundstücke die für folgende Anwendungen
-                  geeignet sind
+              <div className='mt-4'>
+                <h1 className='text-[32px] font-bold text-black-muted mb-4'>
+                  Mein Suchprofil
+                </h1>
+                <p className='text-primary text-[16px] w-[606px] mb-4'>
+                  Unser Unternehmen interessiert sich für Grundstücke die für
+                  folgende Anwendungen geeignet sind
                 </p>
-                <form onSubmit={handleSubmit} className="grid grid-cols-1 w-[70%]">
-                  <div className="grid grid-cols-2 gap-y-6 mb-4">
+                <form
+                  onSubmit={handleSubmit}
+                  className='grid grid-cols-1 w-[70%]'
+                >
+                  <div className='grid grid-cols-2 gap-y-6 mb-4'>
                     <Checkbox
-                      label="Windenergie (On-Shore)"
-                      name="wind"
+                      label='Windenergie (On-Shore)'
+                      name='wind'
                       checked={formData.wind}
                       onChange={handleChange}
-                      variant="primary"
+                      variant='primary'
                     />
                     <Checkbox
-                      label="Freiflächen-Solarenergie"
-                      name="ground_mounted_solar"
+                      label='Freiflächen-Solarenergie'
+                      name='ground_mounted_solar'
                       checked={formData.ground_mounted_solar}
                       onChange={handleChange}
-                      variant="primary"
+                      variant='primary'
                     />
                     <Checkbox
-                      label="Batteriespeicher"
-                      name="battery"
+                      label='Batteriespeicher'
+                      name='battery'
                       checked={formData.battery}
                       onChange={handleChange}
-                      variant="primary"
+                      variant='primary'
                     />
                     <Checkbox
-                      label="Wärmespeicher"
-                      name="heat"
+                      label='Wärmespeicher'
+                      name='heat'
                       checked={formData.heat}
                       onChange={handleChange}
-                      variant="primary"
+                      variant='primary'
                     />
                     <Checkbox
-                      label="Wasserstoff"
-                      name="hydrogen"
+                      label='Wasserstoff'
+                      name='hydrogen'
                       checked={formData.hydrogen}
                       onChange={handleChange}
-                      variant="primary"
+                      variant='primary'
                     />
                     <Checkbox
-                      label="Elektromobilität-Ladeinfrastruktur"
-                      name="electromobility"
+                      label='Elektromobilität-Ladeinfrastruktur'
+                      name='electromobility'
                       checked={formData.electromobility}
                       onChange={handleChange}
-                      variant="primary"
+                      variant='primary'
                     />
-                    <div className="col-span-2 space-y-10">
+                    <div className='col-span-2 space-y-10'>
                       <Checkbox
-                        label="Ökologische Aufwertungsmaßnahmen (z.B. Ökopunkte)"
-                        name="ecological_upgrading"
+                        label='Ökologische Aufwertungsmaßnahmen (z.B. Ökopunkte)'
+                        name='ecological_upgrading'
                         checked={formData.ecological_upgrading}
                         onChange={handleChange}
-                        variant="primary"
-                        labelClassName="w-full"
+                        variant='primary'
+                        labelClassName='w-full'
                       />
-                      <div className="w-[416px] !mt-6">
+                      <div className='w-[416px] !mt-6'>
                         <Input
-                          label="Sonstige"
-                          placeholder="Beispiel"
-                          name="other"
-                          type="profile"
-                          variant="profile"
+                          label='Sonstige'
+                          placeholder='Beispiel'
+                          name='other'
+                          type='profile'
+                          variant='profile'
                           value={formData.other}
                           onChange={handleChange}
                         />
@@ -702,104 +718,106 @@ export default function Profile() {
                   </div>
                 </form>
 
-                <Button variant="bluePrimary" onClick={handleSubmit}>
-                  {loading ? "Suchprofil ändern..." : "Suchprofil ändern"}
+                <Button variant='bluePrimary' onClick={handleSubmit}>
+                  {loading ? 'Suchprofil ändern...' : 'Suchprofil ändern'}
                 </Button>
               </div>
             </div>
           </div>
 
-          <div className="flex flex-col items-center mt-10">
-            <h1 className="text-[32px] font-bold text-black-muted mb-4">Mein Abo</h1>
+          <div className='flex flex-col items-center mt-10'>
+            <h1 className='text-[32px] font-bold text-black-muted mb-4'>
+              Mein Abo
+            </h1>
             <SlideCheckbox
-              option1="Yearly"
-              option2="Monthly"
+              option1='Yearly'
+              option2='Monthly'
               checked={isChecked}
               onChange={handleToggleChange}
             />
-            <div className="flex gap-6 mt-8">
+            <div className='flex gap-6 mt-8'>
               {isChecked ? (
                 <>
                   <PackageCard
-                    title="Paket Free"
+                    title='Paket Free'
                     price={0}
-                    plan="/ monthly"
-                    description="All the basic features to boost your freelance career"
+                    plan='/ monthly'
+                    description='All the basic features to boost your freelance career'
                     features={PACKAGE_FEATURES.free}
-                    buttonText="Status aktiv"
+                    buttonText='Status aktiv'
                     onClick={() => {
-                      navigate("/developer/profile/subscribe");
+                      navigate('/developer/profile/subscribe');
                     }}
                     activePlan
                   />
                   <PackageCard
-                    title="Paket Premium"
+                    title='Paket Premium'
                     price={59}
-                    plan="/ monthly"
-                    description="All the basic features to boost your freelance career"
+                    plan='/ monthly'
+                    description='All the basic features to boost your freelance career'
                     features={PACKAGE_FEATURES.premium}
-                    buttonText="Paket buchen"
+                    buttonText='Paket buchen'
                     isActive
                     onClick={handleMonthlyPremiumPackage}
                   />
                   <PackageCard
-                    title="Paket Enterprise"
-                    price="Preis auf Anfrage"
+                    title='Paket Enterprise'
+                    price='Preis auf Anfrage'
                     features={PACKAGE_FEATURES.onRequest}
-                    buttonText="Sales kontaktierten"
+                    buttonText='Sales kontaktierten'
                     onClick={handlePriceOnRequest}
                   />
                 </>
               ) : (
                 <>
                   <PackageCard
-                    title="Paket Free"
+                    title='Paket Free'
                     price={0}
-                    plan="/ yearly"
-                    description="All the basic features to boost your freelance career"
+                    plan='/ yearly'
+                    description='All the basic features to boost your freelance career'
                     features={PACKAGE_FEATURES.free}
-                    buttonText="Status aktiv"
+                    buttonText='Status aktiv'
                     onClick={() => {}}
                     activePlan
                   />
                   <PackageCard
-                    title="Paket Premium"
+                    title='Paket Premium'
                     price={599}
-                    plan="/ yearly"
-                    description="All the basic features to boost your freelance career"
+                    plan='/ yearly'
+                    description='All the basic features to boost your freelance career'
                     features={PACKAGE_FEATURES.premium}
-                    buttonText="Paket buchen"
+                    buttonText='Paket buchen'
                     isActive
                     onClick={handleYearlyPremiumPackage}
                   />
                   <PackageCard
-                    title="Paket Enterprise"
-                    price="Preis auf Anfrage"
+                    title='Paket Enterprise'
+                    price='Preis auf Anfrage'
                     features={PACKAGE_FEATURES.onRequest}
-                    buttonText="Sales kontaktierten"
+                    buttonText='Sales kontaktierten'
                     onClick={handlePriceOnRequest}
                   />
                 </>
               )}
             </div>
 
-            <div className="flex gap-6 mt-5">
+            <div className='flex gap-6 mt-5'>
               <Button
-                type="button"
-                variant="blueSecondary"
-                className="mt-6"
-                onClick={() => navigate("..")}
+                type='button'
+                variant='blueSecondary'
+                className='mt-6'
+                onClick={() => navigate('..')}
               >
                 Abbrechen
               </Button>
               <Button
-                type="submit"
+                type='submit'
                 disabled={loading}
-                variant="bluePrimary"
-                className="mt-6"
+                variant='bluePrimary'
+                className='mt-6'
                 onClick={handleSubmit}
               >
-                {loading ? "Suchprofil ändern..." : "Suchprofil ändern"}
+                {loading ? 'Suchprofil ändern...' : 'Suchprofil ändern'}
               </Button>
             </div>
           </div>

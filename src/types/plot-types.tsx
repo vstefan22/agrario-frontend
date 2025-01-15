@@ -10,7 +10,7 @@ export type PlotType = {
   area_square_meters: number;
   plot_number_secondary: string;
   image: string;
-  analyzePlus: string;
+  analyse_plus: boolean;
 };
 
 export type PlotAnalyseDetails = {
@@ -32,7 +32,7 @@ export type PlotDetailsType = {
   land_use: string;
   // area_square_meters: number;
   image: string;
-  analyzePlus: string;
+  analyse_plus: boolean;
   infrastructure: string;
   evaluation: string;
 };
@@ -85,7 +85,7 @@ export type ActiveAuctionsType = {
   land_use: string;
   area_square_meters: number;
   image: string;
-  analyzePlus: string;
+  analyse_plus: boolean;
   infrastructure: string;
   evaluation: string;
 };
@@ -117,6 +117,7 @@ export type RegisteredPlotType = {
       coordinates: number[][][][];
     };
   };
+  criteria: CriteriaType;
 };
 
 type CriteriaType = {
@@ -151,6 +152,8 @@ type OfferPlotType = {
     }[];
   };
 };
+
+export type RegisteredPlotsType = RegisteredPlotType;
 
 export type RegisteredPlotDetailsType = RegisteredPlotType &
   Partial<{ criteria: CriteriaType }> &

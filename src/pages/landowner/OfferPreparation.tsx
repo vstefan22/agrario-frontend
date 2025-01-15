@@ -14,7 +14,7 @@ import {
   shareholderModel,
   optionsMap,
 } from '../../constants/select-options';
-import { OfferType } from '../../types/offer-types';
+import { OfferPreparationType } from '../../types/offer-types';
 import usePlotStore from '../../store/plot-store';
 import { validateOfferDetailForm } from '../../utils/helper-functions';
 
@@ -30,7 +30,7 @@ const initialFormData = {
   eco_enhancements_restriction: false,
   important_remarks: '',
   hide_from_search: false,
-  documents: [] as File[],
+  documented_offers: [] as File[],
   is_owner_or_authorized: false,
   accept_privacy_policy: false,
   accept_terms: false,
@@ -40,7 +40,8 @@ const initialFormData = {
 export default function MyOffer() {
   const navigate = useNavigate();
   const { addOffer } = useOffers();
-  const [formData, setFormData] = useState<OfferType>(initialFormData);
+  const [formData, setFormData] =
+    useState<OfferPreparationType>(initialFormData);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const { plot } = usePlotStore();
 
@@ -90,10 +91,10 @@ export default function MyOffer() {
     }
   };
 
-  const handleFilesChange = (documents: File[]) => {
+  const handleFilesChange = (documented_offers: File[]) => {
     setFormData((prev) => ({
       ...prev,
-      documents,
+      documented_offers,
     }));
   };
 
@@ -144,9 +145,9 @@ export default function MyOffer() {
             'hide_from_search',
             formData.hide_from_search.toString()
           );
-        if (formData.documents.length > 0) {
-          formData.documents.forEach((file) => {
-            formDataSend.append('documents', file);
+        if (formData.documented_offers.length > 0) {
+          formData.documented_offers.forEach((file) => {
+            formDataSend.append('documented_offers', file);
           });
         }
         formDataSend.append(

@@ -4,11 +4,11 @@ import DynamicTable from '../../common/DynamicTable';
 import Button from '../../common/Button';
 import ItemImage from '../../common/ItemImage';
 import { PLOT_DETAILS_COLUMNS } from '../../../constants/table-data';
-// import active from '../../../assets/images/vermarktung-aktiv.png';
-// import inactive from '../../../assets/images/vermarktung-in-vorbereitung.png';
 import imagePlaceholder from '../../../assets/images/image-placeholder.png';
 import useAuctionOffers from '../../../hooks/auctions-offer-hook';
 import useAuctionOfferstore from '../../../store/auctions-store';
+import active from '../../../assets/images/vermarktung-aktiv.png';
+import inactive from '../../../assets/images/vermarktung-in-vorbereitung.png';
 
 type ActiveAuctionsItemProps = {
   // eslint-disable-next-line
@@ -25,6 +25,9 @@ const ActiveAuctionsItem: FC<ActiveAuctionsItemProps> = ({
   const navigate = useNavigate();
   const { getAuctionOfferDetails } = useAuctionOffers();
   const { setAuctionOffer } = useAuctionOfferstore();
+
+  const isAnalyse =
+    data.parcels.length > 0 ? data.parcels[0].analyse_plus : false;
 
   const handleViewDetails = async () => {
     try {
@@ -97,11 +100,11 @@ const ActiveAuctionsItem: FC<ActiveAuctionsItemProps> = ({
               })()}
             </div>
             <div className='flex items-center'>
-              {/* <img
-                src={data.analyzePlus === 'active' ? active : inactive}
+              <img
+                src={isAnalyse ? active : inactive}
                 alt={`aktiv/inaktiv image`}
                 className='mr-4 h-[22px] object-cover'
-              /> */}
+              />
 
               {isDetails ? (
                 ''
