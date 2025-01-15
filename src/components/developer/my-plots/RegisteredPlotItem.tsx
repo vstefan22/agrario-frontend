@@ -53,7 +53,7 @@ const RegisteredPlotItem: FC<RegisteredPlotItemProps> = ({ data }) => {
         <ItemImage id={data.parcel.id.toString()} image={imagePlaceholder} />
         <div className='flex flex-col'>
           <DynamicTable
-            data={data}
+            data={data.parcel}
             columns={PLOT_SEARCH_COLUMNS}
             customClassName='px-10'
           />
