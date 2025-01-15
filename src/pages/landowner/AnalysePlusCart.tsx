@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Button from '../../components/common/Button';
@@ -5,52 +6,77 @@ import GenericList from '../../components/common/GenericList';
 import AnalysePlusCartItem from '../../components/landowner/my-plots/AnalysePlusCartItem';
 import usePlotStore from '../../store/plot-store';
 import usePlots from '../../hooks/plot-hook';
-import usePayments from '../../hooks/payment-hook';
-import { useState } from 'react';
+// import usePayments from '../../hooks/payment-hook';
 
 const AnalysePlusCart = () => {
   const navigate = useNavigate();
   const [discountCode, setDiscountCode] = useState('');
-  const { basketPlots, removePlotAnalyseFromList, plotAnalyseDetails } =
-    usePlotStore();
-  const { applyDiscount, deletePlotFromBasket } = usePlots();
-  const { createPayment } = usePayments();
+  const {
+    basketPlots,
+    removePlotFromBasket,
+    plotAnalyseDetails,
+    basketSummary,
+    setBasketSummary,
+    setDiscountCodeStore,
+  } = usePlotStore();
+  const { applyDiscount, deletePlotFromBasket, getAnalysePlus } = usePlots();
+  // const { createPayment } = usePayments();
 
   const handleAddPlot = () => {
     navigate('/landowner/my-plots');
   };
 
-  console.log('BASKET PLOTS', basketPlots);
   const handleStripeCheckout = async () => {
     // TODO: use actual data for payment checkout
-    const paymentBody = {
-      payment_type: 'report',
-    };
+    // const paymentBody = {
+    //   payment_type: 'report',
+    // };
 
-    // TODO: promeniti paymentBody type nakon finalnog backenda
-    const response = await createPayment(paymentBody);
-    console.log(response);
-    if (response.session_url) {
-      window.location.href = response.session_url;
-    } else {
-      toast.error('Error happened while creating payment sesion');
-    }
+    // // TODO: promeniti paymentBody type nakon finalnog backenda
+    // const response = await createPayment(paymentBody);
+    // console.log(response);
+    // if (response.session_url) {
+    //   window.location.href = response.session_url;
+    // } else {
+    //   toast.error('Error happened while creating payment sesion');
+    // }
+    navigate('/landowner/my-plots/thank-you-order-request');
   };
 
   const handleReedemCode = async () => {
-    // TODO: use actual reedem code here
-    const discount_code = discountCode;
-    await applyDiscount({ discount_code });
-    console.log('reedem code clicked.');
+    const response = await applyDiscount({ discount_code: discountCode });
+    if (response.status === 'ok') {
+      setDiscountCodeStore(discountCode);
+      toast.success('Ihr Rabattcode ist gültig.');
+    } else {
+      toast.error(
+        'Ihr Rabattcode ist ungültig, bitte versuchen Sie einen anderen.'
+      );
+    }
   };
 
   const handleOnDelete = async (id: string) => {
     try {
       await deletePlotFromBasket(id);
-      removePlotAnalyseFromList(id);
+      removePlotFromBasket(id);
+      const basketSummaryData = await getAnalysePlus();
+      setBasketSummary(basketSummaryData);
       toast.success('Das Flurstück wurde erfolgreich aus der Liste entfernt.');
-    } catch (err) {
-      console.error(err);
+      // eslint-disable-next-line
+    } catch (err: any) {
+      if (err.response.data.error === 'Basket is empty.') {
+        setBasketSummary({
+          cost_per_item: 0,
+          sum_of_items: 0,
+          tax_in_percent: 0,
+          tax_amount: 0,
+          subtotal: 0,
+        });
+        toast.error(
+          'Die Liste ist leer. Bitte fügen Sie mindestens ein Grundstück hinzu, um eine Bestellung aufgeben zu können'
+        );
+        return;
+      }
       toast.error(
         'Es ist ein Fehler aufgetreten, das Flurstück wurde nicht gelöscht.'
       );
@@ -80,16 +106,23 @@ const AnalysePlusCart = () => {
         </Button>
       </div>
 
-      <GenericList
-        data={basketPlots}
-        renderItem={(warenkorb) => (
-          <AnalysePlusCartItem
-            key={warenkorb.id}
-            data={warenkorb}
-            onDelete={handleOnDelete}
-          />
-        )}
-      />
+      {basketPlots.length > 0 ? (
+        <GenericList
+          data={basketPlots}
+          renderItem={(warenkorb) => (
+            <AnalysePlusCartItem
+              key={warenkorb.id}
+              data={warenkorb}
+              onDelete={handleOnDelete}
+            />
+          )}
+        />
+      ) : (
+        <div className='flex text-[18px] font-500 gray-light-200 justify-center'>
+          Die Liste ist leer. Bitte gehen Sie zur Parzellenliste und fügen Sie
+          dort Einträge hinzu
+        </div>
+      )}
 
       <div className='flex justify-between my-8'>
         <div className='mt-auto flex gap-6'>
@@ -106,6 +139,7 @@ const AnalysePlusCart = () => {
             variant='bluePrimary'
             onClick={handleStripeCheckout}
             className='w-[280px] h-[48px]'
+            disabled={basketPlots.length === 0}
           >
             Analyse PLUS kaufen
           </Button>
@@ -113,25 +147,22 @@ const AnalysePlusCart = () => {
         <div className='bg-white rounded-xl shadow-md px-6 py-4 text-right flex flex-col gap-4 text-gray-dark-200'>
           <div className='flex flex-col space-y-3 mb-3'>
             <p>
-              Number of Items:{' '}
-              <strong>{plotAnalyseDetails?.number_of_items}</strong>
+              Number of Items: <strong>{basketPlots?.length}</strong>
             </p>
             <p>
-              Cost per Item:{' '}
-              <strong>{plotAnalyseDetails?.cost_per_item}€</strong>
+              Cost per Item: <strong>{basketSummary?.cost_per_item}€</strong>
             </p>
             <p>
-              Sum of items: <strong>{plotAnalyseDetails?.sum_of_items}€</strong>
+              Sum of items: <strong>{basketSummary?.sum_of_items}€</strong>
             </p>
             <p>
-              Tax in percent:{' '}
-              <strong>{plotAnalyseDetails?.tax_in_percent}</strong>
+              Tax in percent: <strong>{basketSummary?.tax_in_percent}</strong>
             </p>
             <p>
-              Tax amount: <strong>{plotAnalyseDetails?.tax_amount}€</strong>
+              Tax amount: <strong>{basketSummary?.tax_amount}€</strong>
             </p>
             <p className='text-[14px]'>
-              Subtotal: <strong>{plotAnalyseDetails?.subtotal}€</strong>
+              Subtotal: <strong>{basketSummary?.subtotal}€</strong>
             </p>
           </div>
 
