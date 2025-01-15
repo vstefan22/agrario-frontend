@@ -4,6 +4,7 @@ export type PolygonType = {
 };
 
 export type ParcelPolygon = {
+  id: number;
   polygon: PolygonType[];
   parcel_id: number;
   state_name: string;

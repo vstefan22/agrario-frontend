@@ -50,8 +50,8 @@ export default function Profile() {
     role: '',
     // current_plan: user?.current_plan || 'Free',
   });
-  /* eslint-disable @typescript-eslint/no-explicit-any */
 
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   const [loading, setLoading] = useState(false);
   const [profilePic, setProfilePic] = useState<any>(null);
   const [profilePreview, setProfilePreview] = useState<any>(

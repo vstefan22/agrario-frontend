@@ -5,15 +5,16 @@ import DynamicTable from '../../common/DynamicTable';
 import Button from '../../common/Button';
 import ItemImage from '../../common/ItemImage';
 import { PLOT_DETAILS_COLUMNS } from '../../../constants/table-data';
-import { StoreOfferType } from '../../../types/offer-types';
-import active from '../../../assets/images/vermarktung-aktiv.png';
-import inactive from '../../../assets/images/vermarktung-in-vorbereitung.png';
 import useOffers from '../../../hooks/offer-hook';
 import useOfferStore from '../../../store/offer-store';
 import useAuthStore from '../../../store/auth-store';
+import { OfferType } from '../../../types/offer-types';
+import imagePlaceholder from '../../../assets/images/image-placeholder.png';
+import active from '../../../assets/images/vermarktung-aktiv.png';
+import inactive from '../../../assets/images/vermarktung-in-vorbereitung.png';
 
 type OfferItemProps = {
-  data: StoreOfferType;
+  data: OfferType;
 };
 
 const OfferItem: FC<OfferItemProps> = ({ data }) => {
@@ -24,7 +25,6 @@ const OfferItem: FC<OfferItemProps> = ({ data }) => {
 
   const handleViewDetails = async () => {
     try {
-      // TODO: uncoment and use when actual data is present
       const offerDetails = await getOfferDetails(user!.id);
       setOffer(offerDetails);
       setOfferId(offerDetails.id);
@@ -34,6 +34,8 @@ const OfferItem: FC<OfferItemProps> = ({ data }) => {
       console.error(err);
     }
   };
+  const isAnalysePlus =
+    data.parcels.length > 0 ? data.parcels[0].analyse_plus : false;
 
   console.log(data);
   return (
@@ -45,12 +47,14 @@ const OfferItem: FC<OfferItemProps> = ({ data }) => {
       }}
     >
       <div className='flex justify-between py-2 space-x-4'>
-        <ItemImage id={data.id} image={data.image} />
+        {data.parcels.length > 0 && (
+          <ItemImage id={data.parcels[0].id} image={imagePlaceholder} />
+        )}
         <div className='flex flex-col'>
           <DynamicTable data={data} columns={PLOT_DETAILS_COLUMNS} />
           <div className='flex justify-end items-center pt-5 gap-3'>
             <img
-              src={data.analyzePlus === 'active' ? active : inactive}
+              src={isAnalysePlus ? active : inactive}
               alt={`aktiv/inaktiv image`}
               className='mr-4 h-[22px] object-cover'
             />

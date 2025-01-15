@@ -1,4 +1,5 @@
 import { PlotType, RegisteredPlotDetailsType } from '../types/plot-types';
+import { OfferType } from '../types/offer-types';
 import { AuctionOfferDetailsType } from '../types/auctions-offer-types';
 
 export const filterData = (
@@ -50,6 +51,48 @@ export const sortData = (
   }
 };
 
+export const filterOfferData = (
+  items: OfferType[],
+  searchValue: string
+): OfferType[] => {
+  if (!searchValue) return items;
+
+  return items.filter(
+    (item) =>
+      item.parcels.length > 0 &&
+      item.parcels[0].state_name
+        .toLowerCase()
+        .includes(searchValue.toLowerCase())
+  );
+};
+
+export const sortOfferData = (
+  items: OfferType[],
+  sortOption: string | null
+): OfferType[] => {
+  if (!sortOption) return items;
+
+  switch (sortOption) {
+    case 'Sortieren nach Eignung':
+      return items;
+    case 'Sortieren nach Bundesland':
+      return [...items].sort((a, b) => {
+        const aState = a.parcels.length > 0 ? a.parcels[0].state_name : '';
+        const bState = b.parcels.length > 0 ? b.parcels[0].state_name : '';
+        return aState.localeCompare(bState);
+      });
+    case 'Sortieren nach Größe':
+      return [...items].sort((a, b) => {
+        const aArea =
+          a.parcels.length > 0 ? a.parcels[0].area_square_meters : 0;
+        const bArea =
+          b.parcels.length > 0 ? b.parcels[0].area_square_meters : 0;
+        return aArea - bArea;
+      });
+    default:
+      return items;
+  }
+};
 export const filterDataRange = (
   items: PlotType[],
   range: [number, number]

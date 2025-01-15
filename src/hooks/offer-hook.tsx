@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import useHttpRequest from './http-request-hook';
 import useAuthStore from '../store/auth-store';
-import { OfferType } from '../types/offer-types';
+import { OfferPreparationType, OfferType } from '../types/offer-types';
 
 const useOffers = () => {
   const { sendRequest } = useHttpRequest();
@@ -16,7 +16,7 @@ const useOffers = () => {
   }, [sendRequest, token]);
 
   const addOffer = useCallback(
-    async (body: OfferType | FormData) => {
+    async (body: OfferPreparationType | FormData) => {
       return await sendRequest(
         `/offers/area_offers/`,
         'POST',
