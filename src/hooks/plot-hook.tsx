@@ -1,7 +1,7 @@
-import { useCallback } from "react";
-import useHttpRequest from "./http-request-hook";
-import useAuthStore from "../store/auth-store";
-import { ReportType, DiscountType } from "../types/global-types";
+import { useCallback } from 'react';
+import useHttpRequest from './http-request-hook';
+import useAuthStore from '../store/auth-store';
+import { ReportType, DiscountType } from '../types/global-types';
 
 const usePlots = () => {
   const { sendRequest } = useHttpRequest();
@@ -9,11 +9,12 @@ const usePlots = () => {
 
   const getAllPlots = useCallback(
     async (filters = {}) => {
-      // Build query string from filters
       const queryString = new URLSearchParams(filters).toString();
-      const url = queryString ? `/offers/parcels/?${queryString}` : `/offers/parcels/`;
+      const url = queryString
+        ? `/offers/parcels/?${queryString}`
+        : `/offers/parcels/`;
 
-      return await sendRequest(url, "GET", {
+      return await sendRequest(url, 'GET', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -23,7 +24,7 @@ const usePlots = () => {
   );
 
   const getMyPlots = useCallback(async () => {
-    return await sendRequest(`/offers/parcels/my_parcels/`, "GET", {
+    return await sendRequest(`/offers/parcels/my_parcels/`, 'GET', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -32,18 +33,22 @@ const usePlots = () => {
 
   const getFilteredPlots = useCallback(
     async (stateName: string) => {
-      return await sendRequest(`/offers/parcels/?state_name=${stateName}`, "GET", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      return await sendRequest(
+        `/offers/parcels/?state_name=${stateName}`,
+        'GET',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
     },
     [sendRequest, token]
   );
 
   const addPlot = useCallback(
     async (id: number) => {
-      return await sendRequest(`/offers/parcels/${id}/`, "PATCH", {
+      return await sendRequest(`/offers/parcels/${id}/`, 'PATCH', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -53,15 +58,15 @@ const usePlots = () => {
   );
 
   const getPlotGeoData = useCallback(async () => {
-    return await sendRequest(`/offers/parcel_geo_data/`, "GET", {});
+    return await sendRequest(`/offers/parcel_geo_data/`, 'GET', {});
   }, [sendRequest]);
 
   const addPlotToBasket = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line
     async (plotId: string, body: any) => {
       return await sendRequest(
         `/offers/parcels/${plotId}/add_to_basket/`,
-        "POST",
+        'POST',
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -74,7 +79,7 @@ const usePlots = () => {
   );
 
   const getBasketItems = useCallback(async () => {
-    return await sendRequest(`/offers/parcels/basket-items/`, "GET", {
+    return await sendRequest(`/offers/parcels/basket-items/`, 'GET', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -83,7 +88,7 @@ const usePlots = () => {
 
   const getPlotDetails = useCallback(
     async (plotId: string) => {
-      return await sendRequest(`/offers/parcels/${plotId}/`, "GET", {
+      return await sendRequest(`/offers/parcels/${plotId}/`, 'GET', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -94,17 +99,21 @@ const usePlots = () => {
 
   const getPlotAnalyseDetails = useCallback(
     async (plotId: string) => {
-      return await sendRequest(`/offers/parcels/${plotId}/detailed_view/`, "GET", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      return await sendRequest(
+        `/offers/parcels/${plotId}/detailed_view/`,
+        'GET',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
     },
     [sendRequest, token]
   );
 
   const getAnalysePlus = useCallback(async () => {
-    return await sendRequest(`/offers/parcels/basket_summary/`, "GET", {
+    return await sendRequest(`/offers/parcels/basket_summary/`, 'GET', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -112,7 +121,7 @@ const usePlots = () => {
   }, [sendRequest, token]);
 
   const getPurchasedItems = useCallback(async () => {
-    return await sendRequest(`/offers/parcels/purchased_items/`, "GET", {
+    return await sendRequest(`/offers/parcels/purchased_items/`, 'GET', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -123,7 +132,7 @@ const usePlots = () => {
     async (body: ReportType) => {
       return await sendRequest(
         `/reports/create_report/`,
-        "POST",
+        'POST',
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -139,7 +148,7 @@ const usePlots = () => {
     async (body: DiscountType) => {
       return await sendRequest(
         `/offers/parcels/apply_discount/`,
-        "POST",
+        'POST',
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -153,11 +162,15 @@ const usePlots = () => {
 
   const deletePlotFromBasket = useCallback(
     async (plotId: string) => {
-      return await sendRequest(`/offers/parcels/${plotId}/remove_from_basket/`, "DELETE", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      return await sendRequest(
+        `/offers/parcels/${plotId}/remove_from_basket/`,
+        'DELETE',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
     },
     [sendRequest, token]
   );

@@ -31,9 +31,9 @@ const useRegisteredPlots = () => {
   );
 
   const addPlotToWatchlist = useCallback(
-    async (body: RegisteredPlotType) => {
+    async (plotId: string, body: RegisteredPlotType) => {
       return await sendRequest(
-        `/offers/parcels/${body.parcel.id}/add-to-watchlist/`,
+        `/offers/parcels/${plotId}/add-to-watchlist/`,
         'POST',
         {
           headers: {

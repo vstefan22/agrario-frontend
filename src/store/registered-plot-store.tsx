@@ -17,6 +17,7 @@ type PlotState = {
   setRegisteredPlotId: (plotId: string) => void;
   setMyRegisteredPlotId: (plotId: string) => void;
   updateRegisteredPlot: (plot: RegisteredPlotDetailsType) => void;
+  updateMyRegisteredPlot: (plot: RegisteredPlotDetailsType) => void;
   addPlotToMyList: (plot: RegisteredPlotDetailsType) => void;
   updatePlotToMyList: (plot: RegisteredPlotDetailsType) => void;
   removeRegisteredPlotFromMyList: (plotId: string) => void;
@@ -45,9 +46,9 @@ const useRegisteredPlotStore = create<PlotState>()(
         }));
       },
 
-      setMyRegisteredPlots: (registeredPlots) =>
+      setMyRegisteredPlots: (myRegisteredPlots) =>
         set(() => ({
-          registeredPlots,
+          myRegisteredPlots,
         })),
 
       setMyRegisteredPlot: (plot) => {
@@ -89,6 +90,17 @@ const useRegisteredPlotStore = create<PlotState>()(
               String(plotUpdated.parcel.id)
               ? { ...state.registeredPlot, ...plotUpdated }
               : state.registeredPlot,
+        }));
+      },
+
+      updateMyRegisteredPlot: (plotUpdated) => {
+        set((state) => ({
+          myRegisteredPlot:
+            state.myRegisteredPlot &&
+            String(state.myRegisteredPlot.parcel.id) ===
+              String(plotUpdated.parcel.id)
+              ? { ...state.myRegisteredPlot, ...plotUpdated }
+              : state.myRegisteredPlot,
         }));
       },
 

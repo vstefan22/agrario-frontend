@@ -22,12 +22,11 @@ const ActiveAuctions = () => {
   useEffect(() => {
     const fetchMyActiveAuctions = async () => {
       const data = await getAuctionOffers();
-      setAuctionOffers(data);
+      console.log('DATA FROM ACTIVE AUCTIONS: ', data);
+      setAuctionOffers(data.offers);
     };
     fetchMyActiveAuctions();
   }, [getAuctionOffers, setAuctionOffers]);
-
-  console.log(auctionOffers);
 
   const handleSelectChange = (name: string, option: string) => {
     setFilters((prevFilters) => ({

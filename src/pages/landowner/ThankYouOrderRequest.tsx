@@ -1,19 +1,18 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/common/Button';
-// import GenericList from '../../components/common/GenericList';
-// import ThankYouMarketingItem from '../../components/landowner/my-plots/ThankYouMarketingItem';
+import usePlotStore from '../../store/plot-store';
+import GenericList from '../../components/common/GenericList';
+import ThankYouMarketingItem from '../../components/landowner/my-plots/ThankYouMarketingItem';
 
 const ThankYouOrderRequest = () => {
   const navigate = useNavigate();
+  const { basketPlots, setBasketPlots, setBasketSummary } = usePlotStore();
 
-  useEffect(() => {
-    const fetchOrderRequestData = async () => {
-      // TODO: add actual backend call to fetch order request data
-    };
-
-    fetchOrderRequestData();
-  }, []);
+  const handleGoBackToMyPlots = () => {
+    setBasketPlots([]);
+    setBasketSummary({});
+    navigate('/landowner/my-plots');
+  };
 
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
@@ -25,21 +24,15 @@ const ThankYouOrderRequest = () => {
         in der Ansicht " Meine Grundstücke" zur Verfügung gestellt
       </p>
 
-      {/* TODO: uncomment this list when actual data is fetched */}
-      {/* <GenericList
-        data={[]}
+      <GenericList
+        data={basketPlots}
         renderItem={(plot) => (
           <ThankYouMarketingItem key={plot.id} data={plot} />
         )}
-      /> */}
+      />
 
       <div className='ml-auto mt-6'>
-        <Button
-          variant='bluePrimary'
-          onClick={() => {
-            navigate('/landowner/my-plots');
-          }}
-        >
+        <Button variant='bluePrimary' onClick={handleGoBackToMyPlots}>
           Zurück zur Übersicht
         </Button>
       </div>

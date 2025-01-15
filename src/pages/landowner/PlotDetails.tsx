@@ -13,9 +13,9 @@ function PlotDetails() {
     getBasketItems,
     getAnalysePlus,
   } = usePlots();
-  const { plot, setBasketPlots, setPlotAnalyseDetails } = usePlotStore();
+  const { plot, setBasketPlots, setPlotAnalyseDetails, setBasketSummary } =
+    usePlotStore();
 
-  console.log(plot);
   useEffect(() => {
     const fetchAnalyseDetails = async () => {
       try {
@@ -40,11 +40,9 @@ function PlotDetails() {
     try {
       await addPlotToBasket(plot!.id, plot);
       const basketItems = await getBasketItems();
-      console.log(basketItems);
       setBasketPlots(basketItems.basket_items);
       const data = await getAnalysePlus();
-      setPlotAnalyseDetails(data);
-      console.log(data);
+      setBasketSummary(data);
       navigate('/landowner/my-plots/analyse-plus');
     } catch (err) {
       console.error(err);
