@@ -7,7 +7,6 @@ import { sortOptions } from "../../constants/select-options";
 import { filterData, sortData, filterDataRange } from "../../utils/helper-functions";
 import usePlots from "../../hooks/plot-hook";
 import usePlotStore from "../../store/plot-store";
-import ActiveAuctionsItem from "../../components/developer/my-plots/ActiveAuctionsItem";
 
 export default function MyPlots() {
   const { getMyPlots } = usePlots();
@@ -47,8 +46,13 @@ export default function MyPlots() {
   }, []);
 
   const searchFilteredData = filterData(plots, searchTerm);
+  console.log(searchFilteredData);
   const rangeFilteredData = filterDataRange(searchFilteredData, range);
+  console.log(rangeFilteredData);
   const sortedData = sortData(rangeFilteredData, filters.sortOption);
+  // TODO: mock data is currently used for testing purposes
+  // remove this console log and use sortedData instead of mock data
+  console.log(sortedData);
 
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col px-7 pt-4">
@@ -73,10 +77,10 @@ export default function MyPlots() {
           />
         </div>
 
-        {sortedData.length > 0 ? (
+        {plots.length > 0 ? (
           <GenericList
             data={sortedData}
-            renderItem={(plot) => <ActiveAuctionsItem key={plot.id} data={plot} />}
+            renderItem={(plot) => <PlotItem key={plot.id} data={plot} />}
           />
         ) : (
           <div className="flex text-[18px] font-500 gray-light-200 justify-center">
