@@ -1,6 +1,6 @@
-import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
-import { PlotType, PlotAnalyseDetails } from "../types/plot-types";
+import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
+import { PlotType, PlotAnalyseDetails } from '../types/plot-types';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type PlotState = {
@@ -87,27 +87,37 @@ const usePlotStore = create<PlotState>()(
 
       addPlotToList: (plot) => {
         set((state) => ({
-          plots: [...new Map([plot, ...state.plots].map((plot) => [plot.id, plot])).values()],
+          plots: [
+            ...new Map(
+              [plot, ...state.plots].map((plot) => [plot.id, plot])
+            ).values(),
+          ],
         }));
       },
 
       updatePlotToList: (updatePlot) => {
         set((state) => ({
           plots: state.plots.map((plot) =>
-            String(plot.id) === String(updatePlot.id) ? { ...plot, ...updatePlot } : plot
+            String(plot.id) === String(updatePlot.id)
+              ? { ...plot, ...updatePlot }
+              : plot
           ),
         }));
       },
 
       removePlotFromList: (plotId) => {
         set((state) => ({
-          plots: state.plots.filter((plot) => String(plot.id) !== String(plotId)),
+          plots: state.plots.filter(
+            (plot) => String(plot.id) !== String(plotId)
+          ),
         }));
       },
 
       removePlotFromBasket: (plotId) => {
         set((state) => ({
-          basketPlots: state.basketPlots.filter((plot) => String(plot.id) !== String(plotId)),
+          basketPlots: state.basketPlots.filter(
+            (plot) => String(plot.id) !== String(plotId)
+          ),
         }));
       },
 
@@ -131,7 +141,7 @@ const usePlotStore = create<PlotState>()(
         }),
     }),
     {
-      name: "plot-storage",
+      name: 'plot-storage',
       storage: createJSONStorage(() => localStorage),
     }
   )

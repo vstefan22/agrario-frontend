@@ -12,11 +12,11 @@ export const filterData = (
 
   if (!searchValue) return items;
 
-  return items.filter((item) => {
-    if (item.state_name) {
-      item.state_name.toLowerCase().startsWith(searchValue.toLowerCase());
-    }
-  });
+  return items.filter(
+    (item) =>
+      item.state_name &&
+      item.state_name?.toLowerCase().startsWith(searchValue.toLowerCase())
+  );
 };
 
 export const sortData = (
@@ -312,6 +312,7 @@ export const validateAuctionDetailForm = (formData: any) => {
 
 // eslint-disable-next-line
 export const validateOfferDetailForm = (formData: any) => {
+  const MAX_CHAR_LIMIT = 3000;
   const newErrors: Record<string, string> = {};
 
   if (!formData.available_from) {
@@ -339,6 +340,13 @@ export const validateOfferDetailForm = (formData: any) => {
   }
   if (!formData.other) {
     newErrors.other = 'Bitte bestätigen Sie dieses Feld.';
+  }
+
+  if (
+    formData.important_remarks &&
+    formData.important_remarks.length > MAX_CHAR_LIMIT
+  ) {
+    newErrors.important_remarks = `Die Nachricht darf nicht mehr als ${MAX_CHAR_LIMIT} Zeichen enthalten.`;
   }
 
   return {
