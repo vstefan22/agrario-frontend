@@ -18,7 +18,7 @@ const NavBar: FC = () => {
       try {
         if (user?.id) {
           const response = await getUnreadMessages();
-          setUnreadCount(response.unreadCount || 0);
+          setUnreadCount(response.unread_count || 0);
         }
       } catch (err) {
         console.error('Failed to fetch unread messages: ', err);
