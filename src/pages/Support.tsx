@@ -24,7 +24,7 @@ const Support = () => {
       subject: user?.role === "landowner" ? landownerSupportOptions[0] : developerSupportOptions[0],
       recipient: "",
       message: "",
-      file: null as File | null,
+      attachment_files: null as File | null,
     };
   }, [user]);
 
@@ -67,7 +67,7 @@ const Support = () => {
   const handleFilesChange = (files: File[]) => {
     setFormData((prev) => ({
       ...prev,
-      file: files[0],
+      attachment_files: files[0],
     }));
   };
 
@@ -76,7 +76,8 @@ const Support = () => {
     formDataSend.append("recipient", formData.recipient);
     formDataSend.append("subject", formData.subject);
     formDataSend.append("body", formData.message);
-    if (formData.file) formDataSend.append("file", formData.file);
+    if (formData.attachment_files)
+      formDataSend.append("attachment_files", formData.attachment_files);
 
     try {
       sendMessage(formDataSend);
