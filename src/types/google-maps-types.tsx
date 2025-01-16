@@ -13,7 +13,3 @@ export type ParcelPolygon = {
   cadastral_area: string;
   cadastral_parcel: string;
 };
-
-export type PolygonData = ParcelPolygon[];
-
-export type ParcelPolygonArray = ParcelPolygon[];

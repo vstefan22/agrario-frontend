@@ -19,7 +19,7 @@ const NavBar: FC = () => {
     const unreadMessages = async () => {
       try {
         if (user?.id) {
-          const response = await getUnreadMessages(user.id);
+          const response = await getUnreadMessages();
           setUnreadCount(response.unreadCount || 0);
         }
       } catch (err) {
