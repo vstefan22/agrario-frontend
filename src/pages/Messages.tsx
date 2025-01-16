@@ -23,7 +23,7 @@ const Messages = () => {
     };
 
     fetchMyChats();
-  }, [user, getMyChats, setInbox]);
+  }, [getMyChats, setInbox]);
 
   const handleCreateMessage = () => {
     navigate(`/${userRole}/support`);

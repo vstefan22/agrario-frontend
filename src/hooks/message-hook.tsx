@@ -8,7 +8,7 @@ const useMessages = () => {
   const { token } = useAuthStore();
 
   const getMyChats = useCallback(async () => {
-    return await sendRequest(`/messaging/chats/my-chat/`, "GET", {
+    return await sendRequest(`/messaging/chats/`, "GET", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -59,7 +59,6 @@ const useMessages = () => {
   );
 
   const getUnreadMessages = useCallback(async () => {
-    // TODO: use actual endpoint here
     return await sendRequest(`/messaging/messages/unread-count/`, "GET", {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -67,12 +66,27 @@ const useMessages = () => {
     });
   }, [sendRequest, token]);
 
+  const deleteMessages = useCallback(
+    async (ids: Array<string>) => {
+      console.log(ids); // Confirm IDs are being passed
+      return await sendRequest(`/messaging/chats/bulk-delete/`, "DELETE", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json", // Ensure content type is set
+        },
+        data: { ids }, // Pass the `ids` in the `data` field for DELETE
+      });
+    },
+    [sendRequest, token]
+  );
+
   return {
     sendMessage,
     getMyChats,
     getChatDetails,
     broadcastMessage,
     getUnreadMessages,
+    deleteMessages,
   };
 };
 
