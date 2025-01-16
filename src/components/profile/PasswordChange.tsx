@@ -57,7 +57,6 @@ export default function PasswordChange() {
         },
         formData
       );
-      console.log('token: ', token);
     } catch (err: unknown) {
       if (err instanceof Error) {
         toast.error(err.message || 'Ein Fehler ist aufgetreten.');

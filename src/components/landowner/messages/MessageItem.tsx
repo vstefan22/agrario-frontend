@@ -24,7 +24,10 @@ const MessageItem = ({
   };
 
   return (
-    <div className='flex justify-between w-full' onClick={handleChatDetail}>
+    <div
+      className='flex justify-between w-full cursor-pointer'
+      onClick={handleChatDetail}
+    >
       <div className='flex'>
         <div className='flex items-center w-[248px]'>
           <h2 className='font-bold whitespace-nowrap text-black-muted text-sm'>

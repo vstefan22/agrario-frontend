@@ -112,6 +112,7 @@ export type RegisteredPlotType = {
       type: 'MultiPolygon';
       coordinates: number[][][][];
     };
+    is_in_watchlist: boolean;
   };
   criteria: CriteriaType;
 };

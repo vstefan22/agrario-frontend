@@ -17,12 +17,8 @@ type RegisteredPlotItemProps = {
 const RegisteredPlotItem: FC<RegisteredPlotItemProps> = ({ data }) => {
   const navigate = useNavigate();
   const { getRegisteredPlotDetails, addPlotToWatchlist } = useRegisteredPlots();
-  const {
-    registeredPlot,
-    setRegisteredPlot,
-    addPlotToMyList,
-    updateRegisteredPlot,
-  } = useRegisteredPlotStore();
+  const { registeredPlot, setRegisteredPlot, updateRegisteredPlot } =
+    useRegisteredPlotStore();
 
   const AddToWatchList = async () => {
     setRegisteredPlot(data);
@@ -35,7 +31,6 @@ const RegisteredPlotItem: FC<RegisteredPlotItemProps> = ({ data }) => {
         registeredPlot?.parcel.id.toString(),
         registeredPlot!
       );
-      addPlotToMyList(registeredPlot!);
       navigate('/developer/my-watchlist');
     } catch (err) {
       toast.error(
@@ -115,14 +110,16 @@ const RegisteredPlotItem: FC<RegisteredPlotItemProps> = ({ data }) => {
             </div>
 
             <div className='flex gap-6'>
-              <Button
-                type='button'
-                variant='blueSecondary'
-                className='w-[200px]'
-                onClick={AddToWatchList}
-              >
-                Zu Watchlist hinzufügen
-              </Button>
+              {!data.parcel.is_in_watchlist && (
+                <Button
+                  type='button'
+                  variant='blueSecondary'
+                  className='w-[200px]'
+                  onClick={AddToWatchList}
+                >
+                  Zu Watchlist hinzufügen
+                </Button>
+              )}
 
               <Button
                 type='button'

@@ -72,7 +72,6 @@ export default function Profile() {
 
   useEffect(() => {
     if (user) {
-      console.log(user);
       setFormData({
         first_name: user?.first_name || '',
         last_name: user?.last_name || '',
@@ -129,6 +128,11 @@ export default function Profile() {
       !formData.phone_number
     ) {
       toast.error('Bitte füllen Sie alle erforderlichen Felder aus.');
+      return;
+    }
+
+    if (formData.zipcode.length !== 5 || !/^\d+$/.test(formData.zipcode)) {
+      toast.error('Die Postleitzahl muss genau 5 Ziffern enthalten.');
       return;
     }
 

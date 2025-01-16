@@ -87,7 +87,6 @@ export default function NewPlot() {
       }
 
       const response = res[0];
-      console.log('response: ', response);
       const polygonParsed = JSON.parse(response.polygon);
 
       const parcel: ParcelPolygon = {

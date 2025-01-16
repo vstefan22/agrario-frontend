@@ -18,7 +18,6 @@ const Messages = () => {
   useEffect(() => {
     const fetchMyChats = async () => {
       const inbox = await getMyChats();
-      console.log(inbox);
       setInbox(inbox);
     };
 

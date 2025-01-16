@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ShowDetailsDeveloper from './ShowDetailsDeveloper';
 import Button from '../../components/common/Button';
@@ -7,6 +8,7 @@ import useRegisteredPlotStore from '../../store/registered-plot-store';
 const ParcelDetails = () => {
   const { addPlotToWatchlist } = useRegisteredPlots();
   const { registeredPlot, updatePlotToMyList } = useRegisteredPlotStore();
+  const navigate = useNavigate();
 
   const AddToWatchlist = async () => {
     try {
@@ -15,6 +17,7 @@ const ParcelDetails = () => {
         registeredPlot!
       );
       updatePlotToMyList(registeredPlot!);
+      navigate('/developer/my-watchlist');
     } catch (err) {
       toast.error(
         'Das Flurstück wurde nicht erfolgreich zur Beobachtungsliste hinzugefügt.'
@@ -39,16 +42,19 @@ const ParcelDetails = () => {
       <div className='h-[440px] overflow-y-auto rounded-2xl'>
         <ShowDetailsDeveloper data={registeredPlot?.parcel} />
       </div>
-      <div className='ml-auto mt-8'>
-        <Button
-          type='button'
-          variant='bluePrimary'
-          className='w-[258px]'
-          onClick={AddToWatchlist}
-        >
-          Zu Watchlist hinzufügen
-        </Button>
-      </div>
+
+      {!registeredPlot?.parcel.is_in_watchlist && (
+        <div className='ml-auto mt-8'>
+          <Button
+            type='button'
+            variant='bluePrimary'
+            className='w-[258px]'
+            onClick={AddToWatchlist}
+          >
+            Zu Watchlist hinzufügen
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
