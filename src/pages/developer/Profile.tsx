@@ -792,6 +792,7 @@ export default function Profile() {
                     }
                     activePlan={user?.tier === 'PREM'}
                     onClick={handleYearlyPremiumPackage}
+                    isActive
                   />
                   <PackageCard
                     title='Paket Enterprise'

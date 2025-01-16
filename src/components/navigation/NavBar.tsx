@@ -5,7 +5,6 @@ import Navbar from '../common/Navbar';
 import useAuthStore from '../../store/auth-store';
 import headerLogo from '../../assets/images/header_logo.png';
 import messageIcon from '../../assets/images/msg-icon.png';
-import moreIcon from '../../assets/images/more.png';
 import useMessages from '../../hooks/message-hook';
 
 const NavBar: FC = () => {
@@ -88,14 +87,6 @@ const NavBar: FC = () => {
                   </p>
                   <p className='text-[10px] text-gray-dark-100'>Admin</p>
                 </div>
-
-                <button
-                  onClick={() => {
-                    console.log('more clicked');
-                  }}
-                >
-                  <img src={moreIcon} alt='More Icon' />
-                </button>
               </div>
             ) : null}
           </div>

@@ -14,7 +14,7 @@ export const filterData = (
 
   return items.filter((item) => {
     if (item.state_name) {
-      item.state_name.toLowerCase().includes(searchValue.toLowerCase());
+      item.state_name.toLowerCase().startsWith(searchValue.toLowerCase());
     }
   });
 };
@@ -62,7 +62,7 @@ export const filterOfferData = (
       item.parcels.length > 0 &&
       item.parcels[0].state_name
         .toLowerCase()
-        .includes(searchValue.toLowerCase())
+        .startsWith(searchValue.toLowerCase())
   );
 };
 
@@ -120,7 +120,7 @@ export const filterPlotsSearchData = (
   if (!searchValue) return items;
 
   return items.filter((item) =>
-    item.parcel.state_name.toLowerCase().includes(searchValue.toLowerCase())
+    item.parcel.state_name.toLowerCase().startsWith(searchValue.toLowerCase())
   );
 };
 
@@ -132,9 +132,6 @@ export const sortPlotsSearchData = (
 
   switch (sortOption) {
     case 'Sortieren nach Eignung':
-      // return [...items].sort((a, b) =>
-      //   a.parcel.land_use.localeCompare(b.parcel.land_use)
-      // );
       return items;
     case 'Sortieren nach Bundesland':
       return [...items].sort((a, b) =>
@@ -179,7 +176,9 @@ export const filterActiveAuctionsData = (
   if (!searchValue) return items;
 
   return items.filter((item) =>
-    item.parcels[0].state_name.toLowerCase().includes(searchValue.toLowerCase())
+    item.parcels[0].state_name
+      .toLowerCase()
+      .startsWith(searchValue.toLowerCase())
   );
 };
 

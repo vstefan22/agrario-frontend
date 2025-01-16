@@ -5,11 +5,13 @@ import { AuctionOfferDetailsType } from '../types/auctions-offer-types';
 type AuctionOfferState = {
   auctionOffer: AuctionOfferDetailsType | null;
   auctionOffers: AuctionOfferDetailsType[];
+  myAuctionOffer: AuctionOfferDetailsType | null;
   myAuctionOffers: AuctionOfferDetailsType[];
   auctionOfferId: string | null;
 
   setAuctionOffer: (offer: AuctionOfferDetailsType) => void;
   setAuctionOffers: (auctionOffers: AuctionOfferDetailsType[]) => void;
+  setMyAuctionOffer: (myAuctionOffer: AuctionOfferDetailsType) => void;
   setMyAuctionOffers: (auctionOffers: AuctionOfferDetailsType[]) => void;
   setAuctionOfferId: (auctionOfferId: string) => void;
   addAuctionOfferToList: (offer: AuctionOfferDetailsType) => void;
@@ -28,6 +30,7 @@ const useAuctionOfferstore = create<AuctionOfferState>()(
     (set) => ({
       auctionOffer: null,
       auctionOffers: [],
+      myAuctionOffer: null,
       myAuctionOffers: [],
       auctionOfferId: null,
 
@@ -40,6 +43,11 @@ const useAuctionOfferstore = create<AuctionOfferState>()(
       setAuctionOffers: (auctionOffers) =>
         set(() => ({
           auctionOffers,
+        })),
+
+      setMyAuctionOffer: (myAuctionOffer) =>
+        set(() => ({
+          myAuctionOffer,
         })),
 
       setMyAuctionOffers: (offers) =>
