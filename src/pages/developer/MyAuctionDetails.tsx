@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Select from '../../components/common/Select';
 import Input from '../../components/common/Input';
@@ -19,8 +19,24 @@ import { validateAuctionDetailForm } from '../../utils/helper-functions';
 
 const MyAuctionDetails = () => {
   const navigate = useNavigate();
-  const { patchAuctionOffer } = useAuctionOffers();
-  const { auctionOffer, updateAuctionOffer } = useAuctionOfferstore();
+  const {
+    patchAuctionOffer,
+    getActiveAuctionOfferDetails,
+    deleteAuctionOffer,
+  } = useAuctionOffers();
+  const { auctionOffer, updateAuctionOffer, setAuctionOffer } =
+    useAuctionOfferstore();
+
+  useEffect(() => {
+    const fetchMyWatchlist = async () => {
+      const data = await getActiveAuctionOfferDetails(
+        auctionOffer?.identifier!
+      );
+      setAuctionOffer(data);
+    };
+    fetchMyWatchlist();
+  }, [getActiveAuctionOfferDetails, setAuctionOffer]);
+
   const [formData, setFormData] = useState({
     utilization:
       auctionOptionsReverseMap[
@@ -52,6 +68,41 @@ const MyAuctionDetails = () => {
     other: true,
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    if (!auctionOffer) return;
+    setFormData({
+      utilization:
+        auctionOptionsReverseMap[
+          auctionOffer?.offer_confirmation?.utilization || 'LE'
+        ],
+      staggered_lease:
+        auctionOptionsReverseMap[
+          auctionOffer?.offer_confirmation?.staggered_lease || 'NOT'
+        ],
+      share_of_income:
+        auctionOptionsReverseMap[
+          auctionOffer?.offer_confirmation?.share_of_income || 'NOT'
+        ],
+      shares_project_company:
+        auctionOptionsReverseMap[
+          auctionOffer?.offer_confirmation?.shares_project_company || 'NOT'
+        ],
+      sale_amount: auctionOffer?.offer_confirmation?.sale_amount || '',
+      contracted_term_month:
+        auctionOffer?.offer_confirmation?.contracted_term_month || '',
+      lease_amount_yearly_lease_year_one:
+        auctionOffer?.offer_confirmation?.lease_amount_yearly_lease_year_one ||
+        '',
+      message_to_landowner:
+        auctionOffer?.offer_confirmation?.message_to_landowner,
+      message_to_platform:
+        auctionOffer?.offer_confirmation?.message_to_platform,
+      accept_privacy_policy: true,
+      accept_terms: true,
+      other: true,
+    });
+  }, [auctionOffer]);
 
   const handleSelectChange = (name: string, option: string) => {
     setFormData((prev) => ({
@@ -172,14 +223,15 @@ const MyAuctionDetails = () => {
     }
   };
 
-  const handleWithdrawBid = () => {
+  const handleWithdrawBid = async () => {
+    await deleteAuctionOffer(auctionOffer?.identifier!);
     navigate('../my-auctions/');
   };
 
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
       <h1 className='text-[32px] font-bold text-black-muted'>
-        Gebot abgeben {auctionOffer?.identifier}
+        Gebot abgeben {auctionOffer?.offer_number}
       </h1>
       <p className='text-gray-dark-100 w-[50%] mt-2 mb-6'>
         There are many variations of passages of Lorem Ipsum available, but the

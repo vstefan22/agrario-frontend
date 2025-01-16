@@ -17,11 +17,15 @@ const useAuctionOffers = () => {
 
   const getAuctionOfferDetails = useCallback(
     async (offerId: string) => {
-      return await sendRequest(`/offers/area_offers/${offerId}/`, 'GET', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      return await sendRequest(
+        `/offers/area_offers/${offerId}/detail/`,
+        'GET',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
     },
     [sendRequest, token]
   );
@@ -53,7 +57,7 @@ const useAuctionOffers = () => {
   const getActiveAuctionOfferDetails = useCallback(
     async (offerId: string) => {
       return await sendRequest(
-        `/offers/area_offers/submitted-offers/${offerId}/`,
+        `/offers/area_offers/${offerId}/submitted-offers/`,
         'GET',
         {
           headers: {
@@ -68,7 +72,7 @@ const useAuctionOffers = () => {
   const patchAuctionOffer = useCallback(
     async (offerId: string, body: AuctionOfferDetailsType | FormData) => {
       return await sendRequest(
-        `/offers/area_offers/submitted-offers/${offerId}/`,
+        `/offers/area_offers/${offerId}/edit-submitted-offers/`,
         'PATCH',
         {
           headers: {
@@ -81,6 +85,21 @@ const useAuctionOffers = () => {
     [sendRequest, token]
   );
 
+  const deleteAuctionOffer = useCallback(
+    async (offerId: string) => {
+      return await sendRequest(
+        `/offers/area_offers/${offerId}/delete-submitted-offer/`,
+        'DELETE',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    },
+    [sendRequest, token]
+  );
+
   return {
     getAuctionOffers,
     getAuctionOfferDetails,
@@ -88,6 +107,7 @@ const useAuctionOffers = () => {
     getMyAuctionOffers,
     getActiveAuctionOfferDetails,
     patchAuctionOffer,
+    deleteAuctionOffer,
   };
 };
 
