@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/common/Button';
-import usePlotStore from '../../store/plot-store';
 import GenericList from '../../components/common/GenericList';
 import ThankYouMarketingItem from '../../components/landowner/my-plots/ThankYouMarketingItem';
+import usePlotStore from '../../store/plot-store';
 
 const ThankYouOrderRequest = () => {
   const navigate = useNavigate();

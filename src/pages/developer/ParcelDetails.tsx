@@ -1,5 +1,5 @@
-import ShowDetailsDeveloper from './ShowDetailsDeveloper';
 import { toast } from 'react-toastify';
+import ShowDetailsDeveloper from './ShowDetailsDeveloper';
 import Button from '../../components/common/Button';
 import useRegisteredPlots from '../../hooks/registered-plot-hook';
 import useRegisteredPlotStore from '../../store/registered-plot-store';
@@ -22,8 +22,6 @@ const ParcelDetails = () => {
       console.error(err);
     }
   };
-
-  console.log(registeredPlot?.parcel.id.toString());
 
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>

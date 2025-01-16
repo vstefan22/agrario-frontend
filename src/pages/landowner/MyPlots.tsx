@@ -1,17 +1,21 @@
-import { useEffect, useState, ChangeEvent, useCallback } from "react";
-import Search from "../../components/common/Search";
-import Select from "../../components/common/Select";
-import GenericList from "../../components/common/GenericList";
-import PlotItem from "../../components/landowner/my-plots/PlotItem";
-import { sortOptions } from "../../constants/select-options";
-import { filterData, sortData, filterDataRange } from "../../utils/helper-functions";
-import usePlots from "../../hooks/plot-hook";
-import usePlotStore from "../../store/plot-store";
+import { useEffect, useState, ChangeEvent, useCallback } from 'react';
+import Search from '../../components/common/Search';
+import Select from '../../components/common/Select';
+import GenericList from '../../components/common/GenericList';
+import PlotItem from '../../components/landowner/my-plots/PlotItem';
+import { sortOptions } from '../../constants/select-options';
+import {
+  filterData,
+  sortData,
+  filterDataRange,
+} from '../../utils/helper-functions';
+import usePlots from '../../hooks/plot-hook';
+import usePlotStore from '../../store/plot-store';
 
 export default function MyPlots() {
   const { getMyPlots } = usePlots();
   const { setPlots, plots } = usePlotStore();
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState<Record<string, string | null>>({
     sortOption: null,
   });
@@ -23,7 +27,7 @@ export default function MyPlots() {
         const myPlots = await getMyPlots();
         setPlots(myPlots);
       } catch (err) {
-        console.error("Failed to fetch my plots:", err);
+        console.error('Error: ', err);
       }
     };
     fetchMyPlots();
@@ -50,24 +54,30 @@ export default function MyPlots() {
   const sortedData = sortData(rangeFilteredData, filters.sortOption);
 
   return (
-    <div className="bg-gray-100 min-h-screen flex flex-col px-7 pt-4">
-      <h1 className="text-[32px] font-bold text-black-muted">Meine Flurstücke</h1>
+    <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
+      <h1 className='text-[32px] font-bold text-black-muted'>
+        Meine Flurstücke
+      </h1>
 
-      <div className="flex mt-6 flex-col gap-6">
-        <div className="flex justify-between items-center">
-          <Search placeholder="Search" value={searchTerm} onChange={handleSearchChange} />
+      <div className='flex mt-6 flex-col gap-6'>
+        <div className='flex justify-between items-center'>
+          <Search
+            placeholder='Search'
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
           <Select
-            name="sortOption"
-            variant="sort"
+            name='sortOption'
+            variant='sort'
             options={sortOptions}
             value={filters.sortOption}
             onChange={handleSelectChange}
-            placeholder="Sortieren nach"
+            placeholder='Sortieren nach'
             addRangeSlider
-            title="Fläche"
-            details="Größe der Fläche"
+            title='Fläche'
+            details='Größe der Fläche'
             onFilter={handleRangeFilter}
-            unit="ha"
+            unit='ha'
             initialValues={[range[0] / 10000, range[1] / 10000]}
           />
         </div>
@@ -78,7 +88,7 @@ export default function MyPlots() {
             renderItem={(plot) => <PlotItem key={plot.id} data={plot} />}
           />
         ) : (
-          <div className="flex text-[18px] font-500 gray-light-200 justify-center">
+          <div className='flex text-[18px] font-500 gray-light-200 justify-center'>
             Derzeit gibt es keine Daten in der Liste.
           </div>
         )}

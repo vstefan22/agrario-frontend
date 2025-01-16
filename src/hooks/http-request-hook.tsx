@@ -1,13 +1,11 @@
-// src/hooks/http-request-hook.ts
-
 import { useCallback } from 'react';
 import axiosInstance from '../api/axios-instance';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 type HttpMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 type UseHttpRequestReturn = {
-  /* eslint-disable @typescript-eslint/no-explicit-any */
   sendRequest: <T = any>(
     url: string,
     method?: HttpMethod,

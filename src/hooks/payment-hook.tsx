@@ -26,7 +26,6 @@ const usePayments = () => {
   const createPackagePayment = useCallback(
     async (body: PackagePaymentType) => {
       return await sendRequest(
-        // TODO: replace with the actual endpoint
         `/payments/create-payment/`,
         'POST',
         {

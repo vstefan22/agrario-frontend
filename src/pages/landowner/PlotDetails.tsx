@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/common/Button';
 import ShowDetailsLandowner from './ShowDetailsLandowner';
-import usePlotStore from '../../store/plot-store';
 import usePlots from '../../hooks/plot-hook';
+import usePlotStore from '../../store/plot-store';
 
 function PlotDetails() {
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ function PlotDetails() {
   };
 
   const handleDownloadReport = () => {
-    console.log('Download report clicked.');
+    // TODO: add functionality when provided
   };
 
   const handleAnalysePlus = async () => {
@@ -81,7 +81,6 @@ function PlotDetails() {
         >
           Bericht herunterladen
         </Button>
-
         <Button variant='bluePrimary' type='button' onClick={handleAnalysePlus}>
           Analyse PLUS kaufen
         </Button>

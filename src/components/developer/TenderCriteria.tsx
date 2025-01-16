@@ -1,4 +1,4 @@
-import { tenderCriteriaData } from '../../../mockData';
+import { tenderCriteriaData } from '../../constants/global';
 import listIcon from '../../assets/images/list-icon.png';
 
 const TenderCriteria = () => {

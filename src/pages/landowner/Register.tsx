@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { TbEye, TbEyeOff } from 'react-icons/tb';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import Checkbox from '../../components/common/Checkbox';
 import useHttpRequest from '../../hooks/http-request-hook';
-import { TbEye, TbEyeOff } from 'react-icons/tb';
-import { toast } from 'react-toastify';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -30,7 +30,6 @@ export default function Register() {
     privacy_accepted: false,
     terms_accepted: false,
   });
-
   const [loading, setLoading] = useState(false);
 
   const handleChange = (

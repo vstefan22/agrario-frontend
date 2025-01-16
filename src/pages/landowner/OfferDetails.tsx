@@ -23,7 +23,6 @@ import { OfferPreparationType } from '../../types/offer-types';
 const OfferDetails = () => {
   const navigate = useNavigate();
   const { patchOffer, deactivateOffer } = useOffers();
-
   const {
     offer,
     updateOffer,
@@ -31,8 +30,6 @@ const OfferDetails = () => {
     removeOffer,
     removeOfferFromList,
   } = useOfferStore();
-  console.log(offer);
-  const offerId = offer?.identifier;
   const [formData, setFormData] = useState<OfferPreparationType>({
     available_from: offer?.available_from
       ? new Date(offer.available_from)
@@ -64,6 +61,7 @@ const OfferDetails = () => {
     shareholder_model: false,
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const offerId = offer?.identifier;
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

@@ -14,7 +14,6 @@ import { FaMapLocationDot } from 'react-icons/fa6';
 import { RiDiscountPercentLine } from 'react-icons/ri';
 import { HiOutlineClipboardList } from 'react-icons/hi';
 import Button from '../common/Button';
-
 import useAuthStore from '../../store/auth-store';
 import useClearStorage from '../../store/clear-storage';
 
@@ -46,7 +45,7 @@ export default function Sidebar() {
       clearStorage();
       navigate('/');
     } catch (error) {
-      console.error('Error signing out:', error);
+      console.error(error);
     }
   };
 
