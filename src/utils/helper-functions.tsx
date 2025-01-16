@@ -87,7 +87,6 @@ export const sortOfferData = (
           a.parcels.length > 0 ? a.parcels[0].area_square_meters : 0;
         const bArea =
           b.parcels.length > 0 ? b.parcels[0].area_square_meters : 0;
-        console.log(b.parcels[0].area_square_meters);
         return aArea - bArea;
       });
     default:
@@ -199,7 +198,6 @@ export const sortActiveAuctionsData = (
         a.parcels[0].state_name.localeCompare(b.parcels[0].state_name)
       );
     case 'Sortieren nach Größe':
-      console.log(items);
       return [...items].sort(
         (a, b) =>
           b.parcels[0].area_square_meters - a.parcels[0].area_square_meters

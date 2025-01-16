@@ -32,7 +32,6 @@ const ActiveAuctionsItem: FC<ActiveAuctionsItemProps> = ({
   const handleViewDetails = async () => {
     try {
       const auctionDetails = await getAuctionOfferDetails(data.identifier);
-      console.log('Auction details from item.: ', auctionDetails);
       setAuctionOffer(auctionDetails);
       if (detailsType === 'auction')
         navigate('/developer/active-auctions/details');

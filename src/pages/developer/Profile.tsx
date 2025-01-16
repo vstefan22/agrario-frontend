@@ -125,6 +125,15 @@ export default function Profile() {
     }
   }, [user]);
 
+  useEffect(() => {
+    if (user?.profile_picture) {
+      setProfilePreview(user.profile_picture);
+    }
+    if (user?.company_logo) {
+      setCompanyPreview(user.company_logo);
+    }
+  }, [user]);
+
   const handleToggleChange = (checked: boolean) => {
     setIsChecked(checked);
   };
@@ -189,6 +198,26 @@ export default function Profile() {
     //     return;
     //   }
     // }
+    if (
+      !formData.battery &&
+      !formData.electromobility &&
+      !formData.ground_mounted_solar &&
+      !formData.hydrogen &&
+      !formData.wind &&
+      !formData.heat &&
+      !formData.ecological_upgrading &&
+      !formData.other
+    ) {
+      toast.error(
+        'Bitte wählen Sie mindestens eine Option oder geben Sie einen Text in das Feld "Sonstige" ein.'
+      );
+      return;
+    }
+
+    if (formData.zipcode.length !== 5 || !/^\d+$/.test(formData.zipcode)) {
+      toast.error('Die Postleitzahl muss genau 5 Ziffern enthalten.');
+      return;
+    }
 
     setLoading(true);
 
@@ -290,7 +319,13 @@ export default function Profile() {
     };
 
     try {
-      await createPackagePayment(body);
+      const response = await createPackagePayment(body);
+
+      if (response.session_url) {
+        window.location.href = response.session_url;
+      } else {
+        toast.error('Error happened while creating payment sesion');
+      }
     } catch (err) {
       console.error('Error during plan purchase: ', err);
     }

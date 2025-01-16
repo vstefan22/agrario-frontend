@@ -1,6 +1,9 @@
+import { useNavigate } from 'react-router-dom';
 import Button from '../../components/common/Button';
 
 const ThankYouSubscribe = () => {
+  const navigate = useNavigate();
+
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
       <h1 className='text-[32px] font-bold text-black-muted'>
@@ -26,9 +29,7 @@ const ThankYouSubscribe = () => {
         type='button'
         variant='bluePrimary'
         className='w-[342px] ml-auto mt-12'
-        onClick={() => {
-          console.log('ADD NAVIGATE');
-        }}
+        onClick={() => navigate('/developer/active-auctions')}
       >
         Weitere aktive Auktionen ansehen
       </Button>

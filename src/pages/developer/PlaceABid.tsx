@@ -114,6 +114,32 @@ const PlaceABid = () => {
             auctionOptionsMap[formData.shares_project_company] || ''
           );
         }
+
+        if (isNaN(Number(formData.sale_amount))) {
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            sale_amount: 'Eine gültige Zahl ist erforderlich.',
+          }));
+          return;
+        }
+
+        if (isNaN(Number(formData.lease_amount_yearly_lease_year_one))) {
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            lease_amount_yearly_lease_year_one:
+              'Eine gültige Zahl ist erforderlich.',
+          }));
+          return;
+        }
+
+        if (isNaN(Number(formData.contracted_term_month))) {
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            contracted_term_month: 'Eine gültige Zahl ist erforderlich.',
+          }));
+          return;
+        }
+
         formDataSend.append('sale_amount', formData.sale_amount || '');
         formDataSend.append(
           'contracted_term_month',
@@ -300,7 +326,6 @@ const PlaceABid = () => {
               id='message_to_landowner'
               name='message_to_landowner'
               value={formData.message_to_landowner}
-              editBtn
             />
             {errors.message_to_landowner && (
               <span className='text-red-500 text-sm'>
@@ -317,7 +342,6 @@ const PlaceABid = () => {
               id='message_to_platform'
               name='message_to_platform'
               value={formData.message_to_platform}
-              editBtn
             />
             {errors.message_to_platform && (
               <span className='text-red-500 text-sm'>
