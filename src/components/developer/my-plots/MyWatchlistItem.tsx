@@ -1,15 +1,15 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import DynamicTable from '../../common/DynamicTable';
 import Button from '../../common/Button';
 import ItemImage from '../../common/ItemImage';
-import { PLOT_SEARCH_COLUMNS } from '../../../constants/table-data';
-import { RegisteredPlotDetailsType } from '../../../types/plot-types';
-import delIcon from '../../../assets/images/del.png';
-import imagePlaceholder from '../../../assets/images/image-placeholder.png';
 import useRegisteredPlots from '../../../hooks/registered-plot-hook';
 import useRegisteredPlotStore from '../../../store/registered-plot-store';
-import { toast } from 'react-toastify';
+import { RegisteredPlotDetailsType } from '../../../types/plot-types';
+import { PLOT_SEARCH_COLUMNS } from '../../../constants/table-data';
+import delIcon from '../../../assets/images/del.png';
+import imagePlaceholder from '../../../assets/images/image-placeholder.png';
 
 type MyWatchlistItemProps = {
   data: RegisteredPlotDetailsType;

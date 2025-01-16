@@ -1,5 +1,5 @@
-import { Range, getTrackBackground } from 'react-range';
 import { useState } from 'react';
+import { Range, getTrackBackground } from 'react-range';
 
 interface rangeSliderTypes {
   title?: string;

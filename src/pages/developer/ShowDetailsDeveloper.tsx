@@ -6,7 +6,7 @@ import { PLOT_DETAILS_V8_COLUMNS } from '../../constants/table-data';
 import germanyImg from '../../assets/images/germany-country.png';
 import woodsImg from '../../assets/images/woods.png';
 import mountainsImg from '../../assets/images/mountains.png';
-import { showDetailsData } from '../../../ShowDetailsMockData';
+import { showDetailsData } from '../../../detailsData';
 
 type ShowDetailsDeveloperType = {
   isAuction?: boolean;

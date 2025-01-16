@@ -6,15 +6,15 @@ import Button from '../../components/common/Button';
 import Checkbox from '../../components/common/Checkbox';
 import GenericList from '../../components/common/GenericList';
 import RegisteredPlotItem from '../../components/developer/my-plots/RegisteredPlotItem';
+import useRegisteredPlots from '../../hooks/registered-plot-hook';
+import useRegisteredPlotStore from '../../store/registered-plot-store';
 import {
   filterPlotsSearchData,
   sortPlotsSearchData,
+  filterPlotSearchDataRange,
 } from '../../utils/helper-functions';
-import { filterPlotSearchDataRange } from '../../utils/helper-functions';
 import { sortOptions } from '../../constants/select-options';
 import filtersImg from '../../assets/images/filters.png';
-import useRegisteredPlots from '../../hooks/registered-plot-hook';
-import useRegisteredPlotStore from '../../store/registered-plot-store';
 
 const RegisteredPlots = () => {
   const { getAllRegisteredPlots } = useRegisteredPlots();

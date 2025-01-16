@@ -14,7 +14,6 @@ const NavBar: FC = () => {
   const { getUnreadMessages } = useMessages();
   const [unreadCount, setUnreadCount] = useState(0);
 
-  // TODO: Add backend functionality for unread messages
   useEffect(() => {
     const unreadMessages = async () => {
       try {

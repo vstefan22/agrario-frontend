@@ -8,8 +8,6 @@ export const profileOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 export const bidOptions = ['Ja', 'Nein', 'Keine Angabe'];
 
-export const defaultOptions = ['Option 1', 'Option 2', 'Option 3'];
-
 export const utilization = ['Keine Einschränkung', 'Verkauf', 'Verpachtung'];
 
 export const landOptions = ['Pacht', 'Kauf', 'Beides'];
@@ -37,6 +35,7 @@ export const preferredRegionality = [
   'Firmensitz in Deutschland',
   'Firmensitz im Bundesland des Grundstücks',
 ];
+
 export const shareholderModel = [
   'Keine Einschränkung',
   'Beteiligungen am Erlös',

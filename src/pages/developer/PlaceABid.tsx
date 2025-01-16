@@ -154,13 +154,10 @@ const PlaceABid = () => {
     }
   };
 
-  // console.log(auctionOffer);
-
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
       <h1 className='text-[32px] font-bold text-black-muted'>
-        Gebot abgeben AN-561345
-        {/* Replace AN-561345 with original ID */}
+        Gebot abgeben {auctionOffer?.identifier}
       </h1>
       <p className='text-gray-dark-100 w-[50%] mt-2 mb-6'>
         There are many variations of passages of Lorem Ipsum available, but the
@@ -173,7 +170,7 @@ const PlaceABid = () => {
         <form className='w-1/2'>
           <div className='bg-white border-[1px] border-[#D9D9D9] p-6 rounded-2xl'>
             <h1 className='text-[32px] font-bold text-black-muted mb-6'>
-              Gebot abgeben AN-561345
+              Gebot abgeben {auctionOffer?.identifier}
             </h1>
             <Select
               variant='default'
@@ -189,11 +186,9 @@ const PlaceABid = () => {
             {errors.utilization && (
               <span className='text-red-500 text-sm'>{errors.utilization}</span>
             )}
-
             <h1 className='text-[24px] font-bold text-black-muted my-6'>
               Im Falle von Kauf-Angeboten
             </h1>
-
             <Input
               label='Was ist Ihr Kaufpreisangebot'
               placeholder='Text hinzufügen'
@@ -206,20 +201,9 @@ const PlaceABid = () => {
             {errors.sale_amount && (
               <span className='text-red-500 text-sm'>{errors.sale_amount}</span>
             )}
-            {/* <Input
-              label='Was ist Ihr Kaufpreisangebot'
-              placeholder='Text hinzufügen'
-              variant='profile'
-              className='mt-2'
-              name='input2'
-              value={formData.input2 || ''}
-              onChange={handleInputChange}
-            /> */}
-
             <h1 className='text-[24px] font-bold text-black-muted my-6'>
               Im Falle von Pachtangeboten
             </h1>
-
             <Input
               label='Angebotene Vertragslaufzeit'
               placeholder='Text hinzufügen'
@@ -250,7 +234,6 @@ const PlaceABid = () => {
                 {errors.lease_amount_yearly_lease_year_one}
               </span>
             )}
-
             <Select
               variant='default'
               label='Staffelung der Pacht möglich'
@@ -268,18 +251,6 @@ const PlaceABid = () => {
                 {errors.staggered_lease}
               </span>
             )}
-            {/* <Select
-              variant='default'
-              label='Staffelung der Pacht möglich'
-              labelClassName='text-gray-medium'
-              required
-              name='select3'
-              value={formData.select3}
-              onChange={handleSelectChange}
-              options={bidOptions}
-              placeholder='Ja/Nein/Keine Angabe'
-              divClassName='my-8'
-            /> */}
             <Select
               variant='default'
               label='Beteiliung an laufenden Erlösen möglich?'
@@ -297,7 +268,6 @@ const PlaceABid = () => {
                 {errors.share_of_income}
               </span>
             )}
-
             <h1 className='text-[24px] font-bold text-black-muted my-6'>
               Im Falle von Gründung einer Projektgesellschaft
             </h1>
@@ -320,7 +290,6 @@ const PlaceABid = () => {
                 {errors.shares_project_company}
               </span>
             )}
-
             <h1 className='text-[24px] font-bold text-black-muted my-6'>
               Sonstige Informationen für den Eigentümer
             </h1>
@@ -338,11 +307,9 @@ const PlaceABid = () => {
                 {errors.message_to_landowner}
               </span>
             )}
-
             <h1 className='text-[24px] font-bold text-black-muted my-6'>
               Sonstige Informationen für Agrario Energy bzgl. ihres Angebotes
             </h1>
-
             <TextArea
               placeholder='500 Zeichen'
               onChange={handleChange}
@@ -400,12 +367,10 @@ const PlaceABid = () => {
               )}
             </div>
           )}
-
           <p className='text-gray-dark-100 mb-6'>
             There are many variations of passages of Lorem Ipsum available, but
             the majority have suffered alteration in some form.
           </p>
-
           <div className='flex justify-end gap-6'>
             <Button
               variant='blueSecondary'
