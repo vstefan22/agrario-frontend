@@ -1,4 +1,5 @@
 import { useState, ChangeEvent, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Search from "../../components/common/Search";
 import Button from "../../components/common/Button";
 import GoogleMap from "../../components/common/GoogleMap";
@@ -13,6 +14,7 @@ import { toast } from "react-toastify";
 import { LoadingSpinner } from "../../components/common/Loading";
 
 export default function NewPlot() {
+  const navigate = useNavigate();
   const { getPlotGeoData, addPlot, getPlotByFilterData } = usePlots();
   const [searchTerm, setSearchTerm] = useState("");
   const [mapPolygons, setMapPolygons] = useState<ParcelPolygon[]>([]);
@@ -125,6 +127,7 @@ export default function NewPlot() {
       await addPlot(id);
       setLoading(false);
       toast.success("Flurstück hinzugefügt!");
+      navigate("/landowner/my-plots");
     } catch (err) {
       console.error(err);
       setLoading(false);

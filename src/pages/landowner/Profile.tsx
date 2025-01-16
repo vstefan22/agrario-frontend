@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase/firebase-config";
 import { TbCameraPlus } from "react-icons/tb";
 import Input from "../../components/common/Input";
 import Button from "../../components/common/Button";
 import IconCircleButton from "../../components/common/IconCircleButton";
 import useHttpRequest from "../../hooks/http-request-hook";
 import useAuthStore from "../../store/auth-store";
+import useClearStorage from "../../store/clear-storage";
 import { StoreUser } from "../../types/user-types";
 import profilePlaceholder from "../../assets/images/profile-placeholder.png";
 import { LoadingSpinner } from "../../components/common/Loading";
@@ -18,6 +21,7 @@ type ProfileType = Omit<StoreUser, "id">;
 export default function Profile() {
   const navigate = useNavigate();
   const { sendRequest } = useHttpRequest();
+  const { clearStorage } = useClearStorage();
   const { token, user, updateUser } = useAuthStore();
 
   const [formData, setFormData] = useState<ProfileType>({
@@ -56,12 +60,14 @@ export default function Profile() {
 
   useEffect(() => {
     const fetchUserProfile = async () => {
+      setLoading(true);
       const user = await sendRequest<StoreUser>("/accounts/profile/", "GET", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       updateUser(user);
+      setLoading(false);
     };
 
     fetchUserProfile();
@@ -92,13 +98,13 @@ export default function Profile() {
     const { name, value, type } = e.target;
     let checked = false;
 
-    if (type === "checkbox" || type === "radio") {
+    if (type === "checkbox") {
       checked = (e.target as HTMLInputElement).checked;
     }
 
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" || type === "radio" ? checked : value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
@@ -114,12 +120,19 @@ export default function Profile() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.first_name || !formData.last_name || !formData.company_name || !formData.email) {
+    if (
+      !formData.first_name ||
+      !formData.last_name ||
+      !formData.email ||
+      !formData.address ||
+      !formData.zipcode ||
+      !formData.city ||
+      !formData.phone_number
+    ) {
       toast.error("Bitte füllen Sie alle erforderlichen Felder aus.");
       return;
     }
 
-    setLoading(true);
     const formDataSend = new FormData();
 
     Object.entries(formData).forEach(([key, value]) => {
@@ -135,6 +148,7 @@ export default function Profile() {
     }
 
     try {
+      setLoading(true);
       const userUpdated = await sendRequest(
         "/accounts/profile/",
         "PATCH",
@@ -163,6 +177,16 @@ export default function Profile() {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      clearStorage();
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleOnPasswordChange = async () => {
     try {
       await sendRequest(
@@ -175,6 +199,7 @@ export default function Profile() {
         },
         { email: user?.email }
       );
+      handleLogout();
       toast.success("Reset password email sent successfully!");
     } catch {
       toast.error("Error happened while sending reset password email.");
@@ -264,7 +289,6 @@ export default function Profile() {
             <Input
               variant="profile"
               label="Name des Unternechmens"
-              required
               id="company_name"
               name="company_name"
               value={formData.company_name}
@@ -277,8 +301,7 @@ export default function Profile() {
           <div className="md:col-span-2">
             <Input
               variant="profile"
-              label="Ihre Position i Untermehmen"
-              required
+              label="Ihre Position im Untermehmen"
               id="position"
               name="position"
               value={formData.position}
@@ -366,6 +389,7 @@ export default function Profile() {
               id="phone_number"
               name="phone_number"
               type="tel"
+              required
               value={formData.phone_number}
               onChange={handleChange}
               onEdit={() => toggleEditMode("phone_number")}

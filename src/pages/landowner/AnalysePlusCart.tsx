@@ -66,6 +66,7 @@ const AnalysePlusCart = () => {
       removePlotFromBasket(id);
       const basketSummaryData = await getAnalysePlus();
       setBasketSummary(basketSummaryData);
+      setDiscountCodeStore("", "");
       toast.success("Das Flurstück wurde erfolgreich aus der Liste entfernt.");
       setLoading(false);
       // eslint-disable-next-line

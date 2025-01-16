@@ -18,7 +18,7 @@ const NavBar: FC = () => {
       try {
         if (user?.id) {
           const response = await getUnreadMessages();
-          setUnreadCount(response.unreadCount || 0);
+          setUnreadCount(response.unread_count || 0);
         }
       } catch (err) {
         console.error('Failed to fetch unread messages: ', err);
@@ -85,7 +85,6 @@ const NavBar: FC = () => {
                   <p className='text-[14px] text-gray-dark-150'>
                     {user?.first_name} {user?.last_name}
                   </p>
-                  <p className='text-[10px] text-gray-dark-100'>Admin</p>
                 </div>
               </div>
             ) : null}

@@ -17,6 +17,7 @@ import {
 } from "../../constants/select-options";
 import { validateOfferDetailForm } from "../../utils/helper-functions";
 import { OfferPreparationType } from "../../types/offer-types";
+import { toast } from "react-toastify";
 import { LoadingSpinner } from "../../components/common/Loading";
 
 const initialFormData = {
@@ -99,7 +100,7 @@ export default function MyOffer() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const { isFormValidate } = validateOfferDetailForm(formData);
+    const { errors: errorsFrom, isFormValidate } = validateOfferDetailForm(formData);
     const parcelIds = [plot?.id];
 
     try {
@@ -143,9 +144,18 @@ export default function MyOffer() {
         await addOffer(formDataSend);
         setLoading(false);
         navigate("/landowner/my-plots/thank-you-marketing-request");
+      } else {
+        setLoading(false);
+        setErrors(errorsFrom);
       }
-    } catch (err) {
+      // eslint-disable-next-line
+    } catch (err: any) {
+      if (err?.response.data.detail.endsWith("is already associated with another AreaOffer.")) {
+        toast.error("Dieses Angebot existiert bereits, bitte versuchen Sie es mit einem anderen.");
+        return;
+      }
       setLoading(false);
+      toast.error(`Fehler: ${err.message}`);
       console.error("Error: ", err);
     }
   };
@@ -159,9 +169,11 @@ export default function MyOffer() {
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col px-7 pt-4">
       <h1 className="text-[32px] font-bold text-black-muted">Vorbereitung des Angebotes</h1>
+
       <div className="flex mt-6 flex-col gap-6">
         <OfferPreparationItem data={plot} />
       </div>
+
       <div>
         <h1 className="text-[32px] font-bold text-black-muted mt-4">Ihre Kriterien</h1>
         <form onSubmit={handleSubmit} className="flex flex-col mt-4 gap-6">
@@ -178,6 +190,7 @@ export default function MyOffer() {
                 <span className="text-red-500 text-sm">{errors.available_from}</span>
               )}
             </div>
+
             <div className="flex flex-col">
               <Select
                 name="utilization"
@@ -277,6 +290,9 @@ export default function MyOffer() {
             label=""
             placeholder="Ihre Nachricht an uns"
           />
+          {errors.important_remarks && (
+            <span className="text-red-500 text-sm">{errors.important_remarks}</span>
+          )}
 
           <UploadFile onFilesChange={handleFilesChange} />
 
