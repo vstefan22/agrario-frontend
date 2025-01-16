@@ -14,6 +14,7 @@ import { PlotSearchData } from '../../types/plot-types';
 import usePlots from '../../hooks/plot-hook';
 import SearchByAttributes from '../../components/search-with-backup/SearchByAttributes';
 import { toast } from 'react-toastify';
+import { LoadingSpinner } from '../../components/common/Loading';
 
 export default function NewPlot() {
   const navigate = useNavigate();
@@ -22,9 +23,11 @@ export default function NewPlot() {
   const [mapPolygons, setMapPolygons] = useState<ParcelPolygon[]>([]);
   const [searchPolygons, setSearchPolygons] = useState<ParcelPolygon[]>([]);
   const [parcelList, setParcelList] = useState<ParcelPolygon[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchParcels = async () => {
+      setLoading(true);
       try {
         const response = await getPlotGeoData();
         const polygons: ParcelPolygon[] = [];
@@ -59,8 +62,10 @@ export default function NewPlot() {
         }
 
         setMapPolygons(polygons);
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching parcels:', error);
+        setLoading(false);
       }
     };
 
@@ -73,6 +78,7 @@ export default function NewPlot() {
   };
 
   const handleSetPolygonData = async (formData: PlotSearchData) => {
+    setLoading(true);
     try {
       const filter = Object.fromEntries(
         // eslint-disable-next-line
@@ -104,9 +110,11 @@ export default function NewPlot() {
 
       setParcelList(foundPolygons);
       setSearchPolygons(foundPolygons);
+      setLoading(false);
       toast.success('Flurstücke erfolgreich geladen.');
     } catch (err) {
       console.error(err);
+      setLoading(false);
       toast.error('Fehler beim Abrufen der Flurstücke.');
     }
   };
@@ -116,13 +124,15 @@ export default function NewPlot() {
 
     const parcel = parcelList[0];
     const id = parcel.id;
-
+    setLoading(true);
     try {
       await addPlot(id);
+      setLoading(false);
       toast.success('Flurstück hinzugefügt!');
       navigate('/landowner/my-plots');
     } catch (err) {
       console.error(err);
+      setLoading(false);
       toast.error('Fehler beim Hinzufügen des Flurstücks.');
     }
   };
@@ -136,6 +146,7 @@ export default function NewPlot() {
     setSearchPolygons([]);
   };
 
+  if (loading) return <LoadingSpinner />;
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
       <div className='flex items-center justify-between mb-6'>

@@ -11,11 +11,13 @@ import {
 } from '../../utils/helper-functions';
 import usePlots from '../../hooks/plot-hook';
 import usePlotStore from '../../store/plot-store';
+import { LoadingSpinner } from '../../components/common/Loading';
 
 export default function MyPlots() {
   const { getMyPlots } = usePlots();
   const { setPlots, plots } = usePlotStore();
   const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState<Record<string, string | null>>({
     sortOption: null,
   });
@@ -24,9 +26,12 @@ export default function MyPlots() {
   useEffect(() => {
     const fetchMyPlots = async () => {
       try {
+        setLoading(true);
         const myPlots = await getMyPlots();
         setPlots(myPlots);
+        setLoading(false);
       } catch (err) {
+        setLoading(false);
         console.error('Error: ', err);
       }
     };
@@ -51,7 +56,7 @@ export default function MyPlots() {
   const searchFilteredData = filterData(plots, searchTerm);
   const rangeFilteredData = filterDataRange(searchFilteredData, range);
   const sortedData = sortData(rangeFilteredData, filters.sortOption);
-
+  if (loading) return <LoadingSpinner />;
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
       <h1 className='text-[32px] font-bold text-black-muted'>

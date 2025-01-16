@@ -12,6 +12,7 @@ import useAuthStore from '../../store/auth-store';
 import useClearStorage from '../../store/clear-storage';
 import { StoreUser } from '../../types/user-types';
 import profilePlaceholder from '../../assets/images/profile-placeholder.png';
+import { LoadingSpinner } from '../../components/common/Loading';
 // import { EyeOpenIcon, EyeClosedIcon } from '../../assets/svgs/svg-icons';
 
 type ProfileType = Omit<StoreUser, 'id'>;
@@ -59,12 +60,14 @@ export default function Profile() {
 
   useEffect(() => {
     const fetchUserProfile = async () => {
+      setLoading(true);
       const user = await sendRequest<StoreUser>('/accounts/profile/', 'GET', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       updateUser(user);
+      setLoading(false);
     };
 
     fetchUserProfile();
@@ -136,7 +139,11 @@ export default function Profile() {
       return;
     }
 
-    setLoading(true);
+    if (formData.zipcode.length !== 5 || !/^\d+$/.test(formData.zipcode)) {
+      toast.error('Die Postleitzahl muss genau 5 Ziffern enthalten.');
+      return;
+    }
+
     const formDataSend = new FormData();
 
     Object.entries(formData).forEach(([key, value]) => {
@@ -152,6 +159,7 @@ export default function Profile() {
     }
 
     try {
+      setLoading(true);
       const userUpdated = await sendRequest(
         '/accounts/profile/',
         'PATCH',
@@ -220,6 +228,7 @@ export default function Profile() {
     toggleEditMode(field);
   };
 
+  if (loading) return <LoadingSpinner />;
   return (
     <div className='bg-gray-lightest min-h-screen flex flex-col items-center justify-start px-4 py-8 auto-fill-profile'>
       <div className='w-full max-w-[960px] bg-white border border-gray-medium rounded-[44px] p-8'>

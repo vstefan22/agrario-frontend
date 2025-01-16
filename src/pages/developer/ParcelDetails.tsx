@@ -4,14 +4,18 @@ import ShowDetailsDeveloper from './ShowDetailsDeveloper';
 import Button from '../../components/common/Button';
 import useRegisteredPlots from '../../hooks/registered-plot-hook';
 import useRegisteredPlotStore from '../../store/registered-plot-store';
+import { useState } from 'react';
+import { LoadingSpinner } from '../../components/common/Loading';
 
 const ParcelDetails = () => {
   const { addPlotToWatchlist } = useRegisteredPlots();
   const { registeredPlot, updatePlotToMyList } = useRegisteredPlotStore();
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const AddToWatchlist = async () => {
     try {
+      setLoading(true);
       await addPlotToWatchlist(
         registeredPlot!.parcel!.id!.toString(),
         registeredPlot!
@@ -23,9 +27,12 @@ const ParcelDetails = () => {
         'Das Flurstück wurde nicht erfolgreich zur Beobachtungsliste hinzugefügt.'
       );
       console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
+  if (loading) return <LoadingSpinner />;
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
       <div>
