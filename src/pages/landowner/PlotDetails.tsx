@@ -18,6 +18,7 @@ function PlotDetails() {
       try {
         const analyseDetailsPlot = await getPlotAnalyseDetails(plot!.id);
         setPlotAnalyseDetails(analyseDetailsPlot);
+        setLoading(false);
       } catch (err) {
         setLoading(true);
         console.error("Failed to fetch analyse details:", err);
