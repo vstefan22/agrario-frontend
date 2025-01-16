@@ -14,7 +14,7 @@ const AnalysePlusCart = () => {
   const {
     basketPlots,
     removePlotFromBasket,
-    plotAnalyseDetails,
+    discountedTotal,
     basketSummary,
     setBasketSummary,
     setDiscountCodeStore,
@@ -30,6 +30,7 @@ const AnalysePlusCart = () => {
     // TODO: use actual data for payment checkout
     const paymentBody = {
       payment_type: "analyse_plus",
+      discount_code: discountCode,
     };
 
     // // TODO: promeniti paymentBody type nakon finalnog backenda
@@ -45,8 +46,9 @@ const AnalysePlusCart = () => {
 
   const handleReedemCode = async () => {
     const response = await applyDiscount({ discount_code: discountCode });
-    if (response.status === "ok") {
-      setDiscountCodeStore(discountCode);
+    console.log(response);
+    if (response.original_total) {
+      setDiscountCodeStore(discountCode, response.discounted_total);
       toast.success("Ihr Rabattcode ist gültig.");
     } else {
       toast.error("Ihr Rabattcode ist ungültig, bitte versuchen Sie einen anderen.");
@@ -178,7 +180,7 @@ const AnalysePlusCart = () => {
 
           <div className="flex flex-col mt-3">
             <p>
-              Total: <strong>{plotAnalyseDetails?.subtotal} €</strong>
+              Total: <strong>{discountedTotal ? discountedTotal : basketSummary.subtotal}€</strong>
             </p>
           </div>
         </div>

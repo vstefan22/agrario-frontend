@@ -1,65 +1,50 @@
-import { useState } from 'react';
-import MessageItem from './MessageItem';
-import starIcon from '../../../assets/images/star.png';
-import filledStarIcon from '../../../assets/images/filled-star.png';
+import MessageItem from "./MessageItem";
 
 type MessageListTypes = {
   name: string;
   message: string;
   time: string;
-  category: string;
+  subject: string;
+  id: string;
+  onSelectMessages: (id: string) => void;
+  selectedMessages: Array<string>;
 };
 
-const MessageList = ({ name, message, time, category }: MessageListTypes) => {
-  const [isChecked, setIsChecked] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
-
-  const checkMessage = () => {
-    setIsChecked((prev) => !prev);
-  };
-
-  const favoriteMessage = () => {
-    setIsFavorite((prev) => !prev);
-  };
+const MessageList = ({
+  id,
+  name,
+  message,
+  time,
+  subject,
+  selectedMessages,
+  onSelectMessages,
+}: MessageListTypes) => {
+  const isChecked = selectedMessages.includes(id);
 
   return (
     <div
       className={`py-4 border-b-[0.8px] border-gray-light-125 flex gap-6 px-4 items-center ${
-        isChecked && 'bg-sky-blue/[6%]'
+        isChecked && "bg-sky-blue/[6%]"
       }`}
     >
-      <label
-        htmlFor='checkMsg'
-        className='relative block w-[16px] h-[16px] cursor-pointer'
-      >
+      <label htmlFor="checkMsg" className="relative block w-[16px] h-[16px] cursor-pointer">
         <input
-          type='checkbox'
-          id='checkMsg'
+          type="checkbox"
+          id="checkMsg"
           checked={isChecked}
-          onChange={checkMessage}
-          className='appearance-none w-[16px] h-[16px] border-2 border-gray-light-200 rounded cursor-pointer
-          checked:bg-black checked:border-black checked:text-white flex items-center justify-center'
+          onChange={() => onSelectMessages(id)}
+          className="appearance-none w-[16px] h-[16px] border-2 border-gray-light-200 rounded cursor-pointer
+          checked:bg-black checked:border-black checked:text-white flex items-center justify-center"
         />
         <span
-          className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
-            text-white text-[12px] font-bold leading-none pointer-events-none'
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
+            text-white text-[12px] font-bold leading-none pointer-events-none"
         >
-          {isChecked && '✓'}
+          {isChecked && "✓"}
         </span>
       </label>
 
-      <img
-        src={!isFavorite ? starIcon : filledStarIcon}
-        alt='star icon'
-        onClick={favoriteMessage}
-        className='cursor-pointer w-[18px] h-[18px]'
-      />
-      <MessageItem
-        name={name}
-        message={message}
-        time={time}
-        category={category}
-      />
+      <MessageItem name={name} message={message} time={time} subject={subject} id={id} />
     </div>
   );
 };

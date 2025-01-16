@@ -1,9 +1,9 @@
 export type MessageTypes = {
   id: string;
-  name: string;
-  message: string;
+  recipient: string;
+  last_message: { body: string };
   time: string;
-  category: string;
+  subject: string;
 };
 
 export type MessageType = {
