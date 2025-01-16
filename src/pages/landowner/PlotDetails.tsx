@@ -14,14 +14,14 @@ function PlotDetails() {
 
   useEffect(() => {
     const fetchAnalyseDetails = async () => {
-      setLoading(true);
       try {
+        setLoading(true);
         const analyseDetailsPlot = await getPlotAnalyseDetails(plot!.id);
         setPlotAnalyseDetails(analyseDetailsPlot);
-        setLoading(false);
       } catch (err) {
-        setLoading(true);
         console.error("Failed to fetch analyse details:", err);
+      } finally {
+        setLoading(false);
       }
     };
     fetchAnalyseDetails();
