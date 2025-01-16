@@ -284,7 +284,6 @@ export default function Profile() {
   };
 
   const handleMonthlyPremiumPackage = async () => {
-    // TODO: Use actual data here
     const body = {
       payment_type: 'subscription',
       plan_tier: 'PREM',
@@ -292,14 +291,12 @@ export default function Profile() {
 
     try {
       await createPackagePayment(body);
-      // TODO: Add Stripe Checkout and after purchase navigate to ThankYouSubscribe page
     } catch (err) {
       console.error('Error during plan purchase: ', err);
     }
   };
 
   const handleYearlyPremiumPackage = async () => {
-    // TODO: Use actual data here
     const body = {
       payment_type: 'subscription',
       plan_tier: 'PREM',
@@ -313,14 +310,13 @@ export default function Profile() {
       } else {
         toast.error('Error happened while creating payment sesion');
       }
-      // TODO: Add Stripe Checkout and after purchase navigate to ThankYouSubscribe page
     } catch (err) {
       console.error('Error during plan purchase: ', err);
     }
   };
 
   const handlePriceOnRequest = () => {
-    // use actual agrario email here and custom message
+    // TODO: check if this works, use actual agrario email here and custom message
     const email = 'agrarioenergy@gmail.com';
     const subject = encodeURIComponent('Price on Request');
     const body = encodeURIComponent(
