@@ -7,6 +7,7 @@ import useHttpRequest from '../../hooks/http-request-hook';
 import useAuthStore from '../../store/auth-store';
 import { ArrowLeft } from '../../assets/svgs/svg-icons';
 import profilePlaceholder from '../../assets/images/profile-placeholder.png';
+import { LoadingSpinner } from '../common/Loading';
 
 type PasswordChangeProps = {
   password: string;
