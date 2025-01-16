@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import DetailsItem from "../../components/landowner/my-plots/DetailsItem";
@@ -28,6 +28,7 @@ const OfferDetails = () => {
   const { patchOffer, deactivateOffer } = useOffers();
   const { offer, updateOffer, updateOfferToList, removeOffer, removeOfferFromList } =
     useOfferStore();
+  console.log(offer);
   const [formData, setFormData] = useState<OfferPreparationType>({
     available_from: offer?.available_from ? new Date(offer.available_from) : null,
     utilization: optionsMapReverse[offer?.utilization || ""],
@@ -55,6 +56,16 @@ const OfferDetails = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const offerId = offer?.identifier;
 
+  useEffect(
+    function () {
+      if (!offer) return;
+      setFormData((prev) => ({
+        ...prev,
+        ...offer.documented_offers,
+      }));
+    },
+    [offer]
+  );
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
     const checked = type === "checkbox" ? (e.target as HTMLInputElement).checked : undefined;
