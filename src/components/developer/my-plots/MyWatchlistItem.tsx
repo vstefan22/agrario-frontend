@@ -22,7 +22,7 @@ const MyWatchlistItem: FC<MyWatchlistItemProps> = ({ data }) => {
   const {
     removeMyRegisteredPlot,
     removeRegisteredPlotFromMyList,
-    setMyRegisteredPlot,
+    setRegisteredPlot,
   } = useRegisteredPlotStore();
 
   const handleDeletePlot = async () => {
@@ -45,7 +45,7 @@ const MyWatchlistItem: FC<MyWatchlistItemProps> = ({ data }) => {
       const plotDetails = await getRegisteredPlotDetails(
         data.parcel.id.toString()
       );
-      setMyRegisteredPlot(plotDetails);
+      setRegisteredPlot(plotDetails);
       navigate('/developer/registered-plots/parcel-details');
     } catch (err) {
       console.error(err);
