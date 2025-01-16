@@ -85,7 +85,6 @@ const NavBar: FC = () => {
                   <p className='text-[14px] text-gray-dark-150'>
                     {user?.first_name} {user?.last_name}
                   </p>
-                  <p className='text-[10px] text-gray-dark-100'>Admin</p>
                 </div>
               </div>
             ) : null}
