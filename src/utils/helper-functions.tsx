@@ -132,9 +132,6 @@ export const sortPlotsSearchData = (
 
   switch (sortOption) {
     case 'Sortieren nach Eignung':
-      // return [...items].sort((a, b) =>
-      //   a.parcel.land_use.localeCompare(b.parcel.land_use)
-      // );
       return items;
     case 'Sortieren nach Bundesland':
       return [...items].sort((a, b) =>
@@ -240,6 +237,28 @@ export function geoJsonToLatLngArrays(geometry: {
     return allPolygons.flat();
   }
 
+  return [];
+}
+
+export function geoJsonToPolygon(geometry: {
+  type: 'Polygon' | 'MultiPolygon';
+  coordinates: number[][][] | number[][][][];
+}): { lat: number; lng: number }[] {
+  if (!geometry) return [];
+
+  const { type, coordinates } = geometry;
+
+  if (type === 'Polygon') {
+    const coords = coordinates as number[][][];
+    return coords.flatMap((ring) => ring.map(([lng, lat]) => ({ lat, lng })));
+  }
+
+  if (type === 'MultiPolygon') {
+    const coords = coordinates as number[][][][];
+    return coords.flatMap((poly) =>
+      poly.flatMap((ring) => ring.map(([lng, lat]) => ({ lat, lng })))
+    );
+  }
   return [];
 }
 

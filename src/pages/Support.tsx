@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect, useMemo } from 'react';
 import Select from '../components/common/Select';
 import TextArea from '../components/common/TextArea';
@@ -6,25 +6,19 @@ import UploadFile from '../components/common/UploadFile';
 import Button from '../components/common/Button';
 import MessageHistoryCard from '../components/landowner/messages/MessageHistoryCard';
 import useMessages from '../hooks/message-hook';
+import useAuthStore from '../store/auth-store';
+import useMessageStore from '../store/message-store';
 import {
   landownerSupportOptions,
   developerSupportOptions,
 } from '../constants/select-options';
-import useAuthStore from '../store/auth-store';
-import useMessageStore from '../store/message-store';
-
-// const initialFormData = {
-//   subject: landownerSupportOptions[0],
-//   recipient: '',
-//   message: '',
-//   file: null as File | null,
-// };
 
 const Support = () => {
   const { user } = useAuthStore();
   const { sendMessage, getChatDetails } = useMessages();
   const { setMessages, messages } = useMessageStore();
   const navigate = useNavigate();
+  const { chatId } = useParams();
 
   const userRole = user?.role;
 
@@ -47,13 +41,17 @@ const Support = () => {
   }, [initialFormData]);
 
   useEffect(() => {
+    if (!chatId) {
+      setMessages([]);
+      return;
+    }
     const fetchChatDetails = async () => {
-      const chatDetails = await getChatDetails(user!.id);
-      setMessages(chatDetails);
+      const chatDetails = await getChatDetails(chatId);
+      setMessages(chatDetails.messages);
     };
 
     fetchChatDetails();
-  }, [getChatDetails, user, setMessages]);
+  }, [getChatDetails, user, setMessages, chatId]);
 
   const handleSelectChange = (name: string, option: string) => {
     setFormData((prev) => ({
@@ -91,6 +89,7 @@ const Support = () => {
 
     try {
       sendMessage(formDataSend);
+      navigate(-1);
     } catch (err) {
       console.error(err);
     }

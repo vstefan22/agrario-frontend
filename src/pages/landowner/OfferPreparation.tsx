@@ -8,15 +8,15 @@ import Checkbox from '../../components/common/Checkbox';
 import TextArea from '../../components/common/TextArea';
 import UploadFile from '../../components/common/UploadFile';
 import useOffers from '../../hooks/offer-hook';
+import usePlotStore from '../../store/plot-store';
 import {
   utilization,
   preferredRegionality,
   shareholderModel,
   optionsMap,
 } from '../../constants/select-options';
-import { OfferPreparationType } from '../../types/offer-types';
-import usePlotStore from '../../store/plot-store';
 import { validateOfferDetailForm } from '../../utils/helper-functions';
+import { OfferPreparationType } from '../../types/offer-types';
 
 const initialFormData = {
   available_from: null as Date | null,
@@ -39,11 +39,11 @@ const initialFormData = {
 
 export default function MyOffer() {
   const navigate = useNavigate();
+  const { plot } = usePlotStore();
   const { addOffer } = useOffers();
   const [formData, setFormData] =
     useState<OfferPreparationType>(initialFormData);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const { plot } = usePlotStore();
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -180,11 +180,9 @@ export default function MyOffer() {
       <h1 className='text-[32px] font-bold text-black-muted'>
         Vorbereitung des Angebotes
       </h1>
-
       <div className='flex mt-6 flex-col gap-6'>
         <OfferPreparationItem data={plot} />
       </div>
-
       <div>
         <h1 className='text-[32px] font-bold text-black-muted mt-4'>
           Ihre Kriterien
@@ -205,7 +203,6 @@ export default function MyOffer() {
                 </span>
               )}
             </div>
-
             <div className='flex flex-col'>
               <Select
                 name='utilization'

@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 import fileUploadIcon from '../../assets/images/file-upload.png';
 import fileDocumentIcon from '../../assets/images/file-document.png';
 import deleteIcon from '../../assets/images/del.png';

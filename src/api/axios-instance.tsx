@@ -47,8 +47,6 @@ axiosInstance.interceptors.response.use(
   async (error: any) => {
     const originalRequest = error.config;
     if (
-      error.response?.status === 403 &&
-      error.response?.data &&
       error.response?.data.error === 'Invalid or expired Firebase token.' &&
       originalRequest &&
       !(originalRequest as any)._retry

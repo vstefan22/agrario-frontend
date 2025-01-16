@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import DynamicTable from '../../common/DynamicTable';
 import Button from '../../common/Button';
 import ItemImage from '../../common/ItemImage';
-import { PLOT_DETAILS_COLUMNS } from '../../../constants/table-data';
-import imagePlaceholder from '../../../assets/images/image-placeholder.png';
 import useAuctionOffers from '../../../hooks/auctions-offer-hook';
 import useAuctionOfferstore from '../../../store/auctions-store';
+import { PLOT_DETAILS_COLUMNS } from '../../../constants/table-data';
+import imagePlaceholder from '../../../assets/images/image-placeholder.png';
 import active from '../../../assets/images/vermarktung-aktiv.png';
 import inactive from '../../../assets/images/vermarktung-in-vorbereitung.png';
 

@@ -7,7 +7,6 @@ type messageData = {
 
 const MessageHistoryCard: FC<messageData> = ({ user, message }) => {
   const date = new Date();
-
   const formattedDate = date.toLocaleDateString('de-DE', {
     year: 'numeric',
     month: '2-digit',

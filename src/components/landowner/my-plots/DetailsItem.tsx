@@ -2,10 +2,10 @@ import { FC } from 'react';
 import DynamicTable from '../../common/DynamicTable';
 import ItemImage from '../../common/ItemImage';
 import { PLOT_DETAILS_COLUMNS } from '../../../constants/table-data';
+import { OfferType } from '../../../types/offer-types';
 import active from '../../../assets/images/vermarktung-aktiv.png';
 import inactive from '../../../assets/images/vermarktung-in-vorbereitung.png';
 import imagePlaceholder from '../../../assets/images/image-placeholder.png';
-import { OfferType } from '../../../types/offer-types';
 
 type DetailsItemProps = {
   data: OfferType;

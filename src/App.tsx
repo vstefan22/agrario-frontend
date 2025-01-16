@@ -36,6 +36,7 @@ import ThankYouInterest from './pages/developer/ThankYouInterest';
 import MyAuctions from './pages/developer/MyAuctions';
 import MyAuctionDetails from './pages/developer/MyAuctionDetails';
 import Redirect from './components/navigation/Redirect';
+import GlobalHelmet from './components/seo/GlobalHelmet';
 import NotFound from './pages/NotFound';
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -43,6 +44,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const App = () => {
   return (
     <Router>
+      <GlobalHelmet />
       <Layout>
         <Routes>
           <Route
@@ -113,6 +115,7 @@ const App = () => {
                     element={<QuestionsHelpLandowner />}
                   />
                   <Route path='/support' element={<Support />} />
+                  <Route path='/support/:chatId' element={<Support />} />
                   <Route path='*' element={<NotFound />} />
                 </Routes>
               </ProtectedLayout>
@@ -163,6 +166,7 @@ const App = () => {
                     element={<QuestionsHelpDeveloper />}
                   />
                   <Route path='/support' element={<Support />} />
+                  <Route path='/support/:chatId' element={<Support />} />
                   <Route path='*' element={<NotFound />} />
                 </Routes>
               </ProtectedLayout>

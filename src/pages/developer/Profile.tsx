@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { TbCameraPlus } from 'react-icons/tb';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
@@ -15,7 +16,6 @@ import { PACKAGE_FEATURES } from '../../constants/package';
 import { StoreUser } from '../../types/user-types';
 import profilePlaceholder from '../../assets/images/profile-placeholder.png';
 import usePayments from '../../hooks/payment-hook';
-import { toast } from 'react-toastify';
 
 type ProfileType = Omit<StoreUser, 'id'>;
 
@@ -48,7 +48,6 @@ export default function Profile() {
     ecological_upgrading: false,
     other: '',
     role: '',
-    // current_plan: user?.current_plan || 'Free',
   });
 
   /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -285,7 +284,6 @@ export default function Profile() {
   };
 
   const handleMonthlyPremiumPackage = async () => {
-    // TODO: Use actual data here
     const body = {
       payment_type: 'subscription',
       plan_tier: 'PREM',
@@ -293,14 +291,12 @@ export default function Profile() {
 
     try {
       await createPackagePayment(body);
-      // TODO: Add Stripe Checkout and after purchase navigate to ThankYouSubscribe page
     } catch (err) {
       console.error('Error during plan purchase: ', err);
     }
   };
 
   const handleYearlyPremiumPackage = async () => {
-    // TODO: Use actual data here
     const body = {
       payment_type: 'subscription',
       plan_tier: 'PREM',
@@ -314,14 +310,13 @@ export default function Profile() {
       } else {
         toast.error('Error happened while creating payment sesion');
       }
-      // TODO: Add Stripe Checkout and after purchase navigate to ThankYouSubscribe page
     } catch (err) {
       console.error('Error during plan purchase: ', err);
     }
   };
 
   const handlePriceOnRequest = () => {
-    // use actual agrario email here and custom message
+    // TODO: check if this works, use actual agrario email here and custom message
     const email = 'agrarioenergy@gmail.com';
     const subject = encodeURIComponent('Price on Request');
     const body = encodeURIComponent(

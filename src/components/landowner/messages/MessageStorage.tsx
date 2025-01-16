@@ -1,52 +1,46 @@
-import { useState, ChangeEvent } from 'react';
-import Search from '../../common/Search';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
 import MessageList from './MessageList';
+import useMessages from '../../../hooks/message-hook';
 import useMessageStore from '../../../store/message-store';
-import archiveIcon from '../../../assets/images/archive-msg.png';
-import infoIcon from '../../../assets/images/info-msg.png';
 import delIcon from '../../../assets/images/del-msg.png';
 
 const MessageStorage = () => {
-  const { inbox } = useMessageStore();
-  const [searchTerm, setSearchTerm] = useState('');
+  const { inbox, setInbox } = useMessageStore();
+  const [selectedMessages, setSelectedMessages] = useState<string[]>([]);
+  const { deleteMessages } = useMessages();
 
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
+  const handleMsgDelete = async () => {
+    if (selectedMessages.length === 0) {
+      toast.error('Sie müssen Chats auswählen, um sie zu löschen.');
+      return;
+    }
+    try {
+      await deleteMessages(selectedMessages);
+      const updatedInbox = inbox.filter(
+        (msg) => !selectedMessages.includes(msg.id)
+      );
+      setInbox(updatedInbox);
+      toast.success('Chats wurden erfolgreich gelöscht!');
+    } catch (err) {
+      toast.error('Ein Fehler ist beim Löschen der Chats aufgetreten!');
+      console.error(err);
+    }
   };
 
-  const handleMsgArchive = () => {
-    console.log('message archive');
-  };
-
-  const handleMsgInfo = () => {
-    console.log('message info');
-  };
-
-  const handleMsgDelete = () => {
-    console.log('message delete');
+  const handleSelecetMessage = (id: string) => {
+    setSelectedMessages((prevSelectedMessages) =>
+      prevSelectedMessages.includes(id)
+        ? prevSelectedMessages.filter((messageId) => messageId !== id)
+        : [...prevSelectedMessages, id]
+    );
   };
 
   return (
     <div className='w-full bg-white shadow-lg p-4 rounded-xl mt-3 mb-6'>
       <div className='flex justify-between items-center h-[80px]'>
-        <Search
-          placeholder='Search mail'
-          value={searchTerm}
-          onChange={handleSearchChange}
-        />
+        <span></span>
         <div className='flex'>
-          <button
-            className='bg-gray-muted-light w-[40px] h-[40px] border-[0.4px] rounded-l-[3px] border-gray-medium/70 flex justify-center items-center'
-            onClick={handleMsgArchive}
-          >
-            <img src={archiveIcon} alt='archive icon' />
-          </button>
-          <button
-            className='bg-gray-muted-light w-[40px] h-[40px] border-t-[0.4px] border-b-[0.4px] border-gray-medium/70 flex justify-center items-center'
-            onClick={handleMsgInfo}
-          >
-            <img src={infoIcon} alt='info icon' />
-          </button>
           <button
             className='bg-gray-muted-light w-[40px] h-[40px] border-[0.4px] rounded-r-[3px] border-gray-medium/70 flex justify-center items-center'
             onClick={handleMsgDelete}
@@ -60,10 +54,13 @@ const MessageStorage = () => {
         inbox.map((msg) => (
           <MessageList
             key={msg.id}
-            name={msg.name}
-            message={msg.message}
+            name={msg.recipient}
+            message={msg.last_message.body}
             time={msg.time}
-            category={msg.category}
+            subject={msg.subject}
+            id={msg.id}
+            onSelectMessages={handleSelecetMessage}
+            selectedMessages={selectedMessages}
           />
         ))
       ) : (

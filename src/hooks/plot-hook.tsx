@@ -7,21 +7,13 @@ const usePlots = () => {
   const { sendRequest } = useHttpRequest();
   const { token } = useAuthStore();
 
-  const getAllPlots = useCallback(
-    async (filters = {}) => {
-      const queryString = new URLSearchParams(filters).toString();
-      const url = queryString
-        ? `/offers/parcels/?${queryString}`
-        : `/offers/parcels/`;
-
-      return await sendRequest(url, 'GET', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    },
-    [sendRequest, token]
-  );
+  const getAllPlots = useCallback(async () => {
+    return await sendRequest(`/offers/parcels/`, 'GET', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }, [sendRequest, token]);
 
   const getMyPlots = useCallback(async () => {
     return await sendRequest(`/offers/parcels/my_parcels/`, 'GET', {
@@ -60,6 +52,22 @@ const usePlots = () => {
   const getPlotGeoData = useCallback(async () => {
     return await sendRequest(`/offers/parcel_geo_data/`, 'GET', {});
   }, [sendRequest]);
+
+  const getPlotByFilterData = useCallback(
+    async (filters = {}) => {
+      const queryString = new URLSearchParams(filters).toString();
+      return await sendRequest(
+        `/offers/parcels/search/?${queryString}`,
+        'GET',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    },
+    [sendRequest, token]
+  );
 
   const addPlotToBasket = useCallback(
     // eslint-disable-next-line
@@ -181,6 +189,7 @@ const usePlots = () => {
     getFilteredPlots,
     addPlot,
     getPlotGeoData,
+    getPlotByFilterData,
     addPlotToBasket,
     getPlotDetails,
     getPlotAnalyseDetails,

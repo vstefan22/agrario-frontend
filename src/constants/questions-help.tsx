@@ -78,7 +78,7 @@ export const QUESTION_HELP_DEVELOPER_DATA: QuestionsHelpType[] = [
   },
   {
     title: `Kann ich während einer der Phase “Vorqualifikation Bieterverfahren” einer aktiven Anzeige mein Angebot anpassen?`,
-    content: `Vor Ablauf der Phase “Vorqualifikation Bieterverfahren”, können Sie Ihr Initialgebot jederzeit anpassen. Nach Ende der Phase “Vorqualifikation Bieterverfahren” ist eine Änderung des Initialgebotes nicht mehr möglich. Wenn Sie zum Bieterverfahren zugelassen werden, können Sie jedoch ihr finales Angebot nochmals anpassen.`,
+    content: `Vor Ablauf der Phase “Vorqualifikation Bieterverfahren”, können Sie Ihr Initialgebot jederzeit anpassen. Nach Ende der Phase “Vorqualifikation Bieterverfahren” ist eine Änderung des Initialgebotes nicht mehr möglich. Wenn Sie zum Bieterverfahren zugelassen werden, können Sie jedoch ihr finales Angebot nochmals anpassen.`,
   },
   {
     title: `Was passiert, nachdem ich mein Interesse einem Bieterverfahren angemeldet habe?`,
