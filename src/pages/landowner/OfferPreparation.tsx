@@ -17,6 +17,7 @@ import {
 } from '../../constants/select-options';
 import { validateOfferDetailForm } from '../../utils/helper-functions';
 import { OfferPreparationType } from '../../types/offer-types';
+import { toast } from 'react-toastify';
 
 const initialFormData = {
   available_from: null as Date | null,
@@ -101,7 +102,8 @@ export default function MyOffer() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const { isFormValidate } = validateOfferDetailForm(formData);
+    const { errors: errorsFrom, isFormValidate } =
+      validateOfferDetailForm(formData);
     const parcelIds = [plot?.id];
 
     try {
@@ -164,8 +166,22 @@ export default function MyOffer() {
 
         await addOffer(formDataSend);
         navigate('/landowner/my-plots/thank-you-marketing-request');
+      } else {
+        setErrors(errorsFrom);
       }
-    } catch (err) {
+      // eslint-disable-next-line
+    } catch (err: any) {
+      if (
+        err?.response.data.detail.endsWith(
+          'is already associated with another AreaOffer.'
+        )
+      ) {
+        toast.error(
+          'Dieses Angebot existiert bereits, bitte versuchen Sie es mit einem anderen.'
+        );
+        return;
+      }
+      toast.error(`Fehler: ${err.message}`);
       console.error('Error: ', err);
     }
   };
@@ -180,9 +196,11 @@ export default function MyOffer() {
       <h1 className='text-[32px] font-bold text-black-muted'>
         Vorbereitung des Angebotes
       </h1>
+
       <div className='flex mt-6 flex-col gap-6'>
         <OfferPreparationItem data={plot} />
       </div>
+
       <div>
         <h1 className='text-[32px] font-bold text-black-muted mt-4'>
           Ihre Kriterien
@@ -203,6 +221,7 @@ export default function MyOffer() {
                 </span>
               )}
             </div>
+
             <div className='flex flex-col'>
               <Select
                 name='utilization'
@@ -309,6 +328,11 @@ export default function MyOffer() {
             label=''
             placeholder='Ihre Nachricht an uns'
           />
+          {errors.important_remarks && (
+            <span className='text-red-500 text-sm'>
+              {errors.important_remarks}
+            </span>
+          )}
 
           <UploadFile onFilesChange={handleFilesChange} />
 
