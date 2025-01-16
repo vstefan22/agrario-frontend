@@ -89,8 +89,6 @@ export type ActiveAuctionsType = {
 };
 
 export type PlotSearchData = {
-  state_name: string;
-  zipcode: string;
   municipality_name: string;
   district_name: string;
   cadastral_area: string;

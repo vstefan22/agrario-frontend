@@ -1,47 +1,31 @@
-import { useState, ChangeEvent, FormEvent, useEffect } from "react";
-import Search from "../../components/common/Search";
-import Button from "../../components/common/Button";
-import GoogleMap from "../../components/common/GoogleMap";
-
-import DynamicTable from "../../components/common/DynamicTable";
-import { geoJsonToLatLngArrays } from "../../utils/helper-functions";
-import { PLOT_GOOGLE_MAPS_COLUMNS } from "../../constants/table-data";
-import { ParcelPolygon, ParcelPolygonArray, PolygonType } from "../../types/google-maps-types";
-import { PlotSearchData } from "../../types/plot-types";
-import usePlots from "../../hooks/plot-hook";
-import SearchByAttributes from "../../components/search-with-backup/SearchByAttributes";
-import { toast } from "react-toastify";
+import { useState, ChangeEvent, useEffect } from 'react';
+import Search from '../../components/common/Search';
+import Button from '../../components/common/Button';
+import GoogleMap from '../../components/common/GoogleMap';
+import DynamicTable from '../../components/common/DynamicTable';
+import {
+  geoJsonToLatLngArrays,
+  geoJsonToPolygon,
+} from '../../utils/helper-functions';
+import { PLOT_GOOGLE_MAPS_COLUMNS } from '../../constants/table-data';
+import { ParcelPolygon, PolygonType } from '../../types/google-maps-types';
+import { PlotSearchData } from '../../types/plot-types';
+import usePlots from '../../hooks/plot-hook';
+import SearchByAttributes from '../../components/search-with-backup/SearchByAttributes';
+import { toast } from 'react-toastify';
 
 export default function NewPlot() {
-  const { getPlotGeoData, addPlot, getAllPlots } = usePlots();
-  const [formData, setFormData] = useState<PlotSearchData>({
-    state_name: "",
-    zipcode: "",
-    municipality_name: "",
-    district_name: "",
-    cadastral_area: "",
-    cadastral_parcel: "",
-  });
-  const [searchTerm, setSearchTerm] = useState("");
+  const { getPlotGeoData, addPlot, getPlotByFilterData } = usePlots();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [mapPolygons, setMapPolygons] = useState<ParcelPolygon[]>([]);
+  const [searchPolygons, setSearchPolygons] = useState<ParcelPolygon[]>([]);
   const [parcelList, setParcelList] = useState<ParcelPolygon[]>([]);
-  const [mapPolygons, setMapPolygons] = useState<ParcelPolygonArray>([]);
-  // const [selectedParcel, setSelectedParcel] = useState<ParcelPolygon | null>(
-  //   null
-  // );
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
 
   useEffect(() => {
     const fetchParcels = async () => {
       try {
         const response = await getPlotGeoData();
-        const polygons: ParcelPolygonArray = [];
+        const polygons: ParcelPolygon[] = [];
         if (response && response.features && Array.isArray(response.features)) {
           // eslint-disable-next-line
           response.features.forEach((feature: any) => {
@@ -74,7 +58,7 @@ export default function NewPlot() {
 
         setMapPolygons(polygons);
       } catch (error) {
-        console.error("Error fetching parcels:", error);
+        console.error('Error fetching parcels:', error);
       }
     };
 
@@ -86,51 +70,43 @@ export default function NewPlot() {
     setParcelList([parcel]);
   };
 
-  const handleSetPolygonData = async (e: FormEvent) => {
-    e.preventDefault();
-    console.log("SUBMIT?");
-
+  const handleSetPolygonData = async (formData: PlotSearchData) => {
     try {
-      const response = await getAllPlots(formData);
-      const polygons: ParcelPolygonArray = [];
-
-      console.log(polygons);
-
-      if (response && response.features && Array.isArray(response.features)) {
+      const filter = Object.fromEntries(
         // eslint-disable-next-line
-        response.features.forEach((feature: any) => {
-          const geometry = feature.geometry;
-          const rings = geoJsonToLatLngArrays(geometry);
+        Object.entries(formData).filter(([_, value]) => value.trim() !== '')
+      );
 
-          const {
-            alkis_feature_id,
-            state_name,
-            municipality_name,
-            district_name,
-            cadastral_area,
-            cadastral_parcel,
-          } = feature.properties;
+      const res = await getPlotByFilterData(filter);
 
-          rings.forEach((ringCoords) => {
-            polygons.push({
-              id: feature.id,
-              polygon: ringCoords,
-              parcel_id: alkis_feature_id,
-              state_name,
-              municipality_name,
-              district_name,
-              cadastral_area,
-              cadastral_parcel,
-            });
-          });
-        });
+      if (!res || !res.length) {
+        toast.error('Nema pronađenih flurstücke za zadati upit.');
+        return;
       }
 
-      setMapPolygons(polygons);
-      toast.success("Flurstücke erfolgreich geladen.");
+      const response = res[0];
+      console.log('response: ', response);
+      const polygonParsed = JSON.parse(response.polygon);
+
+      const parcel: ParcelPolygon = {
+        id: response.id,
+        polygon: geoJsonToPolygon(polygonParsed),
+        parcel_id: response.alkis_feature_id,
+        state_name: response.state_name,
+        municipality_name: response.municipality_name,
+        district_name: response.district_name,
+        cadastral_area: response.cadastral_area,
+        cadastral_parcel: response.cadastral_parcel,
+      };
+
+      const foundPolygons: ParcelPolygon[] = [parcel];
+
+      setParcelList(foundPolygons);
+      setSearchPolygons(foundPolygons);
+      toast.success('Flurstücke erfolgreich geladen.');
     } catch (err) {
       console.error(err);
-      toast.error("Fehler beim Abrufen der Flurstücke.");
+      toast.error('Fehler beim Abrufen der Flurstücke.');
     }
   };
 
@@ -142,10 +118,10 @@ export default function NewPlot() {
 
     try {
       await addPlot(id);
-      toast.success("Flurstück hinzugefügt!");
+      toast.success('Flurstück hinzugefügt!');
     } catch (err) {
       console.error(err);
-      toast.error("Fehler beim Hinzufügen des Flurstücks.");
+      toast.error('Fehler beim Hinzufügen des Flurstücks.');
     }
   };
 
@@ -153,64 +129,66 @@ export default function NewPlot() {
     setSearchTerm(e.target.value);
   };
 
-  const resetFields = () => {
-    setFormData({
-      state_name: "",
-      zipcode: "",
-      municipality_name: "",
-      district_name: "",
-      cadastral_area: "",
-      cadastral_parcel: "",
-    });
+  const handleClearParcelList = () => {
     setParcelList([]);
+    setSearchPolygons([]);
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen flex flex-col px-7 pt-4">
-      <div className="flex items-center justify-between mb-6">
-        <div className="w-[526px]">
-          <h1 className="text-[32px] font-bold text-black-muted">Neues Flurstück</h1>
-          <p className="text-gray-dark-100 text-[16px]">
-            There are many variations of passages of Lorem Ipsum available, but the majority have
-            suffered alteration in some form.
+    <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
+      <div className='flex items-center justify-between mb-6'>
+        <div className='w-[526px]'>
+          <h1 className='text-[32px] font-bold text-black-muted'>
+            Neues Flurstück
+          </h1>
+          <p className='text-gray-dark-100 text-[16px]'>
+            There are many variations of passages of Lorem Ipsum available, but
+            the majority have suffered alteration in some form.
           </p>
         </div>
-        <Search placeholder="Search address..." value={searchTerm} onChange={handleSearchChange} />
+        <Search
+          placeholder='Search address...'
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
       </div>
 
-      <div className="flex-1 flex flex-col">
-        <SearchByAttributes
-          formData={formData}
-          handleChange={handleChange}
-          handleSubmit={handleSetPolygonData}
-          resetFields={resetFields}
-        />
+      <div className='flex-1 flex flex-col'>
+        <SearchByAttributes handleSubmit={handleSetPolygonData} />
 
         {parcelList.length > 0 &&
           parcelList.map((data) => (
-            <div className="w-full bg-white rounded-[18px] p-1 mt-4">
+            <div
+              key={data.id}
+              className='w-full bg-white rounded-[18px] p-1 mt-4'
+            >
               <DynamicTable data={data} columns={PLOT_GOOGLE_MAPS_COLUMNS} />
             </div>
           ))}
 
-        <div className="flex-1 flex flex-col mt-4">
+        <div className='flex-1 flex flex-col mt-4'>
           <div
-            className="w-full bg-white rounded-[18px] p-8"
-            style={{ boxShadow: "6px 6px 54px 0px #0000000D" }}
+            className='w-full bg-white rounded-[18px] p-8'
+            style={{ boxShadow: '6px 6px 54px 0px #0000000D' }}
           >
             <GoogleMap
-              polygonsData={mapPolygons}
+              mapPolygons={mapPolygons}
+              searchPolygons={searchPolygons}
               mapSearchTerm={searchTerm}
               onParcelClick={handleParcelClick}
             />
           </div>
         </div>
 
-        <div className="md:col-span-4 flex justify-end space-x-4 mt-4 mb-6">
-          <Button variant="blueSecondary" type="button" onClick={() => {}}>
+        <div className='md:col-span-4 flex justify-end space-x-4 mt-4 mb-6'>
+          <Button
+            variant='blueSecondary'
+            type='button'
+            onClick={handleClearParcelList}
+          >
             Abbrechen
           </Button>
-          <Button variant="bluePrimary" type="button" onClick={handleAddPlot}>
+          <Button variant='bluePrimary' type='button' onClick={handleAddPlot}>
             Flurstück hinzufügen
           </Button>
         </div>
