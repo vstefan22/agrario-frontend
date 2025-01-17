@@ -55,23 +55,29 @@ const OfferDetails = () => {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const offerId = offer?.identifier;
-
   useEffect(() => {
     if (!offer || !offer.documented_offers) return;
 
-    setFormData((prev) => ({
-      ...prev,
-      documented_offers:
-        offer.documented_offers?.map((file: any) => {
-          if (file instanceof File) {
-            return file; // Already a File object
-          }
-          // Convert to File object if necessary
-          return new File([file.content || ""], file.name || "Unnamed", {
-            type: file.type || "application/octet-stream",
+    const fetchFiles = async () => {
+      const files = await Promise.all(
+        (offer.documented_offers || []).map(async (doc: any) => {
+          const response = await fetch(doc.document_url);
+          const blob = await response.blob();
+          const fileName = doc.document_url.split("?")[0].split("/").pop() || "Unnamed";
+
+          return new File([blob], fileName, {
+            type: blob.type, // Use the type from the fetched blob
           });
-        }) || [],
-    }));
+        })
+      );
+
+      setFormData((prev) => ({
+        ...prev,
+        documented_offers: files,
+      }));
+    };
+
+    fetchFiles().catch((error) => console.error("Failed to fetch files:", error));
   }, [offer]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
