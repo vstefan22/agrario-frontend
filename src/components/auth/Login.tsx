@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Input from "../common/Input";
 import Button from "../common/Button";
@@ -138,6 +138,9 @@ export default function Login() {
               required
               className="pl-10"
             />
+            <Link to="/password-change" className="absolute top-0 right-0 text-white text-sm">
+              Forgot password?
+            </Link>
             <img
               src={lockImg}
               alt="lock image"

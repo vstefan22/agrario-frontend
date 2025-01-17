@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
-import { ParcelPolygon } from '../../types/google-maps-types';
+import { useEffect, useRef, useState } from "react";
+import { ParcelPolygon } from "../../types/google-maps-types";
 
 const MAP_DISPLAY_OPTIONS: google.maps.PolygonOptions = {
-  fillColor: '#206f6a',
-  fillOpacity: 0.65,
-  strokeColor: '#104f50',
+  fillOpacity: 0,
+  strokeColor: "#104f50",
   strokeOpacity: 0.9,
   strokeWeight: 4,
 };
@@ -24,9 +23,7 @@ const GoogleMap = ({
 }: GoogleMapProps) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
-  const [infoWindow, setInfoWindow] = useState<google.maps.InfoWindow | null>(
-    null
-  );
+  const [infoWindow, setInfoWindow] = useState<google.maps.InfoWindow | null>(null);
 
   useEffect(() => {
     const initializeMap = () => {
@@ -35,7 +32,7 @@ const GoogleMap = ({
       const createdMap = new google.maps.Map(mapRef.current, {
         center: { lat: 52.52, lng: 13.4 },
         zoom: 13,
-        mapTypeId: 'hybrid',
+        mapTypeId: "hybrid",
         streetViewControl: false,
         mapTypeControl: false,
         panControl: false,
@@ -47,7 +44,7 @@ const GoogleMap = ({
     };
 
     if (!window.google) {
-      const script = document.createElement('script');
+      const script = document.createElement("script");
       script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places`;
       script.async = true;
       script.defer = true;
@@ -65,7 +62,7 @@ const GoogleMap = ({
     const service = new google.maps.places.PlacesService(map);
     const request: google.maps.places.TextSearchRequest = {
       query: mapSearchTerm,
-      region: 'de',
+      region: "de",
     };
 
     service.textSearch(request, (results, status) => {
@@ -93,13 +90,13 @@ const GoogleMap = ({
       polygonObj.getPath().forEach((latLng) => {
         mapBounds.extend(latLng);
       });
-      polygonObj.addListener('mouseover', () => {
+      polygonObj.addListener("mouseover", () => {
         polygonObj.setOptions({ strokeWeight: 6 });
       });
-      polygonObj.addListener('mouseout', () => {
+      polygonObj.addListener("mouseout", () => {
         polygonObj.setOptions({ strokeWeight: 4 });
       });
-      polygonObj.addListener('click', (event: google.maps.MapMouseEvent) => {
+      polygonObj.addListener("click", (event: google.maps.MapMouseEvent) => {
         if (!infoWindow || !event.latLng) return;
 
         infoWindow.setPosition(event.latLng);
@@ -127,21 +124,21 @@ const GoogleMap = ({
       const polygonObj = new google.maps.Polygon({
         paths: parcel.polygon,
         ...MAP_DISPLAY_OPTIONS,
-        strokeColor: '#FF0000',
-        fillColor: '#FF0000',
+        strokeColor: "#FF0000",
+        fillColor: "#FF0000",
       });
       polygonObj.setMap(map);
 
       polygonObj.getPath().forEach((latLng) => {
         searchBounds.extend(latLng);
       });
-      polygonObj.addListener('mouseover', () => {
+      polygonObj.addListener("mouseover", () => {
         polygonObj.setOptions({ strokeWeight: 6 });
       });
-      polygonObj.addListener('mouseout', () => {
+      polygonObj.addListener("mouseout", () => {
         polygonObj.setOptions({ strokeWeight: 4 });
       });
-      polygonObj.addListener('click', (event: google.maps.MapMouseEvent) => {
+      polygonObj.addListener("click", (event: google.maps.MapMouseEvent) => {
         if (!infoWindow || !event.latLng) return;
 
         infoWindow.setPosition(event.latLng);
@@ -166,8 +163,6 @@ const GoogleMap = ({
 
     if (searchPolygons.length > 0 && !searchBounds.isEmpty()) {
       map.fitBounds(searchBounds);
-    } else if (mapPolygons.length > 0 && !mapBounds.isEmpty()) {
-      map.fitBounds(mapBounds);
     }
   }, [map, mapPolygons, searchPolygons, infoWindow, onParcelClick]);
 
@@ -175,9 +170,9 @@ const GoogleMap = ({
     <div
       ref={mapRef}
       style={{
-        width: '100%',
-        height: '600px',
-        borderRadius: '8px',
+        width: "100%",
+        height: "600px",
+        borderRadius: "8px",
       }}
     />
   );

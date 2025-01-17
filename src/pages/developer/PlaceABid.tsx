@@ -146,7 +146,7 @@ const PlaceABid = () => {
         const offerUpdated = await addAuctionOffer(auctionOffer!.identifier, formDataSend);
         updateAuctionOffer(auctionOffer!.identifier, offerUpdated);
         setLoading(false);
-        navigate("/developer/my-auctions/");
+        navigate("/developer/active-auctions/thanks");
       } else {
         setLoading(false);
         setErrors(errors);

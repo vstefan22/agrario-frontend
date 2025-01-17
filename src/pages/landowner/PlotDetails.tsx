@@ -60,7 +60,7 @@ function PlotDetails() {
           <p className="text-gray-dark-100/70 text-[12px]">ID-Nummer</p>
         </div>
       </div>
-      <div className="h-[440px] overflow-y-auto rounded-2xl">
+      <div className="h-[75vh] overflow-y-auto rounded-2xl">
         <ShowDetailsLandowner isAnalizePlus={plot?.analyse_plus} data={plot} />
       </div>
 

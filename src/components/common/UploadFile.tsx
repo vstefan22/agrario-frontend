@@ -41,6 +41,7 @@ const UploadFile: FC<UploadFileProps> = ({
     e.target.value = "";
   };
   useEffect(() => {
+    if (initialFiles.length === 0) return;
     setFiles(initialFiles);
   }, [initialFiles]);
 

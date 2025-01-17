@@ -221,7 +221,7 @@ export default function Profile() {
     }
 
     if (formData.zipcode.length !== 5 || !/^\d+$/.test(formData.zipcode)) {
-      toast.error('Die Postleitzahl muss genau 5 Ziffern enthalten.');
+      toast.error("Die Postleitzahl muss genau 5 Ziffern enthalten.");
       return;
     }
 
@@ -329,7 +329,7 @@ export default function Profile() {
       if (response.session_url) {
         window.location.href = response.session_url;
       } else {
-        toast.error('Error happened while creating payment sesion');
+        toast.error("Error happened while creating payment sesion");
       }
     } catch (err) {
       console.error("Error during plan purchase: ", err);
@@ -374,7 +374,7 @@ export default function Profile() {
         <div className="w-full max-w-[960px] bg-white border border-gray-medium rounded-[44px] p-8 pt-0">
           <div className="flex flex-col mb-6 h-40">
             <div className="flex items-center justify-around px-16">
-              <div className="relative w-24 h-24 pt-1">
+              <div className="flex-col items-center justify-center relative w-24 h-30">
                 <div className="relative w-24 h-24 rounded-full border-4 border-primary overflow-hidden">
                   <img
                     src={profilePreview || profilePlaceholder}
@@ -397,11 +397,12 @@ export default function Profile() {
                   onChange={handleImageChange}
                   className="hidden"
                 />
+                <p className="text-sm whitespace-nowrap text-center mt-1">Firmenlogo</p>
               </div>
 
               <div className="h-40 border-l-[1px] border-gray-light-125 mx-0"></div>
 
-              <div className="relative w-24 h-24 pt-1">
+              <div className="flex-col items-center justify-center relative w-24 h-30">
                 <div className="relative w-24 h-24 rounded-full border-4 border-primary overflow-hidden flex justify-center items-center">
                   <img
                     src={companyPreview || profilePlaceholder}
@@ -424,6 +425,7 @@ export default function Profile() {
                   onChange={handleCompanyImageChange}
                   className="hidden"
                 />
+                <p className="text-sm  text-center mt-1">Bild Ansprechpartner</p>
               </div>
             </div>
             <div className="relative w-full">
