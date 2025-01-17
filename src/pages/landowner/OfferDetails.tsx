@@ -56,16 +56,24 @@ const OfferDetails = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const offerId = offer?.identifier;
 
-  useEffect(
-    function () {
-      if (!offer) return;
-      setFormData((prev) => ({
-        ...prev,
-        ...offer.documented_offers,
-      }));
-    },
-    [offer]
-  );
+  useEffect(() => {
+    if (!offer || !offer.documented_offers) return;
+
+    setFormData((prev) => ({
+      ...prev,
+      documented_offers:
+        offer.documented_offers?.map((file: any) => {
+          if (file instanceof File) {
+            return file; // Already a File object
+          }
+          // Convert to File object if necessary
+          return new File([file.content || ""], file.name || "Unnamed", {
+            type: file.type || "application/octet-stream",
+          });
+        }) || [],
+    }));
+  }, [offer]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
     const checked = type === "checkbox" ? (e.target as HTMLInputElement).checked : undefined;
