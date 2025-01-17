@@ -355,7 +355,7 @@ const OfferDetails = () => {
             value={formData.important_remarks}
           />
 
-          <UploadFile onFilesChange={handleFilesChange} />
+          <UploadFile onFilesChange={handleFilesChange} initialFiles={formData.documented_offers} />
 
           <Checkbox
             label="Ja, ich bestätige Eigentümer des Grundstückes oder von den Eigentümern beauftragt oder mandatiert zu sein ."
