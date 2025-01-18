@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import DetailsItem from "../../components/landowner/my-plots/DetailsItem";
@@ -28,6 +28,7 @@ const OfferDetails = () => {
   const { patchOffer, deactivateOffer } = useOffers();
   const { offer, updateOffer, updateOfferToList, removeOffer, removeOfferFromList } =
     useOfferStore();
+  console.log(offer);
   const [formData, setFormData] = useState<OfferPreparationType>({
     available_from: offer?.available_from ? new Date(offer.available_from) : null,
     utilization: optionsMapReverse[offer?.utilization || ""],
@@ -54,6 +55,30 @@ const OfferDetails = () => {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const offerId = offer?.identifier;
+  useEffect(() => {
+    if (!offer || !offer.documented_offers) return;
+
+    const fetchFiles = async () => {
+      const files = await Promise.all(
+        (offer.documented_offers || []).map(async (doc: any) => {
+          const response = await fetch(doc.document_url);
+          const blob = await response.blob();
+          const fileName = doc.document_url.split("?")[0].split("/").pop() || "Unnamed";
+
+          return new File([blob], fileName, {
+            type: blob.type, // Use the type from the fetched blob
+          });
+        })
+      );
+
+      setFormData((prev) => ({
+        ...prev,
+        documented_offers: files,
+      }));
+    };
+
+    fetchFiles().catch((error) => console.error("Failed to fetch files:", error));
+  }, [offer]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
@@ -330,7 +355,7 @@ const OfferDetails = () => {
             value={formData.important_remarks}
           />
 
-          <UploadFile onFilesChange={handleFilesChange} />
+          <UploadFile onFilesChange={handleFilesChange} initialFiles={formData.documented_offers} />
 
           <Checkbox
             label="Ja, ich bestätige Eigentümer des Grundstückes oder von den Eigentümern beauftragt oder mandatiert zu sein ."

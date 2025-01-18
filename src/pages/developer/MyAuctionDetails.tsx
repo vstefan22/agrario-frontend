@@ -340,6 +340,7 @@ const MyAuctionDetails = () => {
               name="message_to_landowner"
               value={formData.message_to_landowner}
               editBtn
+              required
             />
             {errors.message_to_landowner && (
               <span className="text-red-500 text-sm">{errors.message_to_landowner}</span>
@@ -356,6 +357,7 @@ const MyAuctionDetails = () => {
               name="message_to_platform"
               value={formData.message_to_platform}
               editBtn
+              required
             />
             {errors.message_to_platform && (
               <span className="text-red-500 text-sm">{errors.message_to_platform}</span>

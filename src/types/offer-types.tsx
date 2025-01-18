@@ -1,4 +1,4 @@
-import { PlotType } from './plot-types';
+import { PlotType } from "./plot-types";
 
 export type BasicOfferType = {
   parcels: PlotType[];
@@ -62,6 +62,4 @@ export type OfferDetailsType = {
 
 export type OfferType = BasicOfferType & Partial<BasicOfferDetailsType>;
 
-export type StoreOfferType = OfferType &
-  Partial<OfferPreparationType> &
-  Partial<OfferDetailsType>;
+export type StoreOfferType = OfferType & Partial<OfferPreparationType> & Partial<OfferDetailsType>;

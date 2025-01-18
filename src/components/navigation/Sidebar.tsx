@@ -1,7 +1,7 @@
-import { Fragment } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { signOut } from 'firebase/auth';
-import { auth } from '../../firebase/firebase-config';
+import { Fragment } from "react";
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase/firebase-config";
 import {
   FaRocket,
   FaTh,
@@ -9,13 +9,14 @@ import {
   FaQuestionCircle,
   FaSignOutAlt,
   FaGavel,
-} from 'react-icons/fa';
-import { FaMapLocationDot } from 'react-icons/fa6';
-import { RiDiscountPercentLine } from 'react-icons/ri';
-import { HiOutlineClipboardList } from 'react-icons/hi';
-import Button from '../common/Button';
-import useAuthStore from '../../store/auth-store';
-import useClearStorage from '../../store/clear-storage';
+} from "react-icons/fa";
+import { LuHandHelping } from "react-icons/lu";
+import { FaMapLocationDot } from "react-icons/fa6";
+import { RiDiscountPercentLine } from "react-icons/ri";
+import { HiOutlineClipboardList } from "react-icons/hi";
+import Button from "../common/Button";
+import useAuthStore from "../../store/auth-store";
+import useClearStorage from "../../store/clear-storage";
 
 export default function Sidebar() {
   const navigate = useNavigate();
@@ -29,10 +30,7 @@ export default function Sidebar() {
     if (exact) {
       return location.pathname === basePath;
     }
-    return (
-      location.pathname === basePath ||
-      location.pathname.startsWith(basePath + '/')
-    );
+    return location.pathname === basePath || location.pathname.startsWith(basePath + "/");
   };
 
   const handleNavigate = (route: string) => {
@@ -43,173 +41,150 @@ export default function Sidebar() {
     try {
       await signOut(auth);
       clearStorage();
-      navigate('/');
+      navigate("/");
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <div className='bg-white h-full w-[230px] flex flex-col justify-between items-center shadow-md pt-[70px]'>
-      <div className='flex flex-col space-y-3'>
-        {userRole === 'landowner' && (
+    <div className="bg-white h-full w-[230px] flex flex-col justify-between items-center shadow-md pt-[70px]">
+      <div className="flex flex-col space-y-3">
+        {userRole === "landowner" && (
           <Fragment>
             <Button
-              variant={
-                isRouteActive('/landowner', true)
-                  ? 'sidebarPrimary'
-                  : 'sidebarSecondary'
-              }
-              onClick={() => handleNavigate('/landowner')}
+              variant={isRouteActive("/landowner", true) ? "sidebarPrimary" : "sidebarSecondary"}
+              onClick={() => handleNavigate("/landowner")}
             >
-              <FaRocket className='mr-3' />
+              <FaRocket className="mr-3" />
               Start
             </Button>
 
             <Button
-              variant={
-                isRouteActive('/landowner/new-plot')
-                  ? 'sidebarPrimary'
-                  : 'sidebarSecondary'
-              }
-              onClick={() => handleNavigate('/landowner/new-plot')}
+              variant={isRouteActive("/landowner/new-plot") ? "sidebarPrimary" : "sidebarSecondary"}
+              onClick={() => handleNavigate("/landowner/new-plot")}
             >
-              <FaTh className='mr-3' />
+              <FaTh className="mr-3" />
               Neues Flurstück
             </Button>
 
             <Button
-              variant={
-                isRouteActive('/landowner/my-plots')
-                  ? 'sidebarPrimary'
-                  : 'sidebarSecondary'
-              }
-              onClick={() => handleNavigate('/landowner/my-plots')}
+              variant={isRouteActive("/landowner/my-plots") ? "sidebarPrimary" : "sidebarSecondary"}
+              onClick={() => handleNavigate("/landowner/my-plots")}
             >
-              <FaMapLocationDot className='mr-3' />
-              My Flurstücke
+              <FaMapLocationDot className="mr-3" />
+              Meine Flurstücke
             </Button>
 
             <Button
               variant={
-                isRouteActive('/landowner/my-offers')
-                  ? 'sidebarPrimary'
-                  : 'sidebarSecondary'
+                isRouteActive("/landowner/my-offers") ? "sidebarPrimary" : "sidebarSecondary"
               }
-              onClick={() => handleNavigate('/landowner/my-offers')}
+              onClick={() => handleNavigate("/landowner/my-offers")}
             >
-              <RiDiscountPercentLine className='mr-3' />
-              My Angebote
+              <RiDiscountPercentLine className="mr-3" />
+              Meine Angebote
             </Button>
 
             <Button
               variant={
-                isRouteActive('/landowner/friend-invite')
-                  ? 'sidebarPrimary'
-                  : 'sidebarSecondary'
+                isRouteActive("/landowner/friend-invite") ? "sidebarPrimary" : "sidebarSecondary"
               }
-              onClick={() => handleNavigate('/landowner/friend-invite')}
+              onClick={() => handleNavigate("/landowner/friend-invite")}
             >
-              <FaUserPlus className='mr-3' />
+              <FaUserPlus className="mr-3" />
               Einen Freund einladen
             </Button>
 
             <Button
               variant={
-                isRouteActive('/landowner/questions-help')
-                  ? 'sidebarPrimary'
-                  : 'sidebarSecondary'
+                isRouteActive("/landowner/questions-help") ? "sidebarPrimary" : "sidebarSecondary"
               }
-              onClick={() => handleNavigate('/landowner/questions-help')}
+              onClick={() => handleNavigate("/landowner/questions-help")}
             >
-              <FaQuestionCircle className='mr-3' />
+              <FaQuestionCircle className="mr-3" />
               Fragen/Hilfe
             </Button>
           </Fragment>
         )}
 
-        {userRole === 'developer' && (
+        {userRole === "developer" && (
           <Fragment>
             <Button
-              variant={
-                isRouteActive('/developer', true)
-                  ? 'sidebarPrimary'
-                  : 'sidebarSecondary'
-              }
-              onClick={() => handleNavigate('/developer')}
+              variant={isRouteActive("/developer", true) ? "sidebarPrimary" : "sidebarSecondary"}
+              onClick={() => handleNavigate("/developer")}
             >
-              <FaRocket className='mr-3' />
+              <FaRocket className="mr-3" />
               Start
             </Button>
 
             <Button
               variant={
-                isRouteActive('/developer/registered-plots')
-                  ? 'sidebarPrimary'
-                  : 'sidebarSecondary'
+                isRouteActive("/developer/registered-plots") ? "sidebarPrimary" : "sidebarSecondary"
               }
-              onClick={() => handleNavigate('/developer/registered-plots')}
+              onClick={() => handleNavigate("/developer/registered-plots")}
             >
-              <FaMapLocationDot className='mr-3' />
+              <FaMapLocationDot className="mr-3" />
               Flurstücke suchen
             </Button>
 
             <Button
               variant={
-                isRouteActive('/developer/my-watchlist')
-                  ? 'sidebarPrimary'
-                  : 'sidebarSecondary'
+                isRouteActive("/developer/my-watchlist") ? "sidebarPrimary" : "sidebarSecondary"
               }
-              onClick={() => handleNavigate('/developer/my-watchlist')}
+              onClick={() => handleNavigate("/developer/my-watchlist")}
             >
-              <HiOutlineClipboardList className='mr-3' />
-              My Watchlist
+              <HiOutlineClipboardList className="mr-3" />
+              Meine Watchlist
             </Button>
 
             <Button
               variant={
-                isRouteActive('/developer/active-auctions')
-                  ? 'sidebarPrimary'
-                  : 'sidebarSecondary'
+                isRouteActive("/developer/active-auctions") ? "sidebarPrimary" : "sidebarSecondary"
               }
-              onClick={() => handleNavigate('/developer/active-auctions')}
+              onClick={() => handleNavigate("/developer/active-auctions")}
             >
-              <FaGavel className='mr-3 scale-x-[-1]' />
+              <LuHandHelping className="mr-3 scale-x-[-1]" />
               Aktive Auktionen
             </Button>
 
             <Button
               variant={
-                isRouteActive('/developer/my-auctions')
-                  ? 'sidebarPrimary'
-                  : 'sidebarSecondary'
+                isRouteActive("/developer/my-auctions") ? "sidebarPrimary" : "sidebarSecondary"
               }
-              onClick={() => handleNavigate('/developer/my-auctions')}
+              onClick={() => handleNavigate("/developer/my-auctions")}
             >
-              <FaGavel className='mr-3 scale-x-[-1]' />
+              <FaGavel className="mr-3 scale-x-[-1]" />
               Meine Auktionen
             </Button>
 
             <Button
               variant={
-                isRouteActive('/developer/questions-help')
-                  ? 'sidebarPrimary'
-                  : 'sidebarSecondary'
+                isRouteActive("/developer/questions-help") ? "sidebarPrimary" : "sidebarSecondary"
               }
-              onClick={() => handleNavigate('/developer/questions-help')}
+              onClick={() => handleNavigate("/developer/questions-help")}
             >
-              <FaQuestionCircle className='mr-3' />
+              <FaQuestionCircle className="mr-3" />
               Fragen/Hilfe
             </Button>
           </Fragment>
         )}
       </div>
 
-      <div className='mb-4'>
-        <Button variant='sidebarSecondary' onClick={handleLogout}>
-          <FaSignOutAlt className='mr-3 text-gray-medium' />
+      <div className="mb-4">
+        <Button variant="sidebarSecondary" onClick={handleLogout}>
+          <FaSignOutAlt className="mr-3 text-gray-medium" />
           Logout
         </Button>
+        <div className="flex gap-1 text-sm">
+          <Link to={"/terms-and-condition"} className="underline">
+            Terms
+          </Link>
+          <p>and</p>
+          <Link to={"/privacy-policy"} className="underline">
+            Privacy policy
+          </Link>
+        </div>
       </div>
     </div>
   );
