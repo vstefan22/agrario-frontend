@@ -8,6 +8,7 @@ import { MY_PLOTS_COLUMNS } from '../../../constants/table-data';
 import { PlotType } from '../../../types/plot-types';
 import active from '../../../assets/images/active.png';
 import inactive from '../../../assets/images/inactive.png';
+import imagePlaceholder from '../../../assets/images/image-placeholder.png';
 
 type PlotItemProps = {
   data: PlotType;
@@ -38,7 +39,7 @@ const PlotItem: FC<PlotItemProps> = ({ data }) => {
       <div className='flex justify-between py-2 space-x-4'>
         <ItemImage
           id={data.id}
-          image={data.image}
+          image={imagePlaceholder}
           className='border-[0.16px]'
         />
         <div className='flex flex-col'>

@@ -78,7 +78,7 @@ export default function Register() {
     }
 
     if (formData.zipcode.length !== 5 || !/^\d+$/.test(formData.zipcode)) {
-      toast.error("Die Postleitzahl muss genau 5 Ziffern enthalten.");
+      toast.error('Die Postleitzahl muss genau 5 Ziffern enthalten.');
       return;
     }
 
@@ -149,26 +149,28 @@ export default function Register() {
 
       if (
         err.response?.data?.password?.[0] &&
-        err.response.data.password[0] === "This password is too common."
+        err.response.data.password[0] === 'This password is too common.'
       ) {
-        toast.error("Dieses Passwort ist zu häufig.");
+        toast.error('Dieses Passwort ist zu häufig.');
         return;
       }
 
       if (
         err.response?.data?.password?.[0] &&
-        err.response.data.password[0] === "This password is entirely numeric."
+        err.response.data.password[0] === 'This password is entirely numeric.'
       ) {
-        toast.error("Dieses Passwort besteht nur aus Zahlen.");
+        toast.error('Dieses Passwort besteht nur aus Zahlen.');
         return;
       }
 
       if (
         err.response?.data?.password?.[0] &&
         err.response.data.password[0] ===
-          "This password is too short. It must contain at least 8 characters."
+          'This password is too short. It must contain at least 8 characters.'
       ) {
-        toast.error("Dieses Passwort ist zu kurz. Es muss mindestens 8 Zeichen enthalten.");
+        toast.error(
+          'Dieses Passwort ist zu kurz. Es muss mindestens 8 Zeichen enthalten.'
+        );
         return;
       }
 
