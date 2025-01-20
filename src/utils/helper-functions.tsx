@@ -354,3 +354,15 @@ export const validateOfferDetailForm = (formData: any) => {
     errors: newErrors,
   };
 };
+
+export const extractFileName = (fileUrl: string) => {
+  try {
+    const parsedUrl = new URL(fileUrl);
+    const pathName = parsedUrl.pathname;
+    const fileName = pathName.split('/').pop();
+    return fileName;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
