@@ -9,14 +9,15 @@ import Select from '../../components/common/Select';
 import Checkbox from '../../components/common/Checkbox';
 import SlideCheckbox from '../../components/common/SlideCheckbox';
 import PackageCard from '../../components/profile/PackageCard';
+import { LoadingSpinner } from '../../components/common/Loading';
 import useHttpRequest from '../../hooks/http-request-hook';
+import usePayments from '../../hooks/payment-hook';
 import useAuthStore from '../../store/auth-store';
 import { profileOptions } from '../../constants/select-options';
 import { PACKAGE_FEATURES } from '../../constants/package';
 import { StoreUser } from '../../types/user-types';
+import { PlanTierType } from '../../types/global-types';
 import profilePlaceholder from '../../assets/images/profile-placeholder.png';
-import usePayments from '../../hooks/payment-hook';
-import { LoadingSpinner } from '../../components/common/Loading';
 
 type ProfileType = Omit<StoreUser, 'id'>;
 
@@ -50,7 +51,6 @@ export default function Profile() {
     other: '',
     role: '',
   });
-
   /* eslint-disable @typescript-eslint/no-explicit-any */
   const [loading, setLoading] = useState(false);
   const [profilePic, setProfilePic] = useState<any>(null);
@@ -67,7 +67,6 @@ export default function Profile() {
   // });
 
   const [isChecked, setIsChecked] = useState<boolean>(false);
-
   const [editMode, setEditMode] = useState<Record<string, boolean>>({
     company_name: false,
     company_website: false,
@@ -306,10 +305,11 @@ export default function Profile() {
     navigate('../password-change');
   };
 
-  const handleMonthlyPremiumPackage = async () => {
+  const handleMonthlyPackage = async (planTier: PlanTierType) => {
     const body = {
       payment_type: 'subscription',
-      plan_tier: 'PREM',
+      plan_tier: planTier,
+      billing_mode: 'MON',
     };
 
     try {
@@ -325,10 +325,11 @@ export default function Profile() {
     }
   };
 
-  const handleYearlyPremiumPackage = async () => {
+  const handleYearlyPackage = async (planTier: PlanTierType) => {
     const body = {
       payment_type: 'subscription',
-      plan_tier: 'PREM',
+      plan_tier: planTier,
+      billing_mode: 'YEA',
     };
 
     try {
@@ -345,7 +346,6 @@ export default function Profile() {
   };
 
   const handlePriceOnRequest = () => {
-    // TODO: check if this works, use actual agrario email here and custom message
     const email = 'agrarioenergy@gmail.com';
     const subject = encodeURIComponent('Price on Request');
     const body = encodeURIComponent(
@@ -356,6 +356,7 @@ export default function Profile() {
   };
 
   if (loading) return <LoadingSpinner />;
+
   return (
     <div className='bg-gray-lightest min-h-screen flex flex-col justify-start items-center px-4 py-8 auto-fill-profile'>
       <div className='w-[962px]'>
@@ -779,11 +780,11 @@ export default function Profile() {
                     plan='/ monthly'
                     description='All the basic features to boost your freelance career'
                     features={PACKAGE_FEATURES.free}
-                    buttonText='Status aktiv'
-                    onClick={() => {
-                      navigate('/developer/profile/subscribe');
-                    }}
-                    activePlan
+                    onClick={() => handleMonthlyPackage('FREE')}
+                    buttonText={
+                      user?.tier === 'FREE' ? 'Status aktiv' : 'Paket buchen'
+                    }
+                    activePlan={user?.tier === 'FREE'}
                   />
                   <PackageCard
                     title='Paket Premium'
@@ -791,15 +792,23 @@ export default function Profile() {
                     plan='/ monthly'
                     description='All the basic features to boost your freelance career'
                     features={PACKAGE_FEATURES.premium}
-                    buttonText='Paket buchen'
+                    buttonText={
+                      user?.tier === 'PREM' ? 'Status aktiv' : 'Paket buchen'
+                    }
+                    activePlan={user?.tier === 'PREM'}
                     isActive
-                    onClick={handleMonthlyPremiumPackage}
+                    onClick={() => handleMonthlyPackage('PREM')}
                   />
                   <PackageCard
                     title='Paket Enterprise'
                     price='Preis auf Anfrage'
                     features={PACKAGE_FEATURES.onRequest}
-                    buttonText='Sales kontaktierten'
+                    buttonText={
+                      user?.tier === 'ENTE'
+                        ? 'Status aktiv'
+                        : 'Sales kontaktierten'
+                    }
+                    activePlan={user?.tier === 'ENTE'}
                     onClick={handlePriceOnRequest}
                   />
                 </>
@@ -811,7 +820,7 @@ export default function Profile() {
                     plan='/ yearly'
                     description='All the basic features to boost your freelance career'
                     features={PACKAGE_FEATURES.free}
-                    onClick={() => {}}
+                    onClick={() => handleYearlyPackage('FREE')}
                     buttonText={
                       user?.tier === 'FREE' ? 'Status aktiv' : 'Paket buchen'
                     }
@@ -827,7 +836,7 @@ export default function Profile() {
                       user?.tier === 'PREM' ? 'Status aktiv' : 'Paket buchen'
                     }
                     activePlan={user?.tier === 'PREM'}
-                    onClick={handleYearlyPremiumPackage}
+                    onClick={() => handleYearlyPackage('PREM')}
                     isActive
                   />
                   <PackageCard
@@ -839,8 +848,8 @@ export default function Profile() {
                         ? 'Status aktiv'
                         : 'Sales kontaktierten'
                     }
-                    onClick={handlePriceOnRequest}
                     activePlan={user?.tier === 'ENTE'}
+                    onClick={handlePriceOnRequest}
                   />
                 </>
               )}
