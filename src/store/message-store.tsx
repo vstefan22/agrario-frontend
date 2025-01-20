@@ -49,6 +49,7 @@ const useMessageStore = create<MessageState>()(
           ],
         }));
       },
+
       clearMessageStorage: () => set({ inbox: [], messages: [] }),
     }),
     {
