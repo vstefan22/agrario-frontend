@@ -1,6 +1,7 @@
 import Button from '../../components/common/Button';
 import useInvites from '../../hooks/invite-hook';
 import einenImg from '../../assets/images/questions-help.png';
+import { toast } from 'react-toastify';
 
 const FriendInvite = () => {
   const { createInvite } = useInvites();
@@ -8,8 +9,14 @@ const FriendInvite = () => {
   function handleSendInvitationLinkRequest() {
     try {
       createInvite({ email: 'email@example.com' });
+      toast.success(
+        'Vielen Dank, dass Sie den Link angefordert haben. Wir werden Ihnen den Link an Ihre registrierte E-Mail-Adresse senden.'
+      );
     } catch (err) {
       console.error(err);
+      toast.error(
+        'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.'
+      );
     }
   }
 

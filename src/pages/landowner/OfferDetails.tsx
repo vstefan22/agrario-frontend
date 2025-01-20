@@ -33,7 +33,7 @@ const OfferDetails = () => {
     removeOffer,
     removeOfferFromList,
   } = useOfferStore();
-  console.log(offer);
+
   const [formData, setFormData] = useState<OfferPreparationType>({
     available_from: offer?.available_from
       ? new Date(offer.available_from)
