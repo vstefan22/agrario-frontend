@@ -6,6 +6,7 @@ import Button from '../../components/common/Button';
 import GoogleMap from '../../components/common/GoogleMap';
 import DynamicTable from '../../components/common/DynamicTable';
 import { LoadingSpinner } from '../../components/common/Loading';
+import SearchByAttributesAccordion from '../../components/common/SearchByAttributesAccordion';
 import {
   geoJsonToLatLngArrays,
   geoJsonToPolygon,
@@ -14,7 +15,6 @@ import { PLOT_GOOGLE_MAPS_COLUMNS } from '../../constants/table-data';
 import { ParcelPolygon, PolygonType } from '../../types/google-maps-types';
 import { PlotSearchData } from '../../types/plot-types';
 import usePlots from '../../hooks/plot-hook';
-import SearchByAttributes from '../../components/search-with-backup/SearchByAttributes';
 
 export default function NewPlot() {
   const navigate = useNavigate();
@@ -162,7 +162,7 @@ export default function NewPlot() {
       </div>
 
       <div className='flex-1 flex flex-col'>
-        <SearchByAttributes handleSubmit={handleSetPolygonData} />
+        <SearchByAttributesAccordion onSubmit={handleSetPolygonData} />
 
         {parcelList.length > 0 &&
           parcelList.map((data) => (
