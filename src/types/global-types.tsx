@@ -13,9 +13,12 @@ export type PaymentType = {
   payment_type: string;
 };
 
+export type PlanTierType = 'FREE' | 'PREM' | 'ENTE';
+
 export type PackagePaymentType = {
   payment_type: string;
-  plan_tier: string;
+  plan_tier: PlanTierType;
+  billing_mode: string;
 };
 
 export type InviteBodyType = {
