@@ -56,9 +56,6 @@ const SearchByAttributes = ({ handleSubmit }: SearchByAttributesProps) => {
       className='w-full bg-white rounded-[18px] p-8 auto-fill-profile'
       style={{ boxShadow: '6px 6px 54px 0px #0000000D' }}
     >
-      <h2 className='text-black text-[40px] leading-[48px] mb-2'>
-        Search by Parcel Attributes
-      </h2>
       <p className='text-gray-dark-100 text-[20px] leading-[24px] font-normal mb-7'>
         Enter municipal, gemarkung, Flur, and Flurstück
       </p>
