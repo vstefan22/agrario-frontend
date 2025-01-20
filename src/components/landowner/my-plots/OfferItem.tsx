@@ -9,8 +9,8 @@ import useOffers from '../../../hooks/offer-hook';
 import useOfferStore from '../../../store/offer-store';
 import { OfferType } from '../../../types/offer-types';
 import imagePlaceholder from '../../../assets/images/image-placeholder.png';
-import active from '../../../assets/images/vermarktung-aktiv.png';
-import inactive from '../../../assets/images/vermarktung-in-vorbereitung.png';
+import vermarktungActive from '../../../assets/images/vermarktung-aktiv.png';
+import vermarktungInactive from '../../../assets/images/vermarktung-in-vorbereitung.png';
 
 type OfferItemProps = {
   data: OfferType;
@@ -32,8 +32,6 @@ const OfferItem: FC<OfferItemProps> = ({ data }) => {
       console.error(err);
     }
   };
-  const isAnalysePlus =
-    data.parcels.length > 0 ? data.parcels[0].analyse_plus : false;
 
   return (
     <div
@@ -56,8 +54,10 @@ const OfferItem: FC<OfferItemProps> = ({ data }) => {
           )}
           <div className='flex justify-end items-center pt-5 gap-3'>
             <img
-              src={isAnalysePlus ? active : inactive}
-              alt={`aktiv/inaktiv image`}
+              src={
+                data.status === 'A' ? vermarktungActive : vermarktungInactive
+              }
+              alt={`vermarktung aktiv/inaktiv image`}
               className='mr-4 h-[22px] object-cover'
             />
 
