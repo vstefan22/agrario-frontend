@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Search from '../../components/common/Search';
 import Select from '../../components/common/Select';
 import RangeSlider from '../../components/common/RangeSlider';
