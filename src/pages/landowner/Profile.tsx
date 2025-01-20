@@ -1,15 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { signOut } from 'firebase/auth';
-import { auth } from '../../firebase/firebase-config';
 import { TbCameraPlus } from 'react-icons/tb';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import IconCircleButton from '../../components/common/IconCircleButton';
 import useHttpRequest from '../../hooks/http-request-hook';
 import useAuthStore from '../../store/auth-store';
-import useClearStorage from '../../store/clear-storage';
 import { StoreUser } from '../../types/user-types';
 import profilePlaceholder from '../../assets/images/profile-placeholder.png';
 import { LoadingSpinner } from '../../components/common/Loading';
@@ -21,7 +18,6 @@ type ProfileType = Omit<StoreUser, 'id'>;
 export default function Profile() {
   const navigate = useNavigate();
   const { sendRequest } = useHttpRequest();
-  const { clearStorage } = useClearStorage();
   const { token, user, updateUser } = useAuthStore();
 
   const [formData, setFormData] = useState<ProfileType>({
@@ -188,33 +184,8 @@ export default function Profile() {
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      clearStorage();
-      navigate('/');
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const handleOnPasswordChange = async () => {
-    try {
-      await sendRequest(
-        '/accounts/password-reset/',
-        'POST',
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-        { email: user?.email }
-      );
-      handleLogout();
-      toast.success('Reset password email sent successfully!');
-    } catch {
-      toast.error('Error happened while sending reset password email.');
-    }
+    navigate('../password-change');
   };
 
   const toggleEditMode = (field: string) => {

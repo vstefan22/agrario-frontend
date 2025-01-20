@@ -26,7 +26,7 @@ const ThankYouMarketingItem: FC<ThankYouMarketingItemProps> = ({ data }) => {
         />
         <div className='flex flex-col'>
           <DynamicTable data={data} columns={PLOT_DETAILS_COLUMNS} />
-          <div className='flex justify-end items-center gap-3 mt-auto'>
+          <div className='flex justify-end items-center gap-3 mt-4'>
             <img
               src={preparationImg}
               alt={'preparation image'}
