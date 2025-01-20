@@ -66,7 +66,7 @@ export default function Login() {
       setUser(user);
       setToken(firebase_token);
       setRefreshToken(refresh_token);
-
+      setLoading(false);
       if (user.role === "landowner") {
         navigate("/landowner");
       } else if (user.role === "developer") {
@@ -77,6 +77,7 @@ export default function Login() {
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
+      setLoading(false);
       if (err.response.data.error === "Please confirm your email address before logging in.") {
         toast.error("Bitte bestätigen Sie Ihre E-Mail Adresse, bevor Sie sich anmelden.");
         return;
