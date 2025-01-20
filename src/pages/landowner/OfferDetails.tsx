@@ -8,6 +8,7 @@ import Checkbox from '../../components/common/Checkbox';
 import TextArea from '../../components/common/TextArea';
 import UploadFile from '../../components/common/UploadFile';
 import Button from '../../components/common/Button';
+import { LoadingSpinner } from '../../components/common/Loading';
 import useOfferStore from '../../store/offer-store';
 import useOffers from '../../hooks/offer-hook';
 import {
@@ -20,19 +21,11 @@ import {
 import { validateOfferDetailForm } from '../../utils/helper-functions';
 import { OfferPreparationType } from '../../types/offer-types';
 
-import { LoadingSpinner } from '../../components/common/Loading';
-
 const OfferDetails = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const { patchOffer, deactivateOffer } = useOffers();
-  const {
-    offer,
-    updateOffer,
-    updateOfferToList,
-    removeOffer,
-    removeOfferFromList,
-  } = useOfferStore();
+  const { patchOffer } = useOffers();
+  const { offer, updateOffer, updateOfferToList } = useOfferStore();
 
   const [formData, setFormData] = useState<OfferPreparationType>({
     available_from: offer?.available_from
@@ -66,11 +59,13 @@ const OfferDetails = () => {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const offerId = offer?.identifier;
+
   useEffect(() => {
     if (!offer || !offer.documented_offers) return;
 
     const fetchFiles = async () => {
       const files = await Promise.all(
+        // eslint-disable-next-line
         (offer.documented_offers || []).map(async (doc: any) => {
           const response = await fetch(doc.document_url);
           const blob = await response.blob();
@@ -78,7 +73,7 @@ const OfferDetails = () => {
             doc.document_url.split('?')[0].split('/').pop() || 'Unnamed';
 
           return new File([blob], fileName, {
-            type: blob.type, // Use the type from the fetched blob
+            type: blob.type,
           });
         })
       );
@@ -147,7 +142,7 @@ const OfferDetails = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const { errors, isFormValidate } = validateOfferDetailForm(formData);
@@ -208,25 +203,12 @@ const OfferDetails = () => {
       );
       formDataSend.append('accept_terms', formData.accept_terms.toString());
       formDataSend.append('other', formData.other.toString());
-
-      const updateOfferData = {
-        ...formData,
-        documented_offers: offer?.documented_offers
-          ? offer.documented_offers
-          : [],
-        criteria: {
-          no_usage_restriction: formData.no_usage_restriction,
-          wind_energy_restriction: formData.wind_energy_restriction,
-          solar_energy_restriction: formData.solar_energy_restriction,
-          energy_storage_restriction: formData.energy_storage_restriction,
-          eco_enhancements_restriction: formData.eco_enhancements_restriction,
-        },
-      };
+      formDataSend.append('status', 'A');
 
       setLoading(true);
-      patchOffer(offerId!, formDataSend);
-      updateOffer(offerId!, updateOfferData);
-      updateOfferToList(offerId!, updateOfferData);
+      const offerUpdated = await patchOffer(offerId!, formDataSend);
+      updateOffer(offerId!, offerUpdated);
+      updateOfferToList(offerId!, offerUpdated);
       setLoading(false);
       toast.success('Das Angebot wurde erfolgreich aktualisiert.');
     } else {
@@ -252,9 +234,11 @@ const OfferDetails = () => {
   const handleDeactivateOffer = async () => {
     try {
       setLoading(true);
-      await deactivateOffer(offerId!);
-      removeOffer(offerId!);
-      removeOfferFromList(offerId!);
+      const formDataSend = new FormData();
+      formDataSend.append('status', 'I');
+      const offerDeactivated = await patchOffer(offerId!, formDataSend);
+      updateOffer(offerId!, offerDeactivated);
+      updateOfferToList(offerId!, offerDeactivated);
       setLoading(false);
       toast.success('Das Angebot wurde erfolgreich deaktiviert.');
     } catch (err) {
@@ -266,6 +250,7 @@ const OfferDetails = () => {
   };
 
   if (loading) return <LoadingSpinner />;
+
   return (
     <div className='bg-gray-lightest min-h-screen flex flex-col px-7 p-4'>
       <h1 className='text-[32px] font-bold text-black-muted mb-4'>

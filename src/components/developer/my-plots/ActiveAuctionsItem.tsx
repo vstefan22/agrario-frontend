@@ -6,6 +6,7 @@ import ItemImage from '../../common/ItemImage';
 import useAuctionOffers from '../../../hooks/auctions-offer-hook';
 import useAuctionOfferstore from '../../../store/auctions-store';
 import { PLOT_DETAILS_COLUMNS } from '../../../constants/table-data';
+import { showRestrictions } from '../../../utils/helper-functions';
 import imagePlaceholder from '../../../assets/images/image-placeholder.png';
 import active from '../../../assets/images/vermarktung-aktiv.png';
 import inactive from '../../../assets/images/vermarktung-in-vorbereitung.png';
@@ -62,43 +63,7 @@ const ActiveAuctionsItem: FC<ActiveAuctionsItemProps> = ({
             />
           )}
           <div className='flex justify-between items-center pt-5 gap-3'>
-            <div>
-              {(() => {
-                const { criteria } = data;
-                const restrictions = [];
-                if (!criteria?.no_usage_restriction) {
-                  if (!criteria?.wind_energy_restriction) {
-                    restrictions.push('Wind');
-                  }
-                  if (!criteria?.solar_energy_restriction) {
-                    restrictions.push('Freiflächensolar');
-                  }
-                  if (!criteria?.energy_storage_restriction) {
-                    restrictions.push('Energie');
-                  }
-                  if (!criteria?.eco_enhancements_restriction) {
-                    restrictions.push('Biodiversität');
-                  }
-                } else {
-                  restrictions.push(
-                    'Wind, Freiflächensolar, Energie, Biodiversität'
-                  );
-                }
-                if (restrictions.length > 0) {
-                  return (
-                    <>
-                      <h1 className='text-black-muted text-[14px]'>
-                        {restrictions.join(', ')}
-                      </h1>
-                      <p className='text-gray-dark-100 text-[10px] opacity-[70%]'>
-                        Potentiell geeignet
-                      </p>
-                    </>
-                  );
-                }
-                return null;
-              })()}
-            </div>
+            <div>{showRestrictions(data)}</div>
             <div className='flex items-center'>
               <img
                 src={isAnalyse ? active : inactive}

@@ -9,6 +9,7 @@ import useRegisteredPlotStore from '../../../store/registered-plot-store';
 import { PLOT_SEARCH_COLUMNS } from '../../../constants/table-data';
 import { RegisteredPlotDetailsType } from '../../../types/plot-types';
 import imagePlaceholder from '../../../assets/images/image-placeholder.png';
+import { showRestrictions } from '../../../utils/helper-functions';
 
 type RegisteredPlotItemProps = {
   data: RegisteredPlotDetailsType;
@@ -71,43 +72,7 @@ const RegisteredPlotItem: FC<RegisteredPlotItemProps> = ({ data }) => {
             customClassName='px-10'
           />
           <div className='flex justify-between items-center pt-5 gap-3 mt-auto'>
-            <div>
-              {(() => {
-                const { criteria } = data;
-                const restrictions = [];
-                if (!criteria?.no_usage_restriction) {
-                  if (!criteria?.wind_energy_restriction) {
-                    restrictions.push('Wind');
-                  }
-                  if (!criteria?.solar_energy_restriction) {
-                    restrictions.push('Freiflächensolar');
-                  }
-                  if (!criteria?.energy_storage_restriction) {
-                    restrictions.push('Energie');
-                  }
-                  if (!criteria?.eco_enhancements_restriction) {
-                    restrictions.push('Biodiversität');
-                  }
-                } else {
-                  restrictions.push(
-                    'Wind, Freiflächensolar, Energie, Biodiversität'
-                  );
-                }
-                if (restrictions.length > 0) {
-                  return (
-                    <>
-                      <h1 className='text-black-muted text-[14px]'>
-                        {restrictions.join(', ')}
-                      </h1>
-                      <p className='text-gray-dark-100 text-[10px] opacity-[70%]'>
-                        Potentiell geeignet
-                      </p>
-                    </>
-                  );
-                }
-                return null;
-              })()}
-            </div>
+            <div>{showRestrictions(data)}</div>
 
             <div className='flex gap-6'>
               {!data.parcel.is_in_watchlist && (

@@ -1,7 +1,7 @@
-import { FC, useEffect, useState } from "react";
-import fileUploadIcon from "../../assets/images/file-upload.png";
-import fileDocumentIcon from "../../assets/images/file-document.png";
-import deleteIcon from "../../assets/images/del.png";
+import { FC, useEffect, useState } from 'react';
+import fileUploadIcon from '../../assets/images/file-upload.png';
+import fileDocumentIcon from '../../assets/images/file-document.png';
+import deleteIcon from '../../assets/images/del.png';
 
 function formatFileSize(sizeInBytes: number): string {
   const kb = sizeInBytes / 1024;
@@ -13,7 +13,7 @@ function formatFileSize(sizeInBytes: number): string {
 }
 
 interface UploadFileProps {
-  onFilesChange?: (files: File[]) => void;
+  onFilesChange: (files: File[]) => void;
   maxFiles?: number;
   initialFiles?: File[];
 }
@@ -38,7 +38,7 @@ const UploadFile: FC<UploadFileProps> = ({
     setFiles(updatedFiles);
     onFilesChange?.(updatedFiles);
 
-    e.target.value = "";
+    e.target.value = '';
   };
   useEffect(() => {
     if (initialFiles.length === 0) return;
@@ -52,39 +52,64 @@ const UploadFile: FC<UploadFileProps> = ({
   };
 
   return (
-    <div className="flex items-start gap-4">
-      <div className="w-[300px] h-[80px] border border-gray-medium rounded-[8px] border-dashed flex flex-col items-center justify-center relative">
-        <label className="cursor-pointer w-full h-full flex flex-col items-center justify-center">
-          <input type="file" multiple className="hidden" onChange={handleFileSelect} />
-          <img src={fileUploadIcon} alt="file upload" className="w-[36px] h-[36px]" />
-          <p className="text-[12px] font-[500] text-center">
-            <span className="text-primary-blue">Datei hinzufügen</span>{" "}
-            <span className="text-gray-dark-100">(Max. File size: {MAX_SIZE_MB} MB)</span>
+    <div className='flex items-start gap-4'>
+      <div className='w-[300px] h-[80px] border border-gray-medium rounded-[8px] border-dashed flex flex-col items-center justify-center relative'>
+        <label className='cursor-pointer w-full h-full flex flex-col items-center justify-center'>
+          <input
+            type='file'
+            multiple
+            className='hidden'
+            onChange={handleFileSelect}
+          />
+          <img
+            src={fileUploadIcon}
+            alt='file upload'
+            className='w-[36px] h-[36px]'
+          />
+          <p className='text-[12px] font-[500] text-center'>
+            <span className='text-primary-blue'>Datei hinzufügen</span>{' '}
+            <span className='text-gray-dark-100'>
+              (Max. File size: {MAX_SIZE_MB} MB)
+            </span>
           </p>
         </label>
       </div>
 
-      <div className="flex gap-4 flex-wrap">
+      <div className='flex gap-4 flex-wrap'>
         {files.map((file, index) => {
           const sizeText = formatFileSize(file.size);
 
           return (
             <div
               key={index}
-              className="w-[300px] h-[80px] border border-gray-medium rounded-[8px] flex items-center px-3 py-2 gap-3 bg-white overflow-hidden"
+              className='w-[300px] h-[80px] border border-gray-medium rounded-[8px] flex items-center px-3 py-2 gap-3 bg-white overflow-hidden'
             >
-              <img src={fileDocumentIcon} alt="file document" className="w-6 h-6" />
-              <div className="flex flex-col flex-1 overflow-hidden">
+              <img
+                src={fileDocumentIcon}
+                alt='file document'
+                className='w-6 h-6'
+              />
+              <div className='flex flex-col flex-1 overflow-hidden'>
                 <span
-                  className="text-gray-dark-200 text-[16px] font-[400] truncate"
+                  className='text-gray-dark-200 text-[16px] font-[400] truncate'
                   title={file.name}
                 >
                   {file.name}
                 </span>
-                <span className="text-gray-medium text-[12px] font-[400]">{sizeText}</span>
+                <span className='text-gray-medium text-[12px] font-[400]'>
+                  {sizeText}
+                </span>
               </div>
-              <button type="button" onClick={() => handleDelete(index)} className="ml-auto">
-                <img src={deleteIcon} alt="delete" className="w-[20px] h-[20px]" />
+              <button
+                type='button'
+                onClick={() => handleDelete(index)}
+                className='ml-auto'
+              >
+                <img
+                  src={deleteIcon}
+                  alt='delete'
+                  className='w-[20px] h-[20px]'
+                />
               </button>
             </div>
           );
