@@ -1,12 +1,12 @@
-import { useState, ChangeEvent, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import Search from '../../components/common/Search';
 import Button from '../../components/common/Button';
 import GoogleMap from '../../components/common/GoogleMap';
 import DynamicTable from '../../components/common/DynamicTable';
 import { LoadingSpinner } from '../../components/common/Loading';
 import SearchByAttributesAccordion from '../../components/common/SearchByAttributesAccordion';
+import SearchGoogleMaps from '../../components/common/SearchGoogleMaps';
 import {
   geoJsonToLatLngArrays,
   geoJsonToPolygon,
@@ -19,11 +19,13 @@ import usePlots from '../../hooks/plot-hook';
 export default function NewPlot() {
   const navigate = useNavigate();
   const { getPlotGeoData, addPlot, getPlotByFilterData } = usePlots();
-  const [searchTerm, setSearchTerm] = useState('');
   const [mapPolygons, setMapPolygons] = useState<ParcelPolygon[]>([]);
   const [searchPolygons, setSearchPolygons] = useState<ParcelPolygon[]>([]);
   const [parcelList, setParcelList] = useState<ParcelPolygon[]>([]);
   const [loading, setLoading] = useState(false);
+  const [mapCenter, setMapCenter] = useState<google.maps.LatLngLiteral | null>(
+    null
+  );
 
   useEffect(() => {
     const fetchParcels = async () => {
@@ -73,7 +75,6 @@ export default function NewPlot() {
   }, [getPlotGeoData]);
 
   const handleParcelClick = (parcel: ParcelPolygon) => {
-    // setParcelList((prev) => [...prev, parcel]);
     setParcelList([parcel]);
   };
 
@@ -89,6 +90,7 @@ export default function NewPlot() {
 
       if (!res || !res.length) {
         toast.error('Nema pronađenih flurstücke za zadati upit.');
+        setLoading(false);
         return;
       }
 
@@ -137,16 +139,21 @@ export default function NewPlot() {
     }
   };
 
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-  };
-
   const handleClearParcelList = () => {
     setParcelList([]);
     setSearchPolygons([]);
   };
 
+  const handlePlaceSelected = (latLng: google.maps.LatLng) => {
+    const newCenter: google.maps.LatLngLiteral = {
+      lat: latLng.lat(),
+      lng: latLng.lng(),
+    };
+    setMapCenter(newCenter);
+  };
+
   if (loading) return <LoadingSpinner />;
+
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
       <div className='flex items-center justify-between mb-6'>
@@ -180,17 +187,17 @@ export default function NewPlot() {
             style={{ boxShadow: '6px 6px 54px 0px #0000000D' }}
           >
             <div className='absolute z-10 right-10 top-10'>
-              <Search
+              <SearchGoogleMaps
                 placeholder='Search address...'
-                value={searchTerm}
-                onChange={handleSearchChange}
+                onPlaceSelected={handlePlaceSelected}
               />
             </div>
+
             <GoogleMap
               mapPolygons={mapPolygons}
               searchPolygons={searchPolygons}
-              mapSearchTerm={searchTerm}
               onParcelClick={handleParcelClick}
+              mapCenter={mapCenter}
             />
           </div>
         </div>

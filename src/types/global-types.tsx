@@ -13,7 +13,7 @@ export type PaymentType = {
   payment_type: string;
 };
 
-export type PlanTierType = 'FREE' | 'PREM' | 'ENVE';
+export type PlanTierType = 'FREE' | 'PREM' | 'ENTE';
 
 export type PackagePaymentType = {
   payment_type: string;

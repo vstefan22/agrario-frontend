@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import { Libraries, LoadScript } from '@react-google-maps/api';
 import Layout from './layout/Layout';
 import ProtectedLayout from './layout/ProtectedLayout';
 import NewRegister from './components/auth/NewRegister';
@@ -43,157 +44,174 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 
 import 'react-toastify/dist/ReactToastify.css';
 
+const libraries: Libraries = ['places'];
+const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_KEY;
+
 const App = () => {
   return (
-    <Router>
-      <GlobalHelmet />
-      <Layout>
-        <Routes>
-          <Route
-            path='/'
-            element={
-              <Redirect>
-                <Login />
-              </Redirect>
-            }
-          />
-          <Route
-            path='/new-register'
-            element={
-              <Redirect>
-                <NewRegister />
-              </Redirect>
-            }
-          />
-          <Route
-            path='/register/landowner'
-            element={
-              <Redirect>
-                <RegisterLandowner />
-              </Redirect>
-            }
-          />
-          <Route
-            path='/register/developer'
-            element={
-              <Redirect>
-                <RegisterDeveloper />
-              </Redirect>
-            }
-          />
+    <LoadScript googleMapsApiKey={googleMapsApiKey} libraries={libraries}>
+      <Router>
+        <GlobalHelmet />
+        <Layout>
+          <Routes>
+            <Route
+              path='/'
+              element={
+                <Redirect>
+                  <Login />
+                </Redirect>
+              }
+            />
+            <Route
+              path='/new-register'
+              element={
+                <Redirect>
+                  <NewRegister />
+                </Redirect>
+              }
+            />
+            <Route
+              path='/register/landowner'
+              element={
+                <Redirect>
+                  <RegisterLandowner />
+                </Redirect>
+              }
+            />
+            <Route
+              path='/register/developer'
+              element={
+                <Redirect>
+                  <RegisterDeveloper />
+                </Redirect>
+              }
+            />
 
-          <Route
-            path='/landowner/*'
-            element={
-              <ProtectedLayout>
-                <Routes>
-                  <Route path='/profile' element={<ProfileLandowner />} />
-                  <Route path='/password-change' element={<PasswordChange />} />
-                  <Route path='/messages' element={<Messages />} />
-                  <Route path='' element={<StartLandowner />} />
-                  <Route path='/new-plot' element={<NewPlot />} />
-                  <Route path='/my-plots' element={<MyPlots />} />
-                  <Route
-                    path='/my-plots/thank-you-order-request'
-                    element={<ThankYouOrderRequest />}
-                  />
-                  <Route
-                    path='/my-plots/thank-you-marketing-request'
-                    element={<ThankYouMarketingRequest />}
-                  />
-                  <Route
-                    path='/my-plots/analyse-plus'
-                    element={<AnalysePlusCart />}
-                  />
-                  <Route path='/my-plots/details' element={<PlotDetails />} />
-                  <Route
-                    path='/my-plots/offer-preparation'
-                    element={<OfferPreparation />}
-                  />
-                  <Route path='/my-offers' element={<MyOffers />} />
-                  <Route path='/my-offers/details' element={<OfferDetails />} />
-                  <Route path='/friend-invite' element={<FriendInvite />} />
-                  <Route
-                    path='/questions-help'
-                    element={<QuestionsHelpLandowner />}
-                  />
-                  <Route path='/support' element={<Support />} />
-                  <Route path='/support/:chatId' element={<Support />} />
-                  <Route path='*' element={<NotFound />} />
+            <Route
+              path='/landowner/*'
+              element={
+                <ProtectedLayout>
+                  <Routes>
+                    <Route path='/profile' element={<ProfileLandowner />} />
+                    <Route
+                      path='/password-change'
+                      element={<PasswordChange />}
+                    />
+                    <Route path='/messages' element={<Messages />} />
+                    <Route path='' element={<StartLandowner />} />
+                    <Route path='/new-plot' element={<NewPlot />} />
+                    <Route path='/my-plots' element={<MyPlots />} />
+                    <Route
+                      path='/my-plots/thank-you-order-request'
+                      element={<ThankYouOrderRequest />}
+                    />
+                    <Route
+                      path='/my-plots/thank-you-marketing-request'
+                      element={<ThankYouMarketingRequest />}
+                    />
+                    <Route
+                      path='/my-plots/analyse-plus'
+                      element={<AnalysePlusCart />}
+                    />
+                    <Route path='/my-plots/details' element={<PlotDetails />} />
+                    <Route
+                      path='/my-plots/offer-preparation'
+                      element={<OfferPreparation />}
+                    />
+                    <Route path='/my-offers' element={<MyOffers />} />
+                    <Route
+                      path='/my-offers/details'
+                      element={<OfferDetails />}
+                    />
+                    <Route path='/friend-invite' element={<FriendInvite />} />
+                    <Route
+                      path='/questions-help'
+                      element={<QuestionsHelpLandowner />}
+                    />
+                    <Route path='/support' element={<Support />} />
+                    <Route path='/support/:chatId' element={<Support />} />
+                    <Route path='*' element={<NotFound />} />
 
-                  <Route path='/terms-and-conditions' element={<Terms />} />
-                  <Route path='/privacy-policy' element={<PrivacyPolicy />} />
-                </Routes>
-              </ProtectedLayout>
-            }
+                    <Route path='/terms-and-conditions' element={<Terms />} />
+                    <Route path='/privacy-policy' element={<PrivacyPolicy />} />
+                  </Routes>
+                </ProtectedLayout>
+              }
+            />
+            <Route
+              path='developer/*'
+              element={
+                <ProtectedLayout>
+                  <Routes>
+                    <Route path='/messages' element={<Messages />} />
+                    <Route path='/profile' element={<ProfileDeveloper />} />
+                    <Route
+                      path='/password-change'
+                      element={<PasswordChange />}
+                    />
+
+                    <Route
+                      path='/profile/subscribe'
+                      element={<ThankYouSubscribe />}
+                    />
+                    <Route path='' element={<StartDeveloper />} />
+                    <Route
+                      path='/registered-plots'
+                      element={<RegisteredPlots />}
+                    />
+                    <Route
+                      path='/registered-plots/parcel-details'
+                      element={<ParcelDetails />}
+                    />
+                    <Route path='/my-watchlist' element={<MyWatchlist />} />
+                    <Route
+                      path='/active-auctions'
+                      element={<ActiveAuctions />}
+                    />
+                    <Route
+                      path='active-auctions/details'
+                      element={<AuctionDetails />}
+                    />
+                    <Route
+                      path='active-auctions/place-a-bid'
+                      element={<PlaceABid />}
+                    />
+                    <Route
+                      path='active-auctions/thanks'
+                      element={<ThankYouInterest />}
+                    />
+                    <Route path='my-auctions' element={<MyAuctions />} />
+                    <Route
+                      path='my-auctions/details'
+                      element={<MyAuctionDetails />}
+                    />
+                    <Route
+                      path='/questions-help'
+                      element={<QuestionsHelpDeveloper />}
+                    />
+                    <Route path='/support' element={<Support />} />
+                    <Route path='/support/:chatId' element={<Support />} />
+                    <Route path='*' element={<NotFound />} />
+
+                    <Route path='/terms-and-conditions' element={<Terms />} />
+                    <Route path='/privacy-policy' element={<PrivacyPolicy />} />
+                  </Routes>
+                </ProtectedLayout>
+              }
+            />
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+          <ToastContainer
+            position='top-center'
+            autoClose={7500}
+            hideProgressBar={false}
+            closeOnClick
+            pauseOnHover
+            draggable
           />
-          <Route
-            path='developer/*'
-            element={
-              <ProtectedLayout>
-                <Routes>
-                  <Route path='/messages' element={<Messages />} />
-                  <Route path='/profile' element={<ProfileDeveloper />} />
-                  <Route path='/password-change' element={<PasswordChange />} />
-
-                  <Route
-                    path='/profile/subscribe'
-                    element={<ThankYouSubscribe />}
-                  />
-                  <Route path='' element={<StartDeveloper />} />
-                  <Route
-                    path='/registered-plots'
-                    element={<RegisteredPlots />}
-                  />
-                  <Route
-                    path='/registered-plots/parcel-details'
-                    element={<ParcelDetails />}
-                  />
-                  <Route path='/my-watchlist' element={<MyWatchlist />} />
-                  <Route path='/active-auctions' element={<ActiveAuctions />} />
-                  <Route
-                    path='active-auctions/details'
-                    element={<AuctionDetails />}
-                  />
-                  <Route
-                    path='active-auctions/place-a-bid'
-                    element={<PlaceABid />}
-                  />
-                  <Route
-                    path='active-auctions/thanks'
-                    element={<ThankYouInterest />}
-                  />
-                  <Route path='my-auctions' element={<MyAuctions />} />
-                  <Route
-                    path='my-auctions/details'
-                    element={<MyAuctionDetails />}
-                  />
-                  <Route
-                    path='/questions-help'
-                    element={<QuestionsHelpDeveloper />}
-                  />
-                  <Route path='/support' element={<Support />} />
-                  <Route path='/support/:chatId' element={<Support />} />
-                  <Route path='*' element={<NotFound />} />
-
-                  <Route path='/terms-and-conditions' element={<Terms />} />
-                  <Route path='/privacy-policy' element={<PrivacyPolicy />} />
-                </Routes>
-              </ProtectedLayout>
-            }
-          />
-          <Route path='*' element={<NotFound />} />
-        </Routes>
-        <ToastContainer
-          position='top-center'
-          autoClose={7500}
-          hideProgressBar={false}
-          closeOnClick
-          pauseOnHover
-          draggable
-        />
-      </Layout>
-    </Router>
+        </Layout>
+      </Router>
+    </LoadScript>
   );
 };
 
