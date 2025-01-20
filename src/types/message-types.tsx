@@ -6,10 +6,18 @@ export type MessageTypes = {
   subject: string;
 };
 
+export type Attachment = {
+  id: string;
+  file: string;
+  created_at: string;
+};
+
 export type MessageType = {
   recipient: string;
   subject: string;
   body: string;
+  sender: string;
+  attachments: Attachment[];
 };
 
 export type MessageBodyType = {
