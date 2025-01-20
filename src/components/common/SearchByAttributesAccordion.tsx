@@ -1,8 +1,8 @@
 import { useState } from 'react';
+import SearchByAttributes from '../search-with-backup/SearchByAttributes';
 import plusIcon from '../../assets/images/plus.png';
 import minusIcon from '../../assets/images/minus.png';
 import { PlotSearchData } from '../../types/plot-types';
-import SearchByAttributes from '../search-with-backup/SearchByAttributes';
 
 type SearchByAttributesAccordionProps = {
   onSubmit: (formData: PlotSearchData) => void;
