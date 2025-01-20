@@ -127,28 +127,29 @@ const ShowDetailsLandowner = ({
                 image={data.image}
               />
             ))
-          : showDetailsData.map((data, index) => (
-              <DynamicTableSection
-                key={index}
-                title={data.title}
-                description={data.description}
-                columns={data.columns}
-                data={data.data}
-                image={data.image}
-                customClassName={`${
-                  !isAnalizePlus &&
-                  [
-                    'Stromnetz und Infrastruktur',
-                    'Solarpark',
-                    'Windenergie',
-                    'Energiespeicher',
-                    'Biodiversität & ökologische Aufwertungsmaßnahmen',
-                  ].includes(data.title)
-                    ? 'blur-[7px] pointer-events-none'
-                    : ''
-                }`}
-              />
-            ))}
+          : showDetailsData.map((data, index) => {
+              const blurKeysForTitle = [
+                'Stromnetz und Infrastruktur',
+                'Solarpark',
+                'Windenergie',
+                'Energiespeicher',
+                'Biodiversität & ökologische Aufwertungsmaßnahmen',
+              ].includes(data.title)
+                ? Object.keys(data.data)
+                : [];
+
+              return (
+                <DynamicTableSection
+                  key={index}
+                  title={data.title}
+                  description={data.description}
+                  columns={data.columns}
+                  data={data.data}
+                  image={data.image}
+                  blurKeys={blurKeysForTitle}
+                />
+              );
+            })}
       </div>
     </div>
   );

@@ -23,7 +23,7 @@ const DynamicTableSection = ({
   customClassName,
   blurKeys = [],
 }: SectionTableProps) => {
-  const [isShow, setIsShow] = useState(false);
+  const [isShow, setIsShow] = useState(true);
 
   const handleAccordionClick = () => {
     setIsShow((prev) => !prev);
@@ -33,7 +33,10 @@ const DynamicTableSection = ({
     <div
       className={`bg-white rounded-3xl shadow-md mb-6 overflow-hidden ${customClassName}`}
     >
-      <div className='bg-[#D9EBF3] px-6 py-4 flex justify-between items-center'>
+      <div
+        className='bg-[#D9EBF3] px-6 py-4 flex justify-between items-center cursor-pointer'
+        onClick={handleAccordionClick}
+      >
         <div className='flex items-center w-full'>
           <img src={image} alt='img' className='mr-6' />
           <div>
@@ -42,7 +45,7 @@ const DynamicTableSection = ({
             </h2>
             <p className='text-[12px] text-[#545454]'>{description}</p>
           </div>
-          <button className='ml-auto' onClick={handleAccordionClick}>
+          <button className='ml-auto'>
             {!isShow ? (
               <img src={arrowUpImg} alt='arrow circle' />
             ) : (

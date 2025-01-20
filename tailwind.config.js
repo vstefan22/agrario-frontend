@@ -38,6 +38,18 @@ export default {
         poppins: ['Poppins', 'sans-serif'],
         openSans: ['Open Sans', 'sans-serif'],
       },
+
+      screens: {
+        xs: '480px',
+        sm: '640px',
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
+        '2xl': '1536px',
+        'min-2040': { min: '2040px', max: '4000' },
+        '2040-2300': { min: '2040px', max: '2300' },
+        'min-2300': { min: '2040px', max: '4000px' },
+      },
     },
   },
   plugins: [],

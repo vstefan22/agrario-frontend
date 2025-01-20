@@ -60,8 +60,6 @@ const OfferDetails = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const offerId = offer?.identifier;
 
-  console.log('offer: ', offer);
-
   useEffect(() => {
     if (!offer || !offer.documented_offers) return;
 
@@ -150,6 +148,7 @@ const OfferDetails = () => {
     const { errors, isFormValidate } = validateOfferDetailForm(formData);
 
     if (isFormValidate) {
+      setErrors({});
       const formDataSend = new FormData();
       formDataSend.append(
         'available_from',
@@ -189,10 +188,6 @@ const OfferDetails = () => {
           'hide_from_search',
           formData.hide_from_search.toString()
         );
-      console.log(
-        'formData.doc offers in handle submit: ',
-        formData.documented_offers
-      );
       if (formData.documented_offers.length > 0) {
         formData.documented_offers.forEach((file) => {
           formDataSend.append('documented_offers', file);
@@ -413,6 +408,11 @@ const OfferDetails = () => {
             checked={formData.is_owner_or_authorized}
             onChange={handleChange}
           />
+          {errors.is_owner_or_authorized && (
+            <span className='text-red-500 text-sm'>
+              {errors.is_owner_or_authorized}
+            </span>
+          )}
           <Checkbox
             label='Ja, ich akzeptiere die Datenschutzbedingungen'
             variant='primary'
@@ -420,6 +420,11 @@ const OfferDetails = () => {
             checked={formData.accept_privacy_policy}
             onChange={handleChange}
           />
+          {errors.accept_privacy_policy && (
+            <span className='text-red-500 text-sm'>
+              {errors.accept_privacy_policy}
+            </span>
+          )}
           <Checkbox
             label='Ja, ich akzeptiere die AGBs'
             variant='primary'
@@ -427,6 +432,9 @@ const OfferDetails = () => {
             checked={formData.accept_terms}
             onChange={handleChange}
           />
+          {errors.accept_terms && (
+            <span className='text-red-500 text-sm'>{errors.accept_terms}</span>
+          )}
           <Checkbox
             label='Ja, ich.......'
             variant='primary'
@@ -434,6 +442,9 @@ const OfferDetails = () => {
             checked={formData.other}
             onChange={handleChange}
           />
+          {errors.other && (
+            <span className='text-red-500 text-sm'>{errors.other}</span>
+          )}
         </div>
 
         <div className='flex gap-x-6 mt-8 justify-end'>
