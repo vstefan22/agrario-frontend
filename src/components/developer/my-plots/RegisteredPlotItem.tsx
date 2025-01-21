@@ -56,17 +56,19 @@ const RegisteredPlotItem: FC<RegisteredPlotItemProps> = ({ data }) => {
         minHeight: '250px',
       }}
     >
-      <div className='flex justify-between py-2 space-x-4 min-1780:justify-center min-1780:gap-x-[6rem]'>
+      <div className='flex w-full py-2 space-x-8'>
         <ItemImage id={data.parcel.id.toString()} image={imagePlaceholder} />
-        <div className='flex flex-col'>
-          <DynamicTable
-            data={data.parcel}
-            columns={PLOT_SEARCH_COLUMNS}
-            customClassName='px-10'
-          />
-          <div className='flex justify-between items-center pt-5 gap-3 mt-auto'>
-            <div>{showRestrictions(data)}</div>
 
+        <div className='flex flex-col justify-center w-full gap-y-8'>
+          <div className='flex justify-between'>
+            <DynamicTable
+              data={data.parcel}
+              columns={PLOT_SEARCH_COLUMNS}
+              customClassName='px-10'
+            />
+          </div>
+          <div className='flex justify-between'>
+            <div>{showRestrictions(data)}</div>
             <div className='flex gap-6'>
               {!data.parcel.is_in_watchlist && (
                 <Button

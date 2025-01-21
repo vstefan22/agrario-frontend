@@ -600,12 +600,6 @@ export default function Profile() {
               </form>
             </div>
 
-            <div className='flex mt-4 justify-end'>
-              <Button variant='bluePrimary' onClick={handleSubmit}>
-                {loading ? 'Zugangsdaten ändern...' : 'Zugangsdaten ändern'}
-              </Button>
-            </div>
-
             <div className='mt-4'>
               <h1 className='text-[32px] font-bold text-black-muted mb-4'>
                 Mein Suchprofil

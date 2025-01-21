@@ -36,15 +36,18 @@ const PlotItem: FC<PlotItemProps> = ({ data }) => {
         minHeight: '250px',
       }}
     >
-      <div className='flex justify-between py-2 space-x-4 min-1780:justify-center min-1780:gap-x-[6rem]'>
+      <div className='flex w-full py-2 space-x-8'>
         <ItemImage
           id={data.id}
           image={imagePlaceholder}
           className='border-[0.16px]'
         />
-        <div className='flex flex-col'>
-          <DynamicTable data={data} columns={MY_PLOTS_COLUMNS} />
-          <div className='flex justify-end items-center pt-5 gap-3'>
+
+        <div className='flex flex-col justify-center w-full gap-y-8'>
+          <div className='flex justify-between'>
+            <DynamicTable data={data} columns={MY_PLOTS_COLUMNS} />
+          </div>
+          <div className='flex justify-end items-center gap-2'>
             <img
               src={data.analyse_plus ? active : inactive}
               alt={'aktiv/inaktiv image'}
@@ -53,6 +56,7 @@ const PlotItem: FC<PlotItemProps> = ({ data }) => {
             <p className='text-[14px] text-gray-dark-100 font-400 mr-3'>
               Analyse Plus
             </p>
+
             <Button
               variant='blueSecondary'
               type='button'
@@ -70,6 +74,12 @@ const PlotItem: FC<PlotItemProps> = ({ data }) => {
               Angebote einholen
             </Button>
           </div>
+        </div>
+      </div>
+
+      <div className='flex justify-between py-2 space-x-4 min-1780:justify-center min-1780:gap-x-[6rem]'>
+        <div className='flex flex-col'>
+          <div className='flex justify-end items-center pt-5 gap-3'></div>
         </div>
       </div>
     </div>

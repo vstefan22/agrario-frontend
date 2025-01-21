@@ -149,19 +149,45 @@ export default function Register() {
       });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
+      console.log(err);
       if (
-        err.response?.data?.email?.[0] &&
-        err.response.data.email[0] === 'The email address is already in use.'
+        err.response?.data?.error &&
+        err.response.data.error === 'The email address is already in use.'
       ) {
         toast.error('Ein Konto mit dieser E-Mail-Adresse existiert bereits.');
         return;
       }
       if (
-        err.response?.data?.phone_number &&
-        err.response.data.phone_number ===
+        err.response?.data?.email?.[0] &&
+        err.response.data.email[0] === 'user with this email already exists.'
+      ) {
+        toast.error('Ein Konto mit dieser E-Mail-Adresse existiert bereits.');
+        return;
+      }
+
+      if (
+        err.response?.data?.phone_number[0] &&
+        err.response.data.phone_number[0] ===
           'The phone number entered is not valid.'
       ) {
         toast.error('Die eingegebene Telefonnummer ist ungültig.');
+        return;
+      }
+      if (
+        err.response?.data?.phone_number[0] &&
+        err.response.data.phone_number[0] === 'Invalid phone number format.'
+      ) {
+        toast.error('Ungültiges Telefonnummernformat.');
+        return;
+      }
+      if (
+        err.response?.data?.phone_number[0] &&
+        err.response.data.phone_number[0] ===
+          'Invalid phone number format. Use local or international format.'
+      ) {
+        toast.error(
+          'Ungültiges Telefonnummernformat. Verwenden Sie das lokale oder internationale Format.'
+        );
         return;
       }
 
