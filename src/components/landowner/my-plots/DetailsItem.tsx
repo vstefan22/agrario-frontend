@@ -21,7 +21,7 @@ const DetailsItem: FC<DetailsItemProps> = ({ data }) => {
         minHeight: '250px',
       }}
     >
-      <div className='flex justify-between py-2 space-x-4 min-1780:justify-center min-1780:gap-x-[6rem]'>
+      <div className='flex justify-start py-2 space-x-4 gap-8'>
         {data.parcels.length > 0 && (
           <ItemImage image={imagePlaceholder} id={data.parcels[0].id} />
         )}

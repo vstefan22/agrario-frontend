@@ -4,6 +4,7 @@ import ItemImage from '../../common/ItemImage';
 import { PLOT_DETAILS_COLUMNS } from '../../../constants/table-data';
 import { PlotType } from '../../../types/plot-types';
 import preparationImg from '../../../assets/images/preparation.png';
+import imagePlaceholder from '../../../assets/images/image-placeholder.png';
 
 type ThankYouMarketingItemProps = {
   data: PlotType;
@@ -21,7 +22,7 @@ const ThankYouMarketingItem: FC<ThankYouMarketingItemProps> = ({ data }) => {
       <div className='flex justify-between py-2 space-x-4 min-1780:justify-center min-1780:gap-x-[6rem]'>
         <ItemImage
           id={data.id}
-          image={data.image}
+          image={imagePlaceholder}
           className='border-[0.16px]'
         />
         <div className='flex flex-col'>

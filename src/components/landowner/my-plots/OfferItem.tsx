@@ -41,18 +41,21 @@ const OfferItem: FC<OfferItemProps> = ({ data }) => {
         minHeight: '250px',
       }}
     >
-      <div className='flex justify-between py-2 space-x-4 min-1780:justify-center min-1780:gap-x-[6rem]'>
+      <div className='flex w-full py-2 space-x-8'>
         {data.parcels.length > 0 && (
           <ItemImage id={data.parcels[0].id} image={imagePlaceholder} />
         )}
-        <div className='flex flex-col'>
-          {data.parcels.length > 0 && (
-            <DynamicTable
-              data={data.parcels[0]}
-              columns={PLOT_DETAILS_COLUMNS}
-            />
-          )}
-          <div className='flex justify-end items-center pt-5 gap-3'>
+
+        <div className='flex flex-col justify-center w-full gap-y-8'>
+          <div className='flex justify-between'>
+            {data.parcels.length > 0 && (
+              <DynamicTable
+                data={data.parcels[0]}
+                columns={PLOT_DETAILS_COLUMNS}
+              />
+            )}
+          </div>
+          <div className='flex justify-end items-center gap-2'>
             <img
               src={
                 data.status === 'A' ? vermarktungActive : vermarktungInactive
