@@ -82,7 +82,6 @@ export default function Profile() {
     email: false,
     phone_number: false,
   });
-  const [errors, setErrors] = useState<Record<string, string | null>>({});
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -265,7 +264,6 @@ export default function Profile() {
       }
 
       toast.success('Profil erfolgreich aktualisiert.');
-      setErrors({});
     } catch (err: any) {
       if (
         err.response?.data?.founding_year &&
