@@ -21,17 +21,12 @@ const RegisteredPlotItem: FC<RegisteredPlotItemProps> = ({ data }) => {
   const { registeredPlot, setRegisteredPlot, updateRegisteredPlot } =
     useRegisteredPlotStore();
 
-  const AddToWatchList = async () => {
-    setRegisteredPlot(data);
-    if (!registeredPlot?.parcel.id) {
-      return;
-    }
+  console.log('data in registered plot item: ', data);
 
+  const AddToWatchList = async () => {
     try {
-      await addPlotToWatchlist(
-        registeredPlot?.parcel.id.toString(),
-        registeredPlot!
-      );
+      await addPlotToWatchlist(data.parcel.id.toString(), data);
+      setRegisteredPlot(data);
       navigate('/developer/my-watchlist');
     } catch (err) {
       toast.error(
