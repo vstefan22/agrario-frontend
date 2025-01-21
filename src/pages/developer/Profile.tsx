@@ -266,13 +266,58 @@ export default function Profile() {
       toast.success('Profil erfolgreich aktualisiert.');
     } catch (err: any) {
       if (
-        err.response?.data?.founding_year[0] &&
+        err.response?.data?.founding_year &&
+        Array.isArray(err.response.data.founding_year) &&
         err.response.data.founding_year[0] ===
           'Ensure this value is less than or equal to 2025.'
       ) {
         toast.error('Bitte geben Sie ein gültiges Jahr ein.');
         return;
       }
+      if (
+        err.response?.data?.company_website &&
+        Array.isArray(err.response.data.company_website) &&
+        err.response.data.company_website[0] ===
+          "URL must start with 'http://', 'https://' or 'www.'."
+      ) {
+        toast.error(
+          "Die URL muss mit 'http://', 'https://' oder 'www.' beginnen."
+        );
+        return;
+      }
+
+      if (
+        err.response?.data?.company_website &&
+        Array.isArray(err.response.data.company_website) &&
+        err.response.data.company_website[0] ===
+          "URL must start with 'http://', 'https://' or 'www.'."
+      ) {
+        toast.error(
+          "Die URL muss mit 'http://', 'https://' oder 'www.' beginnen."
+        );
+        return;
+      }
+
+      if (
+        err.response?.data?.phone_number &&
+        Array.isArray(err.response.data.phone_number) &&
+        err.response.data.phone_number[0] === 'Invalid phone number format.'
+      ) {
+        toast.error('Ungültiges Telefonnummernformat.');
+        return;
+      }
+      if (
+        err.response?.data?.phone_number &&
+        Array.isArray(err.response.data.phone_number) &&
+        err.response.data.phone_number[0] ===
+          'Invalid phone number format. Use local or international format.'
+      ) {
+        toast.error(
+          'Ungültiges Telefonnummernformat. Bitte verwenden Sie das lokale oder internationale Format.'
+        );
+        return;
+      }
+
       if (err instanceof Error) {
         toast.error(err.message || 'Ein Fehler ist aufgetreten.');
       } else {

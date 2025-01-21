@@ -3,6 +3,7 @@ import DynamicTable from '../../common/DynamicTable';
 import ItemImage from '../../common/ItemImage';
 import { PLOT_DETAILS_COLUMNS } from '../../../constants/table-data';
 import { PlotType } from '../../../types/plot-types';
+import imagePlaceholder from '../../../assets/images/image-placeholder.png';
 
 type OfferPreparationItemProps = {
   data: PlotType | null;
@@ -18,10 +19,10 @@ const OfferPreparationItem: FC<OfferPreparationItemProps> = ({ data }) => {
         minHeight: '250px',
       }}
     >
-      <div className='flex justify-between py-2 space-x-4'>
+      <div className='flex justify-between py-2 space-x-4 min-1780:justify-center min-1780:gap-x-[6rem]'>
         <ItemImage
           id={data.id}
-          image={data.image}
+          image={imagePlaceholder}
           className='border-[0.16px]'
         />
         <div className='flex flex-col'>
