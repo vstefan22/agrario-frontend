@@ -61,35 +61,31 @@ const MyWatchlistItem: FC<MyWatchlistItemProps> = ({ data }) => {
         minHeight: '250px',
       }}
     >
-      <div className='flex justify-between py-2 space-x-4 min-1780:justify-center min-1780:gap-x-[6rem]'>
+      <div className='flex w-full py-2 space-x-8'>
         <ItemImage id={data.parcel.id.toString()} image={imagePlaceholder} />
-        <div className='flex flex-col'>
-          <div className='flex gap-6'>
+        <div className='flex flex-col justify-center w-full gap-y-8'>
+          <div className='flex justify-between'>
             <DynamicTable
               data={data.parcel}
               columns={PLOT_SEARCH_COLUMNS}
               customClassName='px-10'
             />
-
             <button onClick={handleDeletePlot}>
               <div className='border-[1.12px] border-gray-blue-light rounded-[50%] p-[11px] flex'>
                 <img src={delIcon} alt='Delete Icon' className='min-w-[14px]' />
               </div>
             </button>
           </div>
-
-          <div className='flex justify-between items-center pt-5 gap-3 mt-auto'>
+          <div className='flex justify-between'>
             <div>{showRestrictions(data)}</div>
-            <div className='flex gap-6 mr-[60px]'>
-              <Button
-                type='button'
-                variant='bluePrimary'
-                className='w-[200px]'
-                onClick={handleViewDetails}
-              >
-                Detail ansehen
-              </Button>
-            </div>
+            <Button
+              type='button'
+              variant='bluePrimary'
+              className='w-[200px]'
+              onClick={handleViewDetails}
+            >
+              Detail ansehen
+            </Button>
           </div>
         </div>
       </div>

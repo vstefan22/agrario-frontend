@@ -328,6 +328,7 @@ const PlaceABid = () => {
               id='message_to_landowner'
               name='message_to_landowner'
               value={formData.message_to_landowner}
+              required
             />
             {errors.message_to_landowner && (
               <span className='text-red-500 text-sm'>
@@ -344,6 +345,7 @@ const PlaceABid = () => {
               id='message_to_platform'
               name='message_to_platform'
               value={formData.message_to_platform}
+              required
             />
             {errors.message_to_platform && (
               <span className='text-red-500 text-sm'>
