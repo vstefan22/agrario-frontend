@@ -48,6 +48,7 @@ function MyOffers() {
   const sortedData = sortOfferData(filteredData, filters.sortOption);
 
   if (loading) return <LoadingSpinner />;
+
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
       <h1 className='text-[32px] font-bold text-black-muted'>Meine Angebote</h1>
