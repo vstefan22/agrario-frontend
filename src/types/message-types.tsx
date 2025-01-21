@@ -1,9 +1,14 @@
 export type MessageTypes = {
   id: string;
   recipient: string;
-  last_message: { body: string };
+  last_message: {
+    body: string;
+    created_at: string;
+    time: string;
+  };
   time: string;
   subject: string;
+  created_at: string;
 };
 
 export type Attachment = {
@@ -18,6 +23,8 @@ export type MessageType = {
   body: string;
   sender: string;
   attachments: Attachment[];
+  created_at: string;
+  time: string;
 };
 
 export type MessageBodyType = {

@@ -18,10 +18,7 @@ type RegisteredPlotItemProps = {
 const RegisteredPlotItem: FC<RegisteredPlotItemProps> = ({ data }) => {
   const navigate = useNavigate();
   const { getRegisteredPlotDetails, addPlotToWatchlist } = useRegisteredPlots();
-  const { registeredPlot, setRegisteredPlot, updateRegisteredPlot } =
-    useRegisteredPlotStore();
-
-  console.log('data in registered plot item: ', data);
+  const { setRegisteredPlot } = useRegisteredPlotStore();
 
   const AddToWatchList = async () => {
     try {
@@ -36,12 +33,10 @@ const RegisteredPlotItem: FC<RegisteredPlotItemProps> = ({ data }) => {
 
   const handleViewDetails = async () => {
     try {
-      setRegisteredPlot(data);
-
       const plotRegistered = await getRegisteredPlotDetails(
-        registeredPlot!.parcel.id.toString()
+        data.parcel.id.toString()
       );
-      updateRegisteredPlot(plotRegistered);
+      setRegisteredPlot(plotRegistered);
       navigate('/developer/registered-plots/parcel-details');
     } catch (err) {
       console.error(err);

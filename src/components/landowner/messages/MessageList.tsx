@@ -3,9 +3,13 @@ import MessageItem from './MessageItem';
 type MessageListTypes = {
   name: string;
   message: string;
-  time: string;
   subject: string;
   id: string;
+  last_message: {
+    body: string;
+    created_at: string;
+    time: string;
+  };
   onSelectMessages: (id: string) => void;
   selectedMessages: Array<string>;
 };
@@ -14,8 +18,8 @@ const MessageList = ({
   id,
   name,
   message,
-  time,
   subject,
+  last_message,
   selectedMessages,
   onSelectMessages,
 }: MessageListTypes) => {
@@ -50,9 +54,9 @@ const MessageList = ({
       <MessageItem
         name={name}
         message={message}
-        time={time}
         subject={subject}
         id={id}
+        last_message={last_message}
       />
     </div>
   );

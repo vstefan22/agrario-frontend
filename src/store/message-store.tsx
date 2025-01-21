@@ -5,9 +5,11 @@ import { MessageType, MessageTypes } from '../types/message-types';
 type MessageState = {
   inbox: MessageTypes[];
   messages: MessageType[];
+  inboxMessage: MessageTypes | null;
 
   setMessages: (messages: MessageType[]) => void;
   setInbox: (inbox: MessageTypes[]) => void;
+  setInboxMessage: (inboxMessage: MessageTypes) => void;
   addMessageToMessages: (message: MessageType) => void;
   addMessageToInbox: (message: MessageTypes) => void;
   clearMessageStorage: () => void;
@@ -18,6 +20,7 @@ const useMessageStore = create<MessageState>()(
     (set) => ({
       inbox: [],
       messages: [],
+      inboxMessage: null,
 
       setMessages: (messages) => {
         set(() => ({
@@ -28,6 +31,11 @@ const useMessageStore = create<MessageState>()(
       setInbox: (inbox) =>
         set(() => ({
           inbox,
+        })),
+
+      setInboxMessage: (inboxMessage) =>
+        set(() => ({
+          inboxMessage,
         })),
 
       addMessageToMessages: (newMessage) => {
@@ -50,7 +58,8 @@ const useMessageStore = create<MessageState>()(
         }));
       },
 
-      clearMessageStorage: () => set({ inbox: [], messages: [] }),
+      clearMessageStorage: () =>
+        set({ inbox: [], messages: [], inboxMessage: null }),
     }),
     {
       name: 'message-storage',

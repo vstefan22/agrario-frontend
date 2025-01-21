@@ -27,9 +27,6 @@ const ActiveAuctionsItem: FC<ActiveAuctionsItemProps> = ({
   const { getAuctionOfferDetails } = useAuctionOffers();
   const { setAuctionOffer } = useAuctionOfferstore();
 
-  const isAnalyse =
-    data.parcels.length > 0 ? data.parcels[0].analyse_plus : false;
-
   const handleViewDetails = async () => {
     try {
       const auctionDetails = await getAuctionOfferDetails(data.identifier);
@@ -66,7 +63,7 @@ const ActiveAuctionsItem: FC<ActiveAuctionsItemProps> = ({
             <div>{showRestrictions(data)}</div>
             <div className='flex items-center'>
               <img
-                src={isAnalyse ? active : inactive}
+                src={data.status === 'A' ? active : inactive}
                 alt={`aktiv/inaktiv image`}
                 className='mr-4 h-[22px] object-cover'
               />

@@ -1,23 +1,30 @@
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../../../store/auth-store';
+import { formatDate } from '../../../utils/helper-functions';
 
 type MessageItemTypes = {
   id: string;
-  name: string;
   message: string;
-  time: string;
+  name: string;
   subject: string;
+  last_message: {
+    body: string;
+    created_at: string;
+    time: string;
+  };
 };
 
 const MessageItem = ({
   id,
   name,
   message,
-  time,
   subject,
+  last_message,
 }: MessageItemTypes) => {
   const navigate = useNavigate();
   const { user } = useAuthStore();
+
+  const dateFormatted = formatDate(last_message.created_at);
 
   const handleChatDetail = () => {
     navigate(`/${user?.role}/support/${id}`);
@@ -40,7 +47,9 @@ const MessageItem = ({
       </div>
       <div className='flex gap-3 items-center'>
         <p>{subject}</p>
-        <span className='text-sm text-black-muted/70'>{time}</span>
+        <span className='text-sm text-black-muted/70'>
+          {dateFormatted} {last_message.time}
+        </span>
       </div>
     </div>
   );

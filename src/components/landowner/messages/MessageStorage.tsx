@@ -56,9 +56,9 @@ const MessageStorage = () => {
             key={msg.id}
             name={msg.recipient}
             message={msg.last_message.body}
-            time={msg.time}
             subject={msg.subject}
             id={msg.id}
+            last_message={msg.last_message}
             onSelectMessages={handleSelecetMessage}
             selectedMessages={selectedMessages}
           />
