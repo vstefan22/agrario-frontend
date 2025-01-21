@@ -61,7 +61,7 @@ const MyWatchlistItem: FC<MyWatchlistItemProps> = ({ data }) => {
         minHeight: '250px',
       }}
     >
-      <div className='flex justify-between py-2 space-x-4'>
+      <div className='flex justify-between py-2 space-x-4 min-1780:justify-center min-1780:gap-x-[6rem]'>
         <ItemImage id={data.parcel.id.toString()} image={imagePlaceholder} />
         <div className='flex flex-col'>
           <div className='flex gap-6'>

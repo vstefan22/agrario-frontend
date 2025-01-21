@@ -23,6 +23,7 @@ const RegisteredPlotItem: FC<RegisteredPlotItemProps> = ({ data }) => {
 
   const AddToWatchList = async () => {
     setRegisteredPlot(data);
+
     if (!registeredPlot?.parcel.id) {
       return;
     }
@@ -32,11 +33,10 @@ const RegisteredPlotItem: FC<RegisteredPlotItemProps> = ({ data }) => {
         registeredPlot?.parcel.id.toString(),
         registeredPlot!
       );
+
       navigate('/developer/my-watchlist');
     } catch (err) {
-      toast.error(
-        'Das Flurstück wurde nicht erfolgreich zur Beobachtungsliste hinzugefügt.'
-      );
+      toast.error('Die Parzelle ist bereits in Ihrer Beobachtungsliste.');
       console.error(err);
     }
   };
@@ -63,7 +63,7 @@ const RegisteredPlotItem: FC<RegisteredPlotItemProps> = ({ data }) => {
         minHeight: '250px',
       }}
     >
-      <div className='flex justify-between py-2 space-x-4'>
+      <div className='flex justify-between py-2 space-x-4 min-1780:justify-center min-1780:gap-x-[6rem]'>
         <ItemImage id={data.parcel.id.toString()} image={imagePlaceholder} />
         <div className='flex flex-col'>
           <DynamicTable

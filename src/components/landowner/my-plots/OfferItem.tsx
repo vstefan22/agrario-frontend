@@ -41,7 +41,7 @@ const OfferItem: FC<OfferItemProps> = ({ data }) => {
         minHeight: '250px',
       }}
     >
-      <div className='flex justify-between py-2 space-x-4'>
+      <div className='flex justify-between py-2 space-x-4 min-1780:justify-center min-1780:gap-x-[6rem]'>
         {data.parcels.length > 0 && (
           <ItemImage id={data.parcels[0].id} image={imagePlaceholder} />
         )}

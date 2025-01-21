@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import Search from '../../components/common/Search';
 import Select from '../../components/common/Select';
 import RangeSlider from '../../components/common/RangeSlider';
@@ -29,6 +29,28 @@ const RegisteredPlots = () => {
   const [loading, setLoading] = useState(false);
 
   const [displayedPlots, setDisplayedPlots] = useState(registeredPlots);
+  const filterRef = useRef<HTMLDivElement | null>(null);
+
+  const handleOutsideClick = useCallback((event: MouseEvent) => {
+    if (
+      filterRef.current &&
+      !filterRef.current.contains(event.target as Node)
+    ) {
+      setIsOpen(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener('mousedown', handleOutsideClick);
+    } else {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [isOpen, handleOutsideClick]);
 
   useEffect(() => {
     const fetchRegisteredPlots = async () => {
@@ -127,7 +149,10 @@ const RegisteredPlots = () => {
               onClick={toggleFilterOptions}
             />
             {isOpen && (
-              <div className='absolute left-1/2 top-full transform -translate-x-1/2 px-4 py-6 rounded-2xl bg-white shadow-xl z-50'>
+              <div
+                ref={filterRef}
+                className='absolute left-1/2 top-full transform -translate-x-1/2 px-4 py-6 rounded-2xl bg-white shadow-xl z-50'
+              >
                 <h1 className='text-[32px] text-black-muted px-4'>
                   Filtereinstellungen
                 </h1>
