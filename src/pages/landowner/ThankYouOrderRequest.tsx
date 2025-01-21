@@ -6,11 +6,9 @@ import usePlotStore from '../../store/plot-store';
 
 const ThankYouOrderRequest = () => {
   const navigate = useNavigate();
-  const { basketPlots, setBasketPlots, setBasketSummary } = usePlotStore();
+  const { basketPlots } = usePlotStore();
 
   const handleGoBackToMyPlots = () => {
-    setBasketPlots([]);
-    setBasketSummary({});
     navigate('/landowner/my-plots');
   };
 

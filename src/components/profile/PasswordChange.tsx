@@ -53,21 +53,21 @@ export default function PasswordChange() {
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         const responseData = err.response?.data;
-        console.log(err);
         if (responseData.error === 'Old password is incorrect.') {
           toast.error('Das alte Passwort ist falsch.');
+          return;
         }
-
         if (responseData.error === 'New passwords do not match.') {
           toast.error('Die neuen Passwörter stimmen nicht überein.');
+          return;
         }
-
         if (responseData.error === 'All fields are required.') {
           toast.error('Alle Felder sind erforderlich.');
+          return;
         }
-
         if (!responseData.error) {
           toast.error(err.message || 'Ein Fehler ist aufgetreten.');
+          return;
         }
       } else {
         toast.error('Ein unbekannter Fehler ist aufgetreten.');
