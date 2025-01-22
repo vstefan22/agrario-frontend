@@ -157,13 +157,16 @@ export default function NewPlot() {
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
       <div className='flex items-center justify-between mb-6'>
-        <div className='w-[526px]'>
+        <div className='w-[60%]'>
           <h1 className='text-[32px] font-bold text-black-muted'>
-            Neues Flurstück
+            Neues Flurstück hinzufügen
           </h1>
           <p className='text-gray-dark-100 text-[16px]'>
-            There are many variations of passages of Lorem Ipsum available, but
-            the majority have suffered alteration in some form.
+            In dieser Ansicht wählen Sie Ihre Flurstücke aus. Navigieren Sie
+            bequem mit der Kartenfunktion zu Ihrem Flurstück. Alternativ können
+            Sie die Funktion „Flurstück mit Flurnummer suchen“ nutzen, um es
+            mithilfe von Angaben wie Gemarkung, Flur und Flurstücksnummer zu
+            finden.
           </p>
         </div>
       </div>

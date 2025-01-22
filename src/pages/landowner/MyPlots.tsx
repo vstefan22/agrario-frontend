@@ -65,6 +65,14 @@ export default function MyPlots() {
         Meine Flurstücke
       </h1>
 
+      <p className='gray-dark-100 w-[60%]'>
+        In dieser Ansicht sehen Sie eine Übersicht aller von Ihnen eingetragenen
+        Flurstücke. Mit dem Button „Details“ können Sie die Ergebnisse der
+        Detailanalyse und Luftbilder des Flurstückes einsehen. Über den Button
+        „Anzeige aufgeben“ haben Sie die Möglichkeit, ihr Flurstück zu
+        inserieren und unverbindlich Pacht- oder Kaufangebote zu erhalten.
+      </p>
+
       <div className='flex mt-6 flex-col gap-6'>
         <div className='flex justify-between items-center'>
           <Search

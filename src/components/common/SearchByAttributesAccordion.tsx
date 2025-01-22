@@ -30,7 +30,7 @@ export default function SearchByAttributesAccordion({
       >
         <div className='flex justify-between items-center w-full'>
           <h2 className='text-[28px] leading-[48px]'>
-            Search by Parcel Attributes
+            Flurstück mit Flurnummer suchen
           </h2>
           <img
             src={isOpen ? minusIcon : plusIcon}

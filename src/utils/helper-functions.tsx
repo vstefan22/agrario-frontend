@@ -286,12 +286,6 @@ export const validateAuctionDetailForm = (formData: any) => {
     newErrors.lease_amount_yearly_lease_year_one =
       'Dieses Feld ist erforderlich.';
   }
-  if (!formData.message_to_landowner) {
-    newErrors.message_to_landowner = 'Dieses Feld ist erforderlich.';
-  }
-  if (!formData.message_to_platform) {
-    newErrors.message_to_platform = 'Dieses Feld ist erforderlich.';
-  }
 
   if (!formData.accept_privacy_policy) {
     newErrors.accept_privacy_policy =
@@ -299,9 +293,6 @@ export const validateAuctionDetailForm = (formData: any) => {
   }
   if (!formData.accept_terms) {
     newErrors.accept_terms = 'Bitte akzeptieren Sie die AGBs.';
-  }
-  if (!formData.other) {
-    newErrors.other = 'Bitte bestätigen Sie dieses Feld.';
   }
 
   return {

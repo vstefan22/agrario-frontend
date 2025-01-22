@@ -13,11 +13,15 @@ import { LoadingSpinner } from '../../components/common/Loading';
 import useHttpRequest from '../../hooks/http-request-hook';
 import usePayments from '../../hooks/payment-hook';
 import useAuthStore from '../../store/auth-store';
-import { profileOptions } from '../../constants/select-options';
+import { profileOptions, MWOptions } from '../../constants/select-options';
 import { PACKAGE_FEATURES } from '../../constants/package';
 import { StoreUser } from '../../types/user-types';
 import { PlanTierType } from '../../types/global-types';
 import profilePlaceholder from '../../assets/images/profile-placeholder.png';
+import {
+  mwOptionsMap,
+  mwOptionsReverseMap,
+} from '../../constants/select-options';
 
 type ProfileType = Omit<StoreUser, 'id'>;
 
@@ -32,7 +36,7 @@ export default function Profile() {
     company_website: '',
     address: '',
     founding_year: 0,
-    mw_capacity: 0,
+    mw_capacity: '',
     employees: 0,
     first_name: '',
     last_name: '',
@@ -110,7 +114,7 @@ export default function Profile() {
         company_website: user?.company_website || '',
         address: user?.address || '',
         founding_year: user?.founding_year || 2000,
-        mw_capacity: user?.mw_capacity || 0,
+        mw_capacity: mwOptionsReverseMap[user?.mw_capacity || ''],
         employees: user?.employees || 1,
         first_name: user?.first_name || '',
         last_name: user?.last_name || '',
@@ -239,6 +243,12 @@ export default function Profile() {
 
     if (companyPic) {
       formDataSend.append('company_logo', companyPic);
+    }
+
+    const mwCapacity = mwOptionsMap[formData.mw_capacity || ''].toString();
+
+    if (formData?.mw_capacity) {
+      formDataSend.append('mw_capacity', mwCapacity);
     }
 
     try {
@@ -570,14 +580,14 @@ export default function Profile() {
                   />
                 </div>
                 <div className='md:col-span-2'>
-                  <Input
-                    variant='profile'
-                    label='Installierte Kapazität in MW seit Gründung'
+                  <Select
+                    variant='default'
+                    label='Installierte Leistung in MW seit Gründung'
                     required
-                    id='mw_capacity'
                     name='mw_capacity'
                     value={formData.mw_capacity}
-                    onChange={handleChange}
+                    onChange={handleSelectChange}
+                    options={MWOptions}
                     onEdit={() => toggleEditMode('mw_capacity')}
                     onSave={() => handleSave('mw_capacity')}
                     isEditable={editMode.mw_capacity}
@@ -602,7 +612,7 @@ export default function Profile() {
 
             <div className='mt-4'>
               <h1 className='text-[32px] font-bold text-black-muted mb-4'>
-                Mein Suchprofil
+                Daten des Ansprechpartners
               </h1>
               <form
                 onSubmit={handleSubmit}
@@ -719,8 +729,7 @@ export default function Profile() {
                   Mein Suchprofil
                 </h1>
                 <p className='text-primary text-[16px] w-[606px] mb-4'>
-                  Unser Unternehmen interessiert sich für Grundstücke die für
-                  folgende Anwendungen geeignet sind
+                  Ich interessiere mich für Grundstücke zu folgenden Anwendungen
                 </p>
                 <form
                   onSubmit={handleSubmit}
@@ -910,7 +919,7 @@ export default function Profile() {
                 className='mt-6'
                 onClick={handleSubmit}
               >
-                {loading ? 'Suchprofil ändern...' : 'Suchprofil ändern'}
+                {loading ? 'Änderungen speichern...' : 'Änderungen speichern'}
               </Button>
             </div>
           </div>

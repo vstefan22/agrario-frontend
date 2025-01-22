@@ -21,7 +21,7 @@ const StartDeveloper = () => {
           onClick={() => {}}
         />
         <ActionCard
-          buttonText='Neues Flurstuckanlegen'
+          buttonText='Flurstück suchen'
           imageSrc={cardImg1}
           onClick={() => {
             navigate('/developer/registered-plots');
