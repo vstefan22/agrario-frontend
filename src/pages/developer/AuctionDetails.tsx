@@ -19,7 +19,7 @@ const AuctionDetails = () => {
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
       <div>
         <h1 className='text-[32px] font-bold text-black-muted'>
-          Detailansicht Flurstück Analyse Basic
+          Detailansicht
         </h1>
         <div className='flex items-center gap-4 mb-4'>
           <p className='text-black-muted font-semibold'>
@@ -43,10 +43,10 @@ const AuctionDetails = () => {
         <Button
           type='button'
           variant='bluePrimary'
-          className='w-[188px]'
+          className='w-[300px]'
           onClick={handlePlaceABid}
         >
-          Gebot abgeben
+          Interesse am Bieterverfahren anmelden
         </Button>
       </div>
     </div>

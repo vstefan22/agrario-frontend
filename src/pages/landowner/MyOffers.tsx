@@ -51,10 +51,10 @@ function MyOffers() {
 
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
-      <h1 className='text-[32px] font-bold text-black-muted'>Meine Angebote</h1>
+      <h1 className='text-[32px] font-bold text-black-muted'>Meine Anzeigen</h1>
       <p className='gray-dark-100 w-[524px]'>
-        There are many variations of passages of Lorem Ipsum available, but the
-        majority have suffered alteration in some form.
+        Hier finden Sie eine Übersicht Ihrer Anzeigen. Gehen Sie auf "Details"
+        um weitere Informationen einzusehen und die Anzeige zu ändern
       </p>
 
       <div className='flex mt-6 flex-col gap-6'>
