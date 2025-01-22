@@ -53,6 +53,17 @@ const usePlots = () => {
     return await sendRequest(`/offers/parcel_geo_data/`, 'GET', {});
   }, [sendRequest]);
 
+  const deletePlot = useCallback(
+    async (id: number) => {
+      return await sendRequest(`/offers/parcels/${id}/`, 'DELETE', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    },
+    [sendRequest, token]
+  );
+
   const getPlotByFilterData = useCallback(
     async (filters = {}) => {
       const queryString = new URLSearchParams(filters).toString();
@@ -188,6 +199,7 @@ const usePlots = () => {
     getMyPlots,
     getFilteredPlots,
     addPlot,
+    deletePlot,
     getPlotGeoData,
     getPlotByFilterData,
     addPlotToBasket,
