@@ -57,7 +57,7 @@ const SearchByAttributes = ({ handleSubmit }: SearchByAttributesProps) => {
       style={{ boxShadow: '6px 6px 54px 0px #0000000D' }}
     >
       <p className='text-gray-dark-100 text-[20px] leading-[24px] font-normal mb-7'>
-        Enter municipal, gemarkung, Flur, and Flurstück
+        Municipal, Gemarkung, Flur, and Flurstück
       </p>
 
       <form
@@ -67,11 +67,11 @@ const SearchByAttributes = ({ handleSubmit }: SearchByAttributesProps) => {
         <div className='md:col-span-2'>
           <Input
             variant='profile'
-            label='Municipal'
+            label='Gemeinde/Stadt'
             required
             id='municipality_name'
             name='municipality_name'
-            placeholder='Enter Municipal'
+            placeholder='Gemeinde/Stadt'
             ref={municipalityNameRef}
           />
           {errors.municipality_name && (
@@ -87,7 +87,7 @@ const SearchByAttributes = ({ handleSubmit }: SearchByAttributesProps) => {
             required
             id='district_name'
             name='district_name'
-            placeholder='Enter Gemarkung'
+            placeholder='Gemarkung'
             ref={districtNameRef}
           />
           {errors.district_name && (
@@ -101,7 +101,7 @@ const SearchByAttributes = ({ handleSubmit }: SearchByAttributesProps) => {
             required
             id='cadastral_area'
             name='cadastral_area'
-            placeholder='Enter Flur'
+            placeholder='Flur'
             ref={cadastralAreaRef}
           />
           {errors.cadastral_area && (
@@ -115,7 +115,7 @@ const SearchByAttributes = ({ handleSubmit }: SearchByAttributesProps) => {
             required
             id='cadastral_parcel'
             name='cadastral_parcel'
-            placeholder='Enter Flurstück'
+            placeholder='Flurstück'
             ref={cadastralParcelRef}
           />
           {errors.cadastral_parcel && (

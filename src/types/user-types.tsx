@@ -29,9 +29,11 @@ export type UserDeveloperProfile = {
   other: string;
   company_logo: string;
   founding_year: number;
-  mw_capacity: number;
+  mw_capacity: string;
   employees: number;
   // current_plan: string;
 };
 
-export type StoreUser = UserType & Partial<UserProfile> & Partial<UserDeveloperProfile>;
+export type StoreUser = UserType &
+  Partial<UserProfile> &
+  Partial<UserDeveloperProfile>;

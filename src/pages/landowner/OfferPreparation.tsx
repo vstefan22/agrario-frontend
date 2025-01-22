@@ -25,7 +25,7 @@ const initialFormData = {
   utilization: undefined as string | undefined,
   preferred_regionality: undefined as string | undefined,
   shareholder_model: undefined as string | undefined,
-  no_usage_restriction: false,
+  no_usage_restriction: true,
   wind_energy_restriction: false,
   solar_energy_restriction: false,
   energy_storage_restriction: false,
@@ -201,8 +201,13 @@ export default function MyOffer() {
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
       <h1 className='text-[32px] font-bold text-black-muted'>
-        Vorbereitung des Angebotes
+        Vorbereitung der Anzeige
       </h1>
+
+      <p className='gray-dark-100 w-[60%]'>
+        Vervollständigen Sie alle Angaben auf dieser Seite um für Ihr Flurstück
+        unverbindliche Pacht- und Kaufangebote zu erhalten.
+      </p>
 
       <div className='flex mt-6 flex-col gap-6'>
         <OfferPreparationItem data={plot} />
@@ -281,13 +286,12 @@ export default function MyOffer() {
           </div>
 
           <p className='text-[16px] font-400 text-primary mt-4'>
-            Wollen Sie einzelne Nutzungsmöglichkeiten für Ihr Grundstück
-            ausschließen?
+            Welchen Nutzungensmöglichkeiten sind sie offen gegenüber
           </p>
 
           <div className='flex gap-8 w-[800px] justify-between'>
             <Checkbox
-              label='Keine Auschluss von Nutzungsmöglichkeiten'
+              label='Offen für alles'
               name='no_usage_restriction'
               variant='primary'
               checked={formData.no_usage_restriction}
@@ -386,7 +390,7 @@ export default function MyOffer() {
                 </span>
               )}
             </div>
-            <div className='flex flex-col'>
+            {/* <div className='flex flex-col'>
               <Checkbox
                 label='Ja, ich...'
                 name='other'
@@ -397,7 +401,7 @@ export default function MyOffer() {
               {errors.other && (
                 <span className='text-red-500 text-sm'>{errors.other}</span>
               )}
-            </div>
+            </div> */}
           </div>
 
           <div className='md:col-span-4 flex justify-end space-x-4'>
@@ -413,7 +417,7 @@ export default function MyOffer() {
               type='submit'
               className='w-[320px] mb-8'
             >
-              Änderungen speichern
+              Anzeige zur Prüfung absenden
             </Button>
           </div>
         </form>

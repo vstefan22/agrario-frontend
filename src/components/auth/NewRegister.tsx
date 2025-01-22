@@ -44,7 +44,9 @@ export default function NewRegister() {
           }}
           aria-pressed={selectedRole === 'landowner'}
         >
-          <h2 className='text-[24px] text-white font-bold mb-4'>Role - 1</h2>
+          <h2 className='text-[24px] text-white font-bold mb-4'>
+            Grundeigentümer
+          </h2>
 
           <div className='w-[120px] h-[120px] rounded-full bg-[rgba(255,255,255,0.3)] flex items-center justify-center mb-6'>
             <FaUserAlt
@@ -81,7 +83,9 @@ export default function NewRegister() {
           }}
           aria-pressed={selectedRole === 'developer'}
         >
-          <h2 className='text-[24px] text-white font-bold mb-4'>Role - 2</h2>
+          <h2 className='text-[24px] text-white font-bold mb-4'>
+            Projektentwickler
+          </h2>
 
           <div className='w-[120px] h-[120px] rounded-full bg-[rgba(255,255,255,0.3)] flex items-center justify-center mb-6'>
             <FaUserAlt

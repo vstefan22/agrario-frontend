@@ -65,10 +65,13 @@ function PlotDetails() {
           <p className='text-black-muted font-semibold'>{plot?.id}</p>
           <p className='text-gray-dark-100/70 text-[12px]'>ID-Nummer</p>
         </div>
-        <p className='text-gray-dark-100 mt-2'>
-          Fügen Sie das Flurstück zu Ihrer Watchlist hinzu, um benachrichtigt zu
-          werden, sobald eine Anzeige mit diesem Flurstück aktiviert wird. Bis
-          dahin bleiben einige Details verborgen.
+        <p className='gray-dark-100 w-[60%] mb-6'>
+          Nachfolgend finden Sie die Detailinformationen zu Ihrem Flurstück. Mit
+          „Anzeige aufgeben“ können Sie das Flurstück auf der Platform
+          inserieren und erhalten unverbindlich Pacht- oder Kaufangebote .
+          Wählen Sie „Bericht herunterladen“, um die Analyse als PDF herunter zu
+          laden. Für eine umfassende Analyse Ihres Grundstücks klicken Sie auf
+          „Analyse PLUS
         </p>
       </div>
       <div className='h-[75vh] overflow-y-auto rounded-2xl'>
@@ -82,7 +85,7 @@ function PlotDetails() {
           onClick={handleRequestOffer}
           className='mr-3'
         >
-          Angebot einholen
+          Anzeige aufgeben
         </Button>
         <Button
           variant='blueSecondary'

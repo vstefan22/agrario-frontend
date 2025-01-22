@@ -6,11 +6,31 @@ export const sortOptions = [
 
 export const profileOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
+export const MWOptions = ['1-20 MW', '21-100 MW', '101-500 MW', '> 500 MW'];
+
 export const bidOptions = ['Ja', 'Nein', 'Keine Angabe'];
 
-export const utilization = ['Keine Einschränkung', 'Verkauf', 'Verpachtung'];
+export const utilization = [
+  'Offen für Verkauf und Verpachtung',
+  'Verkauf',
+  'Verpachtung',
+];
 
 export const landOptions = ['Pacht', 'Kauf', 'Beides'];
+
+export const mwOptionsMap: Record<string, number> = {
+  '1-20 MW': 1,
+  '21-100 MW': 2,
+  '101-500 MW': 3,
+  '> 500 MW': 4,
+};
+
+export const mwOptionsReverseMap: Record<any, string> = {
+  1: '1-20 MW',
+  2: '21-100 MW',
+  3: '101-500 MW',
+  4: '> 500 MW',
+};
 
 export const auctionOptionsMap: Record<string, string> = {
   Pacht: 'LE',
@@ -31,20 +51,20 @@ export const auctionOptionsReverseMap: Record<string, string> = {
 };
 
 export const preferredRegionality = [
-  'Keine Einschränkung',
+  'Keine Präferenz',
   'Firmensitz in Deutschland',
   'Firmensitz im Bundesland des Grundstücks',
 ];
 
 export const shareholderModel = [
-  'Keine Einschränkung',
+  'Keine Präferenz',
   'Beteiligungen am Erlös',
   'Beteiligungen an der Projektgesellschaf',
   'Beides',
 ];
 
 export const optionsMap: Record<string, string> = {
-  'Keine Einschränkung': 'NO',
+  'Offen für Verkauf und Verpachtung': 'NO',
   Verkauf: 'SA',
   Verpachtung: 'LE',
   'Firmensitz in Deutschland': 'DE',
@@ -55,7 +75,7 @@ export const optionsMap: Record<string, string> = {
 };
 
 export const optionsMapReverse: Record<string, string> = {
-  NO: 'Keine Einschränkung',
+  NO: 'Offen für Verkauf und Verpachtung',
   SA: 'Verkauf',
   LE: 'Verpachtung',
   DE: 'Firmensitz in Deutschland',

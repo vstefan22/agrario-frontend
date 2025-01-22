@@ -13,12 +13,17 @@ import useAuctionOfferstore from '../../store/auctions-store';
 import { auctionOptionsMap } from '../../constants/select-options';
 import { validateAuctionDetailForm } from '../../utils/helper-functions';
 import { LoadingSpinner } from '../../components/common/Loading';
+import {
+  tenderCriteriaData,
+  tenderCriteriaData2,
+} from '../../constants/global';
+import listIcon from '../../assets/images/list-icon.png';
 
 const initialFormData = {
   utilization: '',
-  staggered_lease: '',
-  share_of_income: '',
-  shares_project_company: '',
+  staggered_lease: bidOptions[0],
+  share_of_income: bidOptions[0],
+  shares_project_company: bidOptions[0],
   sale_amount: null,
   contracted_term_month: null,
   lease_amount_yearly_lease_year_one: null,
@@ -185,11 +190,17 @@ const PlaceABid = () => {
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4 auto-fill-profile'>
       <h1 className='text-[32px] font-bold text-black-muted'>
-        Gebot abgeben {auctionOffer?.offer_number}
+        Interesse am Bieterverfahren anmelden
       </h1>
-      <p className='text-gray-dark-100 w-[50%] mt-2 mb-6'>
-        There are many variations of passages of Lorem Ipsum available, but the
-        majority have suffered alteration in some form.
+      <p className='text-gray-dark-100 w-[60%] mt-2 mb-6'>
+        Hier können Sie Interesse zur Teilnahme am Bieterverfahren anmelden.
+        Achten Sie dabei auf die Vorgaben des Eigentümers und die Konditionen
+        des jeweiligen Bieterverfahrens. Bis zum Ende der Phase
+        "Vorqualifikation Bieterverfahren" können Sie Ihre Angaben anpassen.
+        Nach Ablauf der Phase "Vorqualifikation Bieterverfahren" prüft Agrario
+        Energy, ob Ihr Unternehmen die Anforderungen erfüllt. Wenn Sie die
+        Anforderungen erfüllen, wird sich ein Mitarbeiter mit Ihnen in
+        Verbindung setzen.
       </p>
 
       <ActiveAuctionsItem data={auctionOffer} isDetails />
@@ -198,12 +209,12 @@ const PlaceABid = () => {
         <form className='w-1/2'>
           <div className='bg-white border-[1px] border-[#D9D9D9] p-6 rounded-2xl'>
             <h1 className='text-[32px] font-bold text-black-muted mb-6'>
-              Gebot abgeben {auctionOffer?.identifier}
+              Ihr Initialgebot
             </h1>
             <Select
               variant='default'
               label='Welche Optionen der Grundstücksnutzung kommen für Sie in Betracht'
-              labelClassName='text-gray-medium max-2xl:mb-8'
+              labelClassName='text-black-muted max-2xl:mb-8'
               divClassName={`${errors.utilization ? 'mb-4' : ''}`}
               required
               name='utilization'
@@ -219,7 +230,7 @@ const PlaceABid = () => {
             </h1>
             <Input
               label='Was ist Ihr Kaufpreisangebot'
-              placeholder='Nummer hinzufügen'
+              placeholder='Preis [€]'
               variant='profile'
               className={`mt-2 ${errors.sale_amount ? 'mb-0' : 'mb-4'}`}
               name='sale_amount'
@@ -234,7 +245,7 @@ const PlaceABid = () => {
             </h1>
             <Input
               label='Angebotene Vertragslaufzeit'
-              placeholder='Nummer hinzufügen'
+              placeholder='Vertragslaufzeit [Jahre]'
               variant='profile'
               className={`mt-2 ${errors.contracted_term_month ? '' : 'mb-4'}`}
               required
@@ -249,7 +260,7 @@ const PlaceABid = () => {
             )}
             <Input
               label='Jährliche Pachtzahlung in Jahr 1'
-              placeholder='0 €'
+              placeholder='Pacht [€]'
               variant='profile'
               className='mt-2'
               required
@@ -328,15 +339,10 @@ const PlaceABid = () => {
               id='message_to_landowner'
               name='message_to_landowner'
               value={formData.message_to_landowner}
-              required
             />
-            {errors.message_to_landowner && (
-              <span className='text-red-500 text-sm'>
-                {errors.message_to_landowner}
-              </span>
-            )}
+
             <h1 className='text-[24px] font-bold text-black-muted my-6'>
-              Sonstige Informationen für Agrario Energy bzgl. ihres Angebotes
+              Sonstige Informationen für Agrario Energy
             </h1>
             <TextArea
               placeholder='500 Zeichen'
@@ -345,60 +351,37 @@ const PlaceABid = () => {
               id='message_to_platform'
               name='message_to_platform'
               value={formData.message_to_platform}
-              required
             />
-            {errors.message_to_platform && (
-              <span className='text-red-500 text-sm'>
-                {errors.message_to_platform}
-              </span>
-            )}
           </div>
-          <div className='grid grid-cols-2 gap-4 my-6'>
+          <div className='grid grid-cols-1 gap-4 my-6'>
             <Checkbox
-              label='Hiermit bestätige ich.......'
+              label='Hiermit bestätige ich die ABG und Datenschutzbestimmungen'
               variant='primary'
               name='accept_privacy_policy'
               onChange={handleChange}
               checked={formData.accept_privacy_policy}
+              labelClassName='w-full'
             />
+            {errors.accept_privacy_policy && (
+              <span className='text-red-500 text-sm nowrap'>
+                {errors.accept_privacy_policy}
+              </span>
+            )}
             <Checkbox
-              label='Hiermit bestätige ich.......'
+              label='Ich habe verstanden, dass mein Angebot zunächst von Agrario Energy geprüft wird, bevor es an den Eigentümer weitergeleitet wird. Wenn alle formellen Kriterien erfüllt sind, werde ich von Agrario Energy aufgefordert, mein verbindliches Angebot zu spezifizieren.'
               variant='primary'
               name='accept_terms'
               onChange={handleChange}
               checked={formData.accept_terms}
+              labelClassName='w-full'
             />
-            <Checkbox
-              label='Hiermit bestätige ich.......'
-              variant='primary'
-              name='other'
-              onChange={handleChange}
-              checked={formData.other}
-            />
+            {errors.accept_terms && (
+              <span className='text-red-500 text-sm nowrap'>
+                {errors.accept_terms}
+              </span>
+            )}
           </div>
-          {(errors.accept_privacy_policy ||
-            errors.accept_terms ||
-            errors.other) && (
-            <div className='flex flex-col mb-4 gap-2'>
-              {errors.accept_privacy_policy && (
-                <span className='text-red-500 text-sm nowrap'>
-                  {errors.accept_privacy_policy}
-                </span>
-              )}
-              {errors.accept_terms && (
-                <span className='text-red-500 text-sm'>
-                  {errors.accept_terms}
-                </span>
-              )}
-              {errors.other && (
-                <span className='text-red-500 text-sm'>{errors.other}</span>
-              )}
-            </div>
-          )}
-          <p className='text-gray-dark-100 mb-6'>
-            There are many variations of passages of Lorem Ipsum available, but
-            the majority have suffered alteration in some form.
-          </p>
+
           <div className='flex justify-end gap-6'>
             <Button
               variant='blueSecondary'
@@ -406,14 +389,36 @@ const PlaceABid = () => {
             >
               Abbrechen
             </Button>
-            <Button variant='bluePrimary' onClick={handleSubmit}>
-              Gebot abgeben
+            <Button
+              variant='bluePrimary'
+              onClick={handleSubmit}
+              className='p-3 leading-5'
+            >
+              Interesse am Bieterverfahren anmelden
             </Button>
           </div>
         </form>
         <div className='w-1/2 space-y-8'>
-          <TenderCriteria />
-          <TenderCriteria />
+          <TenderCriteria
+            title='Kriterien des Eigentümers'
+            list={tenderCriteriaData.list.map((item, index) => (
+              <li key={index} className='mb-4 flex items-center'>
+                <img src={listIcon} alt='icon' />
+                <span className='text-gray-dark-100 ml-2'>{item}</span>
+              </li>
+            ))}
+            sonstiges={tenderCriteriaData.sonstiges}
+          />
+          <TenderCriteria
+            title='Konditionen Bieterverfahren'
+            list={tenderCriteriaData2.list.map((item, index) => (
+              <li key={index} className='mb-4 flex items-center'>
+                <img src={listIcon} alt='icon' />
+                <span className='text-gray-dark-100 ml-2'>{item}</span>
+              </li>
+            ))}
+            sonstiges={tenderCriteriaData2.sonstiges}
+          />
         </div>
       </div>
     </div>

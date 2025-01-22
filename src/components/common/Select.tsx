@@ -136,7 +136,7 @@ const Select: FC<SelectProps> = ({
           onClick={() => setIsOpen(!isOpen)}
           className={`${getButtonClasses()} ${
             !isEditable && onEdit
-              ? 'opacity-50 cursor-not-allowed'
+              ? 'opacity-50 cursor-default'
               : 'cursor-pointer'
           }`}
           disabled={!isEditable && Boolean(onEdit)}

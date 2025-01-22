@@ -27,23 +27,33 @@ const AuctionDetails = () => {
           </p>
           <p className='text-gray-dark-100/70 text-[12px]'>ID-Nummer</p>
         </div>
+        <p className='gray-dark-100 w-[60%]'>
+          Hier sehen Sie die Details des veröffentlichten Inserats. Laden Sie
+          zusätzliche Informationen und Geodaten zum Grundstück herunter und
+          melden Sie Interesse an, um am Bieterverfahren teilzunehmen. Hinweis:
+          Gemäß den AGB ist es untersagt, Grundstückseigentümer zu den
+          veröffentlichten Flurstücken eigenständig zu kontaktieren. Eine
+          Kontaktaufnahme ist ausschließlich mit schriftlicher Genehmigung von
+          Agrario Anergy gestattet.
+        </p>
       </div>
       <div className='h-[75vh] overflow-y-auto rounded-2xl'>
         {/* eslint-disable-next-line */}
         <ShowDetailsDeveloper data={auctionOffer?.parcels[0]!} isAuction />
       </div>
-      <div className='ml-auto mt-8 flex gap-6'>
+      <div className='ml-auto my-8 flex gap-6'>
         <Button
           type='button'
           variant='blueSecondary'
           onClick={handleDownloadGeodata}
+          className='w-full'
         >
           Download Geodaten
         </Button>
         <Button
           type='button'
           variant='bluePrimary'
-          className='w-[300px]'
+          className='w-full px-6 leading-5'
           onClick={handlePlaceABid}
         >
           Interesse am Bieterverfahren anmelden

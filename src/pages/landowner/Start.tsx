@@ -21,7 +21,7 @@ const StartLandowner = () => {
           onClick={() => {}}
         />
         <ActionCard
-          buttonText='Neues Flurstuckanlegen'
+          buttonText='Neues Flurstück hinzufügen'
           imageSrc={cardImg1}
           onClick={() => {
             navigate('/landowner/new-plot');

@@ -89,7 +89,7 @@ const PlotItem: FC<PlotItemProps> = ({ data, onDelete }) => {
               type='button'
               onClick={handleFetchOffers}
             >
-              Angebote einholen
+              Anzeige aufgeben
             </Button>
           </div>
         </div>

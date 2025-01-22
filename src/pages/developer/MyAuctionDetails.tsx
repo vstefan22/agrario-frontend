@@ -17,6 +17,11 @@ import {
 } from '../../constants/select-options';
 import { validateAuctionDetailForm } from '../../utils/helper-functions';
 import { LoadingSpinner } from '../../components/common/Loading';
+import {
+  tenderCriteriaData,
+  tenderCriteriaData2,
+} from '../../constants/global';
+import listIcon from '../../assets/images/list-icon.png';
 
 const MyAuctionDetails = () => {
   const navigate = useNavigate();
@@ -71,6 +76,41 @@ const MyAuctionDetails = () => {
     accept_terms: true,
     other: true,
   });
+
+  useEffect(() => {
+    if (!auctionOffer) return;
+    setFormData({
+      utilization:
+        auctionOptionsReverseMap[
+          auctionOffer?.offer_confirmation?.utilization || 'LE'
+        ],
+      staggered_lease:
+        auctionOptionsReverseMap[
+          auctionOffer?.offer_confirmation?.staggered_lease || 'NOT'
+        ],
+      share_of_income:
+        auctionOptionsReverseMap[
+          auctionOffer?.offer_confirmation?.share_of_income || 'NOT'
+        ],
+      shares_project_company:
+        auctionOptionsReverseMap[
+          auctionOffer?.offer_confirmation?.shares_project_company || 'NOT'
+        ],
+      sale_amount: auctionOffer?.offer_confirmation?.sale_amount || '',
+      contracted_term_month:
+        auctionOffer?.offer_confirmation?.contracted_term_month || '',
+      lease_amount_yearly_lease_year_one:
+        auctionOffer?.offer_confirmation?.lease_amount_yearly_lease_year_one ||
+        '',
+      message_to_landowner:
+        auctionOffer?.offer_confirmation?.message_to_landowner,
+      message_to_platform:
+        auctionOffer?.offer_confirmation?.message_to_platform,
+      accept_privacy_policy: true,
+      accept_terms: true,
+      other: true,
+    });
+  }, [auctionOffer]);
 
   const handleSelectChange = (name: string, option: string) => {
     setFormData((prev) => ({
@@ -203,11 +243,17 @@ const MyAuctionDetails = () => {
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4 auto-fill-profile'>
       <h1 className='text-[32px] font-bold text-black-muted'>
-        Gebot abgeben {auctionOffer?.offer_number}
+        Interesse am Bieterverfahren anmelden
       </h1>
-      <p className='text-gray-dark-100 w-[50%] mt-2 mb-6'>
-        There are many variations of passages of Lorem Ipsum available, but the
-        majority have suffered alteration in some form.
+      <p className='text-gray-dark-100 w-[60%] mt-2 mb-6'>
+        Hier können Sie Interesse zur Teilnahme am Bieterverfahren anmelden.
+        Achten Sie dabei auf die Vorgaben des Eigentümers und die Konditionen
+        des jeweiligen Bieterverfahrens. Bis zum Ende der Phase
+        "Vorqualifikation Bieterverfahren" können Sie Ihre Angaben anpassen.
+        Nach Ablauf der Phase "Vorqualifikation Bieterverfahren" prüft Agrario
+        Energy, ob Ihr Unternehmen die Anforderungen erfüllt. Wenn Sie die
+        Anforderungen erfüllen, wird sich ein Mitarbeiter mit Ihnen in
+        Verbindung setzen.
       </p>
 
       <ActiveAuctionsItem data={auctionOffer} isDetails />
@@ -216,12 +262,12 @@ const MyAuctionDetails = () => {
         <div className='w-1/2'>
           <div className='bg-white border-[1px] border-[#D9D9D9] p-6 rounded-2xl'>
             <h1 className='text-[32px] font-bold text-black-muted mb-6'>
-              Ihr angebot
+              Ihr Initialgebot
             </h1>
             <Select
               variant='default'
               label='Welche Optionen der Grundstücksnutzung kommen für Sie in Betracht'
-              labelClassName='text-gray-medium max-2xl:mb-8'
+              labelClassName='text-black-muted max-2xl:mb-8'
               required
               name='utilization'
               value={formData.utilization}
@@ -240,7 +286,7 @@ const MyAuctionDetails = () => {
 
             <Input
               label='Was ist Ihr Kaufpreisangebot'
-              placeholder='Text hinzufügen'
+              placeholder='Preis [€]'
               variant='profile'
               className={`mt-2 ${errors.sale_amount ? 'mb-0' : 'mb-4'}`}
               name='sale_amount'
@@ -257,7 +303,7 @@ const MyAuctionDetails = () => {
 
             <Input
               label='Angebotene Vertragslaufzeit'
-              placeholder='Text hinzufügen'
+              placeholder='Vertragslaufzeit [Jahre]'
               variant='profile'
               className={`mt-2 ${
                 errors.contracted_term_month ? 'mb-0' : 'mb-4'
@@ -274,7 +320,7 @@ const MyAuctionDetails = () => {
             )}
             <Input
               label='Jährliche Pachtzahlung in Jahr 1'
-              placeholder='0 €'
+              placeholder='Pacht [€]'
               variant='profile'
               className='mt-2'
               required
@@ -287,6 +333,18 @@ const MyAuctionDetails = () => {
                 {errors.lease_amount_yearly_lease_year_one}
               </span>
             )}
+            <Select
+              variant='default'
+              label='Staffelung der Pacht möglich'
+              labelClassName='text-gray-medium'
+              required
+              name='staggered_lease'
+              value={formData.staggered_lease}
+              onChange={handleSelectChange}
+              options={bidOptions}
+              placeholder='Ja/Nein/Keine Angabe'
+              divClassName='my-8'
+            />
             <Select
               variant='default'
               label='Staffelung der Pacht möglich'
@@ -356,16 +414,10 @@ const MyAuctionDetails = () => {
               name='message_to_landowner'
               value={formData.message_to_landowner}
               editBtn
-              required
             />
-            {errors.message_to_landowner && (
-              <span className='text-red-500 text-sm'>
-                {errors.message_to_landowner}
-              </span>
-            )}
 
             <h1 className='text-[24px] font-bold text-black-muted my-6'>
-              Sonstige Informationen für Agrario Energy bzgl. ihres Angebotes
+              Sonstige Informationen für Agrario Energy
             </h1>
             <TextArea
               placeholder='500 Zeichen'
@@ -375,62 +427,36 @@ const MyAuctionDetails = () => {
               name='message_to_platform'
               value={formData.message_to_platform}
               editBtn
-              required
             />
-            {errors.message_to_platform && (
-              <span className='text-red-500 text-sm'>
-                {errors.message_to_platform}
-              </span>
-            )}
           </div>
-          <div className='grid grid-cols-2 gap-4 my-6'>
+          <div className='grid grid-cols-1 gap-4 my-6'>
             <Checkbox
-              label='Hiermit bestätige ich.......'
+              label='Hiermit bestätige ich die ABG und Datenschutzbestimmungen'
               variant='primary'
               name='accept_privacy_policy'
               onChange={handleChange}
               checked={formData.accept_privacy_policy}
+              labelClassName='w-full'
             />
+            {errors.accept_privacy_policy && (
+              <span className='text-red-500 text-sm nowrap'>
+                {errors.accept_privacy_policy}
+              </span>
+            )}
             <Checkbox
-              label='Hiermit bestätige ich.......'
+              label='Ich habe verstanden, dass mein Angebot zunächst von Agrario Energy geprüft wird, bevor es an den Eigentümer weitergeleitet wird. Wenn alle formellen Kriterien erfüllt sind, werde ich von Agrario Energy aufgefordert, mein verbindliches Angebot zu spezifizieren.'
               variant='primary'
               name='accept_terms'
               onChange={handleChange}
               checked={formData.accept_terms}
+              labelClassName='w-full'
             />
-            <Checkbox
-              label='Hiermit bestätige ich.......'
-              variant='primary'
-              name='other'
-              onChange={handleChange}
-              checked={formData.other}
-            />
+            {errors.accept_terms && (
+              <span className='text-red-500 text-sm nowrap'>
+                {errors.accept_terms}
+              </span>
+            )}
           </div>
-
-          {(errors.accept_privacy_policy ||
-            errors.accept_terms ||
-            errors.other) && (
-            <div className='flex flex-col gap-2 mb-4'>
-              {errors.accept_privacy_policy && (
-                <span className='text-red-500 text-sm'>
-                  {errors.accept_privacy_policy}
-                </span>
-              )}
-              {errors.accept_terms && (
-                <span className='text-red-500 text-sm'>
-                  {errors.accept_terms}
-                </span>
-              )}
-              {errors.other && (
-                <span className='text-red-500 text-sm'>{errors.other}</span>
-              )}
-            </div>
-          )}
-
-          <p className='text-gray-dark-100 mb-6'>
-            There are many variations of passages of Lorem Ipsum available, but
-            the majority have suffered alteration in some form.
-          </p>
 
           <div className='flex justify-end gap-6'>
             <Button
@@ -448,8 +474,26 @@ const MyAuctionDetails = () => {
           </div>
         </div>
         <div className='w-1/2 space-y-8'>
-          <TenderCriteria />
-          <TenderCriteria />
+          <TenderCriteria
+            title='Kriterien des Eigentümers'
+            list={tenderCriteriaData.list.map((item, index) => (
+              <li key={index} className='mb-4 flex items-center'>
+                <img src={listIcon} alt='icon' />
+                <span className='text-gray-dark-100 ml-2'>{item}</span>
+              </li>
+            ))}
+            sonstiges={tenderCriteriaData.sonstiges}
+          />
+          <TenderCriteria
+            title='Konditionen Bieterverfahren'
+            list={tenderCriteriaData2.list.map((item, index) => (
+              <li key={index} className='mb-4 flex items-center'>
+                <img src={listIcon} alt='icon' />
+                <span className='text-gray-dark-100 ml-2'>{item}</span>
+              </li>
+            ))}
+            sonstiges={tenderCriteriaData2.sonstiges}
+          />
         </div>
       </div>
     </div>

@@ -176,7 +176,7 @@ export default function Sidebar() {
               onClick={() => handleNavigate('/developer/active-auctions')}
             >
               <LuHandHelping className='mr-3 scale-x-[-1]' />
-              Aktive Auktionen
+              Aktive Anzeigen
             </Button>
 
             <Button
@@ -188,7 +188,7 @@ export default function Sidebar() {
               onClick={() => handleNavigate('/developer/my-auctions')}
             >
               <FaGavel className='mr-3 scale-x-[-1]' />
-              Meine Auktionen
+              Meine Gebote
             </Button>
 
             <Button
@@ -209,15 +209,15 @@ export default function Sidebar() {
       <div className='mb-4'>
         <Button variant='sidebarSecondary' onClick={handleLogout}>
           <FaSignOutAlt className='mr-3 text-gray-medium' />
-          Logout
+          Abmelden
         </Button>
         <div className='flex gap-1 text-sm'>
           <Link to={`/${userRole}/terms-and-conditions`} className='underline'>
-            Terms
+            AGB
           </Link>
-          <p>and</p>
+          <p>und</p>
           <Link to={`/${userRole}/privacy-policy`} className='underline'>
-            Privacy policy
+            Datenschutzerklärung
           </Link>
         </div>
       </div>

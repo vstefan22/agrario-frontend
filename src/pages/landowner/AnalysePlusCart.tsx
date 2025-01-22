@@ -103,8 +103,8 @@ const AnalysePlusCart = () => {
         Warenkorb Analyse PLUS
       </h1>
       <p className='text-[16px] text-gray-dark-100 mt-2'>
-        There are many variations of passages of Lorem Ipsum available, but the
-        majority have suffered alteration in some form.
+        Die folgenden Flurstücke haben Sie für „Analyse PLUS“ in den Warenkorb
+        gelegt.
       </p>
       <div className='flex justify-between mb-4'>
         <h2 className='font-bold mt-4 text-[18px]'>
@@ -116,7 +116,7 @@ const AnalysePlusCart = () => {
           onClick={handleAddPlot}
           className='w-[280px] h-[48px]'
         >
-          Weitere Flurstucke hinzufugen
+          Weitere Flurstücke hinzufügen
         </Button>
       </div>
 
@@ -161,28 +161,30 @@ const AnalysePlusCart = () => {
         <div className='bg-white rounded-xl shadow-md px-6 py-4 text-right flex flex-col gap-4 text-gray-dark-200'>
           <div className='flex flex-col space-y-3 mb-3'>
             <p>
-              Number of Items: <strong>{basketPlots?.length}</strong>
+              Anzahl Flurstücke: <strong>{basketPlots?.length}</strong>
             </p>
             <p>
-              Cost per Item: <strong>{basketSummary?.cost_per_item}€</strong>
+              Kosten pro Analyse Plus und Flurstück:{' '}
+              <strong>{basketSummary?.cost_per_item}€</strong>
             </p>
             <p>
-              Sum of items: <strong>{basketSummary?.sum_of_items}€</strong>
+              Zwischensumme (Netto):{' '}
+              <strong>{basketSummary?.sum_of_items}€</strong>
             </p>
             <p>
-              Tax in percent:{' '}
+              Mehrwertsteuer: 19%:{' '}
               <strong>{basketSummary?.tax_in_percent}MWSt</strong>
             </p>
             <p>
               Tax amount: <strong>{basketSummary?.tax_amount}€</strong>
             </p>
             <p className='text-[14px]'>
-              Subtotal: <strong>{basketSummary?.subtotal}€</strong>
+              Summe (Brutto): <strong>{basketSummary?.subtotal}€</strong>
             </p>
           </div>
 
           <div className='flex justify-end items-center max-[746px]:flex-col max-[746px]:items-end'>
-            <h3 className='mr-6'>Rabattcode einisen</h3>
+            <h3 className='mr-6'>Rabbatcode einlösen</h3>
             <div className='flex'>
               <input
                 type='text'
@@ -203,8 +205,8 @@ const AnalysePlusCart = () => {
           </div>
 
           <div className='flex flex-col mt-3'>
-            <p>
-              Total:{' '}
+            <p className='text-[18px]'>
+              Endbetrag:{' '}
               <strong>
                 {discountedTotal ? discountedTotal : basketSummary.subtotal}€
               </strong>
