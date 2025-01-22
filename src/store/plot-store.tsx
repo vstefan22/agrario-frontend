@@ -24,7 +24,7 @@ type PlotState = {
   updatePlot: (plot: PlotType) => void;
   removePlotFromList: (plotId: string) => void;
   removePlotFromBasket: (plotId: string) => void;
-  removePlot: (plotId: string) => void;
+  removePlot: () => void;
   setDiscountCodeStore: (code: string, discountedTotal: string) => void;
   clearPlotStorage: () => void;
 };
@@ -131,6 +131,7 @@ const usePlotStore = create<PlotState>()(
       },
 
       removePlot: () => set(() => ({ plot: null })),
+
       clearPlotStorage: () =>
         set({
           plot: null,

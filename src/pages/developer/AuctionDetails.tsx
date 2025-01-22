@@ -12,7 +12,7 @@ const AuctionDetails = () => {
   };
 
   const handlePlaceABid = () => {
-    navigate('../active-auctions/place-a-bid');
+    navigate('/developer/active-auctions/place-a-bid');
   };
 
   return (

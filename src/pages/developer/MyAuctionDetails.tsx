@@ -33,18 +33,18 @@ const MyAuctionDetails = () => {
   const { auctionOffer, updateAuctionOffer, setAuctionOffer } =
     useAuctionOfferstore();
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const offerId = auctionOffer?.identifier;
 
   useEffect(() => {
-    const fetchMyWatchlist = async () => {
+    const fetchMyAuctionOfferDetails = async () => {
       setLoading(true);
-      const data = await getActiveAuctionOfferDetails(
-        auctionOffer?.identifier!
-      );
+      const data = await getActiveAuctionOfferDetails(offerId!);
       setAuctionOffer(data);
-      setLoading(false);
     };
-    fetchMyWatchlist();
-  }, [getActiveAuctionOfferDetails, setAuctionOffer, auctionOffer?.identifier]);
+    fetchMyAuctionOfferDetails();
+    setLoading(false);
+  }, [getActiveAuctionOfferDetails, setAuctionOffer, offerId]);
 
   const [formData, setFormData] = useState({
     utilization:
@@ -76,7 +76,6 @@ const MyAuctionDetails = () => {
     accept_terms: true,
     other: true,
   });
-  const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
     if (!auctionOffer) return;
@@ -234,12 +233,13 @@ const MyAuctionDetails = () => {
 
   const handleWithdrawBid = async () => {
     setLoading(true);
-    await deleteAuctionOffer(auctionOffer?.identifier!);
+    await deleteAuctionOffer(auctionOffer!.identifier!);
     setLoading(false);
     navigate('../my-auctions/');
   };
 
   if (loading) return <LoadingSpinner />;
+
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4 auto-fill-profile'>
       <h1 className='text-[32px] font-bold text-black-muted'>
@@ -296,15 +296,6 @@ const MyAuctionDetails = () => {
             {errors.sale_amount && (
               <span className='text-red-500 text-sm'>{errors.sale_amount}</span>
             )}
-            {/* <Input
-              label='Was ist Ihr Kaufpreisangebot'
-              placeholder='Text hinzufügen'
-              variant='profile'
-              className='mt-2'
-              name='input2'
-              value={formData.input2 || ''}
-              onChange={handleInputChange}
-            /> */}
 
             <h1 className='text-[24px] font-bold text-black-muted my-6'>
               Im Falle von Pachtangeboten
@@ -342,18 +333,18 @@ const MyAuctionDetails = () => {
                 {errors.lease_amount_yearly_lease_year_one}
               </span>
             )}
-            {/* <Select
+            <Select
               variant='default'
               label='Staffelung der Pacht möglich'
               labelClassName='text-gray-medium'
               required
-              name='select2'
-              value={formData.select2}
+              name='staggered_lease'
+              value={formData.staggered_lease}
               onChange={handleSelectChange}
               options={bidOptions}
               placeholder='Ja/Nein/Keine Angabe'
               divClassName='my-8'
-            /> */}
+            />
             <Select
               variant='default'
               label='Staffelung der Pacht möglich'

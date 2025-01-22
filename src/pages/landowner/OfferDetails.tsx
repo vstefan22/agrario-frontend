@@ -245,6 +245,7 @@ const OfferDetails = () => {
       // updateOfferToList(offerId!, offerDeactivated);
       deleteOffer(offerId);
       setLoading(false);
+      navigate('/landowner/my-offers');
       toast.success('Das Angebot wurde erfolgreich deaktiviert.');
     } catch (err) {
       toast.error(
@@ -466,10 +467,10 @@ const OfferDetails = () => {
             className='w-[306px]'
             onClick={handleDeactivateOffer}
           >
-            Vermarktungsanfrage zurückziehen
+            Anzeige zurückziehen
           </Button>
           <Button variant='bluePrimary' type='submit' className='w-[306px]'>
-            Vermarktungsanfrage absenden
+            Änderungen speichern
           </Button>
         </div>
       </form>
