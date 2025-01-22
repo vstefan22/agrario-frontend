@@ -1,6 +1,7 @@
 export type MessageTypes = {
   id: string;
   recipient: string;
+  sender: string;
   last_message: {
     body: string;
     created_at: string;

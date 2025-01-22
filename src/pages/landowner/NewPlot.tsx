@@ -89,7 +89,9 @@ export default function NewPlot() {
       const res = await getPlotByFilterData(filter);
 
       if (!res || !res.length) {
-        toast.error('Nema pronađenih flurstücke za zadati upit.');
+        toast.error(
+          'Es wurden keine Flurstücke für die angegebene Anfrage gefunden..'
+        );
         setLoading(false);
         return;
       }
