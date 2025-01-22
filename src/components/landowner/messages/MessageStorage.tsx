@@ -36,6 +36,8 @@ const MessageStorage = () => {
     );
   };
 
+  console.log('inbox: ', inbox);
+
   return (
     <div className='w-full bg-white shadow-lg p-4 rounded-xl mt-3 mb-6'>
       <div className='flex justify-between items-center h-[80px]'>
@@ -54,7 +56,7 @@ const MessageStorage = () => {
         inbox.map((msg) => (
           <MessageList
             key={msg.id}
-            name={msg.recipient}
+            name={msg.sender}
             message={msg.last_message.body}
             subject={msg.subject}
             id={msg.id}

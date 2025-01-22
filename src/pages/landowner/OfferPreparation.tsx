@@ -413,7 +413,7 @@ export default function MyOffer() {
               type='submit'
               className='w-[320px] mb-8'
             >
-              Vermarktungsanfrage absenden
+              Änderungen speichern
             </Button>
           </div>
         </form>

@@ -8,13 +8,15 @@ import { MY_PLOTS_COLUMNS } from '../../../constants/table-data';
 import { PlotType } from '../../../types/plot-types';
 import active from '../../../assets/images/active.png';
 import inactive from '../../../assets/images/inactive.png';
+import deleteIcon from '../../../assets/images/del.png';
 import imagePlaceholder from '../../../assets/images/image-placeholder.png';
 
 type PlotItemProps = {
   data: PlotType;
+  onDelete?: (id: string) => void;
 };
 
-const PlotItem: FC<PlotItemProps> = ({ data }) => {
+const PlotItem: FC<PlotItemProps> = ({ data, onDelete }) => {
   const navigate = useNavigate();
   const { setPlot } = usePlotStore();
 
@@ -44,8 +46,24 @@ const PlotItem: FC<PlotItemProps> = ({ data }) => {
         />
 
         <div className='flex flex-col justify-center w-full gap-y-8'>
-          <div className='flex justify-between'>
+          <div className='flex justify-end'>
             <DynamicTable data={data} columns={MY_PLOTS_COLUMNS} />
+            {onDelete && (
+              <div className='flex justify-center ml-2'>
+                <button
+                  className='cursor-pointer'
+                  onClick={() => onDelete(data.id)}
+                >
+                  <div className='border-[1.12px] border-gray-blue-light rounded-[50%] p-[11px] flex'>
+                    <img
+                      src={deleteIcon}
+                      alt='Delete Icon'
+                      className='min-w-[14px]'
+                    />
+                  </div>
+                </button>
+              </div>
+            )}
           </div>
           <div className='flex justify-end items-center gap-2'>
             <img

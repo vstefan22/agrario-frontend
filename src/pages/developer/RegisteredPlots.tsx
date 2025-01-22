@@ -131,8 +131,10 @@ const RegisteredPlots = () => {
         Flurstücke suchen
       </h1>
       <p className='text-gray-dark-100 w-[50%] mt-2'>
-        There are many variations of passages of Lorem Ipsum available, but the
-        majority have suffered alteration in some form.
+        Hier sehen Sie die auf der Plattform eingetragenen Flurstücke. Sie
+        können Flurstücke vormerken, indem Sie sie Ihrer Watchlist hinzufügen.
+        Erst nach Aktivierung der Anzeige, sind alle Details des Flurstücks
+        sichtbar und Sie können ein Gebot abgeben.
       </p>
       <div className='flex justify-between my-8'>
         <div className='flex gap-4'>

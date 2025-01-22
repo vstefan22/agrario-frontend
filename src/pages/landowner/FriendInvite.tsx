@@ -23,7 +23,7 @@ const FriendInvite = () => {
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
       <h1 className='text-[32px] font-bold text-black-muted mb-6'>
-        Einen Freund Einladen
+        Erzähle einem Freund von Agrario
       </h1>
 
       <div className='flex gap-8'>
@@ -36,13 +36,13 @@ const FriendInvite = () => {
           <div className='text-gray-dark-100 text-[18px] space-y-6'>
             <p>
               Erzählen Sie ihren Freunden und Bekannten von Agrario.Klicken Sie
-              auf den unten stehenden Link. Wir senden Ihnen dann auf Ihre
-              Email-Adresse/Telefonnummer einen privaten Einladungslink zu.
+              auf den unten stehenden Link. Wir senden Ihnen dann einen
+              Einladungslink zu.
             </p>
             <p>
-              Versenden Sie diesen Link an Freunde und Verwandte Für jede
+              Versenden Sie diesen Link an Freunde und Verwandte. Für jede
               Registrierung über diesen Einladungslink erhalten Sie einen
-              Gutschein für eine Gartis-Grundstücksanalyse PLUS
+              Gutschein für eine Gartis "Analyse Plus"
             </p>
           </div>
           <div className='flex justify-end mt-auto'>

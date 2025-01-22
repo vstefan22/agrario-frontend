@@ -18,8 +18,8 @@ const ThankYouOrderRequest = () => {
         Vielen Dank für Ihre Bestellung
       </h1>
       <p className='w-[604px]'>
-        Die Ergebnisse der Detailanalye PLUS werden innerhalb der kommenden 24 h
-        in der Ansicht " Meine Grundstücke" zur Verfügung gestellt
+        Die Ergebnisse der "Analyse Plus" werden von 24 h in der Ansicht "Meine
+        Flurstücke" zur Verfügung gestellt
       </p>
 
       <GenericList

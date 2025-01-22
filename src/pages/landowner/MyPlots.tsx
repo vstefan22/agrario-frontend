@@ -1,4 +1,5 @@
 import { useEffect, useState, ChangeEvent, useCallback } from 'react';
+import { toast } from 'react-toastify';
 import Search from '../../components/common/Search';
 import Select from '../../components/common/Select';
 import GenericList from '../../components/common/GenericList';
@@ -14,8 +15,8 @@ import usePlotStore from '../../store/plot-store';
 import { LoadingSpinner } from '../../components/common/Loading';
 
 export default function MyPlots() {
-  const { getMyPlots } = usePlots();
-  const { setPlots, plots } = usePlotStore();
+  const { getMyPlots, deletePlot } = usePlots();
+  const { setPlots, plots, removePlotFromList } = usePlotStore();
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState<Record<string, string | null>>({
@@ -52,6 +53,22 @@ export default function MyPlots() {
   const handleRangeFilter = useCallback((newRange: [number, number]) => {
     setRange(newRange);
   }, []);
+
+  const handleOnDelete = async (id: string) => {
+    try {
+      setLoading(true);
+      await deletePlot(Number(id));
+      removePlotFromList(id);
+      toast.success('Das Flurstück wurde erfolgreich aus der Liste entfernt.');
+      setLoading(false);
+      // eslint-disable-next-line
+    } catch (err: any) {
+      setLoading(false);
+      toast.error(
+        'Es ist ein Fehler aufgetreten, das Flurstück wurde nicht gelöscht.'
+      );
+    }
+  };
 
   const searchFilteredData = filterData(plots, searchTerm);
   const rangeFilteredData = filterDataRange(searchFilteredData, range);
@@ -91,7 +108,9 @@ export default function MyPlots() {
         {sortedData.length > 0 ? (
           <GenericList
             data={sortedData}
-            renderItem={(plot) => <PlotItem key={plot.id} data={plot} />}
+            renderItem={(plot) => (
+              <PlotItem key={plot.id} data={plot} onDelete={handleOnDelete} />
+            )}
           />
         ) : (
           <div className='flex text-[18px] font-500 gray-light-200 justify-center'>
