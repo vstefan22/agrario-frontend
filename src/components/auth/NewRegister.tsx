@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaUserAlt } from 'react-icons/fa';
 import Checkbox from '../../components/common/Checkbox';
 import Button from '../common/Button';
+import farmerImg from '../../assets/images/farmer.webp';
+import businessImg from '../../assets/images/business.webp';
 
 export default function NewRegister() {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ export default function NewRegister() {
 
       <div className='w-full max-w-[900px] grid grid-cols-1 md:grid-cols-2 gap-1 mb-8 justify-items-center'>
         <div
-          className={`w-[400px] h-[370px] border-2 rounded-lg p-6 flex flex-col items-center justify-start cursor-pointer ${
+          className={`w-[400px] h-full border-2 rounded-lg p-6 flex flex-col items-center justify-start cursor-pointer ${
             selectedRole === 'landowner'
               ? 'bg-white/15 border-[rgba(255,255,255,0.5)]'
               : 'bg-white/10 border-[rgba(255,255,255,0.06)]'
@@ -48,12 +49,11 @@ export default function NewRegister() {
             Grundeigentümer
           </h2>
 
-          <div className='w-[120px] h-[120px] rounded-full bg-[rgba(255,255,255,0.3)] flex items-center justify-center mb-6'>
-            <FaUserAlt
-              className='text-white'
-              style={{ width: '70px', height: '70px' }}
-            />
-          </div>
+          <img
+            src={farmerImg}
+            alt='farmer image'
+            className='rounded-md mb-4 h-[224px] w-[340px]'
+          />
 
           <Checkbox
             label='Ich bin Eigentümer/Verwalter von Grundstücken'
@@ -68,7 +68,7 @@ export default function NewRegister() {
         </div>
 
         <div
-          className={`w-[400px] h-[370px] border-2 rounded-lg p-6 flex flex-col items-center justify-start cursor-pointer ${
+          className={`w-[400px] h-full border-2 rounded-lg p-6 flex flex-col items-center justify-start cursor-pointer ${
             selectedRole === 'developer'
               ? 'bg-white/15 border-[rgba(255,255,255,0.5)]'
               : 'bg-white/10 border-[rgba(255,255,255,0.06)]'
@@ -87,12 +87,11 @@ export default function NewRegister() {
             Projektentwickler
           </h2>
 
-          <div className='w-[120px] h-[120px] rounded-full bg-[rgba(255,255,255,0.3)] flex items-center justify-center mb-6'>
-            <FaUserAlt
-              className='text-white'
-              style={{ width: '70px', height: '70px' }}
-            />
-          </div>
+          <img
+            src={businessImg}
+            alt='business image'
+            className='rounded-md mb-4 h-[224px] w-[340px]'
+          />
 
           <Checkbox
             label='Ich suche geeignete Grundstücke'

@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import ActionCard from '../../components/start/ActionCard';
 import useAuthStore from '../../store/auth-store';
-import cardImg1 from '../../assets/images/card-img1.png';
-import cardImg2 from '../../assets/images/card-img-2.png';
+import cardImg1 from '../../assets/images/search-parcel.webp';
+import cardImg2 from '../../assets/images/profile-change.webp';
 
 const StartDeveloper = () => {
   const navigate = useNavigate();

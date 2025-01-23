@@ -7,7 +7,7 @@ import useAuctionOffers from '../../../hooks/auctions-offer-hook';
 import useAuctionOfferstore from '../../../store/auctions-store';
 import { PLOT_DETAILS_COLUMNS } from '../../../constants/table-data';
 import { showRestrictions } from '../../../utils/helper-functions';
-import imagePlaceholder from '../../../assets/images/image-placeholder.png';
+import parcelPlaceholder from '../../../assets/images/parcel-placeholder.webp';
 import active from '../../../assets/images/vermarktung-aktiv.png';
 import inactive from '../../../assets/images/vermarktung-in-vorbereitung.png';
 
@@ -50,7 +50,7 @@ const ActiveAuctionsItem: FC<ActiveAuctionsItemProps> = ({
     >
       <div className='flex w-full py-2 space-x-8'>
         {data.parcels.length > 0 && (
-          <ItemImage id={data.parcels[0].id} image={imagePlaceholder} />
+          <ItemImage id={data.parcels[0].id} image={parcelPlaceholder} />
         )}
 
         <div className='flex flex-col justify-center w-full gap-y-8'>

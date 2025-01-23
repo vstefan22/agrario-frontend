@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Accordion from '../../components/common/Accordion';
-import questionsHelpImg from '../../assets/images/questions-help.png';
+import questionsHelpImg from '../../assets/images/sheeps.jpg';
 import { QUESTION_HELP_DEVELOPER_DATA } from '../../constants/questions-help';
 
 function QuestionsHelpDeveloper() {
