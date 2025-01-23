@@ -30,7 +30,7 @@ export type UserDeveloperProfile = {
   company_logo: string;
   founding_year: number;
   mw_capacity: string;
-  employees: number;
+  employees: string;
   // current_plan: string;
 };
 

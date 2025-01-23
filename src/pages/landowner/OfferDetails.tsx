@@ -420,7 +420,18 @@ const OfferDetails = () => {
             </span>
           )}
           <Checkbox
-            label='Ja, ich akzeptiere die Datenschutzbedingungen'
+            label={
+              <>
+                Ja, ich akzeptiere die{' '}
+                <a
+                  href='/landowner/privacy-policy'
+                  className='text-blue underline'
+                  rel='noopener noreferrer'
+                >
+                  Datenschutzbedingungen
+                </a>
+              </>
+            }
             variant='primary'
             name='accept_privacy_policy'
             checked={formData.accept_privacy_policy}
@@ -432,7 +443,18 @@ const OfferDetails = () => {
             </span>
           )}
           <Checkbox
-            label='Ja, ich akzeptiere die AGBs'
+            label={
+              <>
+                Ja, ich akzeptiere die{' '}
+                <a
+                  href='/landowner/terms-and-conditions'
+                  className='text-blue underline'
+                  rel='noopener noreferrer'
+                >
+                  AGBs
+                </a>
+              </>
+            }
             variant='primary'
             name='accept_terms'
             checked={formData.accept_terms}
@@ -440,16 +462,6 @@ const OfferDetails = () => {
           />
           {errors.accept_terms && (
             <span className='text-red-500 text-sm'>{errors.accept_terms}</span>
-          )}
-          <Checkbox
-            label='Ja, ich.......'
-            variant='primary'
-            name='other'
-            checked={formData.other}
-            onChange={handleChange}
-          />
-          {errors.other && (
-            <span className='text-red-500 text-sm'>{errors.other}</span>
           )}
         </div>
 

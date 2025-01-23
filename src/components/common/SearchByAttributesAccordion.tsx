@@ -21,7 +21,7 @@ export default function SearchByAttributesAccordion({
     <div className='mt-2 mb-4'>
       <div
         onClick={toggleAccordion}
-        className={`relative w-full flex flex-col px-8 py-2 font-medium rounded-[16px] border-[1.5px]
+        className={`relative w-full flex flex-col px-[24px] py-[6px] font-medium rounded-[16px] border-[1.5px]
             border-gray-medium/60 transition-all duration-[300ms] cursor-pointer select-none ${
               isOpen
                 ? 'bg-white text-gray-dark-100'
@@ -29,7 +29,7 @@ export default function SearchByAttributesAccordion({
             }`}
       >
         <div className='flex justify-between items-center w-full'>
-          <h2 className='text-[28px] leading-[48px]'>
+          <h2 className='text-[16px] leading-[48px]'>
             Flurstück mit Flurnummer suchen
           </h2>
           <img
