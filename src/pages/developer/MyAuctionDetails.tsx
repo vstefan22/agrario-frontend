@@ -431,7 +431,26 @@ const MyAuctionDetails = () => {
           </div>
           <div className='grid grid-cols-1 gap-4 my-6'>
             <Checkbox
-              label='Hiermit bestätige ich die ABG und Datenschutzbestimmungen'
+              label={
+                <>
+                  Hiermit bestätige ich die{' '}
+                  <a
+                    href='/developer/terms-and-conditions'
+                    className='text-blue underline'
+                    rel='noopener noreferrer'
+                  >
+                    AGB
+                  </a>{' '}
+                  und{' '}
+                  <a
+                    href='/developer/privacy-policy'
+                    className='text-blue underline'
+                    rel='noopener noreferrer'
+                  >
+                    Datenschutzbestimmungen
+                  </a>
+                </>
+              }
               variant='primary'
               name='accept_privacy_policy'
               onChange={handleChange}

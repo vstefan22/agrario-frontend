@@ -71,7 +71,7 @@ function PlotDetails() {
           inserieren und erhalten unverbindlich Pacht- oder Kaufangebote .
           Wählen Sie „Bericht herunterladen“, um die Analyse als PDF herunter zu
           laden. Für eine umfassende Analyse Ihres Grundstücks klicken Sie auf
-          „Analyse PLUS
+          „Analyse PLUS“
         </p>
       </div>
       <div className='h-[75vh] overflow-y-auto rounded-2xl'>

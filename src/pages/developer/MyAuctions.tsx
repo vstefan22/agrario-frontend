@@ -11,6 +11,7 @@ import {
   sortActiveAuctionsData,
 } from '../../utils/helper-functions';
 import { LoadingSpinner } from '../../components/common/Loading';
+import useAuthStore from '../../store/auth-store';
 
 const MyAuctions = () => {
   const { getMyAuctionOffers } = useAuctionOffers();
@@ -19,6 +20,7 @@ const MyAuctions = () => {
   const [filters, setFilters] = useState<Record<string, string | null>>({
     sortOption: null,
   });
+  const { user } = useAuthStore();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -71,18 +73,23 @@ const MyAuctions = () => {
             placeholder='Sortieren nach'
           />
         </div>
-
-        {sortedData.length > 0 ? (
-          <GenericList
-            data={sortedData}
-            renderItem={(offer) => (
-              <ActiveAuctionsItem
-                key={offer.identifier}
-                data={offer}
-                detailsType='myAuction'
-              />
-            )}
-          />
+        {user?.tier === 'PREM' ? (
+          sortedData.length > 0 ? (
+            <GenericList
+              data={sortedData}
+              renderItem={(offer) => (
+                <ActiveAuctionsItem
+                  key={offer.identifier}
+                  data={offer}
+                  detailsType='myAuction'
+                />
+              )}
+            />
+          ) : (
+            <div className='flex text-[18px] font-500 gray-light-200 justify-center'>
+              Derzeit gibt es keine Daten in der Liste.
+            </div>
+          )
         ) : (
           <div className='flex text-[18px] font-500 gray-light-200 justify-center'>
             Derzeit gibt es keine Daten in der Liste.

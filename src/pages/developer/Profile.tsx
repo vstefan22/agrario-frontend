@@ -13,7 +13,7 @@ import { LoadingSpinner } from '../../components/common/Loading';
 import useHttpRequest from '../../hooks/http-request-hook';
 import usePayments from '../../hooks/payment-hook';
 import useAuthStore from '../../store/auth-store';
-import { profileOptions, MWOptions } from '../../constants/select-options';
+import { numberOfEmployees, MWOptions } from '../../constants/select-options';
 import { PACKAGE_FEATURES } from '../../constants/package';
 import { StoreUser } from '../../types/user-types';
 import { PlanTierType } from '../../types/global-types';
@@ -37,7 +37,7 @@ export default function Profile() {
     address: '',
     founding_year: 0,
     mw_capacity: '',
-    employees: 0,
+    employees: '',
     first_name: '',
     last_name: '',
     position: '',
@@ -115,7 +115,7 @@ export default function Profile() {
         address: user?.address || '',
         founding_year: user?.founding_year || 2000,
         mw_capacity: mwOptionsReverseMap[user?.mw_capacity || ''],
-        employees: user?.employees || 1,
+        employees: user?.employees || '',
         first_name: user?.first_name || '',
         last_name: user?.last_name || '',
         position: user?.position || '',
@@ -601,7 +601,7 @@ export default function Profile() {
                     name='employees'
                     value={formData.employees}
                     onChange={handleSelectChange}
-                    options={profileOptions}
+                    options={numberOfEmployees}
                     onEdit={() => toggleEditMode('employees')}
                     onSave={() => handleSave('employees')}
                     isEditable={editMode.employees}

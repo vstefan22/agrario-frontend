@@ -5,7 +5,7 @@ import { FaCheck } from 'react-icons/fa';
 type Variant = 'primary' | 'secondary';
 
 interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string;
+  label: any;
   variant?: Variant;
   labelClassName?: string;
 }

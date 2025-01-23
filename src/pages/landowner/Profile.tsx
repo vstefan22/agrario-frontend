@@ -273,7 +273,7 @@ export default function Profile() {
           <div className='md:col-span-2'>
             <Input
               variant='profile'
-              label='Name des Unternechmens'
+              label='Name des Unternehmens'
               id='company_name'
               name='company_name'
               value={formData.company_name}
@@ -286,7 +286,7 @@ export default function Profile() {
           <div className='md:col-span-2'>
             <Input
               variant='profile'
-              label='Ihre Position im Untermehmen'
+              label='Ihre Position im Unternehmen'
               id='position'
               name='position'
               value={formData.position}
@@ -341,7 +341,7 @@ export default function Profile() {
           <div className='md:col-span-2'>
             <Input
               variant='profile'
-              label='Website des Unternechmens'
+              label='Website des Unternehmens'
               id='company_website'
               name='company_website'
               type='url'
@@ -355,7 +355,7 @@ export default function Profile() {
           <div className='md:col-span-2'>
             <Input
               variant='profile'
-              label='Email Adress'
+              label='Email Adresse'
               required
               id='email'
               name='email'

@@ -45,6 +45,11 @@ const ParcelDetails = () => {
           </p>
           <p className='text-gray-dark-100/70 text-[12px]'>ID-Nummer</p>
         </div>
+        <p className='gray-dark-100 w-[60%] mb-3'>
+          Fügen Sie das Flurstück zu Ihrer Watchlist hinzu, um benachrichtigt zu
+          werden, sobald eine Anzeige mit diesem Flurstück aktiviert wird. Bis
+          dahin bleiben einige Details verborgen.
+        </p>
       </div>
       <div className='h-[75vh] overflow-y-auto rounded-2xl'>
         <ShowDetailsDeveloper data={registeredPlot?.parcel} />

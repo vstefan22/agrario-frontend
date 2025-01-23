@@ -329,9 +329,6 @@ export const validateOfferDetailForm = (formData: any) => {
   if (!formData.accept_terms) {
     newErrors.accept_terms = 'Bitte akzeptieren Sie die AGBs.';
   }
-  if (!formData.other) {
-    newErrors.other = 'Bitte bestätigen Sie dieses Feld.';
-  }
 
   if (
     formData.important_remarks &&
