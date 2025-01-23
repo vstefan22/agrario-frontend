@@ -9,7 +9,7 @@ import { PlotType } from '../../../types/plot-types';
 import active from '../../../assets/images/active.png';
 import inactive from '../../../assets/images/inactive.png';
 import deleteIcon from '../../../assets/images/del.png';
-import imagePlaceholder from '../../../assets/images/image-placeholder.png';
+import parcelPlaceholder from '../../../assets/images/parcel-placeholder.webp';
 
 type PlotItemProps = {
   data: PlotType;
@@ -41,7 +41,7 @@ const PlotItem: FC<PlotItemProps> = ({ data, onDelete }) => {
       <div className='flex w-full py-2 space-x-8'>
         <ItemImage
           id={data.id}
-          image={imagePlaceholder}
+          image={parcelPlaceholder}
           className='border-[0.16px]'
         />
 

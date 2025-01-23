@@ -5,7 +5,7 @@ import { PLOT_DETAILS_COLUMNS } from '../../../constants/table-data';
 import { OfferType } from '../../../types/offer-types';
 import active from '../../../assets/images/vermarktung-aktiv.png';
 import inactive from '../../../assets/images/vermarktung-in-vorbereitung.png';
-import imagePlaceholder from '../../../assets/images/image-placeholder.png';
+import parcelPlaceholder from '../../../assets/images/parcel-placeholder.webp';
 import { showRestrictions } from '../../../utils/helper-functions';
 
 type DetailsItemProps = {
@@ -23,7 +23,7 @@ const DetailsItem: FC<DetailsItemProps> = ({ data }) => {
     >
       <div className='flex justify-start py-2 space-x-4 gap-8'>
         {data.parcels.length > 0 && (
-          <ItemImage image={imagePlaceholder} id={data.parcels[0].id} />
+          <ItemImage image={parcelPlaceholder} id={data.parcels[0].id} />
         )}
         <div className='flex flex-col'>
           {data.parcels.length > 0 && (

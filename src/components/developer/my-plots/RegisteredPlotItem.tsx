@@ -8,8 +8,8 @@ import useRegisteredPlots from '../../../hooks/registered-plot-hook';
 import useRegisteredPlotStore from '../../../store/registered-plot-store';
 import { PLOT_SEARCH_COLUMNS } from '../../../constants/table-data';
 import { RegisteredPlotDetailsType } from '../../../types/plot-types';
-import imagePlaceholder from '../../../assets/images/image-placeholder.png';
 import { showRestrictions } from '../../../utils/helper-functions';
+import parcelPlaceholder from '../../../assets/images/parcel-placeholder.webp';
 
 type RegisteredPlotItemProps = {
   data: RegisteredPlotDetailsType;
@@ -52,7 +52,7 @@ const RegisteredPlotItem: FC<RegisteredPlotItemProps> = ({ data }) => {
       }}
     >
       <div className='flex w-full py-2 space-x-8'>
-        <ItemImage id={data.parcel.id.toString()} image={imagePlaceholder} />
+        <ItemImage id={data.parcel.id.toString()} image={parcelPlaceholder} />
 
         <div className='flex flex-col justify-center w-full gap-y-8'>
           <div className='flex justify-between'>

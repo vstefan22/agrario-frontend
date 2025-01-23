@@ -3,7 +3,7 @@ import DynamicTable from '../../common/DynamicTable';
 import ItemImage from '../../common/ItemImage';
 import { PLOT_DETAILS_COLUMNS } from '../../../constants/table-data';
 import { PlotType } from '../../../types/plot-types';
-import imagePlaceholder from '../../../assets/images/image-placeholder.png';
+import parcelPlaceholder from '../../../assets/images/parcel-placeholder.webp';
 
 type OfferPreparationItemProps = {
   data: PlotType | null;
@@ -22,7 +22,7 @@ const OfferPreparationItem: FC<OfferPreparationItemProps> = ({ data }) => {
       <div className='flex justify-start gap-8 py-2 space-x-4'>
         <ItemImage
           id={data.id}
-          image={imagePlaceholder}
+          image={parcelPlaceholder}
           className='border-[0.16px]'
         />
         <div className='flex flex-col'>

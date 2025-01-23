@@ -9,7 +9,7 @@ import useRegisteredPlotStore from '../../../store/registered-plot-store';
 import { RegisteredPlotDetailsType } from '../../../types/plot-types';
 import { PLOT_SEARCH_COLUMNS } from '../../../constants/table-data';
 import delIcon from '../../../assets/images/del.png';
-import imagePlaceholder from '../../../assets/images/image-placeholder.png';
+import parcelPlaceholder from '../../../assets/images/parcel-placeholder.webp';
 import { showRestrictions } from '../../../utils/helper-functions';
 
 type MyWatchlistItemProps = {
@@ -62,7 +62,7 @@ const MyWatchlistItem: FC<MyWatchlistItemProps> = ({ data }) => {
       }}
     >
       <div className='flex w-full py-2 space-x-8'>
-        <ItemImage id={data.parcel.id.toString()} image={imagePlaceholder} />
+        <ItemImage id={data.parcel.id.toString()} image={parcelPlaceholder} />
         <div className='flex flex-col justify-center w-full gap-y-8'>
           <div className='flex justify-between'>
             <DynamicTable

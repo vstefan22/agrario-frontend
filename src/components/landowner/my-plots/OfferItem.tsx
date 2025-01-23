@@ -8,7 +8,7 @@ import { PLOT_DETAILS_COLUMNS } from '../../../constants/table-data';
 import useOffers from '../../../hooks/offer-hook';
 import useOfferStore from '../../../store/offer-store';
 import { OfferType } from '../../../types/offer-types';
-import imagePlaceholder from '../../../assets/images/image-placeholder.png';
+import parcelPlaceholder from '../../../assets/images/parcel-placeholder.webp';
 import vermarktungActive from '../../../assets/images/vermarktung-aktiv.png';
 import vermarktungInactive from '../../../assets/images/vermarktung-in-vorbereitung.png';
 
@@ -43,7 +43,7 @@ const OfferItem: FC<OfferItemProps> = ({ data }) => {
     >
       <div className='flex w-full py-2 space-x-8'>
         {data.parcels.length > 0 && (
-          <ItemImage id={data.parcels[0].id} image={imagePlaceholder} />
+          <ItemImage id={data.parcels[0].id} image={parcelPlaceholder} />
         )}
 
         <div className='flex flex-col justify-center w-full gap-y-8'>
