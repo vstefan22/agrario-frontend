@@ -21,6 +21,7 @@ const AnalysePlusCart = () => {
     setDiscountCodeStore,
     setBasketPlots,
   } = usePlotStore();
+  const [discountValue, setDiscountValue] = useState(0);
   const { applyDiscount, deletePlotFromBasket, getAnalysePlus } = usePlots();
   const { createPayment } = usePayments();
   const [loading, setLoading] = useState(false);
@@ -56,6 +57,7 @@ const AnalysePlusCart = () => {
     const response = await applyDiscount({ discount_code: discountCode });
     if (response.original_total) {
       setDiscountCodeStore(discountCode, response.discounted_total);
+      setDiscountValue(response.discount_amount);
       toast.success('Ihr Rabattcode ist gültig.');
     } else {
       toast.error(
@@ -171,37 +173,43 @@ const AnalysePlusCart = () => {
               Zwischensumme (Netto):{' '}
               <strong>{basketSummary?.sum_of_items}€</strong>
             </p>
+            <div className='flex justify-end items-center max-[746px]:flex-col max-[746px]:items-end'>
+              <h3 className='mr-5'>Rabattcode einlösen</h3>
+              <div className='flex'>
+                <input
+                  type='text'
+                  placeholder='Gutschein-Code'
+                  className='border-[1px] border-r-0 py-1 px-2 rounded-l-md border-gray-medium/60 w-[180px]'
+                  value={discountCode}
+                  onChange={(e) => setDiscountCode(e.target.value)}
+                />
+                <Button
+                  type='button'
+                  variant='bluePrimary'
+                  onClick={handleReedemCode}
+                  className='w-[90px] h-[48px] text-[13px] leading-4'
+                >
+                  Rabattcode bestätigen
+                </Button>
+              </div>
+            </div>
             <p>
-              Mehrwertsteuer: 19%:{' '}
-              <strong>{basketSummary?.tax_in_percent}MWSt</strong>
+              Mehrwertsteuer: <strong>{basketSummary?.tax_in_percent}%</strong>{' '}
+              MWSt
             </p>
             <p>
-              Tax amount: <strong>{basketSummary?.tax_amount}€</strong>
+              Steuer: <strong>{basketSummary?.tax_amount}€</strong>
             </p>
             <p className='text-[14px]'>
               Summe (Brutto): <strong>{basketSummary?.subtotal}€</strong>
             </p>
-          </div>
-
-          <div className='flex justify-end items-center max-[746px]:flex-col max-[746px]:items-end'>
-            <h3 className='mr-6'>Rabbatcode einlösen</h3>
-            <div className='flex'>
-              <input
-                type='text'
-                placeholder='Gutschein-Code'
-                className='border-[1px] border-r-0 py-1 px-2 rounded-l-md border-gray-medium/60 w-[180px]'
-                value={discountCode}
-                onChange={(e) => setDiscountCode(e.target.value)}
-              />
-              <Button
-                type='button'
-                variant='bluePrimary'
-                onClick={handleReedemCode}
-                className='w-[90px] h-[48px] text-[16px]'
-              >
-                Confirm
-              </Button>
-            </div>
+            <p className='text-[14px]'>
+              Rabatt:{' '}
+              <strong>
+                {discountValue !== 0 ? '-' : ''}
+                {discountValue}€
+              </strong>
+            </p>
           </div>
 
           <div className='flex flex-col mt-3'>

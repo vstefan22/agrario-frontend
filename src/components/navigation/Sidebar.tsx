@@ -100,7 +100,7 @@ export default function Sidebar() {
               onClick={() => handleNavigate('/landowner/my-offers')}
             >
               <RiDiscountPercentLine className='mr-3' />
-              Meine Angebote
+              Meine Anzeigen
             </Button>
 
             <Button

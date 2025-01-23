@@ -4,7 +4,7 @@ export const sortOptions = [
   'Sortieren nach Größe',
 ];
 
-export const profileOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+export const numberOfEmployees = ['1-5', '6-10', '10-50', '50-200', '> 200'];
 
 export const MWOptions = ['1-20 MW', '21-100 MW', '101-500 MW', '> 500 MW'];
 

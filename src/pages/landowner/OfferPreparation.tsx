@@ -194,6 +194,7 @@ export default function MyOffer() {
   const handleClearFields = () => {
     setFormData(initialFormData);
     setErrors({});
+    navigate('/landowner/my-plots');
   };
 
   if (loading) return <LoadingSpinner />;
@@ -364,7 +365,18 @@ export default function MyOffer() {
             </div>
             <div className='flex flex-col'>
               <Checkbox
-                label='Ja, ich akzeptiere die Datenschutzbedingungen'
+                label={
+                  <>
+                    Ja, ich akzeptiere die{' '}
+                    <a
+                      href='/landowner/privacy-policy'
+                      className='text-blue underline'
+                      rel='noopener noreferrer'
+                    >
+                      Datenschutzbedingungen
+                    </a>
+                  </>
+                }
                 name='accept_privacy_policy'
                 variant='primary'
                 checked={formData.accept_privacy_policy}
@@ -378,7 +390,18 @@ export default function MyOffer() {
             </div>
             <div className='flex flex-col'>
               <Checkbox
-                label='Ja, ich akzeptiere die AGBs'
+                label={
+                  <>
+                    Ja, ich akzeptiere die{' '}
+                    <a
+                      href='/landowner/terms-and-conditions'
+                      className='text-blue underline'
+                      rel='noopener noreferrer'
+                    >
+                      AGBs
+                    </a>
+                  </>
+                }
                 name='accept_terms'
                 variant='primary'
                 checked={formData.accept_terms}
@@ -390,6 +413,7 @@ export default function MyOffer() {
                 </span>
               )}
             </div>
+
             {/* <div className='flex flex-col'>
               <Checkbox
                 label='Ja, ich...'

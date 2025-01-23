@@ -57,7 +57,8 @@ const SearchByAttributes = ({ handleSubmit }: SearchByAttributesProps) => {
       style={{ boxShadow: '6px 6px 54px 0px #0000000D' }}
     >
       <p className='text-gray-dark-100 text-[20px] leading-[24px] font-normal mb-7'>
-        Municipal, Gemarkung, Flur, and Flurstück
+        Tragen Sie hier Ihre Daten zum Flurstück ein, um dieses direkt
+        auszuwählen.
       </p>
 
       <form

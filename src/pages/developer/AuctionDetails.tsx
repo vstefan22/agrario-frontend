@@ -2,17 +2,32 @@ import { useNavigate } from 'react-router-dom';
 import ShowDetailsDeveloper from './ShowDetailsDeveloper';
 import Button from '../../components/common/Button';
 import useAuctionOfferstore from '../../store/auctions-store';
+import useAuthStore from '../../store/auth-store';
+import { toast } from 'react-toastify';
 
 const AuctionDetails = () => {
   const { auctionOffer } = useAuctionOfferstore();
   const navigate = useNavigate();
+  const { user } = useAuthStore();
 
   const handleDownloadGeodata = () => {
-    console.log('download geodata');
+    if (user?.tier === 'PREM') {
+      console.log('download geodata');
+    } else {
+      toast.error(
+        'Ihr aktuelles Abonnement berechtigt Sie nicht zur Nutzung dieser Funktion. Bitte gehen Sie zu Ihren Profil-Einstellungen, um Ihr Abonnement zu ändern.'
+      );
+    }
   };
 
   const handlePlaceABid = () => {
-    navigate('/developer/active-auctions/place-a-bid');
+    if (user?.tier === 'PREM') {
+      navigate('/developer/active-auctions/place-a-bid');
+    } else {
+      toast.error(
+        'Ihr aktuelles Abonnement berechtigt Sie nicht zur Nutzung dieser Funktion. Bitte gehen Sie zu Ihren Profil-Einstellungen, um Ihr Abonnement zu ändern.'
+      );
+    }
   };
 
   return (
@@ -27,7 +42,7 @@ const AuctionDetails = () => {
           </p>
           <p className='text-gray-dark-100/70 text-[12px]'>ID-Nummer</p>
         </div>
-        <p className='gray-dark-100 w-[60%]'>
+        <p className='gray-dark-100 w-[60%] mb-3'>
           Hier sehen Sie die Details des veröffentlichten Inserats. Laden Sie
           zusätzliche Informationen und Geodaten zum Grundstück herunter und
           melden Sie Interesse an, um am Bieterverfahren teilzunehmen. Hinweis:

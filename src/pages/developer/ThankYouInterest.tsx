@@ -22,11 +22,6 @@ const ThankYouInterest = () => {
         Unternehmens beilegen. Der Eigentümer entscheidet, mit welchem
         Unternehmen er oder sie weitere Gespräche und Verhandlungen führen wird.`}
       </p>
-      <p className='text-gray-dark-100'>
-        Various versions have evolved over the years, sometimes by accident,
-        sometimes on purpose (injected humour and the like).
-      </p>
-
       <Button
         variant='bluePrimary'
         className='w-max px-8 mt-8 ml-auto'
