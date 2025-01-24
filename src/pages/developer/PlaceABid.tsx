@@ -18,6 +18,8 @@ import {
   tenderCriteriaData2,
 } from '../../constants/global';
 import listIcon from '../../assets/images/list-icon.png';
+import useAuthStore from '../../store/auth-store';
+import { toast } from 'react-toastify';
 
 const initialFormData = {
   utilization: '',
@@ -40,6 +42,7 @@ const PlaceABid = () => {
   const navigate = useNavigate();
   const { addAuctionOffer } = useAuctionOffers();
   const { auctionOffer, updateAuctionOffer } = useAuctionOfferstore();
+  const { user } = useAuthStore();
   const [loading, setLoading] = useState(false);
 
   const handleSelectChange = (name: string, option: string) => {
@@ -92,97 +95,103 @@ const PlaceABid = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    try {
-      const { errors, isFormValidate } = validateAuctionDetailForm(formData);
+    if (user?.tier === 'PREM') {
+      try {
+        const { errors, isFormValidate } = validateAuctionDetailForm(formData);
 
-      if (isFormValidate) {
-        const formDataSend = new FormData();
-        if (formData.utilization) {
+        if (isFormValidate) {
+          const formDataSend = new FormData();
+          if (formData.utilization) {
+            formDataSend.append(
+              'utilization',
+              auctionOptionsMap[formData.utilization] || ''
+            );
+          }
+          if (formData.staggered_lease) {
+            formDataSend.append(
+              'staggered_lease',
+              auctionOptionsMap[formData.staggered_lease] || ''
+            );
+          }
+          if (formData.share_of_income) {
+            formDataSend.append(
+              'share_of_income',
+              auctionOptionsMap[formData.share_of_income] || ''
+            );
+          }
+          if (formData.shares_project_company) {
+            formDataSend.append(
+              'shares_project_company',
+              auctionOptionsMap[formData.shares_project_company] || ''
+            );
+          }
+
+          if (isNaN(Number(formData.sale_amount))) {
+            setErrors((prevErrors) => ({
+              ...prevErrors,
+              sale_amount: 'Eine gültige Zahl ist erforderlich.',
+            }));
+            return;
+          }
+
+          if (isNaN(Number(formData.lease_amount_yearly_lease_year_one))) {
+            setErrors((prevErrors) => ({
+              ...prevErrors,
+              lease_amount_yearly_lease_year_one:
+                'Eine gültige Zahl ist erforderlich.',
+            }));
+            return;
+          }
+
+          if (isNaN(Number(formData.contracted_term_month))) {
+            setErrors((prevErrors) => ({
+              ...prevErrors,
+              contracted_term_month: 'Eine gültige Zahl ist erforderlich.',
+            }));
+            return;
+          }
+
+          formDataSend.append('sale_amount', formData.sale_amount || '');
           formDataSend.append(
-            'utilization',
-            auctionOptionsMap[formData.utilization] || ''
+            'lease_amount_yearly_lease_year_one',
+            formData.lease_amount_yearly_lease_year_one || ''
           );
-        }
-        if (formData.staggered_lease) {
           formDataSend.append(
-            'staggered_lease',
-            auctionOptionsMap[formData.staggered_lease] || ''
+            'message_to_landowner',
+            formData.message_to_landowner || ''
           );
-        }
-        if (formData.share_of_income) {
           formDataSend.append(
-            'share_of_income',
-            auctionOptionsMap[formData.share_of_income] || ''
+            'message_to_platform',
+            formData.message_to_platform || ''
           );
-        }
-        if (formData.shares_project_company) {
+
           formDataSend.append(
-            'shares_project_company',
-            auctionOptionsMap[formData.shares_project_company] || ''
+            'accept_privacy_policy',
+            formData.accept_privacy_policy.toString()
           );
+          formDataSend.append('accept_terms', formData.accept_terms.toString());
+          formDataSend.append('other', formData.other.toString());
+
+          setLoading(true);
+          const offerUpdated = await addAuctionOffer(
+            auctionOffer!.identifier,
+            formDataSend
+          );
+          updateAuctionOffer(auctionOffer!.identifier, offerUpdated);
+          setLoading(false);
+          navigate('/developer/active-auctions/thanks');
+        } else {
+          setLoading(false);
+          setErrors(errors);
         }
-
-        if (isNaN(Number(formData.sale_amount))) {
-          setErrors((prevErrors) => ({
-            ...prevErrors,
-            sale_amount: 'Eine gültige Zahl ist erforderlich.',
-          }));
-          return;
-        }
-
-        if (isNaN(Number(formData.lease_amount_yearly_lease_year_one))) {
-          setErrors((prevErrors) => ({
-            ...prevErrors,
-            lease_amount_yearly_lease_year_one:
-              'Eine gültige Zahl ist erforderlich.',
-          }));
-          return;
-        }
-
-        if (isNaN(Number(formData.contracted_term_month))) {
-          setErrors((prevErrors) => ({
-            ...prevErrors,
-            contracted_term_month: 'Eine gültige Zahl ist erforderlich.',
-          }));
-          return;
-        }
-
-        formDataSend.append('sale_amount', formData.sale_amount || '');
-        formDataSend.append(
-          'lease_amount_yearly_lease_year_one',
-          formData.lease_amount_yearly_lease_year_one || ''
-        );
-        formDataSend.append(
-          'message_to_landowner',
-          formData.message_to_landowner || ''
-        );
-        formDataSend.append(
-          'message_to_platform',
-          formData.message_to_platform || ''
-        );
-
-        formDataSend.append(
-          'accept_privacy_policy',
-          formData.accept_privacy_policy.toString()
-        );
-        formDataSend.append('accept_terms', formData.accept_terms.toString());
-        formDataSend.append('other', formData.other.toString());
-
-        setLoading(true);
-        const offerUpdated = await addAuctionOffer(
-          auctionOffer!.identifier,
-          formDataSend
-        );
-        updateAuctionOffer(auctionOffer!.identifier, offerUpdated);
+      } catch (err) {
         setLoading(false);
-        navigate('/developer/active-auctions/thanks');
-      } else {
-        setLoading(false);
-        setErrors(errors);
+        console.error('Error: ', err);
       }
-    } catch (err) {
-      setLoading(false);
-      console.error('Error: ', err);
+    } else {
+      toast.error(
+        'Ihr aktuelles Abonnement berechtigt Sie nicht zur Nutzung dieser Funktion. Bitte gehen Sie zu Ihren Profil-Einstellungen, um Ihr Abonnement zu ändern.'
+      );
     }
   };
 

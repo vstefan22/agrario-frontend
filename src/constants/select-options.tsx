@@ -6,6 +6,22 @@ export const sortOptions = [
 
 export const numberOfEmployees = ['1-5', '6-10', '10-50', '50-200', '> 200'];
 
+export const employeesOptionsMap: Record<string, number> = {
+  '1-5': 1,
+  '6-10': 2,
+  '10-50': 3,
+  '50-200': 4,
+  '> 200': 5,
+};
+
+export const employeesOptionsReverseMap: Record<any, string> = {
+  1: '1-5',
+  2: '6-10',
+  3: '10-50',
+  4: '50-200',
+  5: '> 200',
+};
+
 export const MWOptions = ['1-20 MW', '21-100 MW', '101-500 MW', '> 500 MW'];
 
 export const bidOptions = ['Ja', 'Nein', 'Keine Angabe'];

@@ -12,7 +12,8 @@ const ThankYouSubscribe = () => {
       <p className='text-gray-dark-100 mt-2 w-[60%]'>
         Danke für das Abschließen des Abonements. Sie können jetzt weitere
         Details zu Flurstücken und aktiven Anzeigen einsehen und ihr Interesse
-        an Bieterverfahren bekunden
+        an Bieterverfahren bekunden. Der Update ihres Abonement kann bis zu 10
+        Minuten dauern
       </p>
 
       <Button
