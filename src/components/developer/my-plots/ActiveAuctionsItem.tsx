@@ -10,6 +10,7 @@ import { showRestrictions } from '../../../utils/helper-functions';
 import parcelPlaceholder from '../../../assets/images/parcel-placeholder.webp';
 import active from '../../../assets/images/vermarktung-aktiv.png';
 import inactive from '../../../assets/images/vermarktung-in-vorbereitung.png';
+import useAuthStore from '../../../store/auth-store';
 
 type ActiveAuctionsItemProps = {
   // eslint-disable-next-line
@@ -26,6 +27,7 @@ const ActiveAuctionsItem: FC<ActiveAuctionsItemProps> = ({
   const navigate = useNavigate();
   const { getAuctionOfferDetails } = useAuctionOffers();
   const { setAuctionOffer } = useAuctionOfferstore();
+  const { user } = useAuthStore();
 
   const handleViewDetails = async () => {
     try {
@@ -59,6 +61,17 @@ const ActiveAuctionsItem: FC<ActiveAuctionsItemProps> = ({
               <DynamicTable
                 data={data.parcels[0]}
                 columns={PLOT_DETAILS_COLUMNS}
+                blurKeys={
+                  user?.tier === 'FREE'
+                    ? [
+                        'zipcode',
+                        'municipality_name',
+                        'district_name',
+                        'cadastral_area',
+                        'cadastral_parcel',
+                      ]
+                    : []
+                }
               />
             )}
           </div>

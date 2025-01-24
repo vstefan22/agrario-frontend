@@ -21,6 +21,8 @@ import profilePlaceholder from '../../assets/images/profile-placeholder.png';
 import {
   mwOptionsMap,
   mwOptionsReverseMap,
+  employeesOptionsMap,
+  employeesOptionsReverseMap,
 } from '../../constants/select-options';
 
 type ProfileType = Omit<StoreUser, 'id'>;
@@ -115,7 +117,7 @@ export default function Profile() {
         address: user?.address || '',
         founding_year: user?.founding_year || 2000,
         mw_capacity: mwOptionsReverseMap[user?.mw_capacity || ''],
-        employees: user?.employees || '',
+        employees: employeesOptionsReverseMap[user?.employees || ''],
         first_name: user?.first_name || '',
         last_name: user?.last_name || '',
         position: user?.position || '',
@@ -243,6 +245,12 @@ export default function Profile() {
 
     if (companyPic) {
       formDataSend.append('company_logo', companyPic);
+    }
+
+    const employees = employeesOptionsMap[formData.employees || ''].toString();
+
+    if (formData?.employees) {
+      formDataSend.append('employees', employees);
     }
 
     const mwCapacity = mwOptionsMap[formData.mw_capacity || ''].toString();

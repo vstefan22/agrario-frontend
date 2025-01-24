@@ -21,13 +21,7 @@ const AuctionDetails = () => {
   };
 
   const handlePlaceABid = () => {
-    if (user?.tier === 'PREM') {
-      navigate('/developer/active-auctions/place-a-bid');
-    } else {
-      toast.error(
-        'Ihr aktuelles Abonnement berechtigt Sie nicht zur Nutzung dieser Funktion. Bitte gehen Sie zu Ihren Profil-Einstellungen, um Ihr Abonnement zu ändern.'
-      );
-    }
+    navigate('/developer/active-auctions/place-a-bid');
   };
 
   return (
