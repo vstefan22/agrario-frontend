@@ -25,6 +25,7 @@ export const mwOptionsMap: Record<string, number> = {
   '> 500 MW': 4,
 };
 
+// eslint-disable-next-line
 export const mwOptionsReverseMap: Record<any, string> = {
   1: '1-20 MW',
   2: '21-100 MW',

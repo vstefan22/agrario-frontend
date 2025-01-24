@@ -55,9 +55,9 @@ const AnalysePlusCart = () => {
 
   const handleReedemCode = async () => {
     const response = await applyDiscount({ discount_code: discountCode });
-    if (response.original_total) {
-      setDiscountCodeStore(discountCode, response.discounted_total);
-      setDiscountValue(response.discount_amount);
+    if (response.sum_of_items) {
+      setDiscountCodeStore(discountCode, response.subtotal_after_discount);
+      setDiscountValue(response.discount);
       toast.success('Ihr Rabattcode ist gültig.');
     } else {
       toast.error(
@@ -85,7 +85,8 @@ const AnalysePlusCart = () => {
           sum_of_items: 0,
           tax_in_percent: 0,
           tax_amount: 0,
-          subtotal: 0,
+          subtotal_after_discount: 0,
+          final_total: 0,
         });
         toast.error(
           'Die Liste ist leer. Bitte fügen Sie mindestens ein Grundstück hinzu, um eine Bestellung aufgeben zu können'
@@ -98,7 +99,10 @@ const AnalysePlusCart = () => {
     }
   };
 
+  console.log('basket summary: ', basketSummary);
+
   if (loading) return <LoadingSpinner />;
+
   return (
     <div className='bg-gray-100 min-h-screen flex flex-col px-7 pt-4'>
       <h1 className='text-[32px] font-bold text-black-muted'>
@@ -201,7 +205,8 @@ const AnalysePlusCart = () => {
               Steuer: <strong>{basketSummary?.tax_amount}€</strong>
             </p>
             <p className='text-[14px]'>
-              Summe (Brutto): <strong>{basketSummary?.subtotal}€</strong>
+              Summe (Brutto):{' '}
+              <strong>{basketSummary?.subtotal_after_discount}€</strong>
             </p>
             <p className='text-[14px]'>
               Rabatt:{' '}
@@ -216,7 +221,7 @@ const AnalysePlusCart = () => {
             <p className='text-[18px]'>
               Endbetrag:{' '}
               <strong>
-                {discountedTotal ? discountedTotal : basketSummary.subtotal}€
+                {discountedTotal ? discountedTotal : basketSummary.final_total}€
               </strong>
             </p>
           </div>

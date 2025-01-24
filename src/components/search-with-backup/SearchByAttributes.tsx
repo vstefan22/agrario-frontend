@@ -15,7 +15,7 @@ const SearchByAttributes = ({ handleSubmit }: SearchByAttributesProps) => {
 
   const [errors, setErrors] = useState({
     municipality_name: '',
-    district_name: '',
+    communal_district: '',
     cadastral_area: '',
     cadastral_parcel: '',
   });
@@ -25,7 +25,7 @@ const SearchByAttributes = ({ handleSubmit }: SearchByAttributesProps) => {
 
     const formData = {
       municipality_name: municipalityNameRef.current?.value || '',
-      district_name: districtNameRef.current?.value || '',
+      communal_district: districtNameRef.current?.value || '',
       cadastral_area: cadastralAreaRef.current?.value || '',
       cadastral_parcel: cadastralParcelRef.current?.value || '',
     };
@@ -34,7 +34,7 @@ const SearchByAttributes = ({ handleSubmit }: SearchByAttributesProps) => {
       municipality_name: !formData.municipality_name
         ? 'Gemeinde ist erforderlich.'
         : '',
-      district_name: !formData.district_name
+      communal_district: !formData.communal_district
         ? 'Gemarkung ist erforderlich.'
         : '',
       cadastral_area: !formData.cadastral_area ? 'Flur ist erforderlich.' : '',
@@ -86,13 +86,15 @@ const SearchByAttributes = ({ handleSubmit }: SearchByAttributesProps) => {
             variant='profile'
             label='Gemarkung'
             required
-            id='district_name'
-            name='district_name'
+            id='communal_district'
+            name='communal_district'
             placeholder='Gemarkung'
             ref={districtNameRef}
           />
-          {errors.district_name && (
-            <p className='text-red-500 text-sm mt-1'>{errors.district_name}</p>
+          {errors.communal_district && (
+            <p className='text-red-500 text-sm mt-1'>
+              {errors.communal_district}
+            </p>
           )}
         </div>
         <div className='md:col-span-2'>

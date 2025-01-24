@@ -43,7 +43,7 @@ export default function NewPlot() {
               alkis_feature_id,
               state_name,
               municipality_name,
-              district_name,
+              communal_district,
               cadastral_area,
               cadastral_parcel,
             } = feature.properties;
@@ -55,7 +55,7 @@ export default function NewPlot() {
                 parcel_id: alkis_feature_id,
                 state_name,
                 municipality_name,
-                district_name,
+                communal_district,
                 cadastral_area,
                 cadastral_parcel,
               });
@@ -105,7 +105,7 @@ export default function NewPlot() {
         parcel_id: response.alkis_feature_id,
         state_name: response.state_name,
         municipality_name: response.municipality_name,
-        district_name: response.district_name,
+        communal_district: response.communal_district,
         cadastral_area: response.cadastral_area,
         cadastral_parcel: response.cadastral_parcel,
       };

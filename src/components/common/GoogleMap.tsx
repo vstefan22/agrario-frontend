@@ -96,7 +96,7 @@ export default function GoogleMap({
             <strong>Parcel Info:</strong><br/>
             ID: ${parcel.parcel_id}<br/>
             State: ${parcel.state_name}<br/>
-            District: ${parcel.district_name}<br/>
+            District: ${parcel.communal_district}<br/>
             Municipality: ${parcel.municipality_name}<br/>
             Cadastral Area: ${parcel.cadastral_area}<br/>
             Cadastral Parcel: ${parcel.cadastral_parcel}<br/>
@@ -147,7 +147,7 @@ export default function GoogleMap({
             <strong>Parcel Info (Search):</strong><br/>
             ID: ${parcel.parcel_id}<br/>
             State: ${parcel.state_name}<br/>
-            District: ${parcel.district_name}<br/>
+            District: ${parcel.communal_district}<br/>
             Municipality: ${parcel.municipality_name}<br/>
             Cadastral Area: ${parcel.cadastral_area}<br/>
             Cadastral Parcel: ${parcel.cadastral_parcel}<br/>
