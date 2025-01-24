@@ -1,11 +1,26 @@
 import { useEffect, useRef, useState } from 'react';
 import { ParcelPolygon } from '../../types/google-maps-types';
 
-const MAP_DISPLAY_OPTIONS: google.maps.PolygonOptions = {
+const DEFAULT_POLYGON_STYLE: google.maps.PolygonOptions = {
   fillOpacity: 0,
-  strokeColor: '#104f50',
+  strokeColor: '#099178',
   strokeOpacity: 0.9,
-  strokeWeight: 4,
+  strokeWeight: 3,
+};
+
+const DEFAULT_SEARCH_POLYGON_STYLE: google.maps.PolygonOptions = {
+  fillOpacity: 0,
+  strokeColor: '#FF0000',
+  fillColor: '#FF0000',
+  strokeOpacity: 0.9,
+  strokeWeight: 3,
+};
+
+const SELECTED_POLYGON_STYLE: google.maps.PolygonOptions = {
+  fillOpacity: 0.3,
+  strokeColor: '#4eedd0',
+  strokeOpacity: 0.2,
+  strokeWeight: 16,
 };
 
 type GoogleMapProps = {
@@ -15,17 +30,20 @@ type GoogleMapProps = {
   mapCenter?: google.maps.LatLngLiteral | null;
 };
 
-const GoogleMap = ({
+export default function GoogleMap({
   mapPolygons = [],
   searchPolygons = [],
   onParcelClick,
   mapCenter,
-}: GoogleMapProps) => {
+}: GoogleMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [infoWindow, setInfoWindow] = useState<google.maps.InfoWindow | null>(
     null
   );
+  const [selectedPolygon, setSelectedPolygon] =
+    useState<google.maps.Polygon | null>(null);
+  const [selectedPolygonIsSearch, setSelectedPolygonIsSearch] = useState(false);
 
   useEffect(() => {
     if (!mapRef.current || !window.google) return;
@@ -54,22 +72,24 @@ const GoogleMap = ({
   useEffect(() => {
     if (!map) return;
 
-    const mapBounds = new google.maps.LatLngBounds();
     mapPolygons.forEach((parcel) => {
       const polygonObj = new google.maps.Polygon({
         paths: parcel.polygon,
-        ...MAP_DISPLAY_OPTIONS,
+        ...DEFAULT_POLYGON_STYLE,
       });
       polygonObj.setMap(map);
-      polygonObj.getPath().forEach((latLng) => mapBounds.extend(latLng));
       polygonObj.addListener('mouseover', () => {
         polygonObj.setOptions({ strokeWeight: 6 });
       });
       polygonObj.addListener('mouseout', () => {
-        polygonObj.setOptions({ strokeWeight: 4 });
+        if (polygonObj !== selectedPolygon) {
+          polygonObj.setOptions({ strokeWeight: 3 });
+        }
       });
+
       polygonObj.addListener('click', (event: google.maps.MapMouseEvent) => {
         if (!infoWindow || !event.latLng) return;
+
         infoWindow.setPosition(event.latLng);
         infoWindow.setContent(`
           <div style="color:black">
@@ -83,30 +103,42 @@ const GoogleMap = ({
           </div>
         `);
         infoWindow.open(map);
+
+        if (selectedPolygon) {
+          if (selectedPolygonIsSearch) {
+            selectedPolygon.setOptions(DEFAULT_SEARCH_POLYGON_STYLE);
+          } else {
+            selectedPolygon.setOptions(DEFAULT_POLYGON_STYLE);
+            polygonObj.setOptions(DEFAULT_POLYGON_STYLE);
+          }
+        }
+        polygonObj.setOptions(SELECTED_POLYGON_STYLE);
+
+        setSelectedPolygon(polygonObj);
+        setSelectedPolygonIsSearch(false);
+
         if (onParcelClick) {
           onParcelClick(parcel);
         }
       });
     });
 
-    const searchBounds = new google.maps.LatLngBounds();
     searchPolygons.forEach((parcel) => {
       const polygonObj = new google.maps.Polygon({
         paths: parcel.polygon,
-        ...MAP_DISPLAY_OPTIONS,
-        strokeColor: '#FF0000',
-        fillColor: '#FF0000',
+        ...DEFAULT_SEARCH_POLYGON_STYLE,
       });
       polygonObj.setMap(map);
-
-      polygonObj.getPath().forEach((latLng) => searchBounds.extend(latLng));
 
       polygonObj.addListener('mouseover', () => {
         polygonObj.setOptions({ strokeWeight: 6 });
       });
       polygonObj.addListener('mouseout', () => {
-        polygonObj.setOptions({ strokeWeight: 4 });
+        if (polygonObj !== selectedPolygon) {
+          polygonObj.setOptions({ strokeWeight: 3 });
+        }
       });
+
       polygonObj.addListener('click', (event: google.maps.MapMouseEvent) => {
         if (!infoWindow || !event.latLng) return;
         infoWindow.setPosition(event.latLng);
@@ -122,15 +154,37 @@ const GoogleMap = ({
           </div>
         `);
         infoWindow.open(map);
+
+        if (selectedPolygon) {
+          if (selectedPolygonIsSearch) {
+            selectedPolygon.setOptions(DEFAULT_SEARCH_POLYGON_STYLE);
+          } else {
+            selectedPolygon.setOptions(DEFAULT_POLYGON_STYLE);
+          }
+        }
+
+        polygonObj.setOptions(SELECTED_POLYGON_STYLE);
+        setSelectedPolygon(polygonObj);
+        setSelectedPolygonIsSearch(true);
+
         if (onParcelClick) {
           onParcelClick(parcel);
         }
       });
     });
 
-    if (searchPolygons.length > 0 && !searchBounds.isEmpty()) {
-      map.fitBounds(searchBounds);
+    if (searchPolygons.length > 0) {
+      const searchBounds = new google.maps.LatLngBounds();
+      searchPolygons.forEach((p) => {
+        p.polygon.forEach((coord) => {
+          searchBounds.extend(coord);
+        });
+      });
+      if (!searchBounds.isEmpty()) {
+        map.fitBounds(searchBounds);
+      }
     }
+    // eslint-disable-next-line
   }, [map, mapPolygons, searchPolygons, infoWindow, onParcelClick]);
 
   return (
@@ -143,6 +197,4 @@ const GoogleMap = ({
       }}
     />
   );
-};
-
-export default GoogleMap;
+}
