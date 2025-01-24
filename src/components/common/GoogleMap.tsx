@@ -1,24 +1,25 @@
-import { useEffect, useRef, useState } from 'react';
-import { ParcelPolygon } from '../../types/google-maps-types';
+import { useEffect, useRef, useState } from "react";
+import { ParcelPolygon } from "../../types/google-maps-types";
 
 const DEFAULT_POLYGON_STYLE: google.maps.PolygonOptions = {
   fillOpacity: 0,
-  strokeColor: '#099178',
+  strokeColor: "#099178",
   strokeOpacity: 0.9,
   strokeWeight: 3,
 };
 
 const DEFAULT_SEARCH_POLYGON_STYLE: google.maps.PolygonOptions = {
   fillOpacity: 0,
-  strokeColor: '#FF0000',
-  fillColor: '#FF0000',
+  strokeColor: "#FF0000",
+  fillColor: "#FF0000",
   strokeOpacity: 0.9,
   strokeWeight: 3,
 };
 
 const SELECTED_POLYGON_STYLE: google.maps.PolygonOptions = {
   fillOpacity: 0.3,
-  strokeColor: '#4eedd0',
+  fillColor: "#edc84e",
+  strokeColor: "#edc84e",
   strokeOpacity: 0.2,
   strokeWeight: 16,
 };
@@ -38,12 +39,10 @@ export default function GoogleMap({
 }: GoogleMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
-  const [infoWindow, setInfoWindow] = useState<google.maps.InfoWindow | null>(
-    null
-  );
-  const [selectedPolygon, setSelectedPolygon] =
-    useState<google.maps.Polygon | null>(null);
+  const [infoWindow, setInfoWindow] = useState<google.maps.InfoWindow | null>(null);
+  const [selectedPolygon, setSelectedPolygon] = useState<google.maps.Polygon | null>(null);
   const [selectedPolygonIsSearch, setSelectedPolygonIsSearch] = useState(false);
+  const selectedPolygonRef = useRef<google.maps.Polygon | null>(null);
 
   useEffect(() => {
     if (!mapRef.current || !window.google) return;
@@ -51,7 +50,7 @@ export default function GoogleMap({
     const createdMap = new google.maps.Map(mapRef.current, {
       center: { lat: 52.52, lng: 13.4 },
       zoom: 13,
-      mapTypeId: 'hybrid',
+      mapTypeId: "hybrid",
       streetViewControl: false,
       mapTypeControl: false,
       panControl: false,
@@ -72,22 +71,23 @@ export default function GoogleMap({
   useEffect(() => {
     if (!map) return;
 
+    console.log("SELECTED PARCEL CLICK!");
     mapPolygons.forEach((parcel) => {
       const polygonObj = new google.maps.Polygon({
         paths: parcel.polygon,
         ...DEFAULT_POLYGON_STYLE,
       });
       polygonObj.setMap(map);
-      polygonObj.addListener('mouseover', () => {
+      polygonObj.addListener("mouseover", () => {
         polygonObj.setOptions({ strokeWeight: 6 });
       });
-      polygonObj.addListener('mouseout', () => {
-        if (polygonObj !== selectedPolygon) {
+      polygonObj.addListener("mouseout", () => {
+        if (polygonObj !== selectedPolygonRef.current) {
           polygonObj.setOptions({ strokeWeight: 3 });
         }
       });
 
-      polygonObj.addListener('click', (event: google.maps.MapMouseEvent) => {
+      polygonObj.addListener("click", (event: google.maps.MapMouseEvent) => {
         if (!infoWindow || !event.latLng) return;
 
         infoWindow.setPosition(event.latLng);
@@ -104,18 +104,21 @@ export default function GoogleMap({
         `);
         infoWindow.open(map);
 
-        if (selectedPolygon) {
-          if (selectedPolygonIsSearch) {
-            selectedPolygon.setOptions(DEFAULT_SEARCH_POLYGON_STYLE);
-          } else {
-            selectedPolygon.setOptions(DEFAULT_POLYGON_STYLE);
-            polygonObj.setOptions(DEFAULT_POLYGON_STYLE);
-          }
+        // Reset the previously selected polygon
+        if (selectedPolygonRef.current) {
+          selectedPolygonRef.current.setOptions(
+            selectedPolygonRef.current.get("selectedPolygonIsSearch")
+              ? DEFAULT_SEARCH_POLYGON_STYLE
+              : DEFAULT_POLYGON_STYLE
+          );
         }
+
+        // Highlight the new polygon
         polygonObj.setOptions(SELECTED_POLYGON_STYLE);
 
-        setSelectedPolygon(polygonObj);
-        setSelectedPolygonIsSearch(false);
+        // Update ref and add custom property to track search polygons
+        polygonObj.set("selectedPolygonIsSearch", selectedPolygonIsSearch);
+        selectedPolygonRef.current = polygonObj;
 
         if (onParcelClick) {
           onParcelClick(parcel);
@@ -130,16 +133,16 @@ export default function GoogleMap({
       });
       polygonObj.setMap(map);
 
-      polygonObj.addListener('mouseover', () => {
+      polygonObj.addListener("mouseover", () => {
         polygonObj.setOptions({ strokeWeight: 6 });
       });
-      polygonObj.addListener('mouseout', () => {
+      polygonObj.addListener("mouseout", () => {
         if (polygonObj !== selectedPolygon) {
           polygonObj.setOptions({ strokeWeight: 3 });
         }
       });
 
-      polygonObj.addListener('click', (event: google.maps.MapMouseEvent) => {
+      polygonObj.addListener("click", (event: google.maps.MapMouseEvent) => {
         if (!infoWindow || !event.latLng) return;
         infoWindow.setPosition(event.latLng);
         infoWindow.setContent(`
@@ -191,9 +194,9 @@ export default function GoogleMap({
     <div
       ref={mapRef}
       style={{
-        width: '100%',
-        height: '600px',
-        borderRadius: '8px',
+        width: "100%",
+        height: "600px",
+        borderRadius: "8px",
       }}
     />
   );
