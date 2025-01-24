@@ -47,7 +47,11 @@ const DynamicTable: FC<DynamicTableProps> = ({
               key={column.key}
               className={
                 !isVertical
-                  ? `min-2040:flex min-2040:justify-center border border-gray-medium p-3 text-gray-dark-200 font-400 border-l-0 border-r-0 border-b-0 ${customClassName}`
+                  ? `min-2040:flex min-2040:justify-center border border-gray-medium p-3 text-gray-dark-200 font-400 border-l-0 border-r-0 border-b-0 ${customClassName} ${
+                      blurKeys.includes(column.key)
+                        ? 'blur-[4px] pointer-events-none'
+                        : ''
+                    }`
                   : `border-l-[1px] border-gray-medium/60 w-[20%] px-12 ${
                       blurKeys.includes(column.key)
                         ? 'blur-[7px] pointer-events-none'

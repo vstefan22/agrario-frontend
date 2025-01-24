@@ -260,7 +260,7 @@ const OfferDetails = () => {
   return (
     <div className='bg-gray-lightest min-h-screen flex flex-col px-7 p-4'>
       <h1 className='text-[32px] font-bold text-black-muted mb-4'>
-        Detailansicht Angebot
+        Detailansicht Anzeige
       </h1>
       <DetailsItem key={offer?.identifier} data={offer!} />
 

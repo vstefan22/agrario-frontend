@@ -69,7 +69,7 @@ const OfferItem: FC<OfferItemProps> = ({ data }) => {
               type='button'
               onClick={handleViewDetails}
             >
-              Angebots-Details
+              Details der Anzeige
             </Button>
           </div>
         </div>
