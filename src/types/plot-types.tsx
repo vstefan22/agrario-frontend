@@ -4,6 +4,7 @@ export type PlotType = {
   zipcode: number;
   municipality_name: string;
   district_name: string;
+  communal_district: string;
   cadastral_area: string;
   cadastral_parcel: string;
   land_use: string;
@@ -21,19 +22,6 @@ export type PlotAnalyseDetails = {
   tax_amount: string;
   subtotal: string;
 };
-export type PlotDetailsType = {
-  id: string;
-  state_name: string;
-  zipcode: number;
-  municipality_name: string;
-  district_name: string;
-  cadastral_area: string;
-  cadastral_parcel: string;
-  land_use: string;
-  // area_square_meters: number;
-  // image: string;
-  analyse_plus: boolean;
-};
 
 export type PlotOfferType = {
   id: string;
@@ -41,23 +29,12 @@ export type PlotOfferType = {
   zipcode: number;
   municipality_name: string;
   district_name: string;
+  communal_district: string;
   cadastral_area: string;
   cadastral_parcel: string;
   land_use: string;
   area_square_meters: number;
   image: string;
-};
-
-export type PlotSearchType = {
-  id: string;
-  state_name: string;
-  district_name: string;
-  land_use: string;
-  area_square_meters: number;
-  image: string;
-  infrastructure: string;
-  evaluation: string;
-  parcel: PlotDetailsType;
 };
 
 export type PlotAnalysePlusType = {
@@ -66,6 +43,7 @@ export type PlotAnalysePlusType = {
   zipcode: number;
   municipality_name: string;
   district_name: string;
+  communal_district: string;
   cadastral_area: string;
   cadastral_parcel: string;
   land_use: string;
@@ -78,6 +56,7 @@ export type ActiveAuctionsType = {
   zipcode: number;
   municipality_name: string;
   district_name: string;
+  communal_district: string;
   cadastral_area: string;
   cadastral_parcel: string;
   land_use: string;
@@ -88,9 +67,12 @@ export type ActiveAuctionsType = {
   evaluation: string;
 };
 
+// district_name: Landkreis,
+// communal_district: gemarkung,
+
 export type PlotSearchData = {
   municipality_name: string;
-  district_name: string;
+  communal_district: string;
   cadastral_area: string;
   cadastral_parcel: string;
 };
@@ -100,6 +82,7 @@ export type RegisteredPlotType = {
     id: string | number;
     state_name: string;
     district_name: string;
+    communal_district: string;
     municipality_name: string;
     cadastral_area: string;
     cadastral_parcel: string;

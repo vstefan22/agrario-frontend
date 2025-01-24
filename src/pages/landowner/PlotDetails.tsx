@@ -5,6 +5,7 @@ import ShowDetailsLandowner from './ShowDetailsLandowner';
 import usePlots from '../../hooks/plot-hook';
 import usePlotStore from '../../store/plot-store';
 import { LoadingSpinner } from '../../components/common/Loading';
+import { toast } from 'react-toastify';
 
 function PlotDetails() {
   const navigate = useNavigate();
@@ -49,7 +50,16 @@ function PlotDetails() {
       const data = await getAnalysePlus();
       setBasketSummary(data);
       navigate('/landowner/my-plots/analyse-plus');
-    } catch (err) {
+      // eslint-disable-next-line
+    } catch (err: any) {
+      if (
+        err.response.data.error ===
+        'Analyse Plus for selected parcel is already purchased.'
+      ) {
+        toast.error(
+          'Analyse Plus für das ausgewählte Grundstück wurde bereits gekauft.'
+        );
+      }
       console.error(err);
     }
   };

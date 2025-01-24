@@ -29,6 +29,7 @@ export type AuctionOfferType = {
     id: string | number;
     state_name: string;
     district_name: string;
+    communal_district: string;
     municipality_name: string;
     cadastral_area: string;
     cadastral_parcel: string;
