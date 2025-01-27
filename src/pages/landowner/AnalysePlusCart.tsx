@@ -4,10 +4,10 @@ import { toast } from 'react-toastify';
 import Button from '../../components/common/Button';
 import GenericList from '../../components/common/GenericList';
 import AnalysePlusCartItem from '../../components/landowner/my-plots/AnalysePlusCartItem';
+import { LoadingSpinner } from '../../components/common/Loading';
 import usePlots from '../../hooks/plot-hook';
 import usePayments from '../../hooks/payment-hook';
 import usePlotStore from '../../store/plot-store';
-import { LoadingSpinner } from '../../components/common/Loading';
 
 const AnalysePlusCart = () => {
   const navigate = useNavigate();
@@ -30,7 +30,6 @@ const AnalysePlusCart = () => {
   };
 
   const handleStripeCheckout = async () => {
-    // TODO: use actual data for payment checkout
     const paymentBody = {
       payment_type: 'analyse_plus',
       discount_code: discountCode,
@@ -73,7 +72,6 @@ const AnalysePlusCart = () => {
       await deletePlotFromBasket(id);
       removePlotFromBasket(id);
       const basketSummaryData = await getAnalysePlus();
-
       setBasketSummary(basketSummaryData);
       setDiscountCodeStore('', '');
       toast.success('Das Flurstück wurde erfolgreich aus der Liste entfernt.');
@@ -100,8 +98,6 @@ const AnalysePlusCart = () => {
       );
     }
   };
-
-  console.log('basket summary: ', basketSummary);
 
   if (loading) return <LoadingSpinner />;
 

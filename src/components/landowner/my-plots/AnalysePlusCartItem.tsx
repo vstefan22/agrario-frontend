@@ -23,12 +23,12 @@ const AnalysePlusCartItem: FC<AnalysePlusCartItemProps> = ({
         minHeight: '152px',
       }}
     >
-      <div className='flex justify-between items-center mx-3'>
+      <div className='flex justify-between items-stretch mx-3'>
         <ItemImage
           id={data.id}
-          className={`flex border-[0.16px] min-w-[116px] min-h-[104px] border-gray-medium/60 rounded-xl flex-col justify-center items-center ${IDNummerClass}`}
+          className={`flex border-[0.16px] min-w-[116px] min-h-[104px] max-w-[116px] border-gray-medium/60 rounded-xl flex-col justify-center items-center ${IDNummerClass}`}
         />
-        <div className='flex flex-col min-h-[104px] whitespace-nowrap'>
+        <div className='flex flex-col min-h-[104px] whitespace-nowrap mr-2'>
           <DynamicTable
             data={data}
             columns={PLOT_DETAILS_COLUMNS}
@@ -38,7 +38,7 @@ const AnalysePlusCartItem: FC<AnalysePlusCartItemProps> = ({
 
         {onDelete && (
           <button className='cursor-pointer' onClick={() => onDelete(data.id)}>
-            <div className='border-[1.12px] border-gray-blue-light rounded-[50%] p-[11px] flex'>
+            <div className='border-[1.12px] border-gray-blue-light rounded-[50%] p-[12px] flex'>
               <img src={delIcon} alt='Delete Icon' className='min-w-[14px]' />
             </div>
           </button>
