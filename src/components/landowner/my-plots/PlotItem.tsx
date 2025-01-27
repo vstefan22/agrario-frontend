@@ -1,8 +1,10 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Button from '../../common/Button';
 import DynamicTable from '../../common/DynamicTable';
 import ItemImage from '../../common/ItemImage';
+import usePlots from '../../../hooks/plot-hook';
 import usePlotStore from '../../../store/plot-store';
 import { MY_PLOTS_COLUMNS } from '../../../constants/table-data';
 import { PlotType } from '../../../types/plot-types';
@@ -18,7 +20,8 @@ type PlotItemProps = {
 
 const PlotItem: FC<PlotItemProps> = ({ data, onDelete }) => {
   const navigate = useNavigate();
-  const { setPlot } = usePlotStore();
+  const { addPlotToBasket, getBasketItems, getAnalysePlus } = usePlots();
+  const { setBasketPlots, setPlot, setBasketSummary } = usePlotStore();
 
   const handleViewDetails = () => {
     setPlot(data);
@@ -28,6 +31,28 @@ const PlotItem: FC<PlotItemProps> = ({ data, onDelete }) => {
   const handleFetchOffers = () => {
     setPlot(data);
     navigate('/landowner/my-plots/offer-preparation');
+  };
+
+  const handleAnalysePlus = async () => {
+    try {
+      await addPlotToBasket(data.id, data);
+      const basketItems = await getBasketItems();
+      setBasketPlots(basketItems.basket_items);
+      const analysePlus = await getAnalysePlus();
+      setBasketSummary(analysePlus);
+      navigate('/landowner/my-plots/analyse-plus');
+      // eslint-disable-next-line
+    } catch (err: any) {
+      if (
+        err.response.data.error ===
+        'Analyse Plus for selected parcel is already purchased.'
+      ) {
+        toast.error(
+          'Analyse Plus für das ausgewählte Grundstück wurde bereits gekauft.'
+        );
+      }
+      console.error(err);
+    }
   };
 
   return (
@@ -90,6 +115,13 @@ const PlotItem: FC<PlotItemProps> = ({ data, onDelete }) => {
               onClick={handleFetchOffers}
             >
               Anzeige aufgeben
+            </Button>
+            <Button
+              variant='bluePrimary'
+              type='button'
+              onClick={handleAnalysePlus}
+            >
+              Analyse PLUS kaufen
             </Button>
           </div>
         </div>
