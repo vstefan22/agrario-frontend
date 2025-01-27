@@ -30,7 +30,7 @@ const SlideCheckbox: React.FC<TSlideCheckboxProps> = ({
         ></div>
 
         <span
-          className={`relative z-10 w-1/2 text-center text-sm font-medium transition-colors select-none ${
+          className={`relative z-10 w-1/2 text-center text-[12px] font-medium transition-colors select-none ${
             checked ? 'text-white/80' : 'text-white'
           }`}
         >
@@ -38,7 +38,7 @@ const SlideCheckbox: React.FC<TSlideCheckboxProps> = ({
         </span>
 
         <span
-          className={`relative z-10 w-1/2 text-center text-sm font-medium transition-colors select-none ${
+          className={`relative z-10 w-1/2 text-center text-[12px] font-medium transition-colors select-none ${
             !checked ? 'text-white/80' : 'text-white'
           }`}
         >
