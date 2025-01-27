@@ -196,7 +196,7 @@ const AnalysePlusCart = () => {
               </div>
             </div>
             <p className='text-[14px]'>
-              Rabatt:
+              Rabatt:{' '}
               <strong>
                 {discountValue !== 0 ? '' : ''}
                 {discountValue}€
@@ -214,8 +214,7 @@ const AnalysePlusCart = () => {
 
           <div className='flex flex-col mt-3'>
             <p className='text-[18px]'>
-              Endbetrag:
-              <strong>{basketSummary.final_total}€</strong>
+              Endbetrag(Brutto): <strong>{basketSummary.final_total}€</strong>
             </p>
           </div>
         </div>
