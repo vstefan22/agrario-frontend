@@ -1,25 +1,25 @@
-import { useEffect, useRef, useState } from "react";
-import { ParcelPolygon } from "../../types/google-maps-types";
+import { useEffect, useRef, useState } from 'react';
+import { ParcelPolygon } from '../../types/google-maps-types';
 
 const DEFAULT_POLYGON_STYLE: google.maps.PolygonOptions = {
   fillOpacity: 0,
-  strokeColor: "#099178",
+  strokeColor: '#099178',
   strokeOpacity: 0.9,
   strokeWeight: 3,
 };
 
 const DEFAULT_SEARCH_POLYGON_STYLE: google.maps.PolygonOptions = {
   fillOpacity: 0,
-  strokeColor: "#FF0000",
-  fillColor: "#FF0000",
+  strokeColor: '#FF0000',
+  fillColor: '#FF0000',
   strokeOpacity: 0.9,
   strokeWeight: 3,
 };
 
 const SELECTED_POLYGON_STYLE: google.maps.PolygonOptions = {
   fillOpacity: 0.3,
-  fillColor: "#edc84e",
-  strokeColor: "#edc84e",
+  fillColor: '#edc84e',
+  strokeColor: '#edc84e',
   strokeOpacity: 0.2,
   strokeWeight: 16,
 };
@@ -39,8 +39,11 @@ export default function GoogleMap({
 }: GoogleMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
-  const [infoWindow, setInfoWindow] = useState<google.maps.InfoWindow | null>(null);
-  const [selectedPolygon, setSelectedPolygon] = useState<google.maps.Polygon | null>(null);
+  const [infoWindow, setInfoWindow] = useState<google.maps.InfoWindow | null>(
+    null
+  );
+  const [selectedPolygon, setSelectedPolygon] =
+    useState<google.maps.Polygon | null>(null);
   const [selectedPolygonIsSearch, setSelectedPolygonIsSearch] = useState(false);
   const selectedPolygonRef = useRef<google.maps.Polygon | null>(null);
 
@@ -50,7 +53,7 @@ export default function GoogleMap({
     const createdMap = new google.maps.Map(mapRef.current, {
       center: { lat: 52.52, lng: 13.4 },
       zoom: 13,
-      mapTypeId: "hybrid",
+      mapTypeId: 'hybrid',
       streetViewControl: false,
       mapTypeControl: false,
       panControl: false,
@@ -71,43 +74,29 @@ export default function GoogleMap({
   useEffect(() => {
     if (!map) return;
 
-    console.log("SELECTED PARCEL CLICK!");
+    console.log('SELECTED PARCEL CLICK!');
     mapPolygons.forEach((parcel) => {
       const polygonObj = new google.maps.Polygon({
         paths: parcel.polygon,
         ...DEFAULT_POLYGON_STYLE,
       });
       polygonObj.setMap(map);
-      polygonObj.addListener("mouseover", () => {
+      polygonObj.addListener('mouseover', () => {
         polygonObj.setOptions({ strokeWeight: 6 });
       });
-      polygonObj.addListener("mouseout", () => {
+      polygonObj.addListener('mouseout', () => {
         if (polygonObj !== selectedPolygonRef.current) {
           polygonObj.setOptions({ strokeWeight: 3 });
         }
       });
 
-      polygonObj.addListener("click", (event: google.maps.MapMouseEvent) => {
+      polygonObj.addListener('click', (event: google.maps.MapMouseEvent) => {
         if (!infoWindow || !event.latLng) return;
-
-        infoWindow.setPosition(event.latLng);
-        infoWindow.setContent(`
-          <div style="color:black">
-            <strong>Parcel Info:</strong><br/>
-            ID: ${parcel.parcel_id}<br/>
-            State: ${parcel.state_name}<br/>
-            District: ${parcel.communal_district}<br/>
-            Municipality: ${parcel.municipality_name}<br/>
-            Cadastral Area: ${parcel.cadastral_area}<br/>
-            Cadastral Parcel: ${parcel.cadastral_parcel}<br/>
-          </div>
-        `);
-        infoWindow.open(map);
 
         // Reset the previously selected polygon
         if (selectedPolygonRef.current) {
           selectedPolygonRef.current.setOptions(
-            selectedPolygonRef.current.get("selectedPolygonIsSearch")
+            selectedPolygonRef.current.get('selectedPolygonIsSearch')
               ? DEFAULT_SEARCH_POLYGON_STYLE
               : DEFAULT_POLYGON_STYLE
           );
@@ -117,12 +106,34 @@ export default function GoogleMap({
         polygonObj.setOptions(SELECTED_POLYGON_STYLE);
 
         // Update ref and add custom property to track search polygons
-        polygonObj.set("selectedPolygonIsSearch", selectedPolygonIsSearch);
+        polygonObj.set('selectedPolygonIsSearch', selectedPolygonIsSearch);
         selectedPolygonRef.current = polygonObj;
 
-        if (onParcelClick) {
-          onParcelClick(parcel);
-        }
+        infoWindow.setPosition(event.latLng);
+        infoWindow.setContent(`
+          <div style="color:black">
+            <strong>Flurstück Information:</strong><br/>
+            Bundesland: ${parcel.state_name}<br/>
+            Landkreis: ${parcel.communal_district}<br/>
+            Gemeinde/Stadt: ${parcel.municipality_name}<br/>
+            Flur: ${parcel.cadastral_area}<br/>
+            Flurstücksnummer: ${parcel.cadastral_parcel}<br/>
+          </div>
+          <div style="display:flex; justify-content:end; margin-top:8px;}">
+            <button style="color:blue; outline: none;" id="parcel-btn-${parcel.id}">Flurstück hinzufügen</button>
+          </div>
+        `);
+        google.maps.event.addListenerOnce(infoWindow, 'domready', () => {
+          const button = document.getElementById(`parcel-btn-${parcel.id}`);
+          if (button) {
+            button.addEventListener('click', () => {
+              if (onParcelClick) {
+                onParcelClick(parcel);
+              }
+            });
+          }
+        });
+        infoWindow.open(map);
       });
     });
 
@@ -133,27 +144,26 @@ export default function GoogleMap({
       });
       polygonObj.setMap(map);
 
-      polygonObj.addListener("mouseover", () => {
+      polygonObj.addListener('mouseover', () => {
         polygonObj.setOptions({ strokeWeight: 6 });
       });
-      polygonObj.addListener("mouseout", () => {
+      polygonObj.addListener('mouseout', () => {
         if (polygonObj !== selectedPolygon) {
           polygonObj.setOptions({ strokeWeight: 3 });
         }
       });
 
-      polygonObj.addListener("click", (event: google.maps.MapMouseEvent) => {
+      polygonObj.addListener('click', (event: google.maps.MapMouseEvent) => {
         if (!infoWindow || !event.latLng) return;
         infoWindow.setPosition(event.latLng);
         infoWindow.setContent(`
           <div style="color:black">
-            <strong>Parcel Info (Search):</strong><br/>
-            ID: ${parcel.parcel_id}<br/>
-            State: ${parcel.state_name}<br/>
-            District: ${parcel.communal_district}<br/>
-            Municipality: ${parcel.municipality_name}<br/>
-            Cadastral Area: ${parcel.cadastral_area}<br/>
-            Cadastral Parcel: ${parcel.cadastral_parcel}<br/>
+            <strong>Flurstück Information:</strong><br/>
+            Bundesland: ${parcel.state_name}<br/>
+            Landkreis: ${parcel.communal_district}<br/>
+            Gemeinde/Stadt: ${parcel.municipality_name}<br/>
+            Flur: ${parcel.cadastral_area}<br/>
+            Flurstücksnummer: ${parcel.cadastral_parcel}<br/>
           </div>
         `);
         infoWindow.open(map);
@@ -194,9 +204,9 @@ export default function GoogleMap({
     <div
       ref={mapRef}
       style={{
-        width: "100%",
-        height: "600px",
-        borderRadius: "8px",
+        width: '100%',
+        height: '600px',
+        borderRadius: '8px',
       }}
     />
   );
