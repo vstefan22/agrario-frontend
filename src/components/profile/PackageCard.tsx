@@ -38,7 +38,7 @@ const PackageCard: React.FC<PackageCardProps> = ({
 
       <div className='flex items-end my-5'>
         <p
-          className={`text-[48px] font-semibold text-blue-muted leading-[44px] ${addClass}`}
+          className={`text-[48px] font-semibold text-blue-muted leading-[48px] ${addClass}`}
         >
           {typeof price === 'number' ? `€${price}` : price}
         </p>
@@ -55,7 +55,7 @@ const PackageCard: React.FC<PackageCardProps> = ({
               <img
                 src={CheckCircleImg}
                 alt='Check Circle'
-                className='w-[16px] h-[16px]'
+                className='min-w-[16px] h-[16px]'
               />
             </span>
             <span className='text-blue-muted text-[12px] flex items-center'>

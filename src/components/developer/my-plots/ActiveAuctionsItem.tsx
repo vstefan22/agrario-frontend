@@ -66,7 +66,7 @@ const ActiveAuctionsItem: FC<ActiveAuctionsItemProps> = ({
                     ? [
                         'zipcode',
                         'municipality_name',
-                        'district_name',
+                        'communal_district',
                         'cadastral_area',
                         'cadastral_parcel',
                       ]

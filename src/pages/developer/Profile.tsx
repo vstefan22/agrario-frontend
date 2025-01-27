@@ -822,8 +822,8 @@ export default function Profile() {
               Mein Abo
             </h1>
             <SlideCheckbox
-              option1='Yearly'
-              option2='Monthly'
+              option1='Jährliche Zahlung'
+              option2='Monatliche Zahlung'
               checked={isChecked}
               onChange={handleToggleChange}
             />
@@ -831,10 +831,10 @@ export default function Profile() {
               {isChecked ? (
                 <>
                   <PackageCard
-                    title='Paket Free'
+                    title='Free'
                     price={0}
-                    plan='/ monthly'
-                    description='All the basic features to boost your freelance career'
+                    plan='/ Monat'
+                    description='Entdecken Sie  die Welt von Agrario Energy und finde geeignete Flächenpotentiale  für Ihr Vorhaben.'
                     features={PACKAGE_FEATURES.free}
                     onClick={() => handleMonthlyPackage('FREE')}
                     buttonText={
@@ -843,10 +843,10 @@ export default function Profile() {
                     activePlan={user?.tier === 'FREE'}
                   />
                   <PackageCard
-                    title='Paket Premium'
-                    price={59}
-                    plan='/ monthly'
-                    description='All the basic features to boost your freelance career'
+                    title='Premium'
+                    price={599}
+                    plan='/ Monat'
+                    description='Nutzen Sie Agrario Energy als Tool für  die Akquise neuer Flächenpotentiale-'
                     features={PACKAGE_FEATURES.premium}
                     buttonText={
                       user?.tier === 'PREM' ? 'Status aktiv' : 'Paket buchen'
@@ -856,25 +856,26 @@ export default function Profile() {
                     onClick={() => handleMonthlyPackage('PREM')}
                   />
                   <PackageCard
-                    title='Paket Enterprise'
+                    title='Enterprise'
                     price='Preis auf Anfrage'
                     features={PACKAGE_FEATURES.onRequest}
                     buttonText={
                       user?.tier === 'ENTE'
                         ? 'Status aktiv'
-                        : 'Sales kontaktierten'
+                        : 'Sales-Team kontaktieren'
                     }
                     activePlan={user?.tier === 'ENTE'}
                     onClick={handlePriceOnRequest}
+                    description='Für Ihre Firma suchen Sie eine maßgeschneiderte Lösung. Kontaktieren Sie uns gerne.'
                   />
                 </>
               ) : (
                 <>
                   <PackageCard
-                    title='Paket Free'
+                    title='Free'
                     price={0}
-                    plan='/ yearly'
-                    description='All the basic features to boost your freelance career'
+                    plan='/ Monat'
+                    description='Entdecken Sie  die Welt von Agrario Energy und finde geeignete Flächenpotentiale  für Ihr Vorhaben.'
                     features={PACKAGE_FEATURES.free}
                     onClick={() => handleYearlyPackage('FREE')}
                     buttonText={
@@ -883,10 +884,10 @@ export default function Profile() {
                     activePlan={user?.tier === 'FREE'}
                   />
                   <PackageCard
-                    title='Paket Premium'
-                    price={599}
-                    plan='/ yearly'
-                    description='All the basic features to boost your freelance career'
+                    title='Premium'
+                    price={499}
+                    plan='/ Monat'
+                    description='Nutzen Sie Agrario Energy als Tool für  die Akquise neuer Flächenpotentiale-'
                     features={PACKAGE_FEATURES.premium}
                     buttonText={
                       user?.tier === 'PREM' ? 'Status aktiv' : 'Paket buchen'
@@ -896,16 +897,17 @@ export default function Profile() {
                     isActive
                   />
                   <PackageCard
-                    title='Paket Enterprise'
+                    title='Enterprise'
                     price='Preis auf Anfrage'
                     features={PACKAGE_FEATURES.onRequest}
                     buttonText={
                       user?.tier === 'ENTE'
                         ? 'Status aktiv'
-                        : 'Sales kontaktierten'
+                        : 'Sales-Team kontaktieren'
                     }
                     activePlan={user?.tier === 'ENTE'}
                     onClick={handlePriceOnRequest}
+                    description='Für Ihre Firma suchen Sie eine maßgeschneiderte Lösung. Kontaktieren Sie uns gerne.'
                   />
                 </>
               )}

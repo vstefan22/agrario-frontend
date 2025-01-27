@@ -1,23 +1,19 @@
 export const PACKAGE_FEATURES = {
   free: [
-    { text: 'Full Access to Landingfolio', info: true },
-    { text: '100 GB Free Storage', info: true },
-    { text: 'Unlimited Visitors', info: false },
-    { text: '10 Agents', info: false },
-    { text: 'Live Chat Support', info: true },
+    { text: 'Profil anlegen', info: false },
+    { text: 'Flurstücke einsehen', info: false },
+    { text: 'Plattform Support', info: false },
   ],
   premium: [
-    { text: 'Full Access to Landingfolio', info: true },
-    { text: '100 GB Free Storage', info: true },
-    { text: 'Unlimited Visitors', info: false },
-    { text: '10 Agents', info: false },
-    { text: 'Live Chat Support', info: true },
+    { text: 'Profil anlegen', info: false },
+    { text: 'Flurstücke einsehen', info: false },
+    { text: 'Plattform Support', info: false },
+    { text: 'Aktive Anzeigen einsehen', info: false },
+    {
+      text: 'Download von zusätzlichem Informationsmaterial & Geodaten',
+      info: false,
+    },
+    { text: 'Teilnahme an Bieterverfahren', info: false },
   ],
-  onRequest: [
-    { text: 'Full Access to Landingfolio', info: true },
-    { text: '100 GB Free Storage', info: true },
-    { text: 'Unlimited Visitors', info: false },
-    { text: '10 Agents', info: false },
-    { text: 'Live Chat Support', info: true },
-  ],
+  onRequest: [],
 };
