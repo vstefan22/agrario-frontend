@@ -2,7 +2,7 @@ import DynamicTable from '../../components/common/DynamicTable';
 import ShowDetailsImage from '../../components/show-details/ShowDetailsImage';
 import ShowDetailsCard from '../../components/show-details/ShowDetailsCard';
 import DynamicTableSection from '../../components/show-details/DynamicTableSection';
-import { PLOT_DETAILS_V8_COLUMNS } from '../../constants/table-data';
+import { PLOT_DETAILS_COLUMNS } from '../../constants/table-data';
 import germanyImg from '../../assets/images/germany-country.png';
 import woodsImg from '../../assets/images/woods.png';
 import mountainsImg from '../../assets/images/mountains.png';
@@ -29,7 +29,7 @@ const ShowDetailsDeveloper = ({
         </div>
 
         <div className='flex justify-center my-12'>
-          <DynamicTable data={data} columns={PLOT_DETAILS_V8_COLUMNS} />
+          <DynamicTable data={data} columns={PLOT_DETAILS_COLUMNS} />
         </div>
 
         <div className='flex flex-col'>

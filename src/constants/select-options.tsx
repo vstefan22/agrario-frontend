@@ -14,6 +14,7 @@ export const employeesOptionsMap: Record<string, number> = {
   '> 200': 5,
 };
 
+// eslint-disable-next-line
 export const employeesOptionsReverseMap: Record<any, string> = {
   1: '1-5',
   2: '6-10',
