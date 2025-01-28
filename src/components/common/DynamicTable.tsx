@@ -45,7 +45,7 @@ const DynamicTable: FC<DynamicTableProps> = ({
               <td
                 className={
                   !isVertical
-                    ? `p-4 2040-2300:px-10 min-2300:px-12 font-semibold text-gray-dark-200 border-l-0 border-r-0 border-b-0 ${customClassName}`
+                    ? `p-4 2040-2300:px-10 min-2300:px-12 font-semibold text-gray-dark-200 border-l-0 border-r-0 border-b-0 ${customClassName} whitespace-pre-wrap break-words`
                     : 'p-4 px-8 text-gray-dark-200'
                 }
               >
