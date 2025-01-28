@@ -11,6 +11,7 @@ import { PLOT_SEARCH_COLUMNS } from '../../../constants/table-data';
 import delIcon from '../../../assets/images/del.png';
 import parcelPlaceholder from '../../../assets/images/parcel-placeholder.webp';
 import { showRestrictions } from '../../../utils/helper-functions';
+import useAuthStore from '../../../store/auth-store';
 
 type MyWatchlistItemProps = {
   data: RegisteredPlotDetailsType;
@@ -25,6 +26,7 @@ const MyWatchlistItem: FC<MyWatchlistItemProps> = ({ data }) => {
     removeRegisteredPlotFromMyList,
     setRegisteredPlot,
   } = useRegisteredPlotStore();
+  const { user } = useAuthStore();
 
   const handleDeletePlot = async () => {
     const plotId = data.parcel.id.toString();
@@ -68,7 +70,17 @@ const MyWatchlistItem: FC<MyWatchlistItemProps> = ({ data }) => {
             <DynamicTable
               data={data.parcel}
               columns={PLOT_SEARCH_COLUMNS}
-              customClassName='px-10'
+              blurKeys={
+                user?.tier === 'FREE'
+                  ? [
+                      'zipcode',
+                      'municipality_name',
+                      'communal_district',
+                      'cadastral_area',
+                      'cadastral_parcel',
+                    ]
+                  : []
+              }
             />
             <button onClick={handleDeletePlot}>
               <div className='border-[1.12px] border-gray-blue-light rounded-[50%] p-[11px] flex'>
