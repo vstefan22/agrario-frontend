@@ -134,9 +134,19 @@ export default function NewPlot() {
       setLoading(false);
       toast.success('Flurstück hinzugefügt!');
       navigate('/landowner/my-plots');
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
       setLoading(false);
+
+      if (
+        err?.response?.data?.error === 'Parcel already has an assigned user.'
+      ) {
+        toast.error(
+          'Dieses Flurstück wurde bereits von einem anderen Nutzer der Platform registriert. Kontaktieren Sie den Support und weisen Sie sich als Eigentümer des Flurstückes aus um das Problem zu lösen'
+        );
+        return;
+      }
+
       toast.error('Fehler beim Hinzufügen des Flurstücks.');
     }
   };
@@ -183,6 +193,23 @@ export default function NewPlot() {
               className='w-full bg-white rounded-[18px] p-1 mt-4'
             >
               <DynamicTable data={data} columns={PLOT_GOOGLE_MAPS_COLUMNS} />
+
+              <div className='md:col-span-4 flex space-x-4 mt-4 mb-6'>
+                <Button
+                  variant='blueSecondary'
+                  type='button'
+                  onClick={handleClearParcelList}
+                >
+                  Abbrechen
+                </Button>
+                <Button
+                  variant='bluePrimary'
+                  type='button'
+                  onClick={handleAddPlot}
+                >
+                  Flurstück hinzufügen
+                </Button>
+              </div>
             </div>
           ))}
 
@@ -205,19 +232,6 @@ export default function NewPlot() {
               mapCenter={mapCenter}
             />
           </div>
-        </div>
-
-        <div className='md:col-span-4 flex justify-end space-x-4 mt-4 mb-6'>
-          <Button
-            variant='blueSecondary'
-            type='button'
-            onClick={handleClearParcelList}
-          >
-            Abbrechen
-          </Button>
-          <Button variant='bluePrimary' type='button' onClick={handleAddPlot}>
-            Flurstück hinzufügen
-          </Button>
         </div>
       </div>
     </div>
