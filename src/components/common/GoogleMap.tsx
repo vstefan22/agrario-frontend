@@ -120,7 +120,7 @@ export default function GoogleMap({
             Flurstücksnummer: ${parcel.cadastral_parcel}<br/>
           </div>
           <div style="display:flex; justify-content:end; margin-top:8px;}">
-            <button style="color:blue; outline: none;" id="parcel-btn-${parcel.id}">Flurstück hinzufügen</button>
+            <button style="color:blue; outline: none;" id="parcel-btn-${parcel.id}">Bestätigen</button>
           </div>
         `);
         google.maps.event.addListenerOnce(infoWindow, 'domready', () => {
@@ -165,7 +165,20 @@ export default function GoogleMap({
             Flur: ${parcel.cadastral_area}<br/>
             Flurstücksnummer: ${parcel.cadastral_parcel}<br/>
           </div>
+          <div style="display:flex; justify-content:end; margin-top:8px;}">
+            <button style="color:blue; outline: none;" id="parcel-btn-${parcel.id}">Bestätigen</button>
+          </div>
         `);
+        google.maps.event.addListenerOnce(infoWindow, 'domready', () => {
+          const button = document.getElementById(`parcel-btn-${parcel.id}`);
+          if (button) {
+            button.addEventListener('click', () => {
+              if (onParcelClick) {
+                onParcelClick(parcel);
+              }
+            });
+          }
+        });
         infoWindow.open(map);
 
         if (selectedPolygon) {

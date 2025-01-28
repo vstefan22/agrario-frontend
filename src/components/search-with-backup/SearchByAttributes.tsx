@@ -130,7 +130,7 @@ const SearchByAttributes = ({ handleSubmit }: SearchByAttributesProps) => {
 
         <div className='md:col-span-4 flex justify-end space-x-4'>
           <Button variant='bluePrimary' type='submit'>
-            Auswählen
+            Bestätigen
           </Button>
         </div>
       </form>

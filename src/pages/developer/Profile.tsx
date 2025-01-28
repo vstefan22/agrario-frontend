@@ -293,6 +293,25 @@ export default function Profile() {
         return;
       }
       if (
+        err.response?.data?.founding_year &&
+        Array.isArray(err.response.data.founding_year) &&
+        err.response.data.founding_year[0] ===
+          'Ensure this value is greater than or equal to 1500.'
+      ) {
+        toast.error(
+          'Stellen Sie sicher, dass dieser Wert größer oder gleich 1500 ist.'
+        );
+        return;
+      }
+      if (
+        err.response?.data?.founding_year &&
+        Array.isArray(err.response.data.founding_year) &&
+        err.response.data.founding_year[0] === 'A valid integer is required.'
+      ) {
+        toast.error('Eine gültige ganze Zahl ist erforderlich.');
+        return;
+      }
+      if (
         err.response?.data?.company_website &&
         Array.isArray(err.response.data.company_website) &&
         err.response.data.company_website[0] ===
