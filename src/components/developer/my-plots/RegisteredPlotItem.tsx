@@ -10,6 +10,7 @@ import { PLOT_SEARCH_COLUMNS } from '../../../constants/table-data';
 import { RegisteredPlotDetailsType } from '../../../types/plot-types';
 import { showRestrictions } from '../../../utils/helper-functions';
 import parcelPlaceholder from '../../../assets/images/parcel-placeholder.webp';
+import useAuthStore from '../../../store/auth-store';
 
 type RegisteredPlotItemProps = {
   data: RegisteredPlotDetailsType;
@@ -19,6 +20,7 @@ const RegisteredPlotItem: FC<RegisteredPlotItemProps> = ({ data }) => {
   const navigate = useNavigate();
   const { getRegisteredPlotDetails, addPlotToWatchlist } = useRegisteredPlots();
   const { setRegisteredPlot } = useRegisteredPlotStore();
+  const { user } = useAuthStore();
 
   const AddToWatchList = async () => {
     try {
@@ -59,7 +61,17 @@ const RegisteredPlotItem: FC<RegisteredPlotItemProps> = ({ data }) => {
             <DynamicTable
               data={data.parcel}
               columns={PLOT_SEARCH_COLUMNS}
-              customClassName='px-10'
+              blurKeys={
+                user?.tier === 'FREE'
+                  ? [
+                      'zipcode',
+                      'municipality_name',
+                      'communal_district',
+                      'cadastral_area',
+                      'cadastral_parcel',
+                    ]
+                  : []
+              }
             />
           </div>
           <div className='flex justify-between'>

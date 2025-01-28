@@ -46,6 +46,10 @@ export default function NewPlot() {
               communal_district,
               cadastral_area,
               cadastral_parcel,
+              area_square_meters,
+              land_use,
+              zipcode,
+              district_name,
             } = feature.properties;
 
             rings.forEach((ringCoords: PolygonType[]) => {
@@ -58,6 +62,10 @@ export default function NewPlot() {
                 communal_district,
                 cadastral_area,
                 cadastral_parcel,
+                area_square_meters,
+                land_use,
+                zipcode,
+                district_name,
               });
             });
           });
@@ -108,6 +116,10 @@ export default function NewPlot() {
         communal_district: response.communal_district,
         cadastral_area: response.cadastral_area,
         cadastral_parcel: response.cadastral_parcel,
+        area_square_meters: response.area_square_meters,
+        land_use: response.land_use,
+        zipcode: response.zipcode,
+        district_name: response.district_name,
       };
 
       const foundPolygons: ParcelPolygon[] = [parcel];
@@ -190,11 +202,11 @@ export default function NewPlot() {
           parcelList.map((data) => (
             <div
               key={data.id}
-              className='w-full bg-white rounded-[18px] p-1 mt-4'
+              className='w-[78%] bg-white rounded-[18px] p-1 mt-4 flex flex-col'
             >
               <DynamicTable data={data} columns={PLOT_GOOGLE_MAPS_COLUMNS} />
 
-              <div className='md:col-span-4 flex space-x-4 mt-4 mb-6'>
+              <div className='md:col-span-4 flex space-x-4 mt-4 mb-6 justify-end'>
                 <Button
                   variant='blueSecondary'
                   type='button'
