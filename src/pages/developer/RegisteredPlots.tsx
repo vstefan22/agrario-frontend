@@ -24,7 +24,7 @@ const RegisteredPlots = () => {
   const [filters, setFilters] = useState<Record<string, string | null>>({
     sortOption: null,
   });
-  const [range, setRange] = useState<[number, number]>([200, 200000]);
+  const [range, setRange] = useState<[number, number]>([2000, 2000000]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
 
@@ -162,7 +162,7 @@ const RegisteredPlots = () => {
                   title='Fläche'
                   details='Größe der Fläche'
                   unit='ha'
-                  initialValues={[range[0] / 1000, range[1] / 1000]}
+                  initialValues={[range[0] / 10000, range[1] / 10000]}
                   onFilter={handleRangeFilter}
                   min={0}
                   max={250}

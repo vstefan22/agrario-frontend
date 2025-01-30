@@ -202,7 +202,7 @@ export default function NewPlot() {
           parcelList.map((data) => (
             <div
               key={data.id}
-              className='w-[78%] bg-white rounded-[18px] p-1 mt-4 flex flex-col'
+              className='w-max bg-white rounded-[18px] p-1 mt-4 flex flex-col'
             >
               <DynamicTable data={data} columns={PLOT_GOOGLE_MAPS_COLUMNS} />
 

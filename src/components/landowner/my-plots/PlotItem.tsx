@@ -71,7 +71,7 @@ const PlotItem: FC<PlotItemProps> = ({ data, onDelete }) => {
         />
 
         <div className='flex flex-col justify-center w-full gap-y-8'>
-          <div className='flex justify-end'>
+          <div className='flex justify-between'>
             <DynamicTable data={data} columns={MY_PLOTS_COLUMNS} />
             {onDelete && (
               <div className='flex justify-center ml-2'>

@@ -22,7 +22,7 @@ export default function MyPlots() {
   const [filters, setFilters] = useState<Record<string, string | null>>({
     sortOption: null,
   });
-  const [range, setRange] = useState<[number, number]>([200, 200000]);
+  const [range, setRange] = useState<[number, number]>([2000, 2000000]);
 
   useEffect(() => {
     const fetchMyPlots = async () => {
@@ -109,7 +109,7 @@ export default function MyPlots() {
             details='Größe der Fläche'
             onFilter={handleRangeFilter}
             unit='ha'
-            initialValues={[range[0] / 1000, range[1] / 1000]}
+            initialValues={[range[0] / 10000, range[1] / 10000]}
           />
         </div>
 

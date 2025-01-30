@@ -27,8 +27,8 @@ const RangeSlider = ({
 
   const handleFinalChange = (finalValues: [number, number]) => {
     const newRange: [number, number] = [
-      finalValues[0] * 1000,
-      finalValues[1] * 1000,
+      finalValues[0] * 10000,
+      finalValues[1] * 10000,
     ];
     onFilter(newRange);
   };
